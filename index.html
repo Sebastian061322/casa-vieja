@@ -1589,25 +1589,40 @@ function resetAll(){
   renderView('config');
 }
 
-/* ============ INICIALIZACIÓN DE LA APLICACIÓN ============ */
+/* ============ INICIALIZACIÓN Y AUTO-SINCRONIZACIÓN EN VIVO ============ */
 updateConnBadge();
 switchView('dashboard');
+
+// Carga inicial al abrir la app
 if(isConnected()){
-  refreshFromRemote().then(ok=>{ if(ok) renderView(currentView); });
+  refreshFromRemote().then(ok => { if(ok) renderView(currentView); });
 }
 
-// Actualización casi en tiempo real: cada 15s en pantallas de solo lectura (Dashboard, Delivery),
-// y también apenas vuelves a la pestaña/app. No se toca si hay un formulario a medio llenar en otra vista.
-const READONLY_VIEWS = ['dashboard','delivery'];
+// Pantallas seguras para refrescar automáticamente sin interrumpir la escritura de formularios
+const SAFE_REFRESH_VIEWS = ['dashboard', 'delivery', 'stock', 'ads', 'egresos'];
+
 async function tryLiveRefresh(){
   if(!isConnected()) return;
-  if(!READONLY_VIEWS.includes(currentView)) return;
   if(document.visibilityState !== 'visible') return;
-  const ok = await refreshFromRemote();
-  if(ok && READONLY_VIEWS.includes(currentView)) renderView(currentView);
+
+  // Si estás escribiendo en una caja de texto o campo, no refrescamos para no borrar lo que escribes
+  const isTyping = document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT');
+  if(isTyping) return;
+
+  // Si estás en una vista segura o no estás interactuando, sincroniza
+  if(SAFE_REFRESH_VIEWS.includes(currentView)){
+    const ok = await refreshFromRemote();
+    if(ok && SAFE_REFRESH_VIEWS.includes(currentView)) {
+      renderView(currentView);
+    }
+  }
 }
-setInterval(tryLiveRefresh, 15000);
-document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') tryLiveRefresh(); });
+
+// ⏱️ Revisa automáticamente cada 8 segundos si tu compañera hizo algún cambio
+setInterval(tryLiveRefresh, 8000);
+
+// 📱 Si minimizas el navegador en el teléfono y lo vuelves a abrir, sincroniza al instante
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') tryLiveRefresh(); });
 window.addEventListener('focus', tryLiveRefresh);
 </script>
 </body>

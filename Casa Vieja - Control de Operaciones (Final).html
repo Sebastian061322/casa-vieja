@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<!-- CONFIGURACIÓN DE PWA Y VISTA MÓVIL (IPHONE / PC) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Casa Vieja">
+
+<title>Casa Vieja · Control de Operaciones</title>
+
+<style>
+  :root{
+    --bg:#1C1410;
+    --surface:#241B15;
+    --surface-2:#2E241C;
+    --surface-3:#382B20;
+    --border:#3D2F24;
+    --text:#F2E9DC;
+    --text-muted:#A8998A;
+    --accent-red:#C1432E;
+    --accent-gold:#D4A34A;
+    --accent-green:#6B8F5C;
+    --accent-blue:#5C7F8F;
+    --radius:10px;
+    --font-display:'Iowan Old Style','Palatino Linotype',Georgia,serif;
+    --font-body:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    min-height:100vh;
+    padding-bottom:env(safe-area-inset-bottom); /* Ajuste de barra inferior de iPhone */
+  }
+  #app{display:flex;min-height:100vh;}
+  
+  /* Sidebar */
+  .sidebar{
+    width:220px;flex-shrink:0;background:var(--surface);
+    border-right:1px solid var(--border);
+    display:flex;flex-direction:column;padding:20px 0;
+  }
+  .brand{padding:0 20px 18px 20px;border-bottom:1px solid var(--border);margin-bottom:10px;}
+  .brand h1{font-family:var(--font-display);font-size:20px;margin:0 0 2px 0;font-weight:600;letter-spacing:.3px;}
+  .brand span{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;}
+  nav.navlist{
+    display:flex;flex-direction:column;gap:2px;padding:0 10px;
+    -webkit-overflow-scrolling:touch; /* Scroll fluido en móvil */
+  }
+  .nav-btn{
+    display:flex;align-items:center;gap:10px;
+    background:none;border:none;color:var(--text-muted);
+    padding:10px 12px;border-radius:8px;cursor:pointer;
+    font-size:14px;text-align:left;font-family:var(--font-body);
+    transition:background .15s, color .15s;
+  }
+  .nav-btn svg{flex-shrink:0;opacity:.8;}
+  .nav-btn:hover{background:var(--surface-2);color:var(--text);}
+  .nav-btn.active{background:var(--surface-3);color:var(--text);font-weight:600;}
+  .nav-btn.active svg{opacity:1;}
+  .sidebar-footer{margin-top:auto;padding:14px 20px 0 20px;border-top:1px solid var(--border);}
+  .sidebar-footer p{font-size:11px;color:var(--text-muted);line-height:1.5;margin:10px 0 0 0;}
+  #connStatus.online{color:var(--accent-green);}
+  #connStatus.offline{color:var(--text-muted);}
+  
+  /* Main */
+  .main{flex:1;min-width:0;padding:26px 34px 60px 34px;}
+  .topbar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:22px;flex-wrap:wrap;gap:8px;}
+  .topbar h2{font-family:var(--font-display);font-size:26px;margin:0;font-weight:600;}
+  .topbar .today{font-size:13px;color:var(--text-muted);}
+  .view{display:none;}
+  .view.active{display:block;animation:fadein .2s ease;}
+  @keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+  
+  /* Cards / grid */
+  .grid{display:grid;gap:14px;}
+  .grid-kpi{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:22px;}
+  .grid-charts{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));}
+  .card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);padding:16px 18px;
+  }
+  .kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin:0 0 8px 0;}
+  .kpi-value{font-family:var(--font-display);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;margin:0;}
+  .kpi-value.red{color:var(--accent-red);}
+  .kpi-value.gold{color:var(--accent-gold);}
+  .kpi-value.green{color:var(--accent-green);}
+  .kpi-sub{font-size:11px;color:var(--text-muted);margin-top:6px;}
+  .card h3{font-size:14px;margin:0 0 14px 0;font-weight:600;color:var(--text);}
+  .card h3 small{display:block;font-size:11px;color:var(--text-muted);font-weight:400;margin-top:2px;}
+  
+  /* Chart bits */
+  .chart-svg{width:100%;height:auto;display:block;}
+  .legend{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:12px;}
+  .legend-row{display:flex;align-items:center;gap:8px;justify-content:space-between;}
+  .legend-left{display:flex;align-items:center;gap:8px;color:var(--text-muted);}
+  .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .donut-wrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap;}
+  .donut{width:120px;height:120px;border-radius:50%;position:relative;flex-shrink:0;}
+  .donut::after{content:'';position:absolute;inset:22px;background:var(--surface);border-radius:50%;}
+  .donut-center{position:absolute;inset:22px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-muted);text-align:center;z-index:2;}
+  
+  /* Ripeness stock scale */
+  .stock-row{margin-bottom:14px;}
+  .stock-row-head{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px;}
+  .stock-row-head b{font-weight:600;}
+  .stock-row-head span.low{color:var(--accent-red);font-weight:600;}
+  .ripeness-track{position:relative;height:10px;border-radius:6px;overflow:hidden;
+    background:linear-gradient(90deg,var(--accent-red) 0%,var(--accent-gold) 45%,var(--accent-green) 100%);}
+  .ripeness-mask{position:absolute;top:0;right:0;height:100%;background:var(--surface-2);}
+  .ripeness-min{position:absolute;top:-2px;width:2px;height:14px;background:var(--text);opacity:.8;}
+  
+  /* Forms */
+  .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px;}
+  label{display:block;font-size:11px;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px;}
+  input,select{
+    width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+    padding:9px 10px;border-radius:7px;font-size:13.5px;font-family:var(--font-body);
+  }
+  input:focus,select:focus{outline:2px solid var(--accent-gold);outline-offset:1px;}
+  .btn{
+    background:var(--accent-gold);color:#231A12;border:none;padding:10px 16px;
+    border-radius:7px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:var(--font-body);
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn.secondary{background:var(--surface-3);color:var(--text);border:1px solid var(--border);}
+  .btn.danger{background:var(--accent-red);color:#fff;}
+  .btn.small{padding:5px 10px;font-size:12px;}
+  .btn:focus-visible, .nav-btn:focus-visible, select:focus-visible, input:focus-visible{outline:2px solid var(--accent-gold);outline-offset:2px;}
+  
+  /* Table */
+  .table-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch; /* Scroll suave en tablas para iPhone */
+  }
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{text-align:left;color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap;}
+  td{padding:9px 10px;border-bottom:1px solid var(--border);white-space:nowrap;}
+  tr:last-child td{border-bottom:none;}
+  .pill{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+  .pill.green{background:rgba(107,143,92,.18);color:var(--accent-green);}
+  .pill.gold{background:rgba(212,163,74,.18);color:var(--accent-gold);}
+  .pill.red{background:rgba(193,67,46,.18);color:var(--accent-red);}
+  .empty{color:var(--text-muted);font-size:13px;padding:24px 4px;text-align:center;border:1px dashed var(--border);border-radius:var(--radius);}
+  .section-title{font-family:var(--font-display);font-size:18px;font-weight:600;margin:26px 0 12px 0;}
+  .section-title:first-child{margin-top:0;}
+  .row-actions{display:flex;gap:6px;}
+  .hint{font-size:11.5px;color:var(--text-muted);margin-top:-4px;margin-bottom:14px;}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+  .flexend{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;}
+  
+  /* ADAPTACIÓN MÓVIL (IPHONE / SMARTPHONES) */
+  @media (max-width:880px){
+    #app{flex-direction:column;}
+    .sidebar{
+      width:100%;flex-direction:row;overflow-x:auto;align-items:center;
+      padding: max(16px, env(safe-area-inset-top)) 12px 12px 12px; /* baja el header para que no quede bajo el notch/status bar */
+    }
+    .brand{border:none;padding:0 14px 0 4px;margin:0;}
+    nav.navlist{flex-direction:row;padding:0;}
+    .sidebar-footer{display:none;}
+    .main{padding:16px 16px 50px 16px;}
+    
+    /* Previene el zoom automático en Safari de iPhone al tocar inputs */
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+    
+    .btn, .nav-btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <h1>Casa Vieja</h1>
+      <span>Control de operaciones</span>
+    </div>
+    <nav class="navlist" id="navlist">
+      <button class="nav-btn" data-view="dashboard" onclick="switchView('dashboard')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="6" width="4" height="15"/><rect x="17" y="3" width="4" height="18"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-btn" data-view="ventas" onclick="switchView('ventas')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2 3h2l2.6 12.6a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H5.2"/></svg>
+        Ventas
+      </button>
+      <button class="nav-btn" data-view="stock" onclick="switchView('stock')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>
+        Stock
+      </button>
+      <button class="nav-btn" data-view="ads" onclick="switchView('ads')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a4 4 0 0 1 0 8"/></svg>
+        Ads
+      </button>
+      <button class="nav-btn" data-view="egresos" onclick="switchView('egresos')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18v13H3z"/><path d="M3 7l4-4h10l4 4"/><path d="M8 12h8"/></svg>
+        Egresos
+      </button>
+      <button class="nav-btn" data-view="delivery" onclick="switchView('delivery')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="7" width="13" height="9"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="5.5" cy="18" r="1.6"/><circle cx="16.5" cy="18" r="1.6"/></svg>
+        Delivery
+      </button>
+      <button class="nav-btn" data-view="config" onclick="switchView('config')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
+        Configuración
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <p id="connStatus">● Modo local — solo en este navegador</p>
+      <p>Haz backup seguido desde Configuración.</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h2 id="pageTitle">Dashboard</h2>
+      <div class="today" id="todayLabel"></div>
+    </div>
+    <section class="view" id="view-dashboard"></section>
+    <section class="view" id="view-ventas"></section>
+    <section class="view" id="view-stock"></section>
+    <section class="view" id="view-ads"></section>
+    <section class="view" id="view-egresos"></section>
+    <section class="view" id="view-delivery"></section>
+    <section class="view" id="view-config"></section>
+  </main>
+</div>
+
+<script>
+/* ============ CONFIG / CONSTANTS ============ */
+const STORE_KEY = 'cvc_control_v1';
+const COLORS = { red:'#C1432E', gold:'#D4A34A', green:'#6B8F5C', blue:'#5C7F8F', muted:'#A8998A', surface2:'#2E241C', text:'#F2E9DC' };
+const CHANNELS = ['Meta Ads (Facebook/Instagram)','WhatsApp directo','Instagram orgánico','Referido','Otro'];
+const PAYMENT_STATUSES = ['Pagado','Pendiente'];
+const DELIVERY_STATUSES = ['Pendiente','En camino','Entregado'];
+const MONTH_NAMES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Set','Oct','Nov','Dic'];
+const TITLES = { dashboard:'Dashboard', ventas:'Ventas', stock:'Stock', ads:'Ads', egresos:'Egresos', delivery:'Delivery', config:'Configuración' };
+const EXPENSE_CATEGORIES = ['Café verde / insumo','Empaques y etiquetas','Tostado / maquila','Transporte','Marketing (fuera de ads)','Servicios / alquiler','Otros'];
+const CONN_KEY = 'cvc_connection_v1';
+
+/* ============ STATE / PERSISTENCE ============ */
+let DB = loadDB();
+let currentView = 'dashboard';
+
+function defaultDB(){ return { products:[], sales:[], movements:[], ads:[], expenses:[], lotes:[], baseProducts:[] }; }
+function loadDB(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return defaultDB();
+    const parsed = JSON.parse(raw);
+    return Object.assign(defaultDB(), parsed);
+  }catch(e){ console.error('Error cargando datos', e); return defaultDB(); }
+}
+function saveDB(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(DB)); }
+  catch(e){ alert('No se pudo guardar: ' + e.message); }
+}
+
+/* ============ HELPERS ============ */
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+function qs(id){ return document.getElementById(id); }
+function val(id){ const el = qs(id); return el ? el.value : ''; }
+function num(id){ const v = parseFloat(val(id)); return isNaN(v) ? 0 : v; }
+function sum(arr){ return arr.reduce((a,b)=>a+(Number(b)||0),0); }
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function monthKey(dateStr){ return (dateStr||'').slice(0,7); }
+function money(n){ return 'S/ ' + (Number(n)||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtDate(d){
+  if(!d) return '—';
+  const dt = new Date(d+'T00:00:00');
+  return dt.toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
+}
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function productById(id){ return DB.products.find(p=>p.id===id); }
+function baseProductById(id){ return DB.baseProducts.find(b=>b.id===id); }
+/**
+ * Stock disponible de una presentación (Tripack, Duopack, Unitario, etc.)
+ * Si está vinculada a un producto base (bolsas físicas), se calcula a partir
+ * de esas bolsas. Si no está vinculada (producto viejo, aún no migrado),
+ * usa su propio contador de stock como respaldo.
+ */
+function getAvailableUnits(product){
+  if(product.baseProductId){
+    const base = baseProductById(product.baseProductId);
+    if(!base) return 0;
+    const units = product.unitsPerSale || 1;
+    return Math.floor(base.stock / units);
+  }
+  return product.stock;
+}
+function movementTargets(){
+  const targets = DB.baseProducts.map(b=>({ id:b.id, kind:'base', label: b.name + ' — bolsas físicas' }));
+  DB.products.filter(p=>!p.baseProductId).forEach(p=>{ targets.push({ id:p.id, kind:'product', label: p.name + ' (stock propio, sin vincular)' }); });
+  return targets;
+}
+
+/* ============ CONEXIÓN A GOOGLE SHEETS ============ */
+function getConnConfig(){
+  try{ return JSON.parse(localStorage.getItem(CONN_KEY)) || {url:'', token:''}; }
+  catch(e){ return {url:'', token:''}; }
+}
+function saveConnConfig(cfg){ localStorage.setItem(CONN_KEY, JSON.stringify(cfg)); }
+function isConnected(){ const c = getConnConfig(); return !!(c.url && c.token); }
+function updateConnBadge(){
+  const el = qs('connStatus');
+  if(!el) return;
+  if(isConnected()){ el.textContent = '● Conectado a Google Sheets'; el.className='online'; }
+  else { el.textContent = '● Modo local — solo en este navegador'; el.className='offline'; }
+}
+async function apiGet(){
+  const c = getConnConfig();
+  const res = await fetch(c.url + '?token=' + encodeURIComponent(c.token));
+  return await res.json();
+}
+async function apiPost(action, payload){
+  const c = getConnConfig();
+  const res = await fetch(c.url, { method:'POST', body: JSON.stringify({ token:c.token, action, payload }) });
+  return await res.json();
+}
+async function syncRemote(action, payload){
+  if(!isConnected()) return {ok:true};
+  try{
+    const res = await apiPost(action, payload);
+    if(res && res.error){ alert('Se guardó localmente, pero no se pudo sincronizar con Google Sheets: ' + res.error); }
+    return res;
+  }catch(e){
+    alert('Se guardó localmente, pero no se pudo conectar con Google Sheets: ' + e.message);
+    return { error: e.message };
+  }
+}
+function normalizeProduct(p){ return { id:String(p.id), name:String(p.name||''), price:Number(p.price)||0, cost:Number(p.cost)||0, stock:Number(p.stock)||0, minStock:Number(p.minStock)||0, weightGrams:Number(p.weightGrams)||0, packagingCost:Number(p.packagingCost)||0, grindType:String(p.grindType||'molido'), baseProductId:String(p.baseProductId||''), unitsPerSale:Number(p.unitsPerSale)||1 }; }
+function normalizeSale(s){ return { id:String(s.id), createdAt:Number(s.createdAt)||Date.now(), date:String(s.date||'').slice(0,10), productId:String(s.productId||''), productName:String(s.productName||''), qty:Number(s.qty)||0, unitPrice:Number(s.unitPrice)||0, total:Number(s.total)||0, unitCostUsed:Number(s.unitCostUsed)||0, loteIdUsed:String(s.loteIdUsed||''), channel:String(s.channel||''), customer:String(s.customer||''), paymentStatus:String(s.paymentStatus||'Pendiente'), deliveryStatus:String(s.deliveryStatus||'Pendiente'), deliveryCost:Number(s.deliveryCost)||0, deliveryCharged:Number(s.deliveryCharged)||0, zone:String(s.zone||''), profit:Number(s.profit)||0 }; }
+function normalizeAd(a){ return { id:String(a.id), date:String(a.date||'').slice(0,10), platform:String(a.platform||''), campaign:String(a.campaign||''), amount:Number(a.amount)||0, messages:Number(a.messages)||0 }; }
+function normalizeExpense(x){ return { id:String(x.id), date:String(x.date||'').slice(0,10), category:String(x.category||''), description:String(x.description||''), amount:Number(x.amount)||0, provider:String(x.provider||'') }; }
+function normalizeLote(l){ return {
+  id:String(l.id), name:String(l.name||''), producer:String(l.producer||''), variety:String(l.variety||''),
+  origin:String(l.origin||''), cupScore:Number(l.cupScore)||0, type:String(l.type||'ambos'), date:String(l.date||'').slice(0,10),
+  greenKg:Number(l.greenKg)||0, greenCostPerKg:Number(l.greenCostPerKg)||0, freightCost:Number(l.freightCost)||0,
+  roastedKg:Number(l.roastedKg)||0, roastCost:Number(l.roastCost)||0, totalLotCost:Number(l.totalLotCost)||0,
+  costPerKgRoasted:Number(l.costPerKgRoasted)||0, yieldPct:Number(l.yieldPct)||0, active: (l.active===true || l.active==='TRUE' || l.active===1 || l.active==='1')
+}; }
+function normalizeBaseProduct(b){ return { id:String(b.id), name:String(b.name||''), grindType:String(b.grindType||'molido'), stock:Number(b.stock)||0, minStock:Number(b.minStock)||0 }; }
+
+async function refreshFromRemote(){
+  if(!isConnected()) return false;
+  try{
+    const data = await apiGet();
+    if(!data || data.error){ console.error('Error de Sheets:', data && data.error); return false; }
+    DB = {
+      products: (data.products||[]).map(normalizeProduct),
+      sales: (data.sales||[]).map(normalizeSale),
+      movements: data.movements||[],
+      ads: (data.ads||[]).map(normalizeAd),
+      expenses: (data.expenses||[]).map(normalizeExpense),
+      lotes: (data.lotes||[]).map(normalizeLote),
+      baseProducts: (data.baseProducts||[]).map(normalizeBaseProduct)
+    };
+    saveDB();
+    return true;
+  }catch(e){ console.error(e); return false; }
+}
+async function connectSheets(){
+  const url = val('cfg-url').trim();
+  const token = val('cfg-token').trim();
+  if(!url || !token){ alert('Completa la URL y el token.'); return; }
+  saveConnConfig({url, token});
+  qs('cfg-conn-status').textContent = 'Probando conexión…';
+  try{
+    const data = await apiGet();
+    if(!data || data.error){
+      qs('cfg-conn-status').textContent = '✗ ' + (data && data.error ? data.error : 'No se pudo conectar.');
+      return;
+    }
+    qs('cfg-conn-status').textContent = '✓ Conectado. Trayendo datos de Sheets…';
+    await refreshFromRemote();
+    updateConnBadge();
+    renderConfig();
+    alert('Conectado a Google Sheets. Ya puedes compartir el archivo con tus socios.');
+  }catch(e){
+    qs('cfg-conn-status').textContent = '✗ ' + e.message;
+  }
+}
+function disconnectSheets(){
+  if(!confirm('¿Volver a modo local? Dejarás de sincronizar con Google Sheets.')) return;
+  saveConnConfig({url:'', token:''});
+  updateConnBadge();
+  renderConfig();
+}
+
+/* ============ NAVIGATION ============ */
+function switchView(name){
+  currentView = name;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  qs('view-'+name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
+  qs('pageTitle').textContent = TITLES[name];
+  renderView(name);
+}
+function renderView(name){
+  if(name==='dashboard') renderDashboard();
+  else if(name==='ventas') renderVentas();
+  else if(name==='stock') renderStock();
+  else if(name==='ads') renderAds();
+  else if(name==='egresos') renderEgresos();
+  else if(name==='delivery') renderDelivery();
+  else if(name==='config') renderConfig();
+}
+
+/* ============ CHART HELPERS ============ */
+function svgBars(values, labels, color, opts){
+  opts = opts||{};
+  const w = opts.w||560, h = opts.h||190, padL=8, padR=8, padT=10, padB=24;
+  const plotW = w-padL-padR, plotH = h-padT-padB;
+  const max = Math.max(1, ...values.map(v=>Math.abs(v)));
+  const n = values.length || 1;
+  const slot = plotW/n;
+  const barW = Math.max(4, slot*0.55);
+  let bars='', labelsSvg='';
+  values.forEach((v,i)=>{
+    const bh = max ? (Math.abs(v)/max)*plotH : 0;
+    const x = padL + i*slot + (slot-barW)/2;
+    const y = padT + (plotH-bh);
+    bars += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(bh,1).toFixed(1)}" rx="2.5" fill="${color}"><title>${esc(labels[i])}: ${v.toFixed ? v.toFixed(2) : v}</title></rect>`;
+    if(labels[i]!==undefined){
+      labelsSvg += `<text x="${(x+barW/2).toFixed(1)}" y="${h-8}" font-size="9" fill="${COLORS.muted}" text-anchor="middle">${esc(labels[i])}</text>`;
+    }
+  });
+  return `<svg viewBox="0 0 ${w} ${h}" class="chart-svg" preserveAspectRatio="xMidYMid meet">
+    <line x1="${padL}" y1="${padT+plotH}" x2="${w-padR}" y2="${padT+plotH}" stroke="${COLORS.surface2}" stroke-width="1"/>
+    ${bars}${labelsSvg}
+  </svg>`;
+}
+function svgGroupedBars(labelsX, seriesA, seriesB, colorA, colorB){
+  const w=560, h=200, padL=8, padR=8, padT=10, padB=24;
+  const plotW=w-padL-padR, plotH=h-padT-padB;
+  const max = Math.max(1, ...seriesA, ...seriesB);
+  const n = labelsX.length || 1;
+  const slot = plotW/n;
+  const barW = Math.max(3, slot*0.32);
+  let bars='', labelsSvg='';
+  labelsX.forEach((lab,i)=>{
+    const va = seriesA[i]||0, vb = seriesB[i]||0;
+    const ha = (va/max)*plotH, hb=(vb/max)*plotH;
+    const groupX = padL + i*slot + slot*0.14;
+    const xa = groupX, xb = groupX+barW+3;
+    bars += `<rect x="${xa.toFixed(1)}" y="${(padT+plotH-ha).toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(ha,1).toFixed(1)}" rx="2" fill="${colorA}"><title>${esc(lab)}: ${money(va)}</title></rect>`;
+    bars += `<rect x="${xb.toFixed(1)}" y="${(padT+plotH-hb).toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(hb,1).toFixed(1)}" rx="2" fill="${colorB}"><title>${esc(lab)}: ${money(vb)}</title></rect>`;
+    labelsSvg += `<text x="${(groupX+barW).toFixed(1)}" y="${h-8}" font-size="9" fill="${COLORS.muted}" text-anchor="middle">${esc(lab)}</text>`;
+  });
+  return `<svg viewBox="0 0 ${w} ${h}" class="chart-svg" preserveAspectRatio="xMidYMid meet">
+    <line x1="${padL}" y1="${padT+plotH}" x2="${w-padR}" y2="${padT+plotH}" stroke="${COLORS.surface2}" stroke-width="1"/>
+    ${bars}${labelsSvg}
+  </svg>`;
+}
+function donutBlock(entries, opts){
+  opts = opts || {};
+  const total = sum(entries.map(e=>e[1]));
+  const palette = [COLORS.gold, COLORS.red, COLORS.green, COLORS.blue, '#8A6D5C', '#B0895A'];
+  if(total<=0 || entries.length===0){
+    return `<div class="empty">Sin datos este mes todavía.</div>`;
+  }
+  let acc=0; const stops=[]; const legendRows=[];
+  entries.slice(0,6).forEach((e,i)=>{
+    const pct = e[1]/total*100;
+    const color = palette[i%palette.length];
+    stops.push(`${color} ${acc.toFixed(2)}% ${(acc+pct).toFixed(2)}%`);
+    legendRows.push(`<div class="legend-row"><span class="legend-left"><span class="dot" style="background:${color}"></span>${esc(e[0])}</span><span>${opts.money ? money(e[1]) : e[1]} · ${pct.toFixed(0)}%</span></div>`);
+    acc += pct;
+  });
+  return `<div class="donut-wrap">
+    <div class="donut" style="background:conic-gradient(${stops.join(',')})">
+      <div class="donut-center">${opts.money ? money(total) : total}</div>
+    </div>
+    <div class="legend" style="flex:1;min-width:160px;">${legendRows.join('')}</div>
+  </div>`;
+}
+
+/* ============ DASHBOARD ============ */
+function computeDashboard(){
+  const today = todayStr();
+  const thisMonth = monthKey(today);
+  const todaySales = DB.sales.filter(s=>s.date===today);
+  const monthSales = DB.sales.filter(s=>monthKey(s.date)===thisMonth);
+  const monthAds = DB.ads.filter(a=>monthKey(a.date)===thisMonth);
+  const monthExpenses = DB.expenses.filter(x=>monthKey(x.date)===thisMonth);
+  const revToday = sum(todaySales.map(s=>s.total));
+  const revMonth = sum(monthSales.map(s=>s.total));
+  const profitMonth = sum(monthSales.map(s=>s.profit));
+  const expensesMonth = sum(monthExpenses.map(x=>x.amount));
+  const netProfitMonth = profitMonth - expensesMonth;
+  const adSpendMonth = sum(monthAds.map(a=>a.amount));
+  const adsRevenue = sum(monthSales.filter(s=>s.channel===CHANNELS[0]).map(s=>s.total));
+  const roas = adSpendMonth>0 ? (adsRevenue/adSpendMonth) : null;
+  const totalStock = DB.baseProducts.length>0 ? sum(DB.baseProducts.map(b=>b.stock)) : sum(DB.products.map(p=>p.stock));
+  const pendingDeliveries = DB.sales.filter(s=>s.deliveryStatus && s.deliveryStatus!=='Entregado').length;
+  const lowStock = DB.baseProducts.length>0 ? DB.baseProducts.filter(b=>b.stock<=b.minStock) : DB.products.filter(p=>p.stock<=p.minStock);
+  return {revToday, revMonth, profitMonth, expensesMonth, netProfitMonth, adSpendMonth, roas, totalStock, pendingDeliveries, lowStock, monthSales};
+}
+function last14DaysSeries(){
+  const days=[]; for(let i=13;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push(d.toISOString().slice(0,10)); }
+  const labels = days.map(d=> d.slice(8,10)+'/'+d.slice(5,7) );
+  const values = days.map(d=> sum(DB.sales.filter(s=>s.date===d).map(s=>s.total)) );
+  return {labels, values};
+}
+function last6MonthsSeries(){
+  const months=[]; const now=new Date();
+  for(let i=5;i>=0;i--){ const d=new Date(now.getFullYear(), now.getMonth()-i, 1); months.push(d.toISOString().slice(0,7)); }
+  const labels = months.map(m=> MONTH_NAMES[Number(m.split('-')[1])-1] );
+  const profit = months.map(m=> sum(DB.sales.filter(s=>monthKey(s.date)===m).map(s=>s.profit)) );
+  const adspend = months.map(m=> sum(DB.ads.filter(a=>monthKey(a.date)===m).map(a=>a.amount)) );
+  return {labels, profit, adspend};
+}
+function productSalesShare(){
+  const thisMonth = monthKey(todayStr());
+  const monthSales = DB.sales.filter(s=>monthKey(s.date)===thisMonth);
+  const map={};
+  monthSales.forEach(s=>{ map[s.productName]=(map[s.productName]||0)+s.total; });
+  return Object.entries(map).sort((a,b)=>b[1]-a[1]);
+}
+function stockRipenessHTML(){
+  // Prioriza el stock físico real (bolsas base). Si todavía no lo configuró, usa el stock propio de cada presentación (compatibilidad).
+  const items = DB.baseProducts.length>0
+    ? DB.baseProducts.map(b=>({ name:b.name, stock:b.stock, minStock:b.minStock, unit:'bolsas' }))
+    : DB.products.map(p=>({ name:p.name, stock:p.stock, minStock:p.minStock, unit:'u.' }));
+  if(items.length===0) return `<div class="empty">Agrega tu stock físico en Configuración para ver el nivel aquí.</div>`;
+  return items.map(it=>{
+    const scaleMax = Math.max(it.stock, it.minStock*2, 10);
+    const pct = Math.max(0, Math.min(100, (it.stock/scaleMax)*100));
+    const minPct = Math.max(0, Math.min(100, (it.minStock/scaleMax)*100));
+    const low = it.stock <= it.minStock;
+    return `<div class="stock-row">
+      <div class="stock-row-head"><b>${esc(it.name)}</b><span class="${low?'low':''}">${it.stock} ${it.unit}${low?' · bajo mínimo':''}</span></div>
+      <div class="ripeness-track">
+        <div class="ripeness-mask" style="width:${(100-pct).toFixed(1)}%"></div>
+        <div class="ripeness-min" style="left:${minPct.toFixed(1)}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function renderDashboard(){
+  const d = computeDashboard();
+  const daily = last14DaysSeries();
+  const months = last6MonthsSeries();
+  const shares = productSalesShare();
+  qs('todayLabel').textContent = new Date().toLocaleDateString('es-PE',{weekday:'long',day:'2-digit',month:'long'});
+
+  const html = `
+    ${DB.products.length===0 ? `<div class="empty" style="margin-bottom:20px;">Todavía no tienes productos cargados. Ve a <b>Configuración</b> para agregar tu catálogo.</div>` : ''}
+    <div class="grid grid-kpi">
+      <div class="card"><p class="kpi-label">Ventas hoy</p><p class="kpi-value">${money(d.revToday)}</p></div>
+      <div class="card"><p class="kpi-label">Ventas del mes</p><p class="kpi-value">${money(d.revMonth)}</p></div>
+      <div class="card"><p class="kpi-label">Ganancia del mes</p><p class="kpi-value ${d.profitMonth>=0?'green':'red'}">${money(d.profitMonth)}</p><p class="kpi-sub">Ventas menos costo de producto y envío</p></div>
+      <div class="card"><p class="kpi-label">Egresos del mes</p><p class="kpi-value red">${money(d.expensesMonth)}</p><p class="kpi-sub">Materiales, empaques, etc.</p></div>
+      <div class="card"><p class="kpi-label">Ganancia neta (mes)</p><p class="kpi-value ${d.netProfitMonth>=0?'green':'red'}">${money(d.netProfitMonth)}</p><p class="kpi-sub">Ganancia − egresos</p></div>
+      <div class="card"><p class="kpi-label">Gasto en Ads (mes)</p><p class="kpi-value gold">${money(d.adSpendMonth)}</p><p class="kpi-sub">ROAS aprox: ${d.roas===null?'—':d.roas.toFixed(2)+'x'}</p></div>
+      <div class="card"><p class="kpi-label">Stock total</p><p class="kpi-value">${d.totalStock} u.</p><p class="kpi-sub">${d.lowStock.length>0?d.lowStock.length+' producto(s) bajo mínimo':'Niveles normales'}</p></div>
+      <div class="card"><p class="kpi-label">Pedidos por entregar</p><p class="kpi-value ${d.pendingDeliveries>0?'gold':''}">${d.pendingDeliveries}</p></div>
+    </div>
+    <div class="grid grid-charts">
+      <div class="card">
+        <h3>Ventas — últimos 14 días<small>Ingreso total por día (S/)</small></h3>
+        ${svgBars(daily.values, daily.labels, COLORS.gold)}
+      </div>
+      <div class="card">
+        <h3>Ganancia vs gasto en Ads<small>Últimos 6 meses · <span style="color:${COLORS.green}">■</span> Ganancia &nbsp; <span style="color:${COLORS.blue}">■</span> Gasto Ads</small></h3>
+        ${svgGroupedBars(months.labels, months.profit, months.adspend, COLORS.green, COLORS.blue)}
+      </div>
+      <div class="card">
+        <h3>Ventas por producto<small>Mes actual, por ingresos</small></h3>
+        ${donutBlock(shares, {money:true})}
+      </div>
+      <div class="card">
+        <h3>Nivel de stock<small>Escala de maduración: rojo = bajo, verde = saludable.</small></h3>
+        ${stockRipenessHTML()}
+      </div>
+    </div>
+  `;
+  qs('view-dashboard').innerHTML = html;
+}
+
+/* ============ MÓDULO DE LOTES (HELPERS Y LÓGICA MULTI-LOTE) ============ */
+function getActiveLotes() {
+  if (!DB.lotes) return { molido: null, grano: null };
+  const molido = DB.lotes.find(l => l.active && (l.type === 'molido' || l.type === 'ambos')) || null;
+  const grano = DB.lotes.find(l => l.active && (l.type === 'grano' || l.type === 'ambos')) || null;
+  return { molido, grano };
+}
+
+function getActiveLote(type) {
+  if (!DB.lotes || DB.lotes.length === 0) return null;
+  if (type) {
+    return DB.lotes.find(l => l.active && (l.type === type || l.type === 'ambos')) || DB.lotes.find(l => l.active) || null;
+  }
+  return DB.lotes.find(l => l.active) || null;
+}
+
+function getProductCost(product) {
+  if (!product) return 0;
+  const grindType = product.grindType || 'molido';
+  const activeLote = getActiveLote(grindType);
+  if (!activeLote || !product.weightGrams) {
+    return parseFloat(product.cost) || 0;
+  }
+  const costPerGram = (parseFloat(activeLote.costPerKgRoasted) || 0) / 1000;
+  const coffeeCost = costPerGram * (parseFloat(product.weightGrams) || 0);
+  const packaging = parseFloat(product.packagingCost) || 0;
+  return Math.round((coffeeCost + packaging) * 100) / 100;
+}
+
+/* ============ VENTAS ============ */
+function productOptionsHTML(selectedId){
+  if(DB.products.length===0) return `<option value="">— sin productos, ve a Configuración —</option>`;
+  return DB.products.map(p => {
+    const available = getAvailableUnits(p);
+    return `<option value="${p.id}" ${p.id===selectedId?'selected':''}>${esc(p.name)} (${p.weightGrams||0}g) [${p.grindType==='grano'?'En Grano':'Molido'}] - stock: ${available}</option>`;
+  }).join('');
+}
+
+function onSaleProductChange(){
+  const p = productById(val('sf-product'));
+  if(p){ 
+    qs('sf-price').value = p.price; 
+  }
+}
+
+function renderVentas(){
+  const rows = [...DB.sales].sort((a,b)=> b.date.localeCompare(a.date) || b.createdAt-a.createdAt);
+  const { molido: loteMolido, grano: loteGrano } = getActiveLotes();
+
+  const html = `
+    <div class="section-title">Registrar nueva venta</div>
+    <div class="card">
+      <div style="background:rgba(212,160,23,0.12); border-left:4px solid var(--accent-gold); padding:10px 14px; margin-bottom:15px; border-radius:4px; font-size:0.85rem; display:flex; flex-direction:column; gap:6px;">
+        <div><b>🌾 Lote Activo (Molido):</b> ${loteMolido ? `<b>${esc(loteMolido.name)}</b> | Productor: <b>${esc(loteMolido.producer||'—')}</b> | Flete: <b>${money(loteMolido.freightCost)}</b> | Costo: <b>S/ ${loteMolido.costPerKgRoasted.toFixed(2)}/kg</b>` : '<span style="color:var(--accent-red)">Sin lote activo asignado</span>'}</div>
+        <div><b>☕ Lote Activo (En Grano):</b> ${loteGrano ? `<b>${esc(loteGrano.name)}</b> | Productor: <b>${esc(loteGrano.producer||'—')}</b> | Flete: <b>${money(loteGrano.freightCost)}</b> | Costo: <b>S/ ${loteGrano.costPerKgRoasted.toFixed(2)}/kg</b>` : '<span style="color:var(--accent-red)">Sin lote activo asignado</span>'}</div>
+      </div>
+
+      <div class="form-grid">
+        <div><label>Fecha</label><input type="date" id="sf-date" value="${todayStr()}"></div>
+        <div><label>Producto</label><select id="sf-product" onchange="onSaleProductChange()">${productOptionsHTML()}</select></div>
+        <div><label>Cantidad</label><input type="number" id="sf-qty" min="1" value="1"></div>
+        <div><label>Precio unitario (S/)</label><input type="number" id="sf-price" step="0.01" value="0"></div>
+        <div><label>Canal</label><select id="sf-channel">${CHANNELS.map(c=>`<option>${c}</option>`).join('')}</select></div>
+        <div><label>Cliente (opcional)</label><input type="text" id="sf-customer" placeholder="Nombre"></div>
+        <div><label>Estado de pago</label><select id="sf-payment">${PAYMENT_STATUSES.map(s=>`<option>${s}</option>`).join('')}</select></div>
+        <div><label>Estado de entrega</label><select id="sf-delivery">${DELIVERY_STATUSES.map(s=>`<option>${s}</option>`).join('')}</select></div>
+        <div><label>Costo real de envío (S/)</label><input type="number" id="sf-delcost" step="0.01" value="0"></div>
+        <div><label>Cobrado al cliente por envío (S/)</label><input type="number" id="sf-delcharged" step="0.01" value="0"></div>
+        <div><label>Zona / dirección</label><input type="text" id="sf-zone" placeholder="Distrito, referencia"></div>
+      </div>
+      <button class="btn" onclick="addSale()">+ Registrar venta</button>
+    </div>
+
+    <div class="section-title">Historial de ventas</div>
+    ${rows.length===0 ? `<div class="empty">Aún no registras ventas. Usa el formulario de arriba.</div>` : `
+    <div class="card table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Producto</th><th>Cant.</th><th>Total</th><th>Canal</th><th>Pago</th><th>Entrega</th><th>Ganancia</th><th></th></tr></thead>
+        <tbody>
+          ${rows.map(s=>`
+            <tr>
+              <td>${fmtDate(s.date)}</td>
+              <td>${esc(s.productName)}</td>
+              <td>${s.qty}</td>
+              <td>${money(s.total)}</td>
+              <td>${esc(s.channel)}</td>
+              <td>${pill(s.paymentStatus)}</td>
+              <td>${pill(s.deliveryStatus)}</td>
+              <td style="color:${s.profit>=0?COLORS.green:COLORS.red}; font-weight:600">${money(s.profit)}</td>
+              <td class="row-actions">
+                ${s.paymentStatus!=='Pagado' ? `<button class="btn small secondary" onclick="markPaid('${s.id}')">Marcar pagado</button>` : ''}
+                <button class="btn small danger" onclick="deleteSale('${s.id}')">Eliminar</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>`}
+  `;
+  qs('view-ventas').innerHTML = html;
+  onSaleProductChange();
+}
+
+function pill(status){
+  const cls = status==='Pagado'||status==='Entregado' ? 'green' : (status==='En camino' ? 'gold' : 'red');
+  return `<span class="pill ${cls}">${esc(status)}</span>`;
+}
+
+async function addSale(){
+  const productId = val('sf-product');
+  const product = productById(productId);
+  if(!product){ alert('Selecciona un producto válido.'); return; }
+  const qty = num('sf-qty');
+  if(qty<=0){ alert('La cantidad debe ser mayor a 0.'); return; }
+  const base = product.baseProductId ? baseProductById(product.baseProductId) : null;
+  const available = getAvailableUnits(product);
+  if(available < qty){
+    if(!confirm(`Stock insuficiente (disponible: ${available}). ¿Registrar la venta de todas formas?`)) return;
+  }
+  const price = num('sf-price');
+  const delcost = num('sf-delcost');
+  const delcharged = num('sf-delcharged');
+  const total = qty * price;
+  
+  const unitCost = getProductCost(product);
+  const costTotal = qty * unitCost;
+  const profit = (total - costTotal) + (delcharged - delcost);
+  const activeLote = getActiveLote(product.grindType || 'molido');
+
+  const sale = {
+    id: uid(), createdAt: Date.now(),
+    date: val('sf-date') || todayStr(),
+    productId, productName: product.name,
+    qty, unitPrice: price, total,
+    unitCostUsed: unitCost,
+    loteIdUsed: activeLote ? activeLote.id : null,
+    channel: val('sf-channel'),
+    customer: val('sf-customer'),
+    paymentStatus: val('sf-payment'),
+    deliveryStatus: val('sf-delivery'),
+    deliveryCost: delcost, deliveryCharged: delcharged,
+    zone: val('sf-zone'),
+    profit
+  };
+
+  DB.sales.push(sale);
+
+  let mv;
+  if(base){
+    const bagsConsumed = qty * (product.unitsPerSale||1);
+    base.stock -= bagsConsumed;
+    mv = { id: uid(), date: sale.date, productId: base.id, productName: base.name, type:'salida', qty: bagsConsumed, reason:'Venta: ' + product.name + ' x' + qty };
+  } else {
+    product.stock -= qty;
+    mv = { id: uid(), date: sale.date, productId, productName: product.name, type:'salida', qty, reason:'Venta' };
+  }
+  DB.movements.push(mv);
+  saveDB();
+  renderVentas();
+  await syncRemote('addSale', sale);
+  if(base) await syncRemote('updateBaseProduct', base);
+  else await syncRemote('updateProduct', product);
+  await syncRemote('addMovement', mv);
+}
+
+async function deleteSale(id){
+  if(!confirm('¿Eliminar esta venta? El stock se devolverá.')) return;
+  const sale = DB.sales.find(s=>s.id===id);
+  let product = null, base = null, mv = null;
+  if(sale){
+    product = productById(sale.productId);
+    if(product){
+      base = product.baseProductId ? baseProductById(product.baseProductId) : null;
+      if(base){
+        const bagsBack = sale.qty * (product.unitsPerSale||1);
+        base.stock += bagsBack;
+        mv = { id: uid(), date: todayStr(), productId: base.id, productName: base.name, type:'entrada', qty: bagsBack, reason:'Reversión de venta eliminada: ' + product.name };
+      } else {
+        product.stock += sale.qty;
+        mv = { id: uid(), date: todayStr(), productId: sale.productId, productName: sale.productName, type:'entrada', qty: sale.qty, reason:'Reversión de venta eliminada' };
+      }
+      DB.movements.push(mv);
+    }
+  }
+  DB.sales = DB.sales.filter(s=>s.id!==id);
+  saveDB();
+  renderVentas();
+  await syncRemote('deleteSale', {id});
+  if(base) await syncRemote('updateBaseProduct', base);
+  else if(product) await syncRemote('updateProduct', product);
+  if(mv) await syncRemote('addMovement', mv);
+}
+
+async function markPaid(id){
+  const sale = DB.sales.find(s=>s.id===id);
+  if(sale){
+    sale.paymentStatus='Pagado';
+    saveDB();
+    renderView(currentView);
+    await syncRemote('updateSale', sale);
+  }
+}
+
+/* ============ STOCK ============ */
+function renderStock(){
+  const moves = [...DB.movements].sort((a,b)=> b.date.localeCompare(a.date)).slice(0,50);
+  const targets = movementTargets();
+  const html = `
+    <div class="section-title">Stock físico (bolsas base)</div>
+    ${DB.baseProducts.length===0 ? `<div class="empty">No hay productos base todavía. Créalos en <b>Configuración</b> — son las bolsas físicas de café que empacas.</div>` : `
+    <div class="card table-wrap">
+      <table>
+        <thead><tr><th>Producto base</th><th>Tipo</th><th>Stock</th><th>Mínimo</th></tr></thead>
+        <tbody>
+          ${DB.baseProducts.map(b=>`<tr>
+            <td><b>${esc(b.name)}</b></td>
+            <td><span class="pill ${b.grindType==='grano'?'gold':'blue'}">${b.grindType==='grano'?'En Grano':'Molido'}</span></td>
+            <td>${b.stock<=b.minStock?`<span style="color:${COLORS.red};font-weight:600">${b.stock}</span>`:b.stock}</td>
+            <td>${b.minStock}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`}
+
+    <div class="section-title">Presentaciones y disponibilidad</div>
+    ${DB.products.length===0 ? `<div class="empty">No hay presentaciones todavía. Agrégalas en <b>Configuración</b>.</div>` : `
+    <div class="card table-wrap">
+      <table>
+        <thead><tr><th>Producto</th><th>Gramos</th><th>Tipo</th><th>Precio venta</th><th>Costo prod. (calc)</th><th>Consume</th><th>Stock disponible</th></tr></thead>
+        <tbody>
+          ${DB.products.map(p => {
+            const cost = getProductCost(p);
+            const available = getAvailableUnits(p);
+            return `<tr>
+              <td><b>${esc(p.name)}</b>${p.baseProductId ? `<br><small style="opacity:.65">de: ${esc((baseProductById(p.baseProductId)||{}).name||'—')}</small>` : ''}</td>
+              <td>${p.weightGrams||0} g</td>
+              <td><span class="pill ${p.grindType==='grano'?'gold':'blue'}">${p.grindType==='grano'?'En Grano':'Molido'}</span></td>
+              <td>${money(p.price)}</td>
+              <td style="color:var(--accent-gold); font-weight:600">${money(cost)}</td>
+              <td>${p.baseProductId ? (p.unitsPerSale||1)+' bolsa(s)' : '—'}</td>
+              <td>${available<=p.minStock?`<span style="color:${COLORS.red};font-weight:600">${available}</span>`:available}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>`}
+
+    <div class="section-title">Registrar movimiento de stock</div>
+    <div class="card">
+      <div class="form-grid">
+        <div><label>Producto</label><select id="mv-product">${targets.map(t=>`<option value="${t.kind}:${t.id}">${esc(t.label)}</option>`).join('')}</select></div>
+        <div><label>Tipo</label><select id="mv-type"><option value="entrada">Entrada (empaque / producción)</option><option value="salida">Salida (merma / ajuste)</option></select></div>
+        <div><label>Cantidad</label><input type="number" id="mv-qty" min="1" value="1"></div>
+        <div><label>Motivo</label><input type="text" id="mv-reason" placeholder="Ej: Empaque de lote actual"></div>
+      </div>
+      <button class="btn" onclick="addMovement()">+ Registrar movimiento</button>
+    </div>
+
+    <div class="section-title">Últimos movimientos</div>
+    ${moves.length===0 ? `<div class="empty">Sin movimientos registrados.</div>` : `
+    <div class="card table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Producto</th><th>Tipo</th><th>Cant.</th><th>Motivo</th></tr></thead>
+        <tbody>
+          ${moves.map(m=>`<tr><td>${fmtDate(m.date)}</td><td>${esc(m.productName)}</td><td>${m.type==='entrada'?pill('Entregado'):pill('Pendiente')} ${m.type}</td><td>${m.qty}</td><td>${esc(m.reason||'—')}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`}
+  `;
+  qs('view-stock').innerHTML = html;
+}
+
+async function addMovement(){
+  const raw = val('mv-product');
+  if(!raw){ alert('Selecciona un producto.'); return; }
+  const [kind, id] = raw.split(':');
+  const qty = num('mv-qty');
+  if(qty<=0){ alert('La cantidad debe ser mayor a 0.'); return; }
+  const type = val('mv-type');
+  const reason = val('mv-reason');
+  let mv;
+  if(kind==='base'){
+    const base = baseProductById(id);
+    if(!base){ alert('Producto base no encontrado.'); return; }
+    base.stock += (type==='entrada' ? qty : -qty);
+    mv = { id: uid(), date: todayStr(), productId: base.id, productName: base.name, type, qty, reason };
+    DB.movements.push(mv);
+    saveDB();
+    renderStock();
+    await syncRemote('addMovement', mv);
+    await syncRemote('updateBaseProduct', base);
+  } else {
+    const product = productById(id);
+    if(!product){ alert('Producto no encontrado.'); return; }
+    product.stock += (type==='entrada' ? qty : -qty);
+    mv = { id: uid(), date: todayStr(), productId: product.id, productName: product.name, type, qty, reason };
+    DB.movements.push(mv);
+    saveDB();
+    renderStock();
+    await syncRemote('addMovement', mv);
+    await syncRemote('updateProduct', product);
+  }
+}
+
+/* ============ ADS ============ */
+function renderAds(){
+  const rows = [...DB.ads].sort((a,b)=> b.date.localeCompare(a.date));
+  const thisMonth = monthKey(todayStr());
+  const monthTotal = sum(DB.ads.filter(a=>monthKey(a.date)===thisMonth).map(a=>a.amount));
+  const html = `
+    <div class="grid grid-kpi" style="margin-bottom:18px;">
+      <div class="card"><p class="kpi-label">Gasto en Ads (mes)</p><p class="kpi-value gold">${money(monthTotal)}</p></div>
+    </div>
+    <div class="section-title">Registrar gasto en publicidad</div>
+    <div class="card">
+      <div class="form-grid">
+        <div><label>Fecha</label><input type="date" id="ad-date" value="${todayStr()}"></div>
+        <div><label>Plataforma</label><input type="text" id="ad-platform" value="Meta Ads"></div>
+        <div><label>Campaña / conjunto</label><input type="text" id="ad-campaign" placeholder="Ej: Tráfico WhatsApp"></div>
+        <div><label>Monto gastado (S/)</label><input type="number" id="ad-amount" step="0.01" value="0"></div>
+        <div><label>Mensajes / leads generados</label><input type="number" id="ad-messages" value="0"></div>
+      </div>
+      <button class="btn" onclick="addAdSpend()">+ Registrar gasto</button>
+      <p class="hint">Tip: para que el ROAS del Dashboard se calcule bien, marca el canal "Meta Ads (Facebook/Instagram)" en las ventas que vinieron de un anuncio.</p>
+    </div>
+    <div class="section-title">Historial de gasto</div>
+    ${rows.length===0 ? `<div class="empty">Sin registros de gasto en ads.</div>` : `
+    <div class="card table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Plataforma</th><th>Campaña</th><th>Monto</th><th>Mensajes</th><th></th></tr></thead>
+        <tbody>
+          ${rows.map(a=>`<tr><td>${fmtDate(a.date)}</td><td>${esc(a.platform)}</td><td>${esc(a.campaign||'—')}</td><td>${money(a.amount)}</td><td>${a.messages||0}</td><td><button class="btn small danger" onclick="deleteAd('${a.id}')">Eliminar</button></td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`}
+  `;
+  qs('view-ads').innerHTML = html;
+}
+
+async function addAdSpend(){
+  const amount = num('ad-amount');
+  if(amount<=0){ alert('Ingresa un monto mayor a 0.'); return; }
+  const ad = { id: uid(), date: val('ad-date')||todayStr(), platform: val('ad-platform')||'Meta Ads', campaign: val('ad-campaign'), amount, messages: num('ad-messages') };
+  DB.ads.push(ad);
+  saveDB();
+  renderAds();
+  await syncRemote('addAd', ad);
+}
+
+async function deleteAd(id){
+  if(!confirm('¿Eliminar este registro de gasto?')) return;
+  DB.ads = DB.ads.filter(a=>a.id!==id);
+  saveDB();
+  renderAds();
+  await syncRemote('deleteAd', {id});
+}
+/* ============ EGRESOS (GASTOS EXTRA) ============ */
+function renderEgresos(){
+  const rows = [...DB.expenses].sort((a,b)=> b.date.localeCompare(a.date));
+  const thisMonth = monthKey(todayStr());
+  const monthTotal = sum(DB.expenses.filter(x=>monthKey(x.date)===thisMonth).map(x=>x.amount));
+  const byCat = {};
+  DB.expenses.filter(x=>monthKey(x.date)===thisMonth).forEach(x=>{ byCat[x.category]=(byCat[x.category]||0)+x.amount; });
+  const catEntries = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
+
+  const html = `
+    <div class="grid grid-kpi" style="margin-bottom:18px;">
+      <div class="card"><p class="kpi-label">Egresos del mes</p><p class="kpi-value red">${money(monthTotal)}</p></div>
+    </div>
+    <div class="section-title">Registrar egreso</div>
+    <div class="card">
+      <div class="form-grid">
+        <div><label>Fecha</label><input type="date" id="ex-date" value="${todayStr()}"></div>
+        <div><label>Categoría</label><select id="ex-category">${EXPENSE_CATEGORIES.map(c=>`<option>${c}</option>`).join('')}</select></div>
+        <div><label>Descripción</label><input type="text" id="ex-desc" placeholder="Ej: Bolsas kraft 500g x200"></div>
+        <div><label>Monto (S/)</label><input type="number" id="ex-amount" step="0.01" value="0"></div>
+        <div><label>Proveedor (opcional)</label><input type="text" id="ex-provider" placeholder="Nombre del proveedor"></div>
+      </div>
+      <button class="btn" onclick="addExpense()">+ Registrar egreso</button>
+    </div>
+
+    ${catEntries.length>0 ? `
+    <div class="section-title">Egresos por categoría (mes actual)</div>
+    <div class="card">${donutBlock(catEntries, {money:true})}</div>` : ''}
+
+    <div class="section-title">Historial de egresos</div>
+    ${rows.length===0 ? `<div class="empty">Sin egresos registrados todavía.</div>` : `
+    <div class="card table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Categoría</th><th>Descripción</th><th>Proveedor</th><th>Monto</th><th></th></tr></thead>
+        <tbody>
+          ${rows.map(x=>`<tr><td>${fmtDate(x.date)}</td><td>${esc(x.category)}</td><td>${esc(x.description||'—')}</td><td>${esc(x.provider||'—')}</td><td>${money(x.amount)}</td><td><button class="btn small danger" onclick="deleteExpense('${x.id}')">Eliminar</button></td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`}
+  `;
+  qs('view-egresos').innerHTML = html;
+}
+
+async function addExpense(){
+  const amount = num('ex-amount');
+  if(amount<=0){ alert('Ingresa un monto mayor a 0.'); return; }
+  const expense = { id: uid(), date: val('ex-date')||todayStr(), category: val('ex-category'), description: val('ex-desc'), amount, provider: val('ex-provider') };
+  DB.expenses.push(expense);
+  saveDB();
+  renderEgresos();
+  await syncRemote('addExpense', expense);
+}
+
+async function deleteExpense(id){
+  if(!confirm('¿Eliminar este egreso?')) return;
+  DB.expenses = DB.expenses.filter(x=>x.id!==id);
+  saveDB();
+  renderEgresos();
+  await syncRemote('deleteExpense', {id});
+}
+
+/* ============ DELIVERY ============ */
+function renderDelivery(){
+  const pending = DB.sales.filter(s=>s.deliveryStatus!=='Entregado').sort((a,b)=>a.date.localeCompare(b.date));
+  const delivered = DB.sales.filter(s=>s.deliveryStatus==='Entregado').sort((a,b)=> b.date.localeCompare(a.date)).slice(0,20);
+
+  const html = `
+    <div class="section-title">Pedidos pendientes de entrega (${pending.length})</div>
+    ${pending.length===0 ? `<div class="empty">No hay pedidos pendientes. Todo entregado 🎉</div>` : `
+    <div class="card table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Cliente</th><th>Producto</th><th>Zona</th><th>Costo envío</th><th>Estado</th><th></th></tr></thead>
+        <tbody>
+          ${pending.map(s=>`
+            <tr>
+              <td>${fmtDate(s.date)}</td>
+              <td>${esc(s.customer||'—')}</td>
+              <td>${esc(s.productName)} (${s.qty})</td>
+              <td>${esc(s.zone||'—')}</td>
+              <td>${money(s.deliveryCost)}</td>
+              <td>
+                <select onchange="updateDeliveryStatus('${s.id}', this.value)">
+                  ${DELIVERY_STATUSES.map(st=>`<option ${st===s.deliveryStatus?'selected':''}>${st}</option>`).join('')}
+                </select>
+              </td>
+              <td><button class="btn small" onclick="updateDeliveryStatus('${s.id}','Entregado')">Marcar entregado</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>`}
+
+    <div class="section-title">Entregados recientemente</div>
+    ${delivered.length===0 ? `<div class="empty">Sin entregas registradas todavía.</div>` : `
+    <div class="card table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Cliente</th><th>Producto</th><th>Zona</th><th>Costo envío</th></tr></thead>
+        <tbody>
+          ${delivered.map(s=>`<tr><td>${fmtDate(s.date)}</td><td>${esc(s.customer||'—')}</td><td>${esc(s.productName)} (${s.qty})</td><td>${esc(s.zone||'—')}</td><td>${money(s.deliveryCost)}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`}
+  `;
+  qs('view-delivery').innerHTML = html;
+}
+
+async function updateDeliveryStatus(saleId, newStatus){
+  const sale = DB.sales.find(s=>s.id===saleId);
+  if(sale){
+    sale.deliveryStatus = newStatus;
+    saveDB();
+    renderView(currentView);
+    await syncRemote('updateSale', sale);
+  }
+}
+
+/* ============ CONFIGURACIÓN Y GESTIÓN DE LOTES ============ */
+function renderConfig(){
+  if(!DB.lotes) DB.lotes = [];
+  const lotes = [...DB.lotes].reverse();
+
+  const html = `
+    <!-- GESTIÓN DE LOTES DE CAFÉ -->
+    <div class="section-title">Gestión de Lotes de Café (Materia Prima & Trazabilidad)</div>
+    <div class="card">
+      <p class="hint" style="margin-top:0;">
+        Registra cada lote indicando su origen, tipo y costos asociados. El sistema calculará el <b>costo exacto por kg tostado</b> sumando flete y tostado.
+      </p>
+      
+      <div class="form-grid">
+        <div><label>Nombre / Código Lote</label><input type="text" id="lot-name" placeholder="Ej: Lote 02 - Villa Rica"></div>
+        <div><label>Productor / Finca</label><input type="text" id="lot-producer" placeholder="Ej: Don Pedro / Finca La Esperanza"></div>
+        <div><label>Variedad</label><input type="text" id="lot-variety" placeholder="Ej: Caturra / Geisha"></div>
+        <div><label>Origen / Región</label><input type="text" id="lot-origin" placeholder="Ej: Oxapampa, Pasco"></div>
+        <div><label>Puntaje Taza (SCA)</label><input type="number" id="lot-score" step="0.25" placeholder="Ej: 85.5"></div>
+        <div>
+          <label>Uso del Lote</label>
+          <select id="lot-type">
+            <option value="molido">Solo Molido</option>
+            <option value="grano">Solo En Grano</option>
+            <option value="ambos" selected>Ambos (Molido y Grano)</option>
+          </select>
+        </div>
+        <div><label>Kg Verde comprado</label><input type="number" id="lot-green-kg" step="0.1" value="100"></div>
+        <div><label>Precio / Kg verde (S/)</label><input type="number" id="lot-green-cost" step="0.01" value="16.00"></div>
+        <div><label>Flete a Lima (S/)</label><input type="number" id="lot-freight-cost" step="0.01" value="80.00"></div>
+        <div><label>Kg Tostado obtenido</label><input type="number" id="lot-roasted-kg" step="0.1" value="82.0"></div>
+        <div><label>Costo Tostado / Maquila (S/)</label><input type="number" id="lot-roast-cost" step="0.01" value="250.00"></div>
+      </div>
+      <button class="btn" onclick="addLote()">+ Registrar y activar lote</button>
+    </div>
+
+    ${lotes.length > 0 ? `
+    <div class="card table-wrap" style="margin-bottom:24px;">
+      <table>
+        <thead>
+          <tr>
+            <th>Lote / Origen</th>
+            <th>Productor / Variedad</th>
+            <th>Tipo</th>
+            <th>Kg Verde</th>
+            <th>Flete</th>
+            <th>Kg Tostado</th>
+            <th>Rend.</th>
+            <th>Costo / Kg Tostado</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${lotes.map(l => `
+            <tr style="${l.active ? 'background:rgba(212,160,23,0.08); font-weight:600;' : ''}">
+              <td><b>${esc(l.name)}</b><br><small style="opacity:0.75">${esc(l.origin || '—')}</small></td>
+              <td>${esc(l.producer || '—')}<br><small style="opacity:0.75">${esc(l.variety || '—')} ${l.cupScore ? `(${l.cupScore} pts)` : ''}</small></td>
+              <td><span class="pill ${l.type==='grano'?'gold':(l.type==='molido'?'blue':'green')}">${l.type==='grano'?'Grano':(l.type==='molido'?'Molido':'Ambos')}</span></td>
+              <td>${l.greenKg} kg<br><small style="opacity:0.75">${money(l.greenCostPerKg)}/kg</small></td>
+              <td>${money(l.freightCost || 0)}</td>
+              <td>${l.roastedKg} kg</td>
+              <td>${(l.yieldPct||0).toFixed(1)}%</td>
+              <td style="color:var(--accent-gold); font-size:1.05rem;">${money(l.costPerKgRoasted)}</td>
+              <td>${l.active ? '<span class="pill green">ACTIVO</span>' : '<span class="pill gold" style="opacity:0.5">Inactivo</span>'}</td>
+              <td class="row-actions">
+                <button class="btn small ${l.active ? 'secondary' : ''}" onclick="toggleLoteActive('${l.id}')">
+                  ${l.active ? 'Desactivar' : 'Activar'}
+                </button>
+                <button class="btn small secondary" onclick="editLoteModal('${l.id}')">Editar</button>
+                <button class="btn small danger" onclick="deleteLote('${l.id}')">Eliminar</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>` : ''}
+
+    <!-- STOCK FÍSICO REAL (PRODUCTO BASE) -->
+    <div class="section-title">Stock físico real (bolsas base)</div>
+    <div class="card table-wrap">
+      <p class="hint" style="margin-top:0;">Esto es lo que de verdad tienes en almacén: bolsas empacadas (ej: "Bolsa 500g Molido — Blend Gourmet"). Las presentaciones de abajo (Unitario, Duopack, Tripack…) descuentan de aquí, no tienen stock propio.</p>
+      <table>
+        <thead><tr><th>Nombre</th><th>Tipo</th><th>Stock (bolsas)</th><th>Mínimo</th><th></th></tr></thead>
+        <tbody>
+          ${DB.baseProducts.map(b=>`
+            <tr>
+              <td><input type="text" id="bp-name-${b.id}" value="${esc(b.name)}"></td>
+              <td>
+                <select id="bp-grind-${b.id}">
+                  <option value="molido" ${b.grindType==='molido'?'selected':''}>Molido</option>
+                  <option value="grano" ${b.grindType==='grano'?'selected':''}>En Grano</option>
+                </select>
+              </td>
+              <td><input type="number" id="bp-stock-${b.id}" value="${b.stock}" style="width:80px;"></td>
+              <td><input type="number" id="bp-min-${b.id}" value="${b.minStock}" style="width:70px;"></td>
+              <td class="row-actions">
+                <button class="btn small secondary" onclick="saveBaseProductRow('${b.id}')">Guardar</button>
+                <button class="btn small danger" onclick="deleteBaseProduct('${b.id}')">Eliminar</button>
+              </td>
+            </tr>
+          `).join('')}
+          <tr>
+            <td><input type="text" id="nbp-name" placeholder="Ej: Bolsa 500g Molido - Blend Gourmet"></td>
+            <td>
+              <select id="nbp-grind">
+                <option value="molido">Molido</option>
+                <option value="grano">En Grano</option>
+              </select>
+            </td>
+            <td><input type="number" id="nbp-stock" placeholder="0" style="width:80px;"></td>
+            <td><input type="number" id="nbp-min" placeholder="5" style="width:70px;"></td>
+            <td><button class="btn small" onclick="addBaseProduct()">+ Agregar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CATÁLOGO DE PRODUCTOS (PRESENTACIONES) -->
+    <div class="section-title">Presentaciones (lo que vendes)</div>
+    <div class="card table-wrap">
+      <p class="hint" style="margin-top:0;">Vincula cada presentación a un producto base y define cuántas bolsas consume por venta (Unitario = 1, Duopack = 2, Tripack = 3…). El <b>Costo Calc.</b> sigue saliendo del lote activo.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Gramos</th>
+            <th>Empaque (S/)</th>
+            <th>Costo Calc.</th>
+            <th>Precio Venta</th>
+            <th>Producto base</th>
+            <th>Consume</th>
+            <th>Stock disp.</th>
+            <th>Stock Mín.</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${DB.products.map(p => {
+            const calcCost = getProductCost(p);
+            const available = getAvailableUnits(p);
+            return `
+            <tr>
+              <td><input type="text" id="p-name-${p.id}" value="${esc(p.name)}" style="width:110px;"></td>
+              <td>
+                <select id="p-grind-${p.id}">
+                  <option value="molido" ${p.grindType==='molido'?'selected':''}>Molido</option>
+                  <option value="grano" ${p.grindType==='grano'?'selected':''}>En Grano</option>
+                </select>
+              </td>
+              <td><input type="number" id="p-weight-${p.id}" value="${p.weightGrams||0}" style="width:65px;"></td>
+              <td><input type="number" step="0.01" id="p-pkg-${p.id}" value="${p.packagingCost||0}" style="width:75px;"></td>
+              <td style="font-weight:bold; color:var(--accent-gold);">${money(calcCost)}</td>
+              <td><input type="number" step="0.01" id="p-price-${p.id}" value="${p.price}" style="width:85px;"></td>
+              <td>
+                <select id="p-base-${p.id}" style="width:140px;">
+                  <option value="">— sin vincular —</option>
+                  ${DB.baseProducts.map(b=>`<option value="${b.id}" ${p.baseProductId===b.id?'selected':''}>${esc(b.name)}</option>`).join('')}
+                </select>
+              </td>
+              <td><input type="number" id="p-units-${p.id}" min="1" value="${p.unitsPerSale||1}" style="width:55px;"></td>
+              <td>${p.baseProductId ? `<b style="color:${available<=p.minStock?'var(--accent-red)':'var(--accent-green)'}">${available}</b>` : `<input type="number" id="p-stock-${p.id}" value="${p.stock}" style="width:60px;">`}</td>
+              <td><input type="number" id="p-min-${p.id}" value="${p.minStock}" style="width:60px;"></td>
+              <td class="row-actions">
+                <button class="btn small secondary" onclick="saveProductRow('${p.id}')">Guardar</button>
+                <button class="btn small danger" onclick="deleteProduct('${p.id}')">Eliminar</button>
+              </td>
+            </tr>`;
+          }).join('')}
+          <tr>
+            <td><input type="text" id="np-name" placeholder="Nuevo producto" style="width:110px;"></td>
+            <td>
+              <select id="np-grind">
+                <option value="molido">Molido</option>
+                <option value="grano">En Grano</option>
+              </select>
+            </td>
+            <td><input type="number" id="np-weight" placeholder="250" style="width:65px;"></td>
+            <td><input type="number" step="0.01" id="np-pkg" placeholder="2.50" style="width:75px;"></td>
+            <td>—</td>
+            <td><input type="number" step="0.01" id="np-price" placeholder="35.00" style="width:85px;"></td>
+            <td>
+              <select id="np-base" style="width:140px;">
+                <option value="">— sin vincular —</option>
+                ${DB.baseProducts.map(b=>`<option value="${b.id}">${esc(b.name)}</option>`).join('')}
+              </select>
+            </td>
+            <td><input type="number" id="np-units" min="1" value="1" style="width:55px;"></td>
+            <td><input type="number" id="np-stock" placeholder="0" style="width:60px;"></td>
+            <td><input type="number" id="np-min" placeholder="5" style="width:60px;"></td>
+            <td><button class="btn small" onclick="addProduct()">+ Agregar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- GOOGLE SHEETS -->
+    <div class="section-title">Conexión a Google Sheets</div>
+    <div class="card">
+      ${isConnected() ? `
+        <p class="hint" style="margin-top:0;color:var(--accent-green);">✓ Conectado. Todos los usuarios verán e interactuarán con la misma información.</p>
+        <div class="toolbar">
+          <button class="btn secondary" onclick="refreshFromRemote().then(()=>{renderView(currentView);})">↻ Actualizar desde Sheets</button>
+          <button class="btn danger" onclick="disconnectSheets()">Desconectar</button>
+        </div>
+      ` : `
+        <p class="hint" style="margin-top:0;">Pega aquí la URL de tu Web App de Google Apps Script y tu token de seguridad.</p>
+        <div class="form-grid">
+          <div style="grid-column:1/-1;"><label>URL del Apps Script</label><input type="text" id="cfg-url" placeholder="https://script.google.com/macros/s/.../exec"></div>
+          <div><label>Token secreto</label><input type="text" id="cfg-token" placeholder="tu-clave-secreta"></div>
+        </div>
+        <button class="btn" onclick="connectSheets()">Conectar</button>
+        <p class="hint" id="cfg-conn-status"></p>
+      `}
+    </div>
+
+    <!-- RESPALDO -->
+    <div class="section-title">Respaldo de datos</div>
+    <div class="card">
+      <p class="hint" style="margin-top:0;">Descarga copias periódicamente para asegurar tu información.</p>
+      <div class="toolbar">
+        <button class="btn" onclick="exportBackup()">⭳ Descargar copia de seguridad</button>
+        <label class="btn secondary" style="cursor:pointer;">
+          ⭱ Restaurar copia de seguridad
+          <input type="file" accept="application/json" onchange="importBackup(event)" style="display:none;">
+        </label>
+      </div>
+    </div>
+
+    <div class="section-title">Zona de riesgo</div>
+    <div class="card">
+      <button class="btn danger" onclick="resetAll()">Borrar todos los datos</button>
+    </div>
+
+    <div id="modal-container"></div>
+  `;
+  qs('view-config').innerHTML = html;
+}
+
+/* ============ ACCIONES DE LOTES ============ */
+async function addLote(){
+  const name = val('lot-name').trim() || ('Lote ' + ((DB.lotes ? DB.lotes.length : 0) + 1));
+  const producer = val('lot-producer').trim();
+  const variety = val('lot-variety').trim();
+  const origin = val('lot-origin').trim();
+  const cupScore = num('lot-score');
+  const type = val('lot-type') || 'ambos';
+  
+  const greenKg = num('lot-green-kg');
+  const greenCostPerKg = num('lot-green-cost');
+  const freightCost = num('lot-freight-cost');
+  const roastedKg = num('lot-roasted-kg');
+  const roastCost = num('lot-roast-cost');
+
+  if(greenKg <= 0 || roastedKg <= 0) {
+    alert('Ingresa cantidades válidas para los kilos de café verde y tostado.');
+    return;
+  }
+
+  const greenTotalCost = greenKg * greenCostPerKg;
+  const totalLotCost = greenTotalCost + roastCost + freightCost;
+  const costPerKgRoasted = Math.round((totalLotCost / roastedKg) * 100) / 100;
+  const yieldPct = (roastedKg / greenKg) * 100;
+
+  if(!DB.lotes) DB.lotes = [];
+
+  // Desactivar lotes previos del mismo tipo al activar este
+  DB.lotes.forEach(l => {
+    if(l.active){
+      if(type === 'ambos' || l.type === 'ambos' || l.type === type) {
+        l.active = false;
+      }
+    }
+  });
+
+  const lote = {
+    id: uid(), name, producer, variety, origin, cupScore, type,
+    date: todayStr(), greenKg, greenCostPerKg, freightCost,
+    roastedKg, roastCost, totalLotCost, costPerKgRoasted, yieldPct,
+    active: true
+  };
+
+  DB.lotes.push(lote);
+  saveDB();
+  renderConfig();
+  await syncRemote('addLote', lote);
+}
+
+async function toggleLoteActive(id){
+  if(!DB.lotes) return;
+  const target = DB.lotes.find(l => l.id === id);
+  if(!target) return;
+
+  const willBeActive = !target.active;
+  const changed = [];
+
+  DB.lotes.forEach(l => {
+    if(willBeActive) {
+      if(l.id === id) {
+        if(!l.active){ l.active = true; changed.push(l); }
+      } else if(target.type === 'ambos' || l.type === 'ambos' || l.type === target.type) {
+        if(l.active){ l.active = false; changed.push(l); }
+      }
+    } else {
+      if(l.id === id){ l.active = false; changed.push(l); }
+    }
+  });
+
+  saveDB();
+  renderConfig();
+  for(const l of changed){ await syncRemote('updateLote', l); }
+}
+
+async function deleteLote(id){
+  if(!confirm('¿Eliminar este lote? Las ventas pasadas conservarán sus datos registrados.')) return;
+  DB.lotes = DB.lotes.filter(l => l.id !== id);
+  saveDB();
+  renderConfig();
+  await syncRemote('deleteLote', {id});
+}
+
+function editLoteModal(id){
+  const l = DB.lotes.find(item => item.id === id);
+  if(!l) return;
+
+  const modalHtml = `
+    <div style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:9999;">
+      <div class="card" style="width:90%; max-width:600px; max-height:90vh; overflow-y:auto; background:var(--bg-card);">
+        <h3>Editar Lote: ${esc(l.name)}</h3>
+        <div class="form-grid" style="grid-template-columns:1fr 1fr; gap:10px;">
+          <div><label>Nombre Lote</label><input type="text" id="el-name" value="${esc(l.name)}"></div>
+          <div><label>Productor</label><input type="text" id="el-producer" value="${esc(l.producer||'')}"></div>
+          <div><label>Variedad</label><input type="text" id="el-variety" value="${esc(l.variety||'')}"></div>
+          <div><label>Origen</label><input type="text" id="el-origin" value="${esc(l.origin||'')}"></div>
+          <div><label>Puntaje Taza</label><input type="number" step="0.25" id="el-score" value="${l.cupScore||''}"></div>
+          <div>
+            <label>Tipo</label>
+            <select id="el-type">
+              <option value="molido" ${l.type==='molido'?'selected':''}>Molido</option>
+              <option value="grano" ${l.type==='grano'?'selected':''}>En Grano</option>
+              <option value="ambos" ${l.type==='ambos'?'selected':''}>Ambos</option>
+            </select>
+          </div>
+          <div><label>Kg Verde</label><input type="number" step="0.1" id="el-green-kg" value="${l.greenKg}"></div>
+          <div><label>Precio Kg Verde (S/)</label><input type="number" step="0.01" id="el-green-cost" value="${l.greenCostPerKg}"></div>
+          <div><label>Flete (S/)</label><input type="number" step="0.01" id="el-freight-cost" value="${l.freightCost||0}"></div>
+          <div><label>Kg Tostado</label><input type="number" step="0.1" id="el-roasted-kg" value="${l.roastedKg}"></div>
+          <div><label>Costo Tostado (S/)</label><input type="number" step="0.01" id="el-roast-cost" value="${l.roastCost}"></div>
+        </div>
+        <div style="margin-top:15px; display:flex; gap:10px; justify-content:flex-end;">
+          <button class="btn secondary" onclick="closeModal()">Cancelar</button>
+          <button class="btn" onclick="saveEditedLote('${l.id}')">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  `;
+  qs('modal-container').innerHTML = modalHtml;
+}
+
+function closeModal(){
+  qs('modal-container').innerHTML = '';
+}
+
+async function saveEditedLote(id){
+  const l = DB.lotes.find(item => item.id === id);
+  if(!l) return;
+
+  l.name = val('el-name').trim() || l.name;
+  l.producer = val('el-producer').trim();
+  l.variety = val('el-variety').trim();
+  l.origin = val('el-origin').trim();
+  l.cupScore = num('el-score');
+  l.type = val('el-type');
+  l.greenKg = num('el-green-kg');
+  l.greenCostPerKg = num('el-green-cost');
+  l.freightCost = num('el-freight-cost');
+  l.roastedKg = num('el-roasted-kg');
+  l.roastCost = num('el-roast-cost');
+
+  const greenTotalCost = l.greenKg * l.greenCostPerKg;
+  l.totalLotCost = greenTotalCost + l.roastCost + l.freightCost;
+  l.costPerKgRoasted = l.roastedKg > 0 ? Math.round((l.totalLotCost / l.roastedKg) * 100) / 100 : 0;
+  l.yieldPct = l.greenKg > 0 ? (l.roastedKg / l.greenKg) * 100 : 0;
+
+  saveDB();
+  closeModal();
+  renderConfig();
+  await syncRemote('updateLote', l);
+}
+
+/* ============ PRODUCTOS BASE (stock físico real) ============ */
+async function addBaseProduct(){
+  const name = val('nbp-name').trim();
+  if(!name){ alert('Ponle un nombre al producto base (ej: Bolsa 500g Molido - Blend Gourmet).'); return; }
+  const b = {
+    id: uid(), name,
+    grindType: val('nbp-grind') || 'molido',
+    stock: parseInt(val('nbp-stock')) || 0,
+    minStock: parseInt(val('nbp-min')) || 0
+  };
+  DB.baseProducts.push(b);
+  saveDB();
+  renderConfig();
+  await syncRemote('addBaseProduct', b);
+}
+async function saveBaseProductRow(id){
+  const b = baseProductById(id);
+  if(!b) return;
+  b.name = val('bp-name-'+id).trim() || b.name;
+  b.grindType = val('bp-grind-'+id);
+  b.stock = parseInt(val('bp-stock-'+id)) || 0;
+  b.minStock = parseInt(val('bp-min-'+id)) || 0;
+  saveDB();
+  renderConfig();
+  await syncRemote('updateBaseProduct', b);
+}
+async function deleteBaseProduct(id){
+  const inUse = DB.products.filter(p=>p.baseProductId===id);
+  if(inUse.length>0){
+    alert('No puedes eliminarlo: ' + inUse.map(p=>p.name).join(', ') + ' todavía está vinculado a este producto base. Desvincúlalo primero.');
+    return;
+  }
+  if(!confirm('¿Eliminar este producto base del stock físico?')) return;
+  DB.baseProducts = DB.baseProducts.filter(b=>b.id!==id);
+  saveDB();
+  renderConfig();
+  await syncRemote('deleteBaseProduct', {id});
+}
+
+/* ============ PRODUCTOS (PRESENTACIONES) ============ */
+async function addProduct(){
+  const name = val('np-name').trim();
+  if(!name){ alert('Ponle un nombre al producto.'); return; }
+  const weightGrams = parseFloat(val('np-weight')) || 0;
+  const packagingCost = parseFloat(val('np-pkg')) || 0;
+  const price = parseFloat(val('np-price')) || 0;
+  const grindType = val('np-grind') || 'molido';
+  const baseProductId = val('np-base') || '';
+  const unitsPerSale = parseInt(val('np-units')) || 1;
+  
+  const p = {
+    id: uid(), name, weightGrams, packagingCost, price, cost: 0,
+    grindType, stock: parseInt(val('np-stock')) || 0,
+    minStock: parseInt(val('np-min')) || 0,
+    baseProductId, unitsPerSale
+  };
+  p.cost = getProductCost(p);
+
+  DB.products.push(p);
+  saveDB();
+  renderConfig();
+  await syncRemote('addProduct', p);
+}
+
+async function saveProductRow(id){
+  const p = productById(id);
+  if(!p) return;
+  p.name = val('p-name-'+id).trim() || p.name;
+  p.grindType = val('p-grind-'+id);
+  p.weightGrams = parseFloat(val('p-weight-'+id)) || 0;
+  p.packagingCost = parseFloat(val('p-pkg-'+id)) || 0;
+  p.price = parseFloat(val('p-price-'+id)) || 0;
+  p.baseProductId = val('p-base-'+id) || '';
+  p.unitsPerSale = parseInt(val('p-units-'+id)) || 1;
+  if(!p.baseProductId){ p.stock = parseInt(val('p-stock-'+id)) || 0; }
+  p.minStock = parseInt(val('p-min-'+id)) || 0;
+  p.cost = getProductCost(p);
+
+  saveDB();
+  renderConfig();
+  await syncRemote('updateProduct', p);
+}
+
+async function deleteProduct(id){
+  if(!confirm('¿Eliminar este producto del catálogo? Las ventas históricas mantendrán sus registros.')) return;
+  DB.products = DB.products.filter(p=>p.id!==id);
+  saveDB();
+  renderConfig();
+  await syncRemote('deleteProduct', {id});
+}
+
+/* ============ RESPALDO Y RESET ============ */
+function exportBackup(){
+  const blob = new Blob([JSON.stringify(DB,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'casa-vieja-backup-' + todayStr() + '.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function importBackup(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try{
+      const parsed = JSON.parse(e.target.result);
+      if(!parsed || !Array.isArray(parsed.products) || !Array.isArray(parsed.sales)){
+        alert('El archivo no parece un backup válido de Casa Vieja.');
+        return;
+      }
+      if(confirm('Esto reemplazará todos tus datos actuales por los del backup. ¿Continuar?')){
+        DB = Object.assign(defaultDB(), parsed);
+        saveDB();
+        renderView(currentView);
+        alert('Backup restaurado correctamente.');
+      }
+    }catch(err){
+      alert('No se pudo leer el archivo: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function resetAll(){
+  if(!confirm('¿Seguro que quieres borrar TODOS los datos (productos, lotes, ventas, ads, movimientos)?')) return;
+  if(!confirm('Última confirmación: esta acción no se puede deshacer. ¿Borrar todo?')) return;
+  DB = defaultDB();
+  saveDB();
+  renderView('config');
+}
+
+/* ============ INICIALIZACIÓN DE LA APLICACIÓN ============ */
+updateConnBadge();
+switchView('dashboard');
+if(isConnected()){
+  refreshFromRemote().then(ok=>{ if(ok) renderView(currentView); });
+}
+
+// Actualización casi en tiempo real: cada 15s en pantallas de solo lectura (Dashboard, Delivery),
+// y también apenas vuelves a la pestaña/app. No se toca si hay un formulario a medio llenar en otra vista.
+const READONLY_VIEWS = ['dashboard','delivery'];
+async function tryLiveRefresh(){
+  if(!isConnected()) return;
+  if(!READONLY_VIEWS.includes(currentView)) return;
+  if(document.visibilityState !== 'visible') return;
+  const ok = await refreshFromRemote();
+  if(ok && READONLY_VIEWS.includes(currentView)) renderView(currentView);
+}
+setInterval(tryLiveRefresh, 15000);
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') tryLiveRefresh(); });
+window.addEventListener('focus', tryLiveRefresh);
+</script>
+</body>
+</html>

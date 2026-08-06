@@ -254,6 +254,7 @@ let DB = loadDB();
 let currentView = 'dashboard';
 
 function defaultDB(){ return { products:[], sales:[], movements:[], ads:[], expenses:[], lotes:[], baseProducts:[] }; }
+
 function loadDB(){
   try{
     const raw = localStorage.getItem(STORE_KEY);
@@ -262,11 +263,54 @@ function loadDB(){
     return Object.assign(defaultDB(), parsed);
   }catch(e){ console.error('Error cargando datos', e); return defaultDB(); }
 }
+
+// 🚀 CADA VEZ QUE SE LLAME A saveDB(), GUARDA LOCALMENTE Y ENVÍA A GOOGLE SHEETS
 function saveDB(){
-  try{ localStorage.setItem(STORE_KEY, JSON.stringify(DB)); }
-  catch(e){ alert('No se pudo guardar: ' + e.message); }
+  try{ 
+    localStorage.setItem(STORE_KEY, JSON.stringify(DB)); 
+  } catch(e){ 
+    console.error('Error guardando en memoria local:', e); 
+  }
+  // Envía los datos actualizados a Google Sheets inmediatamente
+  syncToRemote();
 }
 
+/* ============ CONEXIÓN Y SINCRONIZACIÓN CON GOOGLE SHEETS ============ */
+async function syncToRemote(){
+  const url = localStorage.getItem('cv_script_url');
+  const token = localStorage.getItem('cv_script_token');
+  if(!url || !token) return;
+
+  try {
+    await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ token: token, db: DB })
+    });
+  } catch(e) {
+    console.error("Error al enviar datos a Google Sheets:", e);
+  }
+}
+
+async function refreshFromRemote(){
+  const url = localStorage.getItem('cv_script_url');
+  if(!url) return false;
+  try {
+    const res = await fetch(url);
+    const text = await res.text();
+    if(text && text !== '{}'){
+      const remoteDB = JSON.parse(text);
+      if(remoteDB && typeof remoteDB === 'object'){
+        DB = Object.assign(defaultDB(), remoteDB);
+        localStorage.setItem(STORE_KEY, JSON.stringify(DB));
+        return true;
+      }
+    }
+  } catch(e){
+    console.error("Error al descargar datos de Google Sheets:", e);
+  }
+  return false;
+}
 /* ============ HELPERS ============ */
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
 function qs(id){ return document.getElementById(id); }

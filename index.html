@@ -34,7 +34,7 @@
     color:var(--text);
     font-family:var(--font-body);
     min-height:100vh;
-    padding-bottom:env(safe-area-inset-bottom); /* Ajuste de barra inferior de iPhone */
+    padding-bottom:env(safe-area-inset-bottom);
   }
   #app{display:flex;min-height:100vh;}
   
@@ -49,7 +49,7 @@
   .brand span{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;}
   nav.navlist{
     display:flex;flex-direction:column;gap:2px;padding:0 10px;
-    -webkit-overflow-scrolling:touch; /* Scroll fluido en móvil */
+    -webkit-overflow-scrolling:touch;
   }
   .nav-btn{
     display:flex;align-items:center;gap:10px;
@@ -135,7 +135,7 @@
   /* Table */
   .table-wrap{
     overflow-x:auto;
-    -webkit-overflow-scrolling:touch; /* Scroll suave en tablas para iPhone */
+    -webkit-overflow-scrolling:touch;
   }
   table{width:100%;border-collapse:collapse;font-size:13px;}
   th{text-align:left;color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap;}
@@ -158,14 +158,13 @@
     #app{flex-direction:column;}
     .sidebar{
       width:100%;flex-direction:row;overflow-x:auto;align-items:center;
-      padding: max(16px, env(safe-area-inset-top)) 12px 12px 12px; /* baja el header para que no quede bajo el notch/status bar */
+      padding: max(16px, env(safe-area-inset-top)) 12px 12px 12px;
     }
     .brand{border:none;padding:0 14px 0 4px;margin:0;}
     nav.navlist{flex-direction:row;padding:0;}
     .sidebar-footer{display:none;}
     .main{padding:16px 16px 50px 16px;}
     
-    /* Previene el zoom automático en Safari de iPhone al tocar inputs */
     input, select, textarea {
       font-size: 16px !important;
     }
@@ -238,10 +237,57 @@
 </div>
 
 <script>
+/* ============ CONSTANTES GLOBALES Y DICCIONARIOS ============ */
+const STORE_KEY = 'casa_vieja_db';
+const CONN_KEY = 'casa_vieja_conn_config';
+
+const TITLES = {
+  dashboard: 'Dashboard',
+  ventas: 'Ventas',
+  stock: 'Stock',
+  ads: 'Ads',
+  egresos: 'Egresos',
+  delivery: 'Delivery',
+  config: 'Configuración'
+};
+
+const MONTH_NAMES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+const CHANNELS = [
+  'Meta Ads (Facebook/Instagram)',
+  'WhatsApp Directo',
+  'Recomendación / Orgánico',
+  'Feria / Evento',
+  'Otro'
+];
+
+const PAYMENT_STATUSES = ['Pendiente', 'Pagado', 'Cancelado'];
+const DELIVERY_STATUSES = ['Pendiente', 'En camino', 'Entregado'];
+
+const EXPENSE_CATEGORIES = [
+  'Empaques y bolsas',
+  'Etiquetas y diseño',
+  'Tostado / Maquila',
+  'Flete / Transporte',
+  'Herramientas / Insumos',
+  'Otros'
+];
+
+const COLORS = {
+  bg: '#1C1410',
+  surface: '#241B15',
+  surface2: '#2E241C',
+  surface3: '#382B20',
+  border: '#3D2F24',
+  text: '#F2E9DC',
+  muted: '#A8998A',
+  red: '#C1432E',
+  gold: '#D4A34A',
+  green: '#6B8F5C',
+  blue: '#5C7F8F'
+};
 
 /* ============ CONFIGURACIÓN Y PERSISTENCIA BLINDADA ============ */
-const STORE_KEY = 'casa_vieja_db';
-
 let DB = loadDB();
 let currentView = 'dashboard';
 
@@ -261,143 +307,84 @@ function loadDB(){
   }
 }
 
-// 🛡️ GUARDA SIEMPRE EN TU LAPTOP PRIMERO (NUNCA SE BORRA AL REFRESCAR)
 function saveDB(){
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(DB));
   } catch(e) {
     console.error('Error guardando en localStorage:', e);
   }
-  // Envía una copia a Google Sheets en segundo plano
-  syncToRemote();
-}
-
-/* ============ SINCRONIZACIÓN CON GOOGLE SHEETS ============ */
-async function syncToRemote(){
-  const url = localStorage.getItem('cv_script_url');
-  const token = localStorage.getItem('cv_script_token');
-  if(!url || !token) return;
-
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ token: token, db: DB })
-    });
-    const resText = await response.text();
-    console.log("Respuesta de Google Sheets:", resText);
-  } catch(e) {
-    console.error("Error al enviar datos a Google Sheets:", e);
+  if(isConnected()){
+    syncRemote('saveDB', { db: DB });
   }
-}
-
-async function refreshFromRemote(){
-  const url = localStorage.getItem('cv_script_url');
-  if(!url) return false;
-
-  try {
-    const res = await fetch(url);
-    const text = await res.text();
-    
-    // Si la hoja de Google está vacía, NO sobrescribas la laptop. Al contrario, envíale los datos de la laptop a Google
-    if(!text || text.trim() === '' || text.trim() === '{}') {
-      syncToRemote();
-      return false;
-    }
-
-    const remoteDB = JSON.parse(text);
-    if(remoteDB && typeof remoteDB === 'object'){
-      const remoteCount = (remoteDB.sales?.length || 0) + (remoteDB.lotes?.length || 0) + (remoteDB.expenses?.length || 0);
-      const localCount = (DB.sales?.length || 0) + (DB.lotes?.length || 0) + (DB.expenses?.length || 0);
-
-      // Solo actualizar si la nube realmente tiene más información que la laptop
-      if(remoteCount >= localCount && remoteCount > 0) {
-        DB = Object.assign(defaultDB(), remoteDB);
-        localStorage.setItem(STORE_KEY, JSON.stringify(DB));
-        if(typeof renderView === 'function') renderView(currentView);
-        return true;
-      } else if(localCount > 0) {
-        // Si la laptop tiene datos y Google no, los sube a Google Sheets
-        syncToRemote();
-      }
-    }
-  } catch(e){
-    console.error("Error al descargar de Google Sheets:", e);
-  }
-  return false;
-}
-/* ============ HELPERS ============ */
-function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
-function qs(id){ return document.getElementById(id); }
-function val(id){ const el = qs(id); return el ? el.value : ''; }
-function num(id){ const v = parseFloat(val(id)); return isNaN(v) ? 0 : v; }
-function sum(arr){ return arr.reduce((a,b)=>a+(Number(b)||0),0); }
-function todayStr(){ return new Date().toISOString().slice(0,10); }
-function monthKey(dateStr){ return (dateStr||'').slice(0,7); }
-function money(n){ return 'S/ ' + (Number(n)||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function fmtDate(d){
-  if(!d) return '—';
-  const dt = new Date(d+'T00:00:00');
-  return dt.toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
-}
-function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function productById(id){ return DB.products.find(p=>p.id===id); }
-function baseProductById(id){ return DB.baseProducts.find(b=>b.id===id); }
-/**
- * Stock disponible de una presentación (Tripack, Duopack, Unitario, etc.)
- * Si está vinculada a un producto base (bolsas físicas), se calcula a partir
- * de esas bolsas. Si no está vinculada (producto viejo, aún no migrado),
- * usa su propio contador de stock como respaldo.
- */
-function getAvailableUnits(product){
-  if(product.baseProductId){
-    const base = baseProductById(product.baseProductId);
-    if(!base) return 0;
-    const units = product.unitsPerSale || 1;
-    return Math.floor(base.stock / units);
-  }
-  return product.stock;
-}
-function movementTargets(){
-  const targets = DB.baseProducts.map(b=>({ id:b.id, kind:'base', label: b.name + ' — bolsas físicas' }));
-  DB.products.filter(p=>!p.baseProductId).forEach(p=>{ targets.push({ id:p.id, kind:'product', label: p.name + ' (stock propio, sin vincular)' }); });
-  return targets;
 }
 
 /* ============ CONEXIÓN A GOOGLE SHEETS ============ */
 function getConnConfig(){
-  try{ return JSON.parse(localStorage.getItem(CONN_KEY)) || {url:'', token:''}; }
-  catch(e){ return {url:'', token:''}; }
+  try{ 
+    const stored = JSON.parse(localStorage.getItem(CONN_KEY));
+    if(stored && stored.url) return stored;
+  }catch(e){}
+  
+  // Retrocompatibilidad si estaba guardado en llaves sueltas
+  const url = localStorage.getItem('cv_script_url') || '';
+  const token = localStorage.getItem('cv_script_token') || '';
+  return { url, token };
 }
-function saveConnConfig(cfg){ localStorage.setItem(CONN_KEY, JSON.stringify(cfg)); }
-function isConnected(){ const c = getConnConfig(); return !!(c.url && c.token); }
+
+function saveConnConfig(cfg){ 
+  localStorage.setItem(CONN_KEY, JSON.stringify(cfg));
+  localStorage.setItem('cv_script_url', cfg.url || '');
+  localStorage.setItem('cv_script_token', cfg.token || '');
+}
+
+function isConnected(){ 
+  const c = getConnConfig(); 
+  return !!(c.url && c.token); 
+}
+
 function updateConnBadge(){
   const el = qs('connStatus');
   if(!el) return;
-  if(isConnected()){ el.textContent = '● Conectado a Google Sheets'; el.className='online'; }
-  else { el.textContent = '● Modo local — solo en este navegador'; el.className='offline'; }
+  if(isConnected()){ 
+    el.textContent = '● Conectado a Google Sheets'; 
+    el.className = 'online'; 
+  } else { 
+    el.textContent = '● Modo local — solo en este navegador'; 
+    el.className = 'offline'; 
+  }
 }
+
 async function apiGet(){
   const c = getConnConfig();
-  const res = await fetch(c.url + '?token=' + encodeURIComponent(c.token));
+  if(!c.url) return null;
+  const url = c.url + (c.url.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(c.token);
+  const res = await fetch(url);
   return await res.json();
 }
+
 async function apiPost(action, payload){
   const c = getConnConfig();
-  const res = await fetch(c.url, { method:'POST', body: JSON.stringify({ token:c.token, action, payload }) });
+  if(!c.url) return null;
+  const res = await fetch(c.url, { 
+    method: 'POST', 
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ token: c.token, action, payload }) 
+  });
   return await res.json();
 }
+
 async function syncRemote(action, payload){
-  if(!isConnected()) return {ok:true};
+  if(!isConnected()) return { ok: true };
   try{
     const res = await apiPost(action, payload);
-    if(res && res.error){ alert('Se guardó localmente, pero no se pudo sincronizar con Google Sheets: ' + res.error); }
+    if(res && res.error){ console.warn('Advertencia Sheets:', res.error); }
     return res;
   }catch(e){
-    alert('Se guardó localmente, pero no se pudo conectar con Google Sheets: ' + e.message);
+    console.error('Error al conectar con Google Sheets:', e);
     return { error: e.message };
   }
 }
+
 function normalizeProduct(p){ return { id:String(p.id), name:String(p.name||''), price:Number(p.price)||0, cost:Number(p.cost)||0, stock:Number(p.stock)||0, minStock:Number(p.minStock)||0, weightGrams:Number(p.weightGrams)||0, packagingCost:Number(p.packagingCost)||0, grindType:String(p.grindType||'molido'), baseProductId:String(p.baseProductId||''), unitsPerSale:Number(p.unitsPerSale)||1 }; }
 function normalizeSale(s){ return { id:String(s.id), createdAt:Number(s.createdAt)||Date.now(), date:String(s.date||'').slice(0,10), productId:String(s.productId||''), productName:String(s.productName||''), qty:Number(s.qty)||0, unitPrice:Number(s.unitPrice)||0, total:Number(s.total)||0, unitCostUsed:Number(s.unitCostUsed)||0, loteIdUsed:String(s.loteIdUsed||''), channel:String(s.channel||''), customer:String(s.customer||''), paymentStatus:String(s.paymentStatus||'Pendiente'), deliveryStatus:String(s.deliveryStatus||'Pendiente'), deliveryCost:Number(s.deliveryCost)||0, deliveryCharged:Number(s.deliveryCharged)||0, zone:String(s.zone||''), profit:Number(s.profit)||0 }; }
 function normalizeAd(a){ return { id:String(a.id), date:String(a.date||'').slice(0,10), platform:String(a.platform||''), campaign:String(a.campaign||''), amount:Number(a.amount)||0, messages:Number(a.messages)||0 }; }
@@ -416,19 +403,27 @@ async function refreshFromRemote(){
   try{
     const data = await apiGet();
     if(!data || data.error){ console.error('Error de Sheets:', data && data.error); return false; }
+    
+    // Si viene la BD completa envuelta o por colecciones
+    const source = data.db || data;
+    
     DB = {
-      products: (data.products||[]).map(normalizeProduct),
-      sales: (data.sales||[]).map(normalizeSale),
-      movements: data.movements||[],
-      ads: (data.ads||[]).map(normalizeAd),
-      expenses: (data.expenses||[]).map(normalizeExpense),
-      lotes: (data.lotes||[]).map(normalizeLote),
-      baseProducts: (data.baseProducts||[]).map(normalizeBaseProduct)
+      products: (source.products||[]).map(normalizeProduct),
+      sales: (source.sales||[]).map(normalizeSale),
+      movements: source.movements||[],
+      ads: (source.ads||[]).map(normalizeAd),
+      expenses: (source.expenses||[]).map(normalizeExpense),
+      lotes: (source.lotes||[]).map(normalizeLote),
+      baseProducts: (source.baseProducts||[]).map(normalizeBaseProduct)
     };
-    saveDB();
+    localStorage.setItem(STORE_KEY, JSON.stringify(DB));
     return true;
-  }catch(e){ console.error(e); return false; }
+  }catch(e){ 
+    console.error("Error al descargar de Google Sheets:", e); 
+    return false;
+  }
 }
+
 async function connectSheets(){
   const url = val('cfg-url').trim();
   const token = val('cfg-token').trim();
@@ -445,11 +440,12 @@ async function connectSheets(){
     await refreshFromRemote();
     updateConnBadge();
     renderConfig();
-    alert('Conectado a Google Sheets. Ya puedes compartir el archivo con tus socios.');
+    alert('Conectado a Google Sheets con éxito.');
   }catch(e){
     qs('cfg-conn-status').textContent = '✗ ' + e.message;
   }
 }
+
 function disconnectSheets(){
   if(!confirm('¿Volver a modo local? Dejarás de sincronizar con Google Sheets.')) return;
   saveConnConfig({url:'', token:''});
@@ -457,15 +453,50 @@ function disconnectSheets(){
   renderConfig();
 }
 
-/* ============ NAVIGATION ============ */
+/* ============ HELPERS ============ */
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+function qs(id){ return document.getElementById(id); }
+function val(id){ const el = qs(id); return el ? el.value : ''; }
+function num(id){ const v = parseFloat(val(id)); return isNaN(v) ? 0 : v; }
+function sum(arr){ return arr.reduce((a,b)=>a+(Number(b)||0),0); }
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function monthKey(dateStr){ return (dateStr||'').slice(0,7); }
+function money(n){ return 'S/ ' + (Number(n)||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtDate(d){
+  if(!d) return '—';
+  const dt = new Date(d+'T00:00:00');
+  return dt.toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
+}
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function productById(id){ return DB.products.find(p=>p.id===id); }
+function baseProductById(id){ return DB.baseProducts.find(b=>b.id===id); }
+
+function getAvailableUnits(product){
+  if(product.baseProductId){
+    const base = baseProductById(product.baseProductId);
+    if(!base) return 0;
+    const units = product.unitsPerSale || 1;
+    return Math.floor(base.stock / units);
+  }
+  return product.stock;
+}
+
+function movementTargets(){
+  const targets = DB.baseProducts.map(b=>({ id:b.id, kind:'base', label: b.name + ' — bolsas físicas' }));
+  DB.products.filter(p=>!p.baseProductId).forEach(p=>{ targets.push({ id:p.id, kind:'product', label: p.name + ' (stock propio, sin vincular)' }); });
+  return targets;
+}
+
+/* ============ NAVEGACIÓN ============ */
 function switchView(name){
   currentView = name;
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   qs('view-'+name).classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
-  qs('pageTitle').textContent = TITLES[name];
+  qs('pageTitle').textContent = TITLES[name] || name;
   renderView(name);
 }
+
 function renderView(name){
   if(name==='dashboard') renderDashboard();
   else if(name==='ventas') renderVentas();
@@ -500,6 +531,7 @@ function svgBars(values, labels, color, opts){
     ${bars}${labelsSvg}
   </svg>`;
 }
+
 function svgGroupedBars(labelsX, seriesA, seriesB, colorA, colorB){
   const w=560, h=200, padL=8, padR=8, padT=10, padB=24;
   const plotW=w-padL-padR, plotH=h-padT-padB;
@@ -522,6 +554,7 @@ function svgGroupedBars(labelsX, seriesA, seriesB, colorA, colorB){
     ${bars}${labelsSvg}
   </svg>`;
 }
+
 function donutBlock(entries, opts){
   opts = opts || {};
   const total = sum(entries.map(e=>e[1]));
@@ -566,12 +599,14 @@ function computeDashboard(){
   const lowStock = DB.baseProducts.length>0 ? DB.baseProducts.filter(b=>b.stock<=b.minStock) : DB.products.filter(p=>p.stock<=p.minStock);
   return {revToday, revMonth, profitMonth, expensesMonth, netProfitMonth, adSpendMonth, roas, totalStock, pendingDeliveries, lowStock, monthSales};
 }
+
 function last14DaysSeries(){
   const days=[]; for(let i=13;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push(d.toISOString().slice(0,10)); }
   const labels = days.map(d=> d.slice(8,10)+'/'+d.slice(5,7) );
   const values = days.map(d=> sum(DB.sales.filter(s=>s.date===d).map(s=>s.total)) );
   return {labels, values};
 }
+
 function last6MonthsSeries(){
   const months=[]; const now=new Date();
   for(let i=5;i>=0;i--){ const d=new Date(now.getFullYear(), now.getMonth()-i, 1); months.push(d.toISOString().slice(0,7)); }
@@ -580,6 +615,7 @@ function last6MonthsSeries(){
   const adspend = months.map(m=> sum(DB.ads.filter(a=>monthKey(a.date)===m).map(a=>a.amount)) );
   return {labels, profit, adspend};
 }
+
 function productSalesShare(){
   const thisMonth = monthKey(todayStr());
   const monthSales = DB.sales.filter(s=>monthKey(s.date)===thisMonth);
@@ -587,8 +623,8 @@ function productSalesShare(){
   monthSales.forEach(s=>{ map[s.productName]=(map[s.productName]||0)+s.total; });
   return Object.entries(map).sort((a,b)=>b[1]-a[1]);
 }
+
 function stockRipenessHTML(){
-  // Prioriza el stock físico real (bolsas base). Si todavía no lo configuró, usa el stock propio de cada presentación (compatibilidad).
   const items = DB.baseProducts.length>0
     ? DB.baseProducts.map(b=>({ name:b.name, stock:b.stock, minStock:b.minStock, unit:'bolsas' }))
     : DB.products.map(p=>({ name:p.name, stock:p.stock, minStock:p.minStock, unit:'u.' }));
@@ -607,6 +643,7 @@ function stockRipenessHTML(){
     </div>`;
   }).join('');
 }
+
 function renderDashboard(){
   const d = computeDashboard();
   const daily = last14DaysSeries();
@@ -648,7 +685,7 @@ function renderDashboard(){
   qs('view-dashboard').innerHTML = html;
 }
 
-/* ============ MÓDULO DE LOTES (HELPERS Y LÓGICA MULTI-LOTE) ============ */
+/* ============ MÓDULO DE LOTES ============ */
 function getActiveLotes() {
   if (!DB.lotes) return { molido: null, grano: null };
   const molido = DB.lotes.find(l => l.active && (l.type === 'molido' || l.type === 'ambos')) || null;
@@ -1004,7 +1041,8 @@ async function deleteAd(id){
   renderAds();
   await syncRemote('deleteAd', {id});
 }
-/* ============ EGRESOS (GASTOS EXTRA) ============ */
+
+/* ============ EGRESOS ============ */
 function renderEgresos(){
   const rows = [...DB.expenses].sort((a,b)=> b.date.localeCompare(a.date));
   const thisMonth = monthKey(todayStr());
@@ -1124,6 +1162,7 @@ async function updateDeliveryStatus(saleId, newStatus){
 function renderConfig(){
   if(!DB.lotes) DB.lotes = [];
   const lotes = [...DB.lotes].reverse();
+  const conn = getConnConfig();
 
   const html = `
     <!-- GESTIÓN DE LOTES DE CAFÉ -->
@@ -1329,8 +1368,8 @@ function renderConfig(){
       ` : `
         <p class="hint" style="margin-top:0;">Pega aquí la URL de tu Web App de Google Apps Script y tu token de seguridad.</p>
         <div class="form-grid">
-          <div style="grid-column:1/-1;"><label>URL del Apps Script</label><input type="text" id="cfg-url" placeholder="https://script.google.com/macros/s/.../exec"></div>
-          <div><label>Token secreto</label><input type="text" id="cfg-token" placeholder="tu-clave-secreta"></div>
+          <div style="grid-column:1/-1;"><label>URL del Apps Script</label><input type="text" id="cfg-url" value="${esc(conn.url)}" placeholder="https://script.google.com/macros/s/.../exec"></div>
+          <div><label>Token secreto</label><input type="text" id="cfg-token" value="${esc(conn.token)}" placeholder="tu-clave-secreta"></div>
         </div>
         <button class="btn" onclick="connectSheets()">Conectar</button>
         <p class="hint" id="cfg-conn-status"></p>
@@ -1387,7 +1426,6 @@ async function addLote(){
 
   if(!DB.lotes) DB.lotes = [];
 
-  // Desactivar lotes previos del mismo tipo al activar este
   DB.lotes.forEach(l => {
     if(l.active){
       if(type === 'ambos' || l.type === 'ambos' || l.type === type) {
@@ -1448,7 +1486,7 @@ function editLoteModal(id){
 
   const modalHtml = `
     <div style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:9999;">
-      <div class="card" style="width:90%; max-width:600px; max-height:90vh; overflow-y:auto; background:var(--bg-card);">
+      <div class="card" style="width:90%; max-width:600px; max-height:90vh; overflow-y:auto; background:var(--surface);">
         <h3>Editar Lote: ${esc(l.name)}</h3>
         <div class="form-grid" style="grid-template-columns:1fr 1fr; gap:10px;">
           <div><label>Nombre Lote</label><input type="text" id="el-name" value="${esc(l.name)}"></div>
@@ -1511,7 +1549,7 @@ async function saveEditedLote(id){
   await syncRemote('updateLote', l);
 }
 
-/* ============ PRODUCTOS BASE (stock físico real) ============ */
+/* ============ PRODUCTOS BASE ============ */
 async function addBaseProduct(){
   const name = val('nbp-name').trim();
   if(!name){ alert('Ponle un nombre al producto base (ej: Bolsa 500g Molido - Blend Gourmet).'); return; }
@@ -1526,6 +1564,7 @@ async function addBaseProduct(){
   renderConfig();
   await syncRemote('addBaseProduct', b);
 }
+
 async function saveBaseProductRow(id){
   const b = baseProductById(id);
   if(!b) return;
@@ -1537,6 +1576,7 @@ async function saveBaseProductRow(id){
   renderConfig();
   await syncRemote('updateBaseProduct', b);
 }
+
 async function deleteBaseProduct(id){
   const inUse = DB.products.filter(p=>p.baseProductId===id);
   if(inUse.length>0){
@@ -1657,18 +1697,16 @@ if(isConnected()){
   refreshFromRemote().then(ok => { if(ok) renderView(currentView); });
 }
 
-// Pantallas seguras para refrescar automáticamente sin interrumpir la escritura de formularios
+// Vistas seguras para refresco automático
 const SAFE_REFRESH_VIEWS = ['dashboard', 'delivery', 'stock', 'ads', 'egresos'];
 
 async function tryLiveRefresh(){
   if(!isConnected()) return;
   if(document.visibilityState !== 'visible') return;
 
-  // Si estás escribiendo en una caja de texto o campo, no refrescamos para no borrar lo que escribes
   const isTyping = document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT');
   if(isTyping) return;
 
-  // Si estás en una vista segura o no estás interactuando, sincroniza
   if(SAFE_REFRESH_VIEWS.includes(currentView)){
     const ok = await refreshFromRemote();
     if(ok && SAFE_REFRESH_VIEWS.includes(currentView)) {
@@ -1677,10 +1715,9 @@ async function tryLiveRefresh(){
   }
 }
 
-// ⏱️ Revisa automáticamente cada 8 segundos si tu compañera hizo algún cambio
+// Revisa automáticamente cada 8 segundos si hubo actualizaciones en Google Sheets
 setInterval(tryLiveRefresh, 8000);
 
-// 📱 Si minimizas el navegador en el teléfono y lo vuelves a abrir, sincroniza al instante
 document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') tryLiveRefresh(); });
 window.addEventListener('focus', tryLiveRefresh);
 </script>

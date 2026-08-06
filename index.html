@@ -249,33 +249,38 @@ const TITLES = { dashboard:'Dashboard', ventas:'Ventas', stock:'Stock', ads:'Ads
 const EXPENSE_CATEGORIES = ['Café verde / insumo','Empaques y etiquetas','Tostado / maquila','Transporte','Marketing (fuera de ads)','Servicios / alquiler','Otros'];
 const CONN_KEY = 'cvc_connection_v1';
 
-/* ============ STATE / PERSISTENCE ============ */
+/* ============ STATE / PERSISTENCE (LOCAL-FIRST Y PROTEGIDO) ============ */
 let DB = loadDB();
 let currentView = 'dashboard';
 
-function defaultDB(){ return { products:[], sales:[], movements:[], ads:[], expenses:[], lotes:[], baseProducts:[] }; }
+function defaultDB(){ 
+  return { products:[], sales:[], movements:[], ads:[], expenses:[], lotes:[], baseProducts:[] }; 
+}
 
 function loadDB(){
-  try{
+  try {
     const raw = localStorage.getItem(STORE_KEY);
     if(!raw) return defaultDB();
     const parsed = JSON.parse(raw);
     return Object.assign(defaultDB(), parsed);
-  }catch(e){ console.error('Error cargando datos', e); return defaultDB(); }
+  } catch(e) { 
+    console.error('Error cargando datos locales:', e); 
+    return defaultDB(); 
+  }
 }
 
-// 🚀 CADA VEZ QUE SE LLAME A saveDB(), GUARDA LOCALMENTE Y ENVÍA A GOOGLE SHEETS
+// 🛡️ 1. GUARDA SIEMPRE EN LOCALSTORAGE DE FORMA INMEDIATA Y SAGRADA
 function saveDB(){
-  try{ 
-    localStorage.setItem(STORE_KEY, JSON.stringify(DB)); 
-  } catch(e){ 
-    console.error('Error guardando en memoria local:', e); 
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(DB));
+  } catch(e) {
+    console.error('Error guardando en localStorage:', e);
   }
-  // Envía los datos actualizados a Google Sheets inmediatamente
+  // 🚀 2. Envía a Google Sheets en segundo plano
   syncToRemote();
 }
 
-/* ============ CONEXIÓN Y SINCRONIZACIÓN CON GOOGLE SHEETS ============ */
+/* ============ SINCRONIZACIÓN PROTEGIDA CON GOOGLE SHEETS ============ */
 async function syncToRemote(){
   const url = localStorage.getItem('cv_script_url');
   const token = localStorage.getItem('cv_script_token');
@@ -284,30 +289,47 @@ async function syncToRemote(){
   try {
     await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ token: token, db: DB })
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ token: token, db: DB }),
+      redirect: 'follow'
     });
   } catch(e) {
     console.error("Error al enviar datos a Google Sheets:", e);
   }
 }
 
+// 🛡️ 3. DESCARGA PROTEGIDA: NUNCA BORRA TUS DATOS SI GOOGLE SHEETS ESTÁ VACÍO
 async function refreshFromRemote(){
   const url = localStorage.getItem('cv_script_url');
   if(!url) return false;
+
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, { redirect: 'follow' });
     const text = await res.text();
-    if(text && text !== '{}'){
-      const remoteDB = JSON.parse(text);
-      if(remoteDB && typeof remoteDB === 'object'){
+    
+    // Si Google Sheets está vacío, NO BORRA NADA. Le sube los datos de la laptop a Google Sheets
+    if(!text || text.trim() === '' || text.trim() === '{}') {
+      syncToRemote();
+      return false;
+    }
+
+    const remoteDB = JSON.parse(text);
+    if(remoteDB && typeof remoteDB === 'object'){
+      // Verificar si Google Sheets realmente tiene datos reales
+      const tieneDatos = Object.values(remoteDB).some(arr => Array.isArray(arr) && arr.length > 0);
+      
+      if(tieneDatos) {
         DB = Object.assign(defaultDB(), remoteDB);
         localStorage.setItem(STORE_KEY, JSON.stringify(DB));
+        if(typeof renderView === 'function') renderView(currentView);
         return true;
+      } else {
+        // Si la nube está vacía pero la laptop tiene datos, los sube
+        syncToRemote();
       }
     }
   } catch(e){
-    console.error("Error al descargar datos de Google Sheets:", e);
+    console.error("Error al descargar de Google Sheets:", e);
   }
   return false;
 }

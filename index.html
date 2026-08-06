@@ -777,6 +777,9 @@ function renderVentas(){
               <td class="row-actions">
                 ${s.paymentStatus!=='Pagado' ? `<button class="btn small secondary" onclick="markPaid('${s.id}')">Marcar pagado</button>` : ''}
                 <button class="btn small danger" onclick="deleteSale('${s.id}')">Eliminar</button>
+                <button onclick="editSale('${sale.id}')" class="btn btn-sm" style="background: #f1c40f; color: #000; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;" title="Editar venta">
+                ✏️ Editar
+                </button>
               </td>
             </tr>
           `).join('')}
@@ -887,7 +890,77 @@ async function markPaid(id){
     await syncRemote('updateSale', sale);
   }
 }
+/* === EDICIÓN DE VENTAS === */
+function editSale(id) {
+  // Buscar la venta actual por ID
+  const sale = db.sales.find(s => s.id === id);
+  if (!sale) return;
 
+  // Si existe un modal previo abierto, lo eliminamos
+  const existingModal = document.getElementById('modal-edit-sale');
+  if (existingModal) existingModal.remove();
+
+  // Construir ventana flotante para editar los datos esenciales
+  const modalHtml = `
+    <div id="modal-edit-sale" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:9999;">
+      <div style="background:#ffffff; color:#333; padding:24px; border-radius:10px; max-width:420px; width:90%; box-shadow:0 10px 25px rgba(0,0,0,0.3);">
+        <h3 style="margin-top:0; margin-bottom:15px;">✏️ Editar Venta</h3>
+        
+        <label style="display:block; margin-top:10px; font-weight:bold; font-size:14px;">Cliente:</label>
+        <input type="text" id="edit-client" value="${sale.client || ''}" style="width:100%; padding:8px; margin-top:4px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;" />
+
+        <label style="display:block; margin-top:10px; font-weight:bold; font-size:14px;">Costo de Envío / Delivery (S/):</label>
+        <input type="number" step="0.01" id="edit-delivery-cost" value="${sale.deliveryCost || 0}" style="width:100%; padding:8px; margin-top:4px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;" />
+
+        <label style="display:block; margin-top:10px; font-weight:bold; font-size:14px;">Monto Total (S/):</label>
+        <input type="number" step="0.01" id="edit-total" value="${sale.total || sale.amount || 0}" style="width:100%; padding:8px; margin-top:4px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;" />
+
+        <label style="display:block; margin-top:10px; font-weight:bold; font-size:14px;">Notas / Dirección / Detalles:</label>
+        <textarea id="edit-notes" style="width:100%; padding:8px; margin-top:4px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box; height:70px;">${sale.notes || ''}</textarea>
+
+        <div style="margin-top:20px; display:flex; gap:10px; justify-content:flex-end;">
+          <button onclick="document.getElementById('modal-edit-sale').remove()" style="background:#6c757d; color:#fff; border:none; padding:8px 14px; border-radius:4px; cursor:pointer;">Cancelar</button>
+          <button onclick="saveSaleEdit('${sale.id}')" style="background:#28a745; color:#fff; border:none; padding:8px 16px; border-radius:4px; cursor:pointer; font-weight:bold;">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function saveSaleEdit(id) {
+  const sale = db.sales.find(s => s.id === id);
+  if (!sale) return;
+
+  // Obtener los valores del modal
+  const newClient = document.getElementById('edit-client').value;
+  const newDeliveryCost = parseFloat(document.getElementById('edit-delivery-cost').value) || 0;
+  const newTotal = parseFloat(document.getElementById('edit-total').value) || 0;
+  const newNotes = document.getElementById('edit-notes').value;
+
+  // Actualizar la venta en la memoria del sistema
+  sale.client = newClient;
+  sale.deliveryCost = newDeliveryCost;
+  if (sale.total !== undefined) sale.total = newTotal;
+  if (sale.amount !== undefined) sale.amount = newTotal;
+  sale.notes = newNotes;
+
+  // Guardar en almacenamiento local y sincronizar con Google Sheets
+  saveDB();
+  if (typeof syncRemote === 'function') {
+    syncRemote();
+  }
+
+  // Cerrar la ventana flotante
+  const modal = document.getElementById('modal-edit-sale');
+  if (modal) modal.remove();
+
+  // Actualizar las vistas en pantalla para ver los cambios de inmediato
+  if (typeof renderVentas === 'function') renderVentas();
+  if (typeof renderDashboard === 'function') renderDashboard();
+  if (typeof renderDelivery === 'function') renderDelivery();
+}
 /* ============ STOCK ============ */
 function renderStock(){
   const moves = [...DB.movements].sort((a,b)=> b.date.localeCompare(a.date)).slice(0,50);

@@ -358,18 +358,12 @@ async function apiGet(){
   const c = getConnConfig();
   if(!c.url) return null;
   
-  const url = c.url + (c.url.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(c.token) + '&_t=' + Date.now();
+  // Cache-buster con marca de tiempo + número aleatorio para romper la caché móvil sin disparar errores de CORS
+  const cacheBuster = '_t=' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+  const url = c.url + (c.url.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(c.token) + '&' + cacheBuster;
   
-  // SOLUCIÓN PARA TELÉFONOS:
-  // Fuerza a los navegadores móviles (Safari/Chrome) a saltarse el caché del teléfono 
-  // y traer las ventas reales desde Sheets.
-  const res = await fetch(url, {
-    cache: 'no-store',
-    headers: {
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Pragma': 'no-cache'
-    }
-  });
+  // Petición limpia sin headers restrictivos para evitar "Failed to fetch"
+  const res = await fetch(url, { redirect: 'follow' });
   return await res.json();
 }
 
@@ -379,7 +373,8 @@ async function apiPost(action, payload){
   const res = await fetch(c.url, { 
     method: 'POST', 
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ token: c.token, action, payload }) 
+    body: JSON.stringify({ token: c.token, action, payload }),
+    redirect: 'follow'
   });
   return await res.json();
 }

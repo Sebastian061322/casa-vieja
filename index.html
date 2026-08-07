@@ -389,7 +389,7 @@ async function syncRemote(action, payload) {
 }
 
 function normalizeProduct(p) { return { id: String(p.id), name: String(p.name || ''), price: Number(p.price) || 0, cost: Number(p.cost) || 0, stock: Number(p.stock) || 0, minStock: Number(p.minStock) || 0, weightGrams: Number(p.weightGrams) || 0, packagingCost: Number(p.packagingCost) || 0, grindType: String(p.grindType || 'molido'), baseProductId: String(p.baseProductId || ''), unitsPerSale: Number(p.unitsPerSale) || 1 }; }
-function normalizeSale(s) { return { id: String(s.id), createdAt: Number(s.createdAt) || Date.now(), date: String(s.date || '').slice(0, 10), productId: String(s.productId || ''), productName: String(s.productName || ''), qty: Number(s.qty) || 0, unitPrice: Number(s.unitPrice) || 0, total: Number(s.total) || 0, unitCostUsed: Number(s.unitCostUsed) || 0, loteIdUsed: String(s.loteIdUsed || ''), channel: String(s.channel || ''), customer: String(s.customer || ''), phone: String(s.phone || ''), paymentStatus: String(s.paymentStatus || 'Pendiente'), deliveryStatus: String(s.deliveryStatus || 'Pendiente'), deliveryCost: Number(s.deliveryCost) || 0, deliveryCharged: Number(s.deliveryCharged) || 0, zone: String(s.zone || ''), profit: Number(s.profit) || 0 }; }
+function normalizeSale(s) { return { id: String(s.id), createdAt: Number(s.createdAt) || Date.now(), date: String(s.date || '').slice(0, 10), productId: String(s.productId || ''), productName: String(s.productName || ''), qty: Number(s.qty) || 0, unitPrice: Number(s.unitPrice) || 0, total: Number(s.total) || 0, unitCostUsed: Number(s.unitCostUsed) || 0, loteIdUsed: String(s.loteIdUsed || ''), channel: String(s.channel || ''), customer: String(s.customer || ''), phone: String(s.phone || ''), paymentStatus: String(s.paymentStatus || 'Pendiente'), deliveryStatus: String(s.deliveryStatus || 'Pendiente'), deliveryCost: Number(s.deliveryCost) || 0, deliveryCharged: Number(s.deliveryCharged) || 0, zone: String(s.zone || ''), profit: Number(s.profit) || 0, combo: Array.isArray(s.combo) ? s.combo.map(c => ({ grindType: String(c.grindType || ''), loteId: String(c.loteId || ''), loteName: String(c.loteName || ''), unitCost: Number(c.unitCost) || 0 })) : [] }; }
 function normalizeAd(a) { return { id: String(a.id), date: String(a.date || '').slice(0, 10), platform: String(a.platform || ''), campaign: String(a.campaign || ''), amount: Number(a.amount) || 0, messages: Number(a.messages) || 0 }; }
 function normalizeExpense(x) { return { id: String(x.id), date: String(x.date || '').slice(0, 10), category: String(x.category || ''), description: String(x.description || ''), amount: Number(x.amount) || 0, provider: String(x.provider || '') }; }
 function normalizeLote(l) {
@@ -401,7 +401,7 @@ function normalizeLote(l) {
     costPerKgRoasted: Number(l.costPerKgRoasted) || 0, yieldPct: Number(l.yieldPct) || 0, active: (l.active === true || l.active === 'TRUE' || l.active === 1 || l.active === '1')
   };
 }
-function normalizeBaseProduct(b) { return { id: String(b.id), name: String(b.name || ''), grindType: String(b.grindType || 'molido'), stock: Number(b.stock) || 0, minStock: Number(b.minStock) || 0 }; }
+function normalizeBaseProduct(b) { return { id: String(b.id), name: String(b.name || ''), grindType: String(b.grindType || 'molido'), stock: Number(b.stock) || 0, minStock: Number(b.minStock) || 0, weightGrams: Number(b.weightGrams) || 500, packagingCost: Number(b.packagingCost) || 0 }; }
 
 async function refreshFromRemote() {
   if (!isConnected()) return false;
@@ -748,11 +748,16 @@ function renderVentas(){
         <div><b>☕ Lote Activo (En Grano):</b> ${loteGrano ? `<b>${esc(loteGrano.name)}</b> | Productor: <b>${esc(loteGrano.producer||'—')}</b> | Flete: <b>${money(loteGrano.freightCost)}</b> | Costo: <b>S/ ${(loteGrano.costPerKgRoasted||0).toFixed(2)}/kg</b>` : '<span style="color:var(--accent-red)">Sin lote activo asignado</span>'}</div>
       </div>
 
+      <div style="background:rgba(92,127,143,0.12); border-left:4px solid var(--accent-blue,#5C7F8F); padding:10px 14px; margin-bottom:15px; border-radius:4px; display:flex; align-items:center; gap:10px;">
+        <input type="checkbox" id="sf-combo-toggle" onchange="toggleComboMode()" style="width:18px; height:18px;">
+        <label for="sf-combo-toggle" style="cursor:pointer; margin:0; font-size:0.9rem;">🔀 <b>Venta combinada</b> — el pedido mezcla Grano/Molido o distintos lotes (ej: Duo = 1 Grano + 1 Molido)</label>
+      </div>
+
       <div class="form-grid">
         <div><label>Fecha</label><input type="date" id="sf-date" value="${todayStr()}"></div>
-        <div><label>Producto</label><select id="sf-product" onchange="onSaleProductChange()">${productOptionsHTML()}</select></div>
-        <div><label>Cantidad</label><input type="number" id="sf-qty" min="1" value="1"></div>
-        <div><label>Precio unitario (S/)</label><input type="number" id="sf-price" step="0.01" value="0"></div>
+        <div id="sf-product-field"><label>Producto</label><select id="sf-product" onchange="onSaleProductChange()">${productOptionsHTML()}</select></div>
+        <div id="sf-qty-field"><label>Cantidad</label><input type="number" id="sf-qty" min="1" value="1"></div>
+        <div><label id="sf-price-label">Precio unitario (S/)</label><input type="number" id="sf-price" step="0.01" value="0" onchange="updateComboPreview()"></div>
         <div><label>Canal</label><select id="sf-channel">${CHANNELS.map(c=>`<option>${c}</option>`).join('')}</select></div>
         <div><label>Cliente (opcional)</label><input type="text" id="sf-customer" placeholder="Nombre"></div>
         <div><label>Teléfono (opcional)</label><input type="text" id="sf-phone" placeholder="Ej: 987654321"></div>
@@ -762,7 +767,20 @@ function renderVentas(){
         <div><label>Cobrado al cliente por envío (S/)</label><input type="number" id="sf-delcharged" step="0.01" value="0"></div>
         <div><label>Zona / dirección</label><input type="text" id="sf-zone" placeholder="Distrito, referencia"></div>
       </div>
-      <button class="btn" onclick="addSale()">+ Registrar venta</button>
+
+      <div id="sf-combo-block" style="display:none; margin-top:10px; padding:14px; border:1px dashed var(--border); border-radius:8px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
+          <label style="margin:0;">Nombre del pack</label>
+          <input type="text" id="sf-combo-name" placeholder="Ej: Duo Gourmet Mixto" style="width:180px;">
+          <label style="margin:0;">¿Cuántas bolsas lleva el pedido?</label>
+          <input type="number" id="sf-combo-count" min="1" max="8" value="2" onchange="renderComboRows()" style="width:70px;">
+        </div>
+        <p class="hint" style="margin-top:0;">Por cada bolsa elige el tipo, el producto base y el lote exacto. El costo y la ganancia se calculan al instante.</p>
+        <div id="sf-combo-rows"></div>
+        <div id="sf-combo-summary" style="margin-top:10px; font-size:0.95rem; padding:8px 10px; background:rgba(255,255,255,0.04); border-radius:6px;"></div>
+      </div>
+
+      <button class="btn" style="margin-top:14px;" onclick="addSale()">+ Registrar venta</button>
     </div>
 
     <div class="section-title">Historial de ventas</div>
@@ -781,7 +799,10 @@ function renderVentas(){
                 <b>${esc(customerStr || '—')}</b>
                 ${phoneStr ? `<div style="font-size:0.75rem; opacity:0.85; margin-top:2px;">📱 ${esc(phoneStr)}</div>` : ''}
               </td>
-              <td>${esc(s.productName || '—')}</td>
+              <td>
+                ${esc(s.productName || '—')}
+                ${Array.isArray(s.combo) && s.combo.length>0 ? `<div style="font-size:0.72rem; opacity:0.85; margin-top:2px;">🔀 ${s.combo.map(c=>`${c.grindType==='grano'?'Grano':'Molido'} (${esc(c.loteName||'sin lote')})`).join(' + ')}</div>` : ''}
+              </td>
               <td>${s.qty || 0}</td>
               <td>${money(s.total || 0)}</td>
               <td>${esc(s.channel || '—')}</td>
@@ -804,6 +825,95 @@ function renderVentas(){
   onSaleProductChange();
 }
 
+/* ============ VENTA COMBINADA (MEZCLA GRANO/MOLIDO Y LOTES) ============ */
+function toggleComboMode(){
+  const on = qs('sf-combo-toggle').checked;
+  qs('sf-product-field').style.display = on ? 'none' : '';
+  qs('sf-qty-field').style.display = on ? 'none' : '';
+  qs('sf-combo-block').style.display = on ? '' : 'none';
+  qs('sf-price-label').textContent = on ? 'Precio total del pedido (S/)' : 'Precio unitario (S/)';
+  if(on) renderComboRows();
+}
+
+function comboBasesHTML(grindType, selectedId){
+  const bases = DB.baseProducts.filter(b=>b.grindType===grindType);
+  if(bases.length===0) return `<option value="">— sin bolsa base de ${grindType==='grano'?'Grano':'Molido'} —</option>`;
+  return bases.map(b=>`<option value="${b.id}" ${b.id===selectedId?'selected':''}>${esc(b.name)} (stock: ${b.stock})</option>`).join('');
+}
+
+function comboLotesHTML(grindType, selectedId){
+  const lotes = (DB.lotes||[]).filter(l=>l.type===grindType || l.type==='ambos');
+  if(lotes.length===0) return `<option value="">— sin lotes para ${grindType==='grano'?'Grano':'Molido'} —</option>`;
+  return lotes.map(l=>`<option value="${l.id}" ${l.id===selectedId?'selected':''}>${l.active?'⭐ ':''}${esc(l.name)} — S/${(l.costPerKgRoasted||0).toFixed(2)}/kg</option>`).join('');
+}
+
+function comboRowHTML(i, grindType){
+  grindType = grindType || 'molido';
+  const bases = DB.baseProducts.filter(b=>b.grindType===grindType);
+  const defaultBase = bases[0];
+  const lotes = (DB.lotes||[]).filter(l=>l.type===grindType || l.type==='ambos');
+  const defaultLote = lotes.find(l=>l.active) || lotes[0];
+  return `
+    <div class="combo-row" id="combo-row-${i}" style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:8px; padding:8px; background:rgba(255,255,255,0.03); border-radius:6px;">
+      <span style="min-width:60px; font-weight:600;">Bolsa ${i}</span>
+      <select id="combo-grind-${i}" onchange="onComboGrindChange(${i})">
+        <option value="molido" ${grindType==='molido'?'selected':''}>Molido</option>
+        <option value="grano" ${grindType==='grano'?'selected':''}>En Grano</option>
+      </select>
+      <select id="combo-base-${i}" onchange="updateComboPreview()">${comboBasesHTML(grindType, defaultBase?defaultBase.id:'')}</select>
+      <select id="combo-lote-${i}" onchange="updateComboPreview()">${comboLotesHTML(grindType, defaultLote?defaultLote.id:'')}</select>
+      <span id="combo-unitcost-${i}" style="min-width:90px; font-weight:600; color:var(--accent-gold);">—</span>
+    </div>`;
+}
+
+function onComboGrindChange(i){
+  const grindType = val('combo-grind-'+i);
+  qs('combo-base-'+i).innerHTML = comboBasesHTML(grindType, '');
+  qs('combo-lote-'+i).innerHTML = comboLotesHTML(grindType, '');
+  updateComboPreview();
+}
+
+function renderComboRows(){
+  const n = Math.max(1, Math.min(8, parseInt(val('sf-combo-count'))||1));
+  let html = '';
+  for(let i=1;i<=n;i++) html += comboRowHTML(i);
+  qs('sf-combo-rows').innerHTML = html;
+  updateComboPreview();
+}
+
+function getComboEntries(){
+  const n = Math.max(1, Math.min(8, parseInt(val('sf-combo-count'))||1));
+  const entries = [];
+  for(let i=1;i<=n;i++){
+    const grindType = val('combo-grind-'+i);
+    const baseId = val('combo-base-'+i);
+    const loteId = val('combo-lote-'+i);
+    const base = baseProductById(baseId);
+    const lote = (DB.lotes||[]).find(l=>l.id===loteId);
+    const costPerGram = lote ? (parseFloat(lote.costPerKgRoasted)||0)/1000 : 0;
+    const weight = base ? (parseFloat(base.weightGrams)||500) : 500;
+    const packaging = base ? (parseFloat(base.packagingCost)||0) : 0;
+    const unitCost = Math.round((costPerGram*weight + packaging)*100)/100;
+    entries.push({ grindType, baseId, baseName: base?base.name:'', loteId, loteName: lote?lote.name:'', unitCost });
+  }
+  return entries;
+}
+
+function updateComboPreview(){
+  if(!qs('sf-combo-toggle') || !qs('sf-combo-toggle').checked) return;
+  const entries = getComboEntries();
+  entries.forEach((e,idx)=>{ const el = qs('combo-unitcost-'+(idx+1)); if(el) el.textContent = money(e.unitCost); });
+  const totalCost = entries.reduce((a,e)=>a+e.unitCost,0);
+  const price = num('sf-price');
+  const profit = price - totalCost;
+  const el = qs('sf-combo-summary');
+  if(el){
+    const granoCount = entries.filter(e=>e.grindType==='grano').length;
+    const molidoCount = entries.filter(e=>e.grindType==='molido').length;
+    el.innerHTML = `Mezcla: <b>${granoCount} Grano + ${molidoCount} Molido</b> &nbsp;|&nbsp; Costo total estimado: <b>${money(totalCost)}</b> &nbsp;|&nbsp; Ganancia estimada: <b style="color:${profit>=0?'var(--accent-green)':'var(--accent-red)'}">${money(profit)}</b>`;
+  }
+}
+
 function pill(status){
   const st = String(status || '');
   const cls = st==='Pagado'||st==='Entregado' ? 'green' : (st==='En camino' ? 'gold' : 'red');
@@ -811,6 +921,9 @@ function pill(status){
 }
 
 async function addSale(){
+  const isCombo = qs('sf-combo-toggle') && qs('sf-combo-toggle').checked;
+  if(isCombo) return addComboSale();
+
   const productId = val('sf-product');
   const product = productById(productId);
   if(!product){ alert('Selecciona un producto válido.'); return; }
@@ -846,7 +959,8 @@ async function addSale(){
     deliveryCost: delcost || 0, 
     deliveryCharged: delcharged || 0,
     zone: String(val('sf-zone') || '').trim(),
-    profit: profit || 0
+    profit: profit || 0,
+    combo: []
   };
 
   DB.sales.push(sale);
@@ -867,6 +981,77 @@ async function addSale(){
   if(base) await syncRemote('updateBaseProduct', base);
   else await syncRemote('updateProduct', product);
   await syncRemote('addMovement', mv);
+}
+
+async function addComboSale(){
+  const entries = getComboEntries();
+  if(entries.length===0){ alert('Agrega al menos una bolsa a la combinación.'); return; }
+  const missingBase = entries.some(e=>!e.baseId);
+  if(missingBase){ alert('Falta vincular alguna bolsa a un producto base. Revisa Configuración → Stock físico real.'); return; }
+
+  // Validar stock disponible por tipo antes de descontar
+  const neededByBase = {};
+  entries.forEach(e=>{ neededByBase[e.baseId] = (neededByBase[e.baseId]||0) + 1; });
+  const shortages = Object.keys(neededByBase).map(bid=>{
+    const b = baseProductById(bid);
+    return b && b.stock < neededByBase[bid] ? `${b.name} (disponible: ${b.stock}, necesitas: ${neededByBase[bid]})` : null;
+  }).filter(Boolean);
+  if(shortages.length>0){
+    if(!confirm(`Stock insuficiente: ${shortages.join(', ')}. ¿Registrar la venta de todas formas?`)) return;
+  }
+
+  const price = num('sf-price'); // precio total del pedido
+  const delcost = num('sf-delcost');
+  const delcharged = num('sf-delcharged');
+  const totalCost = entries.reduce((a,e)=>a+e.unitCost,0);
+  const profit = (price - totalCost) + (delcharged - delcost);
+
+  const granoCount = entries.filter(e=>e.grindType==='grano').length;
+  const molidoCount = entries.filter(e=>e.grindType==='molido').length;
+  const autoName = `Pack Mixto (${granoCount?granoCount+' Grano':''}${granoCount&&molidoCount?' + ':''}${molidoCount?molidoCount+' Molido':''})`;
+  const productName = String(val('sf-combo-name') || '').trim() || autoName;
+
+  const sale = {
+    id: uid(), createdAt: Date.now(),
+    date: val('sf-date') || todayStr(),
+    productId: '', productName,
+    qty: 1, unitPrice: price, total: price,
+    unitCostUsed: Math.round((totalCost/entries.length)*100)/100,
+    loteIdUsed: entries[0] ? entries[0].loteId : null,
+    channel: val('sf-channel') || 'Otro',
+    customer: String(val('sf-customer') || '').trim(),
+    phone: String(val('sf-phone') || '').trim(),
+    paymentStatus: val('sf-payment') || 'Pendiente',
+    deliveryStatus: val('sf-delivery') || 'Pendiente',
+    deliveryCost: delcost || 0,
+    deliveryCharged: delcharged || 0,
+    zone: String(val('sf-zone') || '').trim(),
+    profit: profit || 0,
+    combo: entries.map(e=>({ grindType: e.grindType, loteId: e.loteId, loteName: e.loteName, unitCost: e.unitCost }))
+  };
+
+  DB.sales.push(sale);
+
+  const movements = [];
+  Object.keys(neededByBase).forEach(bid=>{
+    const b = baseProductById(bid);
+    if(!b) return;
+    b.stock -= neededByBase[bid];
+    const lotesUsados = [...new Set(entries.filter(e=>e.baseId===bid).map(e=>e.loteName).filter(Boolean))].join(', ');
+    movements.push({ id: uid(), date: sale.date, productId: b.id, productName: b.name, type:'salida', qty: neededByBase[bid], reason: 'Venta combinada: ' + productName + (lotesUsados ? ' (Lotes: '+lotesUsados+')' : '') });
+  });
+  DB.movements.push(...movements);
+
+  saveDB();
+  renderVentas();
+  await syncRemote('addSale', sale);
+  for(const bid of Object.keys(neededByBase)){
+    const b = baseProductById(bid);
+    if(b) await syncRemote('updateBaseProduct', b);
+  }
+  for(const mv of movements){
+    await syncRemote('addMovement', mv);
+  }
 }
 
 async function deleteSale(id){
@@ -923,6 +1108,11 @@ function editSale(id) {
     <div id="modal-edit-sale" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:9999;">
       <div class="card" style="width:90%; max-width:500px; max-height:90vh; overflow-y:auto; background:var(--surface);">
         <h3>Editar Venta: ${esc(sale.productName || 'Producto')}</h3>
+        ${Array.isArray(sale.combo) && sale.combo.length>0 ? `
+        <div style="background:rgba(92,127,143,0.12); border-left:4px solid var(--accent-blue,#5C7F8F); padding:8px 12px; margin-bottom:12px; border-radius:4px; font-size:0.85rem;">
+          🔀 <b>Venta combinada</b> — ${sale.combo.map(c=>`${c.grindType==='grano'?'Grano':'Molido'} (${esc(c.loteName||'sin lote')}, costo ${money(c.unitCost)})`).join(' + ')}
+          <br><span style="opacity:0.75;">La composición de bolsas/lotes no se puede editar aquí — si te equivocaste, elimina la venta y regístrala de nuevo.</span>
+        </div>` : ''}
         <div class="form-grid" style="grid-template-columns:1fr 1fr; gap:10px;">
           <div>
             <label>Cliente</label>
@@ -1332,9 +1522,9 @@ function renderConfig(){
     <!-- STOCK FÍSICO REAL (PRODUCTO BASE) -->
     <div class="section-title">Stock físico real (bolsas base)</div>
     <div class="card table-wrap">
-      <p class="hint" style="margin-top:0;">Esto es lo que de verdad tienes en almacén: bolsas empacadas (ej: "Bolsa 500g Molido — Blend Gourmet"). Las presentaciones de abajo (Unitario, Duopack, Tripack…) descuentan de aquí, no tienen stock propio.</p>
+      <p class="hint" style="margin-top:0;">Esto es lo que de verdad tienes en almacén: bolsas empacadas (ej: "Bolsa 500g Molido — Blend Gourmet"). Las presentaciones de abajo (Unitario, Duopack, Tripack…) descuentan de aquí, no tienen stock propio. <b>Gramos/bolsa</b> y <b>Empaque/bolsa</b> se usan para calcular el costo cuando registras una <b>venta combinada</b> (mezcla de Grano/Molido o de lotes distintos).</p>
       <table>
-        <thead><tr><th>Nombre</th><th>Tipo</th><th>Stock (bolsas)</th><th>Mínimo</th><th></th></tr></thead>
+        <thead><tr><th>Nombre</th><th>Tipo</th><th>Gramos/bolsa</th><th>Empaque S//bolsa</th><th>Stock (bolsas)</th><th>Mínimo</th><th></th></tr></thead>
         <tbody>
           ${DB.baseProducts.map(b=>`
             <tr>
@@ -1345,6 +1535,8 @@ function renderConfig(){
                   <option value="grano" ${b.grindType==='grano'?'selected':''}>En Grano</option>
                 </select>
               </td>
+              <td><input type="number" id="bp-weight-${b.id}" value="${b.weightGrams||500}" style="width:75px;"></td>
+              <td><input type="number" step="0.01" id="bp-pkg-${b.id}" value="${b.packagingCost||0}" style="width:80px;"></td>
               <td><input type="number" id="bp-stock-${b.id}" value="${b.stock}" style="width:80px;"></td>
               <td><input type="number" id="bp-min-${b.id}" value="${b.minStock}" style="width:70px;"></td>
               <td class="row-actions">
@@ -1361,6 +1553,8 @@ function renderConfig(){
                 <option value="grano">En Grano</option>
               </select>
             </td>
+            <td><input type="number" id="nbp-weight" placeholder="500" style="width:75px;"></td>
+            <td><input type="number" step="0.01" id="nbp-pkg" placeholder="2.50" style="width:80px;"></td>
             <td><input type="number" id="nbp-stock" placeholder="0" style="width:80px;"></td>
             <td><input type="number" id="nbp-min" placeholder="5" style="width:70px;"></td>
             <td><button class="btn small" onclick="addBaseProduct()">+ Agregar</button></td>
@@ -1649,7 +1843,9 @@ async function addBaseProduct(){
     id: uid(), name,
     grindType: val('nbp-grind') || 'molido',
     stock: parseInt(val('nbp-stock')) || 0,
-    minStock: parseInt(val('nbp-min')) || 0
+    minStock: parseInt(val('nbp-min')) || 0,
+    weightGrams: parseFloat(val('nbp-weight')) || 500,
+    packagingCost: parseFloat(val('nbp-pkg')) || 0
   };
   DB.baseProducts.push(b);
   saveDB();
@@ -1662,6 +1858,8 @@ async function saveBaseProductRow(id){
   if(!b) return;
   b.name = val('bp-name-'+id).trim() || b.name;
   b.grindType = val('bp-grind-'+id);
+  b.weightGrams = parseFloat(val('bp-weight-'+id)) || 500;
+  b.packagingCost = parseFloat(val('bp-pkg-'+id)) || 0;
   b.stock = parseInt(val('bp-stock-'+id)) || 0;
   b.minStock = parseInt(val('bp-min-'+id)) || 0;
   saveDB();

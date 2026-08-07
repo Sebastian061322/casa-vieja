@@ -319,126 +319,125 @@ function saveDB(){
 }
 
 /* ============ CONEXIÓN A GOOGLE SHEETS ============ */
-function getConnConfig(){
-  try{ 
+function getConnConfig() {
+  try {
     const stored = JSON.parse(localStorage.getItem(CONN_KEY));
-    if(stored && stored.url) return stored;
-  }catch(e){}
-  
+    if (stored && stored.url) return stored;
+  } catch (e) {}
+
   // Retrocompatibilidad si estaba guardado en llaves sueltas
   const url = localStorage.getItem('cv_script_url') || '';
   const token = localStorage.getItem('cv_script_token') || '';
   return { url, token };
 }
 
-function saveConnConfig(cfg){ 
+function saveConnConfig(cfg) {
   localStorage.setItem(CONN_KEY, JSON.stringify(cfg));
   localStorage.setItem('cv_script_url', cfg.url || '');
   localStorage.setItem('cv_script_token', cfg.token || '');
 }
 
-function isConnected(){ 
-  const c = getConnConfig(); 
-  return !!(c.url && c.token); 
+function isConnected() {
+  const c = getConnConfig();
+  return !!(c.url && c.token);
 }
 
-function updateConnBadge(){
+function updateConnBadge() {
   const el = qs('connStatus');
-  if(!el) return;
-  if(isConnected()){ 
-    el.textContent = '● Conectado a Google Sheets'; 
-    el.className = 'online'; 
-  } else { 
-    el.textContent = '● Modo local — solo en este navegador'; 
-    el.className = 'offline'; 
+  if (!el) return;
+  if (isConnected()) {
+    el.textContent = '● Conectado a Google Sheets';
+    el.className = 'online';
+  } else {
+    el.textContent = '● Modo local — solo en este navegador';
+    el.className = 'offline';
   }
 }
 
-async function apiGet(){
+async function apiGet() {
   const c = getConnConfig();
-  if(!c.url) return null;
-  
-  // Cache-buster con marca de tiempo + número aleatorio para romper la caché móvil sin disparar errores de CORS
-  const cacheBuster = '_t=' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-  const url = c.url + (c.url.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(c.token) + '&' + cacheBuster;
-  
-  // Petición limpia sin headers restrictivos para evitar "Failed to fetch"
-  const res = await fetch(url, { redirect: 'follow' });
+  if (!c.url) return null;
+
+  // Se agrega el parámetro para evitar el caché
+  const url = c.url + (c.url.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(c.token) + '&_t=' + Date.now();
+
+  const res = await fetch(url);
   return await res.json();
 }
 
-async function apiPost(action, payload){
+async function apiPost(action, payload) {
   const c = getConnConfig();
-  if(!c.url) return null;
-  const res = await fetch(c.url, { 
-    method: 'POST', 
+  if (!c.url) return null;
+  const res = await fetch(c.url, {
+    method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ token: c.token, action, payload }),
-    redirect: 'follow'
+    body: JSON.stringify({ token: c.token, action, payload })
   });
   return await res.json();
 }
 
-async function syncRemote(action, payload){
-  if(!isConnected()) return { ok: true };
-  try{
+async function syncRemote(action, payload) {
+  if (!isConnected()) return { ok: true };
+  try {
     const res = await apiPost(action, payload);
-    if(res && res.error){ console.warn('Advertencia Sheets:', res.error); }
+    if (res && res.error) { console.warn('Advertencia Sheets:', res.error); }
     return res;
-  }catch(e){
+  } catch (e) {
     console.error('Error al conectar con Google Sheets:', e);
     return { error: e.message };
   }
 }
 
-function normalizeProduct(p){ return { id:String(p.id), name:String(p.name||''), price:Number(p.price)||0, cost:Number(p.cost)||0, stock:Number(p.stock)||0, minStock:Number(p.minStock)||0, weightGrams:Number(p.weightGrams)||0, packagingCost:Number(p.packagingCost)||0, grindType:String(p.grindType||'molido'), baseProductId:String(p.baseProductId||''), unitsPerSale:Number(p.unitsPerSale)||1 }; }
-function normalizeSale(s){ return { id:String(s.id), createdAt:Number(s.createdAt)||Date.now(), date:String(s.date||'').slice(0,10), productId:String(s.productId||''), productName:String(s.productName||''), qty:Number(s.qty)||0, unitPrice:Number(s.unitPrice)||0, total:Number(s.total)||0, unitCostUsed:Number(s.unitCostUsed)||0, loteIdUsed:String(s.loteIdUsed||''), channel:String(s.channel||''), customer:String(s.customer||''), paymentStatus:String(s.paymentStatus||'Pendiente'), deliveryStatus:String(s.deliveryStatus||'Pendiente'), deliveryCost:Number(s.deliveryCost)||0, deliveryCharged:Number(s.deliveryCharged)||0, zone:String(s.zone||''), profit:Number(s.profit)||0 }; }
-function normalizeAd(a){ return { id:String(a.id), date:String(a.date||'').slice(0,10), platform:String(a.platform||''), campaign:String(a.campaign||''), amount:Number(a.amount)||0, messages:Number(a.messages)||0 }; }
-function normalizeExpense(x){ return { id:String(x.id), date:String(x.date||'').slice(0,10), category:String(x.category||''), description:String(x.description||''), amount:Number(x.amount)||0, provider:String(x.provider||'') }; }
-function normalizeLote(l){ return {
-  id:String(l.id), name:String(l.name||''), producer:String(l.producer||''), variety:String(l.variety||''),
-  origin:String(l.origin||''), cupScore:Number(l.cupScore)||0, type:String(l.type||'ambos'), date:String(l.date||'').slice(0,10),
-  greenKg:Number(l.greenKg)||0, greenCostPerKg:Number(l.greenCostPerKg)||0, freightCost:Number(l.freightCost)||0,
-  roastedKg:Number(l.roastedKg)||0, roastCost:Number(l.roastCost)||0, totalLotCost:Number(l.totalLotCost)||0,
-  costPerKgRoasted:Number(l.costPerKgRoasted)||0, yieldPct:Number(l.yieldPct)||0, active: (l.active===true || l.active==='TRUE' || l.active===1 || l.active==='1')
-}; }
-function normalizeBaseProduct(b){ return { id:String(b.id), name:String(b.name||''), grindType:String(b.grindType||'molido'), stock:Number(b.stock)||0, minStock:Number(b.minStock)||0 }; }
+function normalizeProduct(p) { return { id: String(p.id), name: String(p.name || ''), price: Number(p.price) || 0, cost: Number(p.cost) || 0, stock: Number(p.stock) || 0, minStock: Number(p.minStock) || 0, weightGrams: Number(p.weightGrams) || 0, packagingCost: Number(p.packagingCost) || 0, grindType: String(p.grindType || 'molido'), baseProductId: String(p.baseProductId || ''), unitsPerSale: Number(p.unitsPerSale) || 1 }; }
+function normalizeSale(s) { return { id: String(s.id), createdAt: Number(s.createdAt) || Date.now(), date: String(s.date || '').slice(0, 10), productId: String(s.productId || ''), productName: String(s.productName || ''), qty: Number(s.qty) || 0, unitPrice: Number(s.unitPrice) || 0, total: Number(s.total) || 0, unitCostUsed: Number(s.unitCostUsed) || 0, loteIdUsed: String(s.loteIdUsed || ''), channel: String(s.channel || ''), customer: String(s.customer || ''), paymentStatus: String(s.paymentStatus || 'Pendiente'), deliveryStatus: String(s.deliveryStatus || 'Pendiente'), deliveryCost: Number(s.deliveryCost) || 0, deliveryCharged: Number(s.deliveryCharged) || 0, zone: String(s.zone || ''), profit: Number(s.profit) || 0 }; }
+function normalizeAd(a) { return { id: String(a.id), date: String(a.date || '').slice(0, 10), platform: String(a.platform || ''), campaign: String(a.campaign || ''), amount: Number(a.amount) || 0, messages: Number(a.messages) || 0 }; }
+function normalizeExpense(x) { return { id: String(x.id), date: String(x.date || '').slice(0, 10), category: String(x.category || ''), description: String(x.description || ''), amount: Number(x.amount) || 0, provider: String(x.provider || '') }; }
+function normalizeLote(l) {
+  return {
+    id: String(l.id), name: String(l.name || ''), producer: String(l.producer || ''), variety: String(l.variety || ''),
+    origin: String(l.origin || ''), cupScore: Number(l.cupScore) || 0, type: String(l.type || 'ambos'), date: String(l.date || '').slice(0, 10),
+    greenKg: Number(l.greenKg) || 0, greenCostPerKg: Number(l.greenCostPerKg) || 0, freightCost: Number(l.freightCost) || 0,
+    roastedKg: Number(l.roastedKg) || 0, roastCost: Number(l.roastCost) || 0, totalLotCost: Number(l.totalLotCost) || 0,
+    costPerKgRoasted: Number(l.costPerKgRoasted) || 0, yieldPct: Number(l.yieldPct) || 0, active: (l.active === true || l.active === 'TRUE' || l.active === 1 || l.active === '1')
+  };
+}
+function normalizeBaseProduct(b) { return { id: String(b.id), name: String(b.name || ''), grindType: String(b.grindType || 'molido'), stock: Number(b.stock) || 0, minStock: Number(b.minStock) || 0 }; }
 
-async function refreshFromRemote(){
-  if(!isConnected()) return false;
-  try{
+async function refreshFromRemote() {
+  if (!isConnected()) return false;
+  try {
     const data = await apiGet();
-    if(!data || data.error){ console.error('Error de Sheets:', data && data.error); return false; }
-    
+    if (!data || data.error) { console.error('Error de Sheets:', data && data.error); return false; }
+
     // Si viene la BD completa envuelta o por colecciones
     const source = data.db || data;
-    
+
     DB = {
-      products: (source.products||[]).map(normalizeProduct),
-      sales: (source.sales||[]).map(normalizeSale),
-      movements: source.movements||[],
-      ads: (source.ads||[]).map(normalizeAd),
-      expenses: (source.expenses||[]).map(normalizeExpense),
-      lotes: (source.lotes||[]).map(normalizeLote),
-      baseProducts: (source.baseProducts||[]).map(normalizeBaseProduct)
+      products: (source.products || []).map(normalizeProduct),
+      sales: (source.sales || []).map(normalizeSale),
+      movements: source.movements || [],
+      ads: (source.ads || []).map(normalizeAd),
+      expenses: (source.expenses || []).map(normalizeExpense),
+      lotes: (source.lotes || []).map(normalizeLote),
+      baseProducts: (source.baseProducts || []).map(normalizeBaseProduct)
     };
     localStorage.setItem(STORE_KEY, JSON.stringify(DB));
     return true;
-  }catch(e){ 
-    console.error("Error al descargar de Google Sheets:", e); 
+  } catch (e) {
+    console.error("Error al descargar de Google Sheets:", e);
     return false;
   }
 }
 
-async function connectSheets(){
+async function connectSheets() {
   const url = val('cfg-url').trim();
   const token = val('cfg-token').trim();
-  if(!url || !token){ alert('Completa la URL y el token.'); return; }
-  saveConnConfig({url, token});
+  if (!url || !token) { alert('Completa la URL y el token.'); return; }
+  saveConnConfig({ url, token });
   qs('cfg-conn-status').textContent = 'Probando conexión…';
-  try{
+  try {
     const data = await apiGet();
-    if(!data || data.error){
+    if (!data || data.error) {
       qs('cfg-conn-status').textContent = '✗ ' + (data && data.error ? data.error : 'No se pudo conectar.');
       return;
     }
@@ -447,49 +446,49 @@ async function connectSheets(){
     updateConnBadge();
     renderConfig();
     alert('Conectado a Google Sheets con éxito.');
-  }catch(e){
+  } catch (e) {
     qs('cfg-conn-status').textContent = '✗ ' + e.message;
   }
 }
 
-function disconnectSheets(){
-  if(!confirm('¿Volver a modo local? Dejarás de sincronizar con Google Sheets.')) return;
-  saveConnConfig({url:'', token:''});
+function disconnectSheets() {
+  if (!confirm('¿Volver a modo local? Dejarás de sincronizar con Google Sheets.')) return;
+  saveConnConfig({ url: '', token: '' });
   updateConnBadge();
   renderConfig();
 }
 
 /* ============ HELPERS ============ */
-function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
-function qs(id){ return document.getElementById(id); }
-function val(id){ const el = qs(id); return el ? el.value : ''; }
-function num(id){ const v = parseFloat(val(id)); return isNaN(v) ? 0 : v; }
-function sum(arr){ return arr.reduce((a,b)=>a+(Number(b)||0),0); }
-function todayStr(){ return new Date().toISOString().slice(0,10); }
-function monthKey(dateStr){ return (dateStr||'').slice(0,7); }
-function money(n){ return 'S/ ' + (Number(n)||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function fmtDate(d){
-  if(!d) return '—';
-  const dt = new Date(d+'T00:00:00');
-  return dt.toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+function qs(id) { return document.getElementById(id); }
+function val(id) { const el = qs(id); return el ? el.value : ''; }
+function num(id) { const v = parseFloat(val(id)); return isNaN(v) ? 0 : v; }
+function sum(arr) { return arr.reduce((a, b) => a + (Number(b) || 0), 0); }
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+function monthKey(dateStr) { return (dateStr || '').slice(0, 7); }
+function money(n) { return 'S/ ' + (Number(n) || 0).toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function fmtDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString('es-PE', { day: '2-digit', month: 'short', year: 'numeric' });
 }
-function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function productById(id){ return DB.products.find(p=>p.id===id); }
-function baseProductById(id){ return DB.baseProducts.find(b=>b.id===id); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function productById(id) { return DB.products.find(p => p.id === id); }
+function baseProductById(id) { return DB.baseProducts.find(b => b.id === id); }
 
-function getAvailableUnits(product){
-  if(product.baseProductId){
+function getAvailableUnits(product) {
+  if (product.baseProductId) {
     const base = baseProductById(product.baseProductId);
-    if(!base) return 0;
+    if (!base) return 0;
     const units = product.unitsPerSale || 1;
     return Math.floor(base.stock / units);
   }
   return product.stock;
 }
 
-function movementTargets(){
-  const targets = DB.baseProducts.map(b=>({ id:b.id, kind:'base', label: b.name + ' — bolsas físicas' }));
-  DB.products.filter(p=>!p.baseProductId).forEach(p=>{ targets.push({ id:p.id, kind:'product', label: p.name + ' (stock propio, sin vincular)' }); });
+function movementTargets() {
+  const targets = DB.baseProducts.map(b => ({ id: b.id, kind: 'base', label: b.name + ' — bolsas físicas' }));
+  DB.products.filter(p => !p.baseProductId).forEach(p => { targets.push({ id: p.id, kind: 'product', label: p.name + ' (stock propio, sin vincular)' }); });
   return targets;
 }
   

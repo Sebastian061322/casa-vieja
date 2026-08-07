@@ -355,13 +355,21 @@ function updateConnBadge(){
 }
 
 async function apiGet(){
-const c = getConnConfig();
+  const c = getConnConfig();
   if(!c.url) return null;
   
-  // Se agrega el parámetro para evitar el caché
   const url = c.url + (c.url.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(c.token) + '&_t=' + Date.now();
   
-  const res = await fetch(url);
+  // SOLUCIÓN PARA TELÉFONOS:
+  // Fuerza a los navegadores móviles (Safari/Chrome) a saltarse el caché del teléfono 
+  // y traer las ventas reales desde Sheets.
+  const res = await fetch(url, {
+    cache: 'no-store',
+    headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache'
+    }
+  });
   return await res.json();
 }
 
@@ -489,7 +497,7 @@ function movementTargets(){
   DB.products.filter(p=>!p.baseProductId).forEach(p=>{ targets.push({ id:p.id, kind:'product', label: p.name + ' (stock propio, sin vincular)' }); });
   return targets;
 }
-
+  
 /* ============ NAVEGACIÓN ============ */
 function switchView(name){
   currentView = name;

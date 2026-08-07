@@ -716,7 +716,7 @@ function getProductCost(product) {
 
 /* ============ VENTAS ============ */
 function productOptionsHTML(selectedId){
-  if(DB.products.length===0) return `<option value="">— sin productos, ve a Configuración —</option>`;
+  if(!DB.products || DB.products.length===0) return `<option value="">— sin productos, ve a Configuración —</option>`;
   return DB.products.map(p => {
     const available = getAvailableUnits(p);
     return `<option value="${p.id}" ${p.id===selectedId?'selected':''}>${esc(p.name)} (${p.weightGrams||0}g) [${p.grindType==='grano'?'En Grano':'Molido'}] - stock: ${available}</option>`;
@@ -731,15 +731,16 @@ function onSaleProductChange(){
 }
 
 function renderVentas(){
-  const rows = [...DB.sales].sort((a,b)=> b.date.localeCompare(a.date) || b.createdAt-a.createdAt);
+  const salesList = DB.sales || [];
+  const rows = [...salesList].sort((a,b)=> (b.date || '').localeCompare(a.date || '') || (b.createdAt || 0) - (a.createdAt || 0));
   const { molido: loteMolido, grano: loteGrano } = getActiveLotes();
 
   const html = `
     <div class="section-title">Registrar nueva venta</div>
     <div class="card">
       <div style="background:rgba(212,160,23,0.12); border-left:4px solid var(--accent-gold); padding:10px 14px; margin-bottom:15px; border-radius:4px; font-size:0.85rem; display:flex; flex-direction:column; gap:6px;">
-        <div><b>🌾 Lote Activo (Molido):</b> ${loteMolido ? `<b>${esc(loteMolido.name)}</b> | Productor: <b>${esc(loteMolido.producer||'—')}</b> | Flete: <b>${money(loteMolido.freightCost)}</b> | Costo: <b>S/ ${loteMolido.costPerKgRoasted.toFixed(2)}/kg</b>` : '<span style="color:var(--accent-red)">Sin lote activo asignado</span>'}</div>
-        <div><b>☕ Lote Activo (En Grano):</b> ${loteGrano ? `<b>${esc(loteGrano.name)}</b> | Productor: <b>${esc(loteGrano.producer||'—')}</b> | Flete: <b>${money(loteGrano.freightCost)}</b> | Costo: <b>S/ ${loteGrano.costPerKgRoasted.toFixed(2)}/kg</b>` : '<span style="color:var(--accent-red)">Sin lote activo asignado</span>'}</div>
+        <div><b>🌾 Lote Activo (Molido):</b> ${loteMolido ? `<b>${esc(loteMolido.name)}</b> | Productor: <b>${esc(loteMolido.producer||'—')}</b> | Flete: <b>${money(loteMolido.freightCost)}</b> | Costo: <b>S/ ${(loteMolido.costPerKgRoasted||0).toFixed(2)}/kg</b>` : '<span style="color:var(--accent-red)">Sin lote activo asignado</span>'}</div>
+        <div><b>☕ Lote Activo (En Grano):</b> ${loteGrano ? `<b>${esc(loteGrano.name)}</b> | Productor: <b>${esc(loteGrano.producer||'—')}</b> | Flete: <b>${money(loteGrano.freightCost)}</b> | Costo: <b>S/ ${(loteGrano.costPerKgRoasted||0).toFixed(2)}/kg</b>` : '<span style="color:var(--accent-red)">Sin lote activo asignado</span>'}</div>
       </div>
 
       <div class="form-grid">
@@ -765,27 +766,31 @@ function renderVentas(){
       <table>
         <thead><tr><th>Fecha</th><th>Cliente / Tel.</th><th>Producto</th><th>Cant.</th><th>Total</th><th>Canal</th><th>Pago</th><th>Entrega</th><th>Ganancia</th><th>Acciones</th></tr></thead>
         <tbody>
-          ${rows.map(s=>`
+          ${rows.map(s=>{
+            const phoneStr = String(s.phone || '').trim();
+            const customerStr = String(s.customer || '').trim();
+            return `
             <tr>
               <td>${fmtDate(s.date)}</td>
               <td>
-                <b>${esc(s.customer || '—')}</b>
-                ${s.phone ? `<div style="font-size:0.75rem; opacity:0.75; margin-top:2px;">📱 ${esc(s.phone)}</div>` : ''}
+                <b>${esc(customerStr || '—')}</b>
+                ${phoneStr ? `<div style="font-size:0.75rem; opacity:0.85; margin-top:2px;">📱 ${esc(phoneStr)}</div>` : ''}
               </td>
-              <td>${esc(s.productName)}</td>
-              <td>${s.qty}</td>
-              <td>${money(s.total)}</td>
-              <td>${esc(s.channel)}</td>
+              <td>${esc(s.productName || '—')}</td>
+              <td>${s.qty || 0}</td>
+              <td>${money(s.total || 0)}</td>
+              <td>${esc(s.channel || '—')}</td>
               <td>${pill(s.paymentStatus)}</td>
               <td>${pill(s.deliveryStatus)}</td>
-              <td style="color:${s.profit>=0?COLORS.green:COLORS.red}; font-weight:600">${money(s.profit)}</td>
+              <td style="color:${(s.profit||0)>=0?COLORS.green:COLORS.red}; font-weight:600">${money(s.profit||0)}</td>
               <td class="row-actions">
                 ${s.paymentStatus!=='Pagado' ? `<button class="btn small secondary" onclick="markPaid('${s.id}')">Marcar pagado</button>` : ''}
                 <button class="btn small" onclick="editSale('${s.id}')">Editar</button>
                 <button class="btn small danger" onclick="deleteSale('${s.id}')">Eliminar</button>
               </td>
             </tr>
-          `).join('')}
+            `;
+          }).join('')}
         </tbody>
       </table>
     </div>`}
@@ -795,8 +800,9 @@ function renderVentas(){
 }
 
 function pill(status){
-  const cls = status==='Pagado'||status==='Entregado' ? 'green' : (status==='En camino' ? 'gold' : 'red');
-  return `<span class="pill ${cls}">${esc(status)}</span>`;
+  const st = String(status || '');
+  const cls = st==='Pagado'||st==='Entregado' ? 'green' : (st==='En camino' ? 'gold' : 'red');
+  return `<span class="pill ${cls}">${esc(st || 'Pendiente')}</span>`;
 }
 
 async function addSale(){
@@ -827,14 +833,15 @@ async function addSale(){
     qty, unitPrice: price, total,
     unitCostUsed: unitCost,
     loteIdUsed: activeLote ? activeLote.id : null,
-    channel: val('sf-channel'),
-    customer: val('sf-customer').trim(),
-    phone: val('sf-phone').trim(),
-    paymentStatus: val('sf-payment'),
-    deliveryStatus: val('sf-delivery'),
-    deliveryCost: delcost, deliveryCharged: delcharged,
-    zone: val('sf-zone'),
-    profit
+    channel: val('sf-channel') || 'Otro',
+    customer: String(val('sf-customer') || '').trim(),
+    phone: String(val('sf-phone') || '').trim(),
+    paymentStatus: val('sf-payment') || 'Pendiente',
+    deliveryStatus: val('sf-delivery') || 'Pendiente',
+    deliveryCost: delcost || 0, 
+    deliveryCharged: delcharged || 0,
+    zone: String(val('sf-zone') || '').trim(),
+    profit: profit || 0
   };
 
   DB.sales.push(sale);
@@ -914,11 +921,11 @@ function editSale(id) {
         <div class="form-grid" style="grid-template-columns:1fr 1fr; gap:10px;">
           <div>
             <label>Cliente</label>
-            <input type="text" id="es-customer" value="${esc(sale.customer || '')}">
+            <input type="text" id="es-customer" value="${esc(String(sale.customer || ''))}">
           </div>
           <div>
             <label>Teléfono</label>
-            <input type="text" id="es-phone" value="${esc(sale.phone || '')}">
+            <input type="text" id="es-phone" value="${esc(String(sale.phone || ''))}">
           </div>
           <div>
             <label>Costo real envío (S/)</label>
@@ -934,7 +941,7 @@ function editSale(id) {
           </div>
           <div style="grid-column: 1 / -1;">
             <label>Zona / Dirección / Referencia</label>
-            <input type="text" id="es-zone" value="${esc(sale.zone || '')}">
+            <input type="text" id="es-zone" value="${esc(String(sale.zone || ''))}">
           </div>
         </div>
         <div style="margin-top:15px; display:flex; gap:10px; justify-content:flex-end;">
@@ -952,12 +959,12 @@ async function saveSaleEdit(id) {
   const sale = DB.sales.find(s => s.id === id);
   if (!sale) return;
 
-  sale.customer = val('es-customer').trim();
-  sale.phone = val('es-phone').trim();
-  sale.deliveryCost = num('es-delcost');
-  sale.deliveryCharged = num('es-delcharged');
-  sale.total = num('es-total');
-  sale.zone = val('es-zone').trim();
+  sale.customer = String(val('es-customer') || '').trim();
+  sale.phone = String(val('es-phone') || '').trim();
+  sale.deliveryCost = num('es-delcost') || 0;
+  sale.deliveryCharged = num('es-delcharged') || 0;
+  sale.total = num('es-total') || 0;
+  sale.zone = String(val('es-zone') || '').trim();
 
   // Recalcular la ganancia neta automáticamente
   const costTotal = (sale.qty || 1) * (sale.unitCostUsed || 0);

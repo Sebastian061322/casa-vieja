@@ -355,9 +355,12 @@ function updateConnBadge(){
 }
 
 async function apiGet(){
-  const c = getConnConfig();
+const c = getConnConfig();
   if(!c.url) return null;
-  const url = c.url + (c.url.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(c.token);
+  
+  // Se agrega el parámetro para evitar el caché
+  const url = c.url + (c.url.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(c.token) + '&_t=' + Date.now();
+  
   const res = await fetch(url);
   return await res.json();
 }

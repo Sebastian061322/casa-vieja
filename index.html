@@ -307,13 +307,15 @@ function loadDB(){
   }
 }
 
-function saveDB(){
+function saveDB(syncFull){
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(DB));
   } catch(e) {
     console.error('Error guardando en localStorage:', e);
   }
-  if(isConnected()){
+  // syncFull=false: esta acción ya va a hacer su propio syncRemote('addX'/'updateX'/'deleteX', ...)
+  // justo después, así que NO reenviamos toda la base de datos aquí (evita duplicados).
+  if(syncFull !== false && isConnected()){
     syncRemote('saveDB', { db: DB });
   }
 }
@@ -780,7 +782,7 @@ function renderVentas(){
         <div id="sf-combo-summary" style="margin-top:10px; font-size:0.95rem; padding:8px 10px; background:rgba(255,255,255,0.04); border-radius:6px;"></div>
       </div>
 
-      <button class="btn" style="margin-top:14px;" onclick="addSale()">+ Registrar venta</button>
+      <button class="btn" style="margin-top:14px;" onclick="this.disabled=true; addSale().finally(()=>this.disabled=false)">+ Registrar venta</button>
     </div>
 
     <div class="section-title">Historial de ventas</div>
@@ -975,7 +977,7 @@ async function addSale(){
     mv = { id: uid(), date: sale.date, productId, productName: product.name, type:'salida', qty, reason:'Venta' };
   }
   DB.movements.push(mv);
-  saveDB();
+  saveDB(false);
   renderVentas();
   await syncRemote('addSale', sale);
   if(base) await syncRemote('updateBaseProduct', base);
@@ -1042,7 +1044,7 @@ async function addComboSale(){
   });
   DB.movements.push(...movements);
 
-  saveDB();
+  saveDB(false);
   renderVentas();
   await syncRemote('addSale', sale);
   for(const bid of Object.keys(neededByBase)){
@@ -1074,7 +1076,7 @@ async function deleteSale(id){
     }
   }
   DB.sales = DB.sales.filter(s=>s.id!==id);
-  saveDB();
+  saveDB(false);
   renderVentas();
   await syncRemote('deleteSale', {id});
   if(base) await syncRemote('updateBaseProduct', base);
@@ -1086,7 +1088,7 @@ async function markPaid(id){
   const sale = DB.sales.find(s=>s.id===id);
   if(sale){
     sale.paymentStatus='Pagado';
-    saveDB();
+    saveDB(false);
     renderView(currentView);
     await syncRemote('updateSale', sale);
   }
@@ -1165,7 +1167,7 @@ async function saveSaleEdit(id) {
   const costTotal = (sale.qty || 1) * (sale.unitCostUsed || 0);
   sale.profit = (sale.total - costTotal) + (sale.deliveryCharged - sale.deliveryCost);
 
-  saveDB();
+  saveDB(false);
   closeModalSale();
   renderVentas();
   await syncRemote('updateSale', sale);
@@ -1222,7 +1224,7 @@ function renderStock(){
         <div><label>Cantidad</label><input type="number" id="mv-qty" min="1" value="1"></div>
         <div><label>Motivo</label><input type="text" id="mv-reason" placeholder="Ej: Empaque de lote actual"></div>
       </div>
-      <button class="btn" onclick="addMovement()">+ Registrar movimiento</button>
+      <button class="btn" onclick="this.disabled=true; addMovement().finally(()=>this.disabled=false)">+ Registrar movimiento</button>
     </div>
 
     <div class="section-title">Últimos movimientos</div>
@@ -1254,7 +1256,7 @@ async function addMovement(){
     base.stock += (type==='entrada' ? qty : -qty);
     mv = { id: uid(), date: todayStr(), productId: base.id, productName: base.name, type, qty, reason };
     DB.movements.push(mv);
-    saveDB();
+    saveDB(false);
     renderStock();
     await syncRemote('addMovement', mv);
     await syncRemote('updateBaseProduct', base);
@@ -1264,7 +1266,7 @@ async function addMovement(){
     product.stock += (type==='entrada' ? qty : -qty);
     mv = { id: uid(), date: todayStr(), productId: product.id, productName: product.name, type, qty, reason };
     DB.movements.push(mv);
-    saveDB();
+    saveDB(false);
     renderStock();
     await syncRemote('addMovement', mv);
     await syncRemote('updateProduct', product);
@@ -1289,7 +1291,7 @@ function renderAds(){
         <div><label>Monto gastado (S/)</label><input type="number" id="ad-amount" step="0.01" value="0"></div>
         <div><label>Mensajes / leads generados</label><input type="number" id="ad-messages" value="0"></div>
       </div>
-      <button class="btn" onclick="addAdSpend()">+ Registrar gasto</button>
+      <button class="btn" onclick="this.disabled=true; addAdSpend().finally(()=>this.disabled=false)">+ Registrar gasto</button>
       <p class="hint">Tip: para que el ROAS del Dashboard se calcule bien, marca el canal "Meta Ads (Facebook/Instagram)" en las ventas que vinieron de un anuncio.</p>
     </div>
     <div class="section-title">Historial de gasto</div>
@@ -1311,7 +1313,7 @@ async function addAdSpend(){
   if(amount<=0){ alert('Ingresa un monto mayor a 0.'); return; }
   const ad = { id: uid(), date: val('ad-date')||todayStr(), platform: val('ad-platform')||'Meta Ads', campaign: val('ad-campaign'), amount, messages: num('ad-messages') };
   DB.ads.push(ad);
-  saveDB();
+  saveDB(false);
   renderAds();
   await syncRemote('addAd', ad);
 }
@@ -1319,7 +1321,7 @@ async function addAdSpend(){
 async function deleteAd(id){
   if(!confirm('¿Eliminar este registro de gasto?')) return;
   DB.ads = DB.ads.filter(a=>a.id!==id);
-  saveDB();
+  saveDB(false);
   renderAds();
   await syncRemote('deleteAd', {id});
 }
@@ -1346,7 +1348,7 @@ function renderEgresos(){
         <div><label>Monto (S/)</label><input type="number" id="ex-amount" step="0.01" value="0"></div>
         <div><label>Proveedor (opcional)</label><input type="text" id="ex-provider" placeholder="Nombre del proveedor"></div>
       </div>
-      <button class="btn" onclick="addExpense()">+ Registrar egreso</button>
+      <button class="btn" onclick="this.disabled=true; addExpense().finally(()=>this.disabled=false)">+ Registrar egreso</button>
     </div>
 
     ${catEntries.length>0 ? `
@@ -1372,7 +1374,7 @@ async function addExpense(){
   if(amount<=0){ alert('Ingresa un monto mayor a 0.'); return; }
   const expense = { id: uid(), date: val('ex-date')||todayStr(), category: val('ex-category'), description: val('ex-desc'), amount, provider: val('ex-provider') };
   DB.expenses.push(expense);
-  saveDB();
+  saveDB(false);
   renderEgresos();
   await syncRemote('addExpense', expense);
 }
@@ -1380,7 +1382,7 @@ async function addExpense(){
 async function deleteExpense(id){
   if(!confirm('¿Eliminar este egreso?')) return;
   DB.expenses = DB.expenses.filter(x=>x.id!==id);
-  saveDB();
+  saveDB(false);
   renderEgresos();
   await syncRemote('deleteExpense', {id});
 }
@@ -1434,7 +1436,7 @@ async function updateDeliveryStatus(saleId, newStatus){
   const sale = DB.sales.find(s=>s.id===saleId);
   if(sale){
     sale.deliveryStatus = newStatus;
-    saveDB();
+    saveDB(false);
     renderView(currentView);
     await syncRemote('updateSale', sale);
   }
@@ -1474,7 +1476,7 @@ function renderConfig(){
         <div><label>Kg Tostado obtenido</label><input type="number" id="lot-roasted-kg" step="0.1" value="82.0"></div>
         <div><label>Costo Tostado / Maquila (S/)</label><input type="number" id="lot-roast-cost" step="0.01" value="250.00"></div>
       </div>
-      <button class="btn" onclick="addLote()">+ Registrar y activar lote</button>
+      <button class="btn" onclick="this.disabled=true; addLote().finally(()=>this.disabled=false)">+ Registrar y activar lote</button>
     </div>
 
     ${lotes.length > 0 ? `
@@ -1557,7 +1559,7 @@ function renderConfig(){
             <td><input type="number" step="0.01" id="nbp-pkg" placeholder="2.50" style="width:80px;"></td>
             <td><input type="number" id="nbp-stock" placeholder="0" style="width:80px;"></td>
             <td><input type="number" id="nbp-min" placeholder="5" style="width:70px;"></td>
-            <td><button class="btn small" onclick="addBaseProduct()">+ Agregar</button></td>
+            <td><button class="btn small" onclick="this.disabled=true; addBaseProduct().finally(()=>this.disabled=false)">+ Agregar</button></td>
           </tr>
         </tbody>
       </table>
@@ -1636,7 +1638,7 @@ function renderConfig(){
             <td><input type="number" id="np-units" min="1" value="1" style="width:55px;"></td>
             <td><input type="number" id="np-stock" placeholder="0" style="width:60px;"></td>
             <td><input type="number" id="np-min" placeholder="5" style="width:60px;"></td>
-            <td><button class="btn small" onclick="addProduct()">+ Agregar</button></td>
+            <td><button class="btn small" onclick="this.disabled=true; addProduct().finally(()=>this.disabled=false)">+ Agregar</button></td>
           </tr>
         </tbody>
       </table>
@@ -1728,7 +1730,7 @@ async function addLote(){
   };
 
   DB.lotes.push(lote);
-  saveDB();
+  saveDB(false);
   renderConfig();
   await syncRemote('addLote', lote);
 }
@@ -1753,7 +1755,7 @@ async function toggleLoteActive(id){
     }
   });
 
-  saveDB();
+  saveDB(false);
   renderConfig();
   for(const l of changed){ await syncRemote('updateLote', l); }
 }
@@ -1761,7 +1763,7 @@ async function toggleLoteActive(id){
 async function deleteLote(id){
   if(!confirm('¿Eliminar este lote? Las ventas pasadas conservarán sus datos registrados.')) return;
   DB.lotes = DB.lotes.filter(l => l.id !== id);
-  saveDB();
+  saveDB(false);
   renderConfig();
   await syncRemote('deleteLote', {id});
 }
@@ -1829,7 +1831,7 @@ async function saveEditedLote(id){
   l.costPerKgRoasted = l.roastedKg > 0 ? Math.round((l.totalLotCost / l.roastedKg) * 100) / 100 : 0;
   l.yieldPct = l.greenKg > 0 ? (l.roastedKg / l.greenKg) * 100 : 0;
 
-  saveDB();
+  saveDB(false);
   closeModal();
   renderConfig();
   await syncRemote('updateLote', l);
@@ -1848,7 +1850,7 @@ async function addBaseProduct(){
     packagingCost: parseFloat(val('nbp-pkg')) || 0
   };
   DB.baseProducts.push(b);
-  saveDB();
+  saveDB(false);
   renderConfig();
   await syncRemote('addBaseProduct', b);
 }
@@ -1862,7 +1864,7 @@ async function saveBaseProductRow(id){
   b.packagingCost = parseFloat(val('bp-pkg-'+id)) || 0;
   b.stock = parseInt(val('bp-stock-'+id)) || 0;
   b.minStock = parseInt(val('bp-min-'+id)) || 0;
-  saveDB();
+  saveDB(false);
   renderConfig();
   await syncRemote('updateBaseProduct', b);
 }
@@ -1875,7 +1877,7 @@ async function deleteBaseProduct(id){
   }
   if(!confirm('¿Eliminar este producto base del stock físico?')) return;
   DB.baseProducts = DB.baseProducts.filter(b=>b.id!==id);
-  saveDB();
+  saveDB(false);
   renderConfig();
   await syncRemote('deleteBaseProduct', {id});
 }
@@ -1900,7 +1902,7 @@ async function addProduct(){
   p.cost = getProductCost(p);
 
   DB.products.push(p);
-  saveDB();
+  saveDB(false);
   renderConfig();
   await syncRemote('addProduct', p);
 }
@@ -1919,7 +1921,7 @@ async function saveProductRow(id){
   p.minStock = parseInt(val('p-min-'+id)) || 0;
   p.cost = getProductCost(p);
 
-  saveDB();
+  saveDB(false);
   renderConfig();
   await syncRemote('updateProduct', p);
 }
@@ -1927,7 +1929,7 @@ async function saveProductRow(id){
 async function deleteProduct(id){
   if(!confirm('¿Eliminar este producto del catálogo? Las ventas históricas mantendrán sus registros.')) return;
   DB.products = DB.products.filter(p=>p.id!==id);
-  saveDB();
+  saveDB(false);
   renderConfig();
   await syncRemote('deleteProduct', {id});
 }

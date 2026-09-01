@@ -378,15 +378,40 @@ async function apiPost(action, payload) {
   return await res.json();
 }
 
+let pendingWrites = 0;
+
+function showSyncBanner(message, isError) {
+  let banner = qs('sync-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'sync-banner';
+    banner.style.cssText = 'position:fixed; top:10px; left:50%; transform:translateX(-50%); z-index:99999; padding:10px 18px; border-radius:8px; font-size:13px; font-weight:600; box-shadow:0 4px 14px rgba(0,0,0,.4); max-width:90vw; text-align:center;';
+    document.body.appendChild(banner);
+  }
+  banner.style.background = isError ? 'var(--accent-red)' : 'var(--accent-green)';
+  banner.style.color = '#fff';
+  banner.textContent = message;
+  banner.style.display = 'block';
+  clearTimeout(banner._hideTimer);
+  banner._hideTimer = setTimeout(() => { banner.style.display = 'none'; }, isError ? 7000 : 2500);
+}
+
 async function syncRemote(action, payload) {
   if (!isConnected()) return { ok: true };
+  pendingWrites++;
   try {
     const res = await apiPost(action, payload);
-    if (res && res.error) { console.warn('Advertencia Sheets:', res.error); }
+    if (res && res.error) {
+      console.warn('Advertencia Sheets:', res.error);
+      showSyncBanner('⚠ No se guardó en Sheets (' + action + '): ' + res.error, true);
+    }
     return res;
   } catch (e) {
     console.error('Error al conectar con Google Sheets:', e);
+    showSyncBanner('⚠ Sin conexión con Sheets — "' + action + '" quedó SOLO guardado en este dispositivo. Revisa tu internet y actualiza luego.', true);
     return { error: e.message };
+  } finally {
+    pendingWrites--;
   }
 }
 
@@ -466,7 +491,19 @@ function qs(id) { return document.getElementById(id); }
 function val(id) { const el = qs(id); return el ? el.value : ''; }
 function num(id) { const v = parseFloat(val(id)); return isNaN(v) ? 0 : v; }
 function sum(arr) { return arr.reduce((a, b) => a + (Number(b) || 0), 0); }
-function todayStr() { return new Date().toISOString().slice(0, 10); }
+function todayStr() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+function localISODate(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
 function monthKey(dateStr) { return (dateStr || '').slice(0, 7); }
 function money(n) { return 'S/ ' + (Number(n) || 0).toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 function fmtDate(d) {
@@ -599,16 +636,17 @@ function computeDashboard(){
   const expensesMonth = sum(monthExpenses.map(x=>x.amount));
   const netProfitMonth = profitMonth - expensesMonth;
   const adSpendMonth = sum(monthAds.map(a=>a.amount));
+  const profitMonthMinusAds = profitMonth - adSpendMonth;
   const adsRevenue = sum(monthSales.filter(s=>s.channel===CHANNELS[0]).map(s=>s.total));
   const roas = adSpendMonth>0 ? (adsRevenue/adSpendMonth) : null;
   const totalStock = DB.baseProducts.length>0 ? sum(DB.baseProducts.map(b=>b.stock)) : sum(DB.products.map(p=>p.stock));
   const pendingDeliveries = DB.sales.filter(s=>s.deliveryStatus && s.deliveryStatus!=='Entregado').length;
   const lowStock = DB.baseProducts.length>0 ? DB.baseProducts.filter(b=>b.stock<=b.minStock) : DB.products.filter(p=>p.stock<=p.minStock);
-  return {revToday, revMonth, profitMonth, expensesMonth, netProfitMonth, adSpendMonth, roas, totalStock, pendingDeliveries, lowStock, monthSales};
+  return {revToday, revMonth, profitMonth, expensesMonth, netProfitMonth, profitMonthMinusAds, adSpendMonth, roas, totalStock, pendingDeliveries, lowStock, monthSales};
 }
 
 function last14DaysSeries(){
-  const days=[]; for(let i=13;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push(d.toISOString().slice(0,10)); }
+  const days=[]; for(let i=13;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push(localISODate(d)); }
   const labels = days.map(d=> d.slice(8,10)+'/'+d.slice(5,7) );
   const values = days.map(d=> sum(DB.sales.filter(s=>s.date===d).map(s=>s.total)) );
   return {labels, values};
@@ -616,7 +654,7 @@ function last14DaysSeries(){
 
 function last6MonthsSeries(){
   const months=[]; const now=new Date();
-  for(let i=5;i>=0;i--){ const d=new Date(now.getFullYear(), now.getMonth()-i, 1); months.push(d.toISOString().slice(0,7)); }
+  for(let i=5;i>=0;i--){ const d=new Date(now.getFullYear(), now.getMonth()-i, 1); months.push(localISODate(d).slice(0,7)); }
   const labels = months.map(m=> MONTH_NAMES[Number(m.split('-')[1])-1] );
   const profit = months.map(m=> sum(DB.sales.filter(s=>monthKey(s.date)===m).map(s=>s.profit)) );
   const adspend = months.map(m=> sum(DB.ads.filter(a=>monthKey(a.date)===m).map(a=>a.amount)) );
@@ -664,6 +702,7 @@ function renderDashboard(){
       <div class="card"><p class="kpi-label">Ventas hoy</p><p class="kpi-value">${money(d.revToday)}</p></div>
       <div class="card"><p class="kpi-label">Ventas del mes</p><p class="kpi-value">${money(d.revMonth)}</p></div>
       <div class="card"><p class="kpi-label">Ganancia del mes</p><p class="kpi-value ${d.profitMonth>=0?'green':'red'}">${money(d.profitMonth)}</p><p class="kpi-sub">Ventas menos costo de producto y envío</p></div>
+      <div class="card"><p class="kpi-label">Ganancia neta (sin Ads)</p><p class="kpi-value ${d.profitMonthMinusAds>=0?'green':'red'}">${money(d.profitMonthMinusAds)}</p><p class="kpi-sub">Ganancia del mes − inversión en Ads</p></div>
       <div class="card"><p class="kpi-label">Egresos del mes</p><p class="kpi-value red">${money(d.expensesMonth)}</p><p class="kpi-sub">Materiales, empaques, etc.</p></div>
       <div class="card"><p class="kpi-label">Ganancia neta (mes)</p><p class="kpi-value ${d.netProfitMonth>=0?'green':'red'}">${money(d.netProfitMonth)}</p><p class="kpi-sub">Ganancia − egresos</p></div>
       <div class="card"><p class="kpi-label">Gasto en Ads (mes)</p><p class="kpi-value gold">${money(d.adSpendMonth)}</p><p class="kpi-sub">ROAS aprox: ${d.roas===null?'—':d.roas.toFixed(2)+'x'}</p></div>
@@ -1169,7 +1208,7 @@ async function saveSaleEdit(id) {
 
   saveDB(false);
   closeModalSale();
-  renderVentas();
+  renderView(currentView);
   await syncRemote('updateSale', sale);
 }
 /* ============ STOCK ============ */
@@ -1411,7 +1450,7 @@ function renderDelivery(){
                   ${DELIVERY_STATUSES.map(st=>`<option ${st===s.deliveryStatus?'selected':''}>${st}</option>`).join('')}
                 </select>
               </td>
-              <td><button class="btn small" onclick="updateDeliveryStatus('${s.id}','Entregado')">Marcar entregado</button></td>
+              <td><button class="btn small" onclick="updateDeliveryStatus('${s.id}','Entregado')">Marcar entregado</button> <button class="btn small secondary" onclick="editSale('${s.id}')">Editar</button></td>
             </tr>
           `).join('')}
         </tbody>
@@ -1995,6 +2034,7 @@ const SAFE_REFRESH_VIEWS = ['dashboard', 'delivery', 'stock', 'ads', 'egresos'];
 async function tryLiveRefresh(){
   if(!isConnected()) return;
   if(document.visibilityState !== 'visible') return;
+  if(pendingWrites > 0) return; // hay un guardado en camino: no pisar con datos viejos de Sheets
 
   const isTyping = document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT');
   if(isTyping) return;

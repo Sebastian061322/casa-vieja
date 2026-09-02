@@ -778,7 +778,6 @@ function onSaleProductChange(){
 
 function renderVentas(){
   const salesList = DB.sales || [];
-  const rows = [...salesList].sort((a,b)=> (b.date || '').localeCompare(a.date || '') || (b.createdAt || 0) - (a.createdAt || 0));
   const { molido: loteMolido, grano: loteGrano } = getActiveLotes();
 
   const html = `
@@ -825,42 +824,41 @@ function renderVentas(){
     </div>
 
     <div class="section-title">Historial de ventas</div>
-    ${rows.length===0 ? `<div class="empty">Aún no registras ventas. Usa el formulario de arriba.</div>` : `
-    <div class="card table-wrap">
-      <table>
-        <thead><tr><th>Fecha</th><th>Cliente / Tel.</th><th>Producto</th><th>Cant.</th><th>Total</th><th>Canal</th><th>Pago</th><th>Entrega</th><th>Ganancia</th><th>Acciones</th></tr></thead>
-        <tbody>
-          ${rows.map(s=>{
-            const phoneStr = String(s.phone || '').trim();
-            const customerStr = String(s.customer || '').trim();
-            return `
-            <tr>
-              <td>${fmtDate(s.date)}</td>
-              <td>
-                <b>${esc(customerStr || '—')}</b>
-                ${phoneStr ? `<div style="font-size:0.75rem; opacity:0.85; margin-top:2px;">📱 ${esc(phoneStr)}</div>` : ''}
-              </td>
-              <td>
-                ${esc(s.productName || '—')}
-                ${Array.isArray(s.combo) && s.combo.length>0 ? `<div style="font-size:0.72rem; opacity:0.85; margin-top:2px;">🔀 ${s.combo.map(c=>`${c.grindType==='grano'?'Grano':'Molido'} (${esc(c.loteName||'sin lote')})`).join(' + ')}</div>` : ''}
-              </td>
-              <td>${s.qty || 0}</td>
-              <td>${money(s.total || 0)}</td>
-              <td>${esc(s.channel || '—')}</td>
-              <td>${pill(s.paymentStatus)}</td>
-              <td>${pill(s.deliveryStatus)}</td>
-              <td style="color:${(s.profit||0)>=0?COLORS.green:COLORS.red}; font-weight:600">${money(s.profit||0)}</td>
-              <td class="row-actions">
-                ${s.paymentStatus!=='Pagado' ? `<button class="btn small secondary" onclick="markPaid('${s.id}')">Marcar pagado</button>` : ''}
-                <button class="btn small" onclick="editSale('${s.id}')">Editar</button>
-                <button class="btn small danger" onclick="deleteSale('${s.id}')">Eliminar</button>
-              </td>
-            </tr>
-            `;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>`}
+    ${renderHistorySection({
+      id: 'ventas-hist',
+      items: salesList,
+      dateField: 'date',
+      emptyText: 'Aún no registras ventas este mes.',
+      headHtml: '<th>Fecha</th><th>Cliente / Tel.</th><th>Producto</th><th>Cant.</th><th>Total</th><th>Canal</th><th>Pago</th><th>Entrega</th><th>Ganancia</th><th>Acciones</th>',
+      renderRow: (s, num) => {
+        const phoneStr = String(s.phone || '').trim();
+        const customerStr = String(s.customer || '').trim();
+        return `
+        <tr>
+          <td>${num}</td>
+          <td>${fmtDate(s.date)}</td>
+          <td>
+            <b>${esc(customerStr || '—')}</b>
+            ${phoneStr ? `<div style="font-size:0.75rem; opacity:0.85; margin-top:2px;">📱 ${esc(phoneStr)}</div>` : ''}
+          </td>
+          <td>
+            ${esc(s.productName || '—')}
+            ${Array.isArray(s.combo) && s.combo.length>0 ? `<div style="font-size:0.72rem; opacity:0.85; margin-top:2px;">🔀 ${s.combo.map(c=>`${c.grindType==='grano'?'Grano':'Molido'} (${esc(c.loteName||'sin lote')})`).join(' + ')}</div>` : ''}
+          </td>
+          <td>${s.qty || 0}</td>
+          <td>${money(s.total || 0)}</td>
+          <td>${esc(s.channel || '—')}</td>
+          <td>${pill(s.paymentStatus)}</td>
+          <td>${pill(s.deliveryStatus)}</td>
+          <td style="color:${(s.profit||0)>=0?COLORS.green:COLORS.red}; font-weight:600">${money(s.profit||0)}</td>
+          <td class="row-actions">
+            ${s.paymentStatus!=='Pagado' ? `<button class="btn small secondary" onclick="markPaid('${s.id}')">Marcar pagado</button>` : ''}
+            <button class="btn small" onclick="editSale('${s.id}')">Editar</button>
+            <button class="btn small danger" onclick="deleteSale('${s.id}')">Eliminar</button>
+          </td>
+        </tr>`;
+      }
+    })}
   `;
   qs('view-ventas').innerHTML = html;
   onSaleProductChange();
@@ -953,6 +951,88 @@ function updateComboPreview(){
     const molidoCount = entries.filter(e=>e.grindType==='molido').length;
     el.innerHTML = `Mezcla: <b>${granoCount} Grano + ${molidoCount} Molido</b> &nbsp;|&nbsp; Costo total estimado: <b>${money(totalCost)}</b> &nbsp;|&nbsp; Ganancia estimada: <b style="color:${profit>=0?'var(--accent-green)':'var(--accent-red)'}">${money(profit)}</b>`;
   }
+}
+
+/* ============ HISTORIAL AGRUPADO POR MES (mes actual plano, meses pasados desplegables) ============ */
+const FULL_MONTH_NAMES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+function monthLabelFull(mk){
+  if(!mk) return '—';
+  const parts = mk.split('-');
+  const y = parts[0], m = parts[1];
+  return (FULL_MONTH_NAMES[Number(m)-1]||mk) + ' ' + y;
+}
+
+function groupByMonthKey(items, dateField){
+  const map = {};
+  items.forEach(it=>{
+    const mk = monthKey(it[dateField]);
+    if(!mk) return;
+    if(!map[mk]) map[mk]=[];
+    map[mk].push(it);
+  });
+  return map;
+}
+
+// Numera 1..N en orden cronológico ascendente (1 = el más antiguo del mes, N = el más nuevo)
+function numberWithinMonth(items){
+  const sorted = [...items].sort((a,b)=> (a.date||'').localeCompare(b.date||'') || (a.createdAt||0)-(b.createdAt||0));
+  const numMap = new Map();
+  sorted.forEach((it,idx)=> numMap.set(it, idx+1));
+  return numMap;
+}
+
+let historySections = {};
+
+function renderHistorySection(config){
+  // config: { id, items, dateField, renderRow(item,num), headHtml, emptyText }
+  const currentMonth = monthKey(todayStr());
+  const byMonth = groupByMonthKey(config.items, config.dateField);
+  historySections[config.id] = { byMonth, renderRow: config.renderRow, headHtml: config.headHtml, emptyText: config.emptyText };
+
+  const currentItems = byMonth[currentMonth] || [];
+  const pastMonthKeys = Object.keys(byMonth).filter(mk=>mk!==currentMonth).sort((a,b)=> b.localeCompare(a));
+  const currentSortedDesc = [...currentItems].sort((a,b)=> (b.date||'').localeCompare(a.date||'') || (b.createdAt||0)-(a.createdAt||0));
+  const currentNumMap = numberWithinMonth(currentItems);
+
+  let html = `<div style="margin-bottom:10px; font-size:0.85rem; color:var(--text-muted);">📅 <b>${monthLabelFull(currentMonth)}</b> (mes actual) — ${currentItems.length} registro(s)</div>`;
+
+  if(currentSortedDesc.length===0){
+    html += `<div class="empty">${config.emptyText}</div>`;
+  } else {
+    html += `<div class="card table-wrap"><table><thead><tr><th>#</th>${config.headHtml}</tr></thead><tbody>`;
+    currentSortedDesc.forEach(it=>{ html += config.renderRow(it, currentNumMap.get(it)); });
+    html += `</tbody></table></div>`;
+  }
+
+  if(pastMonthKeys.length>0){
+    html += `<div style="margin-top:18px;">
+      <label style="display:block; margin-bottom:6px;">📂 Ver historial de un mes anterior</label>
+      <select id="${config.id}-month-select" onchange="renderPastMonthDetail('${config.id}')">
+        <option value="">— selecciona un mes —</option>
+        ${pastMonthKeys.map(mk=>`<option value="${mk}">${monthLabelFull(mk)} (${byMonth[mk].length} registro(s))</option>`).join('')}
+      </select>
+      <div id="${config.id}-month-detail" style="margin-top:12px;"></div>
+    </div>`;
+  }
+
+  return html;
+}
+
+function renderPastMonthDetail(id){
+  const sel = qs(id+'-month-select');
+  const mk = sel ? sel.value : '';
+  const container = qs(id+'-month-detail');
+  if(!container) return;
+  if(!mk){ container.innerHTML=''; return; }
+  const section = historySections[id];
+  if(!section) return;
+  const items = section.byMonth[mk] || [];
+  const sortedDesc = [...items].sort((a,b)=> (b.date||'').localeCompare(a.date||'') || (b.createdAt||0)-(a.createdAt||0));
+  const numMap = numberWithinMonth(items);
+  let html = `<div class="card table-wrap"><table><thead><tr><th>#</th>${section.headHtml}</tr></thead><tbody>`;
+  sortedDesc.forEach(it=>{ html += section.renderRow(it, numMap.get(it)); });
+  html += `</tbody></table></div><div style="margin-top:6px; font-size:0.8rem; color:var(--text-muted);">Total: ${items.length} registro(s) en ${monthLabelFull(mk)}</div>`;
+  container.innerHTML = html;
 }
 
 function pill(status){
@@ -1314,7 +1394,6 @@ async function addMovement(){
 
 /* ============ ADS ============ */
 function renderAds(){
-  const rows = [...DB.ads].sort((a,b)=> b.date.localeCompare(a.date));
   const thisMonth = monthKey(todayStr());
   const monthTotal = sum(DB.ads.filter(a=>monthKey(a.date)===thisMonth).map(a=>a.amount));
   const html = `
@@ -1334,15 +1413,14 @@ function renderAds(){
       <p class="hint">Tip: para que el ROAS del Dashboard se calcule bien, marca el canal "Meta Ads (Facebook/Instagram)" en las ventas que vinieron de un anuncio.</p>
     </div>
     <div class="section-title">Historial de gasto</div>
-    ${rows.length===0 ? `<div class="empty">Sin registros de gasto en ads.</div>` : `
-    <div class="card table-wrap">
-      <table>
-        <thead><tr><th>Fecha</th><th>Plataforma</th><th>Campaña</th><th>Monto</th><th>Mensajes</th><th></th></tr></thead>
-        <tbody>
-          ${rows.map(a=>`<tr><td>${fmtDate(a.date)}</td><td>${esc(a.platform)}</td><td>${esc(a.campaign||'—')}</td><td>${money(a.amount)}</td><td>${a.messages||0}</td><td><button class="btn small danger" onclick="deleteAd('${a.id}')">Eliminar</button></td></tr>`).join('')}
-        </tbody>
-      </table>
-    </div>`}
+    ${renderHistorySection({
+      id: 'ads-hist',
+      items: DB.ads,
+      dateField: 'date',
+      emptyText: 'Sin registros de gasto en ads este mes.',
+      headHtml: '<th>Fecha</th><th>Plataforma</th><th>Campaña</th><th>Monto</th><th>Mensajes</th><th></th>',
+      renderRow: (a, num) => `<tr><td>${num}</td><td>${fmtDate(a.date)}</td><td>${esc(a.platform)}</td><td>${esc(a.campaign||'—')}</td><td>${money(a.amount)}</td><td>${a.messages||0}</td><td><button class="btn small danger" onclick="deleteAd('${a.id}')">Eliminar</button></td></tr>`
+    })}
   `;
   qs('view-ads').innerHTML = html;
 }
@@ -1367,7 +1445,6 @@ async function deleteAd(id){
 
 /* ============ EGRESOS ============ */
 function renderEgresos(){
-  const rows = [...DB.expenses].sort((a,b)=> b.date.localeCompare(a.date));
   const thisMonth = monthKey(todayStr());
   const monthTotal = sum(DB.expenses.filter(x=>monthKey(x.date)===thisMonth).map(x=>x.amount));
   const byCat = {};
@@ -1395,15 +1472,14 @@ function renderEgresos(){
     <div class="card">${donutBlock(catEntries, {money:true})}</div>` : ''}
 
     <div class="section-title">Historial de egresos</div>
-    ${rows.length===0 ? `<div class="empty">Sin egresos registrados todavía.</div>` : `
-    <div class="card table-wrap">
-      <table>
-        <thead><tr><th>Fecha</th><th>Categoría</th><th>Descripción</th><th>Proveedor</th><th>Monto</th><th></th></tr></thead>
-        <tbody>
-          ${rows.map(x=>`<tr><td>${fmtDate(x.date)}</td><td>${esc(x.category)}</td><td>${esc(x.description||'—')}</td><td>${esc(x.provider||'—')}</td><td>${money(x.amount)}</td><td><button class="btn small danger" onclick="deleteExpense('${x.id}')">Eliminar</button></td></tr>`).join('')}
-        </tbody>
-      </table>
-    </div>`}
+    ${renderHistorySection({
+      id: 'egresos-hist',
+      items: DB.expenses,
+      dateField: 'date',
+      emptyText: 'Sin egresos registrados este mes.',
+      headHtml: '<th>Fecha</th><th>Categoría</th><th>Descripción</th><th>Proveedor</th><th>Monto</th><th></th>',
+      renderRow: (x, num) => `<tr><td>${num}</td><td>${fmtDate(x.date)}</td><td>${esc(x.category)}</td><td>${esc(x.description||'—')}</td><td>${esc(x.provider||'—')}</td><td>${money(x.amount)}</td><td><button class="btn small danger" onclick="deleteExpense('${x.id}')">Eliminar</button></td></tr>`
+    })}
   `;
   qs('view-egresos').innerHTML = html;
 }
@@ -1429,7 +1505,7 @@ async function deleteExpense(id){
 /* ============ DELIVERY ============ */
 function renderDelivery(){
   const pending = DB.sales.filter(s=>s.deliveryStatus!=='Entregado').sort((a,b)=>a.date.localeCompare(b.date));
-  const delivered = DB.sales.filter(s=>s.deliveryStatus==='Entregado').sort((a,b)=> b.date.localeCompare(a.date)).slice(0,20);
+  const delivered = DB.sales.filter(s=>s.deliveryStatus==='Entregado');
 
   const html = `
     <div class="section-title">Pedidos pendientes de entrega (${pending.length})</div>
@@ -1457,16 +1533,15 @@ function renderDelivery(){
       </table>
     </div>`}
 
-    <div class="section-title">Entregados recientemente</div>
-    ${delivered.length===0 ? `<div class="empty">Sin entregas registradas todavía.</div>` : `
-    <div class="card table-wrap">
-      <table>
-        <thead><tr><th>Fecha</th><th>Cliente</th><th>Producto</th><th>Zona</th><th>Costo envío</th></tr></thead>
-        <tbody>
-          ${delivered.map(s=>`<tr><td>${fmtDate(s.date)}</td><td>${esc(s.customer||'—')}</td><td>${esc(s.productName)} (${s.qty})</td><td>${esc(s.zone||'—')}</td><td>${money(s.deliveryCost)}</td></tr>`).join('')}
-        </tbody>
-      </table>
-    </div>`}
+    <div class="section-title">Entregados</div>
+    ${renderHistorySection({
+      id: 'delivery-hist',
+      items: delivered,
+      dateField: 'date',
+      emptyText: 'Sin entregas registradas este mes.',
+      headHtml: '<th>Fecha</th><th>Cliente</th><th>Producto</th><th>Zona</th><th>Costo envío</th>',
+      renderRow: (s, num) => `<tr><td>${num}</td><td>${fmtDate(s.date)}</td><td>${esc(s.customer||'—')}</td><td>${esc(s.productName)} (${s.qty})</td><td>${esc(s.zone||'—')}</td><td>${money(s.deliveryCost)}</td></tr>`
+    })}
   `;
   qs('view-delivery').innerHTML = html;
 }

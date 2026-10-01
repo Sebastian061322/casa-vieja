@@ -152,7 +152,29 @@
   .hint{font-size:11.5px;color:var(--text-muted);margin-top:-4px;margin-bottom:14px;}
   .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
   .flexend{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;}
-  
+
+  /* Acordeón (tarjetas desplegables para historiales) */
+  .acc-list{display:flex;flex-direction:column;gap:8px;}
+  .acc-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+  .acc-head{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;user-select:none;}
+  .acc-head:hover{background:var(--surface-2);}
+  .acc-num{flex:0 0 auto;min-width:26px;color:var(--text-muted);font-size:12px;font-weight:600;}
+  .acc-summary{flex:1 1 auto;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;}
+  .acc-summary .acc-main{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .acc-summary .acc-sub{color:var(--text-muted);font-size:12px;white-space:nowrap;}
+  .acc-summary .acc-amt{margin-left:auto;font-weight:700;white-space:nowrap;}
+  .acc-caret{flex:0 0 auto;color:var(--text-muted);transition:transform .15s;font-size:12px;}
+  .acc-item.open .acc-caret{transform:rotate(180deg);}
+  .acc-body{display:none;padding:4px 14px 14px 14px;border-top:1px solid var(--border);}
+  .acc-item.open .acc-body{display:block;}
+  .acc-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px 16px;margin:10px 0;}
+  .acc-field label{margin-bottom:2px;}
+  .acc-field div{font-size:13.5px;}
+  .acc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  @media (max-width:880px){
+    .acc-summary .acc-main{max-width:140px;}
+  }
+
   /* ADAPTACIÓN MÓVIL (IPHONE / SMARTPHONES) */
   @media (max-width:880px){
     #app{flex-direction:column;}
@@ -252,6 +274,7 @@ const TITLES = {
 };
 
 const MONTH_NAMES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+const FULL_MONTH_NAMES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
 const CHANNELS = [
   'Meta Ads (Facebook/Instagram)',
@@ -290,6 +313,7 @@ const COLORS = {
 /* ============ CONFIGURACIÓN Y PERSISTENCIA BLINDADA ============ */
 let DB = loadDB();
 let currentView = 'dashboard';
+let selectedDashboardMonth = null; // se fija en todayStr() al primer render
 
 function defaultDB(){ 
   return { products:[], sales:[], movements:[], ads:[], expenses:[], lotes:[], baseProducts:[] }; 
@@ -359,10 +383,7 @@ function updateConnBadge() {
 async function apiGet() {
   const c = getConnConfig();
   if (!c.url) return null;
-
-  // Se agrega el parámetro para evitar el caché
   const url = c.url + (c.url.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(c.token) + '&_t=' + Date.now();
-
   const res = await fetch(url);
   return await res.json();
 }
@@ -435,10 +456,7 @@ async function refreshFromRemote() {
   try {
     const data = await apiGet();
     if (!data || data.error) { console.error('Error de Sheets:', data && data.error); return false; }
-
-    // Si viene la BD completa envuelta o por colecciones
     const source = data.db || data;
-
     DB = {
       products: (source.products || []).map(normalizeProduct),
       sales: (source.sales || []).map(normalizeSale),
@@ -530,7 +548,7 @@ function movementTargets() {
   DB.products.filter(p => !p.baseProductId).forEach(p => { targets.push({ id: p.id, kind: 'product', label: p.name + ' (stock propio, sin vincular)' }); });
   return targets;
 }
-  
+
 /* ============ NAVEGACIÓN ============ */
 function switchView(name){
   currentView = name;
@@ -622,16 +640,27 @@ function donutBlock(entries, opts){
   </div>`;
 }
 
-/* ============ DASHBOARD ============ */
-function computeDashboard(){
+/* ============ DASHBOARD (con selector de mes) ============ */
+function availableDashboardMonths(){
+  const set = new Set();
+  DB.sales.forEach(s=>{ const mk=monthKey(s.date); if(mk) set.add(mk); });
+  DB.ads.forEach(a=>{ const mk=monthKey(a.date); if(mk) set.add(mk); });
+  DB.expenses.forEach(x=>{ const mk=monthKey(x.date); if(mk) set.add(mk); });
+  set.add(monthKey(todayStr()));
+  return Array.from(set).sort((a,b)=> b.localeCompare(a));
+}
+
+function computeDashboardForMonth(thisMonth){
   const today = todayStr();
-  const thisMonth = monthKey(today);
+  const isCurrentMonth = thisMonth === monthKey(today);
   const todaySales = DB.sales.filter(s=>s.date===today);
   const monthSales = DB.sales.filter(s=>monthKey(s.date)===thisMonth);
   const monthAds = DB.ads.filter(a=>monthKey(a.date)===thisMonth);
   const monthExpenses = DB.expenses.filter(x=>monthKey(x.date)===thisMonth);
   const revToday = sum(todaySales.map(s=>s.total));
   const revMonth = sum(monthSales.map(s=>s.total));
+  const salesCountMonth = monthSales.length;
+  const avgTicketMonth = salesCountMonth>0 ? revMonth/salesCountMonth : 0;
   const profitMonth = sum(monthSales.map(s=>s.profit));
   const expensesMonth = sum(monthExpenses.map(x=>x.amount));
   const netProfitMonth = profitMonth - expensesMonth;
@@ -642,7 +671,15 @@ function computeDashboard(){
   const totalStock = DB.baseProducts.length>0 ? sum(DB.baseProducts.map(b=>b.stock)) : sum(DB.products.map(p=>p.stock));
   const pendingDeliveries = DB.sales.filter(s=>s.deliveryStatus && s.deliveryStatus!=='Entregado').length;
   const lowStock = DB.baseProducts.length>0 ? DB.baseProducts.filter(b=>b.stock<=b.minStock) : DB.products.filter(p=>p.stock<=p.minStock);
-  return {revToday, revMonth, profitMonth, expensesMonth, netProfitMonth, profitMonthMinusAds, adSpendMonth, roas, totalStock, pendingDeliveries, lowStock, monthSales};
+  const byChannel = {};
+  monthSales.forEach(s=>{ const ch = s.channel||'Otro'; byChannel[ch]=(byChannel[ch]||0)+s.total; });
+  const topChannel = Object.entries(byChannel).sort((a,b)=>b[1]-a[1])[0] || null;
+  return {isCurrentMonth, revToday, revMonth, salesCountMonth, avgTicketMonth, profitMonth, expensesMonth, netProfitMonth, profitMonthMinusAds, adSpendMonth, roas, totalStock, pendingDeliveries, lowStock, monthSales, topChannel};
+}
+
+function changeDashboardMonth(mk){
+  selectedDashboardMonth = mk;
+  renderDashboard();
 }
 
 function last14DaysSeries(){
@@ -661,8 +698,7 @@ function last6MonthsSeries(){
   return {labels, profit, adspend};
 }
 
-function productSalesShare(){
-  const thisMonth = monthKey(todayStr());
+function productSalesShareForMonth(thisMonth){
   const monthSales = DB.sales.filter(s=>monthKey(s.date)===thisMonth);
   const map={};
   monthSales.forEach(s=>{ map[s.productName]=(map[s.productName]||0)+s.total; });
@@ -690,28 +726,40 @@ function stockRipenessHTML(){
 }
 
 function renderDashboard(){
-  const d = computeDashboard();
+  if(!selectedDashboardMonth) selectedDashboardMonth = monthKey(todayStr());
+  const d = computeDashboardForMonth(selectedDashboardMonth);
   const daily = last14DaysSeries();
   const months = last6MonthsSeries();
-  const shares = productSalesShare();
+  const shares = productSalesShareForMonth(selectedDashboardMonth);
+  const monthOptions = availableDashboardMonths();
   qs('todayLabel').textContent = new Date().toLocaleDateString('es-PE',{weekday:'long',day:'2-digit',month:'long'});
 
   const html = `
     ${DB.products.length===0 ? `<div class="empty" style="margin-bottom:20px;">Todavía no tienes productos cargados. Ve a <b>Configuración</b> para agregar tu catálogo.</div>` : ''}
+
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+      <label style="margin:0;">📅 Mes a mostrar</label>
+      <select id="dash-month-select" style="width:auto; min-width:180px;" onchange="changeDashboardMonth(this.value)">
+        ${monthOptions.map(mk=>`<option value="${mk}" ${mk===selectedDashboardMonth?'selected':''}>${monthLabelFull(mk)}${mk===monthKey(todayStr())?' (actual)':''}</option>`).join('')}
+      </select>
+    </div>
+
     <div class="grid grid-kpi">
-      <div class="card"><p class="kpi-label">Ventas hoy</p><p class="kpi-value">${money(d.revToday)}</p></div>
+      ${d.isCurrentMonth ? `<div class="card"><p class="kpi-label">Ventas hoy</p><p class="kpi-value">${money(d.revToday)}</p></div>` : ''}
       <div class="card"><p class="kpi-label">Ventas del mes</p><p class="kpi-value">${money(d.revMonth)}</p></div>
+      <div class="card"><p class="kpi-label">N° de ventas</p><p class="kpi-value">${d.salesCountMonth}</p><p class="kpi-sub">Ticket promedio: ${money(d.avgTicketMonth)}</p></div>
       <div class="card"><p class="kpi-label">Ganancia del mes</p><p class="kpi-value ${d.profitMonth>=0?'green':'red'}">${money(d.profitMonth)}</p><p class="kpi-sub">Ventas menos costo de producto y envío</p></div>
       <div class="card"><p class="kpi-label">Ganancia neta (sin Ads)</p><p class="kpi-value ${d.profitMonthMinusAds>=0?'green':'red'}">${money(d.profitMonthMinusAds)}</p><p class="kpi-sub">Ganancia del mes − inversión en Ads</p></div>
       <div class="card"><p class="kpi-label">Egresos del mes</p><p class="kpi-value red">${money(d.expensesMonth)}</p><p class="kpi-sub">Materiales, empaques, etc.</p></div>
       <div class="card"><p class="kpi-label">Ganancia neta (mes)</p><p class="kpi-value ${d.netProfitMonth>=0?'green':'red'}">${money(d.netProfitMonth)}</p><p class="kpi-sub">Ganancia − egresos</p></div>
       <div class="card"><p class="kpi-label">Gasto en Ads (mes)</p><p class="kpi-value gold">${money(d.adSpendMonth)}</p><p class="kpi-sub">ROAS aprox: ${d.roas===null?'—':d.roas.toFixed(2)+'x'}</p></div>
-      <div class="card"><p class="kpi-label">Stock total</p><p class="kpi-value">${d.totalStock} u.</p><p class="kpi-sub">${d.lowStock.length>0?d.lowStock.length+' producto(s) bajo mínimo':'Niveles normales'}</p></div>
-      <div class="card"><p class="kpi-label">Pedidos por entregar</p><p class="kpi-value ${d.pendingDeliveries>0?'gold':''}">${d.pendingDeliveries}</p></div>
+      <div class="card"><p class="kpi-label">Mejor canal del mes</p><p class="kpi-value" style="font-size:16px;">${d.topChannel?esc(d.topChannel[0]):'—'}</p><p class="kpi-sub">${d.topChannel?money(d.topChannel[1]):''}</p></div>
+      <div class="card"><p class="kpi-label">Stock total (actual)</p><p class="kpi-value">${d.totalStock} u.</p><p class="kpi-sub">${d.lowStock.length>0?d.lowStock.length+' producto(s) bajo mínimo':'Niveles normales'}</p></div>
+      <div class="card"><p class="kpi-label">Pedidos por entregar (actual)</p><p class="kpi-value ${d.pendingDeliveries>0?'gold':''}">${d.pendingDeliveries}</p></div>
     </div>
     <div class="grid grid-charts">
       <div class="card">
-        <h3>Ventas — últimos 14 días<small>Ingreso total por día (S/)</small></h3>
+        <h3>Ventas — últimos 14 días<small>Ingreso total por día (S/) · tendencia reciente, no depende del mes seleccionado</small></h3>
         ${svgBars(daily.values, daily.labels, COLORS.gold)}
       </div>
       <div class="card">
@@ -719,11 +767,11 @@ function renderDashboard(){
         ${svgGroupedBars(months.labels, months.profit, months.adspend, COLORS.green, COLORS.blue)}
       </div>
       <div class="card">
-        <h3>Ventas por producto<small>Mes actual, por ingresos</small></h3>
+        <h3>Ventas por producto<small>${monthLabelFull(selectedDashboardMonth)}, por ingresos</small></h3>
         ${donutBlock(shares, {money:true})}
       </div>
       <div class="card">
-        <h3>Nivel de stock<small>Escala de maduración: rojo = bajo, verde = saludable.</small></h3>
+        <h3>Nivel de stock<small>Escala de maduración: rojo = bajo, verde = saludable. (estado actual)</small></h3>
         ${stockRipenessHTML()}
       </div>
     </div>
@@ -829,34 +877,29 @@ function renderVentas(){
       items: salesList,
       dateField: 'date',
       emptyText: 'Aún no registras ventas este mes.',
-      headHtml: '<th>Fecha</th><th>Cliente / Tel.</th><th>Producto</th><th>Cant.</th><th>Total</th><th>Canal</th><th>Pago</th><th>Entrega</th><th>Ganancia</th><th>Acciones</th>',
-      renderRow: (s, num) => {
+      renderSummary: (s) => `
+        <span class="acc-summary">
+          <span class="acc-main">${esc(s.customer||'Sin cliente')}</span>
+          <span class="acc-sub">${fmtDate(s.date)}</span>
+          ${pill(s.paymentStatus)}
+          <span class="acc-amt">${money(s.total||0)}</span>
+        </span>`,
+      renderDetail: (s) => {
         const phoneStr = String(s.phone || '').trim();
-        const customerStr = String(s.customer || '').trim();
         return `
-        <tr>
-          <td>${num}</td>
-          <td>${fmtDate(s.date)}</td>
-          <td>
-            <b>${esc(customerStr || '—')}</b>
-            ${phoneStr ? `<div style="font-size:0.75rem; opacity:0.85; margin-top:2px;">📱 ${esc(phoneStr)}</div>` : ''}
-          </td>
-          <td>
-            ${esc(s.productName || '—')}
-            ${Array.isArray(s.combo) && s.combo.length>0 ? `<div style="font-size:0.72rem; opacity:0.85; margin-top:2px;">🔀 ${s.combo.map(c=>`${c.grindType==='grano'?'Grano':'Molido'} (${esc(c.loteName||'sin lote')})`).join(' + ')}</div>` : ''}
-          </td>
-          <td>${s.qty || 0}</td>
-          <td>${money(s.total || 0)}</td>
-          <td>${esc(s.channel || '—')}</td>
-          <td>${pill(s.paymentStatus)}</td>
-          <td>${pill(s.deliveryStatus)}</td>
-          <td style="color:${(s.profit||0)>=0?COLORS.green:COLORS.red}; font-weight:600">${money(s.profit||0)}</td>
-          <td class="row-actions">
-            ${s.paymentStatus!=='Pagado' ? `<button class="btn small secondary" onclick="markPaid('${s.id}')">Marcar pagado</button>` : ''}
-            <button class="btn small" onclick="editSale('${s.id}')">Editar</button>
-            <button class="btn small danger" onclick="deleteSale('${s.id}')">Eliminar</button>
-          </td>
-        </tr>`;
+        <div class="acc-fields">
+          <div class="acc-field"><label>Teléfono</label><div>${phoneStr?'📱 '+esc(phoneStr):'—'}</div></div>
+          <div class="acc-field"><label>Producto</label><div>${esc(s.productName||'—')}${Array.isArray(s.combo) && s.combo.length>0 ? `<br><span style="font-size:0.72rem; opacity:0.85;">🔀 ${s.combo.map(c=>`${c.grindType==='grano'?'Grano':'Molido'} (${esc(c.loteName||'sin lote')})`).join(' + ')}</span>` : ''}</div></div>
+          <div class="acc-field"><label>Cantidad</label><div>${s.qty || 0}</div></div>
+          <div class="acc-field"><label>Canal</label><div>${esc(s.channel || '—')}</div></div>
+          <div class="acc-field"><label>Entrega</label><div>${pill(s.deliveryStatus)}</div></div>
+          <div class="acc-field"><label>Ganancia</label><div style="color:${(s.profit||0)>=0?COLORS.green:COLORS.red}; font-weight:600">${money(s.profit||0)}</div></div>
+        </div>
+        <div class="acc-actions">
+          ${s.paymentStatus!=='Pagado' ? `<button class="btn small secondary" onclick="markPaid('${s.id}')">Marcar pagado</button>` : ''}
+          <button class="btn small" onclick="editSale('${s.id}')">Editar</button>
+          <button class="btn small danger" onclick="deleteSale('${s.id}')">Eliminar</button>
+        </div>`;
       }
     })}
   `;
@@ -953,8 +996,7 @@ function updateComboPreview(){
   }
 }
 
-/* ============ HISTORIAL AGRUPADO POR MES (mes actual plano, meses pasados desplegables) ============ */
-const FULL_MONTH_NAMES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+/* ============ HISTORIAL AGRUPADO POR MES, COMO TARJETAS DESPLEGABLES ============ */
 function monthLabelFull(mk){
   if(!mk) return '—';
   const parts = mk.split('-');
@@ -983,11 +1025,33 @@ function numberWithinMonth(items){
 
 let historySections = {};
 
+function toggleAccordion(rowId){
+  const item = qs(rowId);
+  if(item) item.classList.toggle('open');
+}
+
+function renderAccordionList(sectionId, sortedItems, numMap, renderSummary, renderDetail){
+  return `<div class="acc-list">
+    ${sortedItems.map((it,idx)=>{
+      const rowId = sectionId + '-row-' + idx;
+      const num = numMap.get(it);
+      return `<div class="acc-item" id="${rowId}">
+        <div class="acc-head" onclick="toggleAccordion('${rowId}')">
+          <span class="acc-num">#${num}</span>
+          ${renderSummary(it, num)}
+          <span class="acc-caret">▾</span>
+        </div>
+        <div class="acc-body">${renderDetail(it, num)}</div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
 function renderHistorySection(config){
-  // config: { id, items, dateField, renderRow(item,num), headHtml, emptyText }
+  // config: { id, items, dateField, renderSummary(item,num), renderDetail(item,num), emptyText }
   const currentMonth = monthKey(todayStr());
   const byMonth = groupByMonthKey(config.items, config.dateField);
-  historySections[config.id] = { byMonth, renderRow: config.renderRow, headHtml: config.headHtml, emptyText: config.emptyText };
+  historySections[config.id] = { byMonth, renderSummary: config.renderSummary, renderDetail: config.renderDetail, emptyText: config.emptyText };
 
   const currentItems = byMonth[currentMonth] || [];
   const pastMonthKeys = Object.keys(byMonth).filter(mk=>mk!==currentMonth).sort((a,b)=> b.localeCompare(a));
@@ -999,9 +1063,7 @@ function renderHistorySection(config){
   if(currentSortedDesc.length===0){
     html += `<div class="empty">${config.emptyText}</div>`;
   } else {
-    html += `<div class="card table-wrap"><table><thead><tr><th>#</th>${config.headHtml}</tr></thead><tbody>`;
-    currentSortedDesc.forEach(it=>{ html += config.renderRow(it, currentNumMap.get(it)); });
-    html += `</tbody></table></div>`;
+    html += renderAccordionList(config.id, currentSortedDesc, currentNumMap, config.renderSummary, config.renderDetail);
   }
 
   if(pastMonthKeys.length>0){
@@ -1029,9 +1091,8 @@ function renderPastMonthDetail(id){
   const items = section.byMonth[mk] || [];
   const sortedDesc = [...items].sort((a,b)=> (b.date||'').localeCompare(a.date||'') || (b.createdAt||0)-(a.createdAt||0));
   const numMap = numberWithinMonth(items);
-  let html = `<div class="card table-wrap"><table><thead><tr><th>#</th>${section.headHtml}</tr></thead><tbody>`;
-  sortedDesc.forEach(it=>{ html += section.renderRow(it, numMap.get(it)); });
-  html += `</tbody></table></div><div style="margin-top:6px; font-size:0.8rem; color:var(--text-muted);">Total: ${items.length} registro(s) en ${monthLabelFull(mk)}</div>`;
+  let html = renderAccordionList(id+'-past', sortedDesc, numMap, section.renderSummary, section.renderDetail);
+  html += `<div style="margin-top:6px; font-size:0.8rem; color:var(--text-muted);">Total: ${items.length} registro(s) en ${monthLabelFull(mk)}</div>`;
   container.innerHTML = html;
 }
 
@@ -1110,7 +1171,6 @@ async function addComboSale(){
   const missingBase = entries.some(e=>!e.baseId);
   if(missingBase){ alert('Falta vincular alguna bolsa a un producto base. Revisa Configuración → Stock físico real.'); return; }
 
-  // Validar stock disponible por tipo antes de descontar
   const neededByBase = {};
   entries.forEach(e=>{ neededByBase[e.baseId] = (neededByBase[e.baseId]||0) + 1; });
   const shortages = Object.keys(neededByBase).map(bid=>{
@@ -1121,7 +1181,7 @@ async function addComboSale(){
     if(!confirm(`Stock insuficiente: ${shortages.join(', ')}. ¿Registrar la venta de todas formas?`)) return;
   }
 
-  const price = num('sf-price'); // precio total del pedido
+  const price = num('sf-price');
   const delcost = num('sf-delcost');
   const delcharged = num('sf-delcharged');
   const totalCost = entries.reduce((a,e)=>a+e.unitCost,0);
@@ -1282,7 +1342,6 @@ async function saveSaleEdit(id) {
   sale.total = num('es-total') || 0;
   sale.zone = String(val('es-zone') || '').trim();
 
-  // Recalcular la ganancia neta automáticamente
   const costTotal = (sale.qty || 1) * (sale.unitCostUsed || 0);
   sale.profit = (sale.total - costTotal) + (sale.deliveryCharged - sale.deliveryCost);
 
@@ -1291,6 +1350,7 @@ async function saveSaleEdit(id) {
   renderView(currentView);
   await syncRemote('updateSale', sale);
 }
+
 /* ============ STOCK ============ */
 function renderStock(){
   const moves = [...DB.movements].sort((a,b)=> b.date.localeCompare(a.date)).slice(0,50);
@@ -1418,8 +1478,18 @@ function renderAds(){
       items: DB.ads,
       dateField: 'date',
       emptyText: 'Sin registros de gasto en ads este mes.',
-      headHtml: '<th>Fecha</th><th>Plataforma</th><th>Campaña</th><th>Monto</th><th>Mensajes</th><th></th>',
-      renderRow: (a, num) => `<tr><td>${num}</td><td>${fmtDate(a.date)}</td><td>${esc(a.platform)}</td><td>${esc(a.campaign||'—')}</td><td>${money(a.amount)}</td><td>${a.messages||0}</td><td><button class="btn small danger" onclick="deleteAd('${a.id}')">Eliminar</button></td></tr>`
+      renderSummary: (a) => `
+        <span class="acc-summary">
+          <span class="acc-main">${esc(a.campaign || a.platform || 'Ads')}</span>
+          <span class="acc-sub">${fmtDate(a.date)}</span>
+          <span class="acc-amt">${money(a.amount)}</span>
+        </span>`,
+      renderDetail: (a) => `
+        <div class="acc-fields">
+          <div class="acc-field"><label>Plataforma</label><div>${esc(a.platform)}</div></div>
+          <div class="acc-field"><label>Mensajes/Leads</label><div>${a.messages||0}</div></div>
+        </div>
+        <div class="acc-actions"><button class="btn small danger" onclick="deleteAd('${a.id}')">Eliminar</button></div>`
     })}
   `;
   qs('view-ads').innerHTML = html;
@@ -1477,8 +1547,18 @@ function renderEgresos(){
       items: DB.expenses,
       dateField: 'date',
       emptyText: 'Sin egresos registrados este mes.',
-      headHtml: '<th>Fecha</th><th>Categoría</th><th>Descripción</th><th>Proveedor</th><th>Monto</th><th></th>',
-      renderRow: (x, num) => `<tr><td>${num}</td><td>${fmtDate(x.date)}</td><td>${esc(x.category)}</td><td>${esc(x.description||'—')}</td><td>${esc(x.provider||'—')}</td><td>${money(x.amount)}</td><td><button class="btn small danger" onclick="deleteExpense('${x.id}')">Eliminar</button></td></tr>`
+      renderSummary: (x) => `
+        <span class="acc-summary">
+          <span class="acc-main">${esc(x.description || x.category)}</span>
+          <span class="acc-sub">${fmtDate(x.date)}</span>
+          <span class="acc-amt">${money(x.amount)}</span>
+        </span>`,
+      renderDetail: (x) => `
+        <div class="acc-fields">
+          <div class="acc-field"><label>Categoría</label><div>${esc(x.category)}</div></div>
+          <div class="acc-field"><label>Proveedor</label><div>${esc(x.provider||'—')}</div></div>
+        </div>
+        <div class="acc-actions"><button class="btn small danger" onclick="deleteExpense('${x.id}')">Eliminar</button></div>`
     })}
   `;
   qs('view-egresos').innerHTML = html;
@@ -1503,35 +1583,48 @@ async function deleteExpense(id){
 }
 
 /* ============ DELIVERY ============ */
+function renderPendingAccordion(pending){
+  if(pending.length===0) return `<div class="empty">No hay pedidos pendientes. Todo entregado 🎉</div>`;
+  return `<div class="acc-list">
+    ${pending.map((s,idx)=>{
+      const rowId = 'delivery-pending-row-'+idx;
+      return `<div class="acc-item" id="${rowId}">
+        <div class="acc-head" onclick="toggleAccordion('${rowId}')">
+          <span class="acc-summary">
+            <span class="acc-main">${esc(s.customer||'—')}</span>
+            <span class="acc-sub">${fmtDate(s.date)}</span>
+            ${pill(s.deliveryStatus)}
+            <span class="acc-amt">${money(s.deliveryCost)}</span>
+          </span>
+          <span class="acc-caret">▾</span>
+        </div>
+        <div class="acc-body">
+          <div class="acc-fields">
+            <div class="acc-field"><label>Producto</label><div>${esc(s.productName)} (${s.qty})</div></div>
+            <div class="acc-field"><label>Zona</label><div>${esc(s.zone||'—')}</div></div>
+            <div class="acc-field"><label>Cambiar estado</label><div>
+              <select onchange="updateDeliveryStatus('${s.id}', this.value)">
+                ${DELIVERY_STATUSES.map(st=>`<option ${st===s.deliveryStatus?'selected':''}>${st}</option>`).join('')}
+              </select>
+            </div></div>
+          </div>
+          <div class="acc-actions">
+            <button class="btn small" onclick="updateDeliveryStatus('${s.id}','Entregado')">Marcar entregado</button>
+            <button class="btn small secondary" onclick="editSale('${s.id}')">Editar</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
 function renderDelivery(){
   const pending = DB.sales.filter(s=>s.deliveryStatus!=='Entregado').sort((a,b)=>a.date.localeCompare(b.date));
   const delivered = DB.sales.filter(s=>s.deliveryStatus==='Entregado');
 
   const html = `
     <div class="section-title">Pedidos pendientes de entrega (${pending.length})</div>
-    ${pending.length===0 ? `<div class="empty">No hay pedidos pendientes. Todo entregado 🎉</div>` : `
-    <div class="card table-wrap">
-      <table>
-        <thead><tr><th>Fecha</th><th>Cliente</th><th>Producto</th><th>Zona</th><th>Costo envío</th><th>Estado</th><th></th></tr></thead>
-        <tbody>
-          ${pending.map(s=>`
-            <tr>
-              <td>${fmtDate(s.date)}</td>
-              <td>${esc(s.customer||'—')}</td>
-              <td>${esc(s.productName)} (${s.qty})</td>
-              <td>${esc(s.zone||'—')}</td>
-              <td>${money(s.deliveryCost)}</td>
-              <td>
-                <select onchange="updateDeliveryStatus('${s.id}', this.value)">
-                  ${DELIVERY_STATUSES.map(st=>`<option ${st===s.deliveryStatus?'selected':''}>${st}</option>`).join('')}
-                </select>
-              </td>
-              <td><button class="btn small" onclick="updateDeliveryStatus('${s.id}','Entregado')">Marcar entregado</button> <button class="btn small secondary" onclick="editSale('${s.id}')">Editar</button></td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    </div>`}
+    ${renderPendingAccordion(pending)}
 
     <div class="section-title">Entregados</div>
     ${renderHistorySection({
@@ -1539,8 +1632,17 @@ function renderDelivery(){
       items: delivered,
       dateField: 'date',
       emptyText: 'Sin entregas registradas este mes.',
-      headHtml: '<th>Fecha</th><th>Cliente</th><th>Producto</th><th>Zona</th><th>Costo envío</th>',
-      renderRow: (s, num) => `<tr><td>${num}</td><td>${fmtDate(s.date)}</td><td>${esc(s.customer||'—')}</td><td>${esc(s.productName)} (${s.qty})</td><td>${esc(s.zone||'—')}</td><td>${money(s.deliveryCost)}</td></tr>`
+      renderSummary: (s) => `
+        <span class="acc-summary">
+          <span class="acc-main">${esc(s.customer||'—')}</span>
+          <span class="acc-sub">${fmtDate(s.date)}</span>
+          <span class="acc-amt">${money(s.deliveryCost)}</span>
+        </span>`,
+      renderDetail: (s) => `
+        <div class="acc-fields">
+          <div class="acc-field"><label>Producto</label><div>${esc(s.productName)} (${s.qty})</div></div>
+          <div class="acc-field"><label>Zona</label><div>${esc(s.zone||'—')}</div></div>
+        </div>`
     })}
   `;
   qs('view-delivery').innerHTML = html;
@@ -2094,24 +2196,34 @@ function resetAll(){
   renderView('config');
 }
 
-/* ============ INICIALIZACIÓN Y AUTO-SINCRONIZACIÓN EN VIVO ============ */
+/* ============ INICIALIZACIÓN Y AUTO-SINCRONIZACIÓN EN VIVO (BLINDADA CONTRA INTERRUPCIONES) ============ */
 updateConnBadge();
 switchView('dashboard');
 
-// Carga inicial al abrir la app
 if(isConnected()){
   refreshFromRemote().then(ok => { if(ok) renderView(currentView); });
 }
 
-// Vistas seguras para refresco automático
+// Rastreamos la última vez que el usuario tocó cualquier campo o control.
+// Mientras no hayan pasado unos segundos desde esa interacción, el refresco
+// automático NUNCA se ejecuta — así no hay riesgo de que te borre algo que
+// estás escribiendo, aunque hagas una pausa breve entre campos.
+let lastUserInteraction = Date.now();
+['input','change','focusin','pointerdown'].forEach(evt=>{
+  document.addEventListener(evt, ()=>{ lastUserInteraction = Date.now(); }, true);
+});
+
 const SAFE_REFRESH_VIEWS = ['dashboard', 'delivery', 'stock', 'ads', 'egresos'];
+const INTERACTION_QUIET_MS = 15000;
 
 async function tryLiveRefresh(){
   if(!isConnected()) return;
   if(document.visibilityState !== 'visible') return;
   if(pendingWrites > 0) return; // hay un guardado en camino: no pisar con datos viejos de Sheets
+  if(Date.now() - lastUserInteraction < INTERACTION_QUIET_MS) return; // el usuario está activo: no interrumpir
+  if(document.getElementById('modal-edit-sale')) return; // hay un modal de edición abierto
 
-  const isTyping = document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT');
+  const isTyping = document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT' || document.activeElement.tagName === 'TEXTAREA');
   if(isTyping) return;
 
   if(SAFE_REFRESH_VIEWS.includes(currentView)){
@@ -2122,9 +2234,7 @@ async function tryLiveRefresh(){
   }
 }
 
-// Revisa automáticamente cada 8 segundos si hubo actualizaciones en Google Sheets
 setInterval(tryLiveRefresh, 8000);
-
 document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') tryLiveRefresh(); });
 window.addEventListener('focus', tryLiveRefresh);
 </script>

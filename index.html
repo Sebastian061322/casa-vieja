@@ -171,19 +171,47 @@
   .acc-field label{margin-bottom:2px;}
   .acc-field div{font-size:13.5px;}
   .acc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  .wf-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;}
+  .wf-row small{display:block;color:var(--text-muted);font-size:11px;font-weight:400;}
+  .wf-row b{white-space:nowrap;font-variant-numeric:tabular-nums;}
+  .wf-row.neg b{color:var(--accent-red);}
+  .wf-row.total{border-bottom:none;border-top:2px solid var(--border);margin-top:4px;padding-top:12px;font-size:16px;font-weight:600;}
+  .wf-row.total b{font-family:var(--font-display);font-size:24px;}
+  .split-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:14px;}
+  .split-box{background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
+  .split-box .nm{font-weight:600;margin-bottom:6px;}
+  .split-box .ln{display:flex;justify-content:space-between;font-size:12.5px;color:var(--text-muted);padding:2px 0;}
+  .split-box .tt{display:flex;justify-content:space-between;font-weight:700;padding-top:6px;margin-top:4px;border-top:1px solid var(--border);}
+  .acc-item.static .acc-head{cursor:default;}
+  .acc-item.static .acc-head:hover{background:none;}
+  .acc-field input,.acc-field select{width:100%;}
+  .pill.blue{background:rgba(92,127,143,.18);color:var(--accent-blue);}
+  .acc-list + .acc-list{margin-top:8px;}
   @media (max-width:880px){
     .acc-summary .acc-main{max-width:140px;}
+  }
+
+  /* Botón hamburguesa (solo visible en móvil) */
+  .hamburger-btn{
+    display:none;background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+    width:40px;height:40px;border-radius:8px;cursor:pointer;flex-shrink:0;
+    align-items:center;justify-content:center;
   }
 
   /* ADAPTACIÓN MÓVIL (IPHONE / SMARTPHONES) */
   @media (max-width:880px){
     #app{flex-direction:column;}
     .sidebar{
-      width:100%;flex-direction:row;overflow-x:auto;align-items:center;
-      padding: max(16px, env(safe-area-inset-top)) 12px 12px 12px;
+      width:100%;flex-direction:column;align-items:stretch;position:relative;z-index:500;
+      padding: max(12px, env(safe-area-inset-top)) 14px 12px 14px;
     }
-    .brand{border:none;padding:0 14px 0 4px;margin:0;}
-    nav.navlist{flex-direction:row;padding:0;}
+    .brand{border:none;padding:0;margin:0;display:flex;align-items:center;justify-content:space-between;}
+    .hamburger-btn{display:flex;}
+    nav.navlist{
+      flex-direction:column;padding:0;margin-top:0;max-height:0;overflow:hidden;
+      transition:max-height .2s ease, margin-top .2s ease;
+    }
+    nav.navlist.open{max-height:480px;margin-top:12px;}
     .sidebar-footer{display:none;}
     .main{padding:16px 16px 50px 16px;}
     
@@ -195,8 +223,9 @@
       min-height: 44px;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
     }
+    .btn{justify-content:center;}
+    .nav-btn{justify-content:flex-start;}
   }
 </style>
 </head>
@@ -204,8 +233,13 @@
 <div id="app">
   <aside class="sidebar">
     <div class="brand">
-      <h1>Casa Vieja</h1>
-      <span>Control de operaciones</span>
+      <div>
+        <h1>Casa Vieja</h1>
+        <span>Control de operaciones</span>
+      </div>
+      <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Abrir menú">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+      </button>
     </div>
     <nav class="navlist" id="navlist">
       <button class="nav-btn" data-view="dashboard" onclick="switchView('dashboard')">
@@ -232,6 +266,18 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="7" width="13" height="9"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="5.5" cy="18" r="1.6"/><circle cx="16.5" cy="18" r="1.6"/></svg>
         Delivery
       </button>
+      <button class="nav-btn" data-view="clientes" onclick="switchView('clientes')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.5 14.2c2.6.3 4.5 2.5 4.5 5.3"/></svg>
+        Clientes
+      </button>
+      <button class="nav-btn" data-view="inventario" onclick="switchView('inventario')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+        Inventario
+      </button>
+      <button class="nav-btn" data-view="fondo" onclick="switchView('fondo')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+        Fondo
+      </button>
       <button class="nav-btn" data-view="config" onclick="switchView('config')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
         Configuración
@@ -254,6 +300,9 @@
     <section class="view" id="view-ads"></section>
     <section class="view" id="view-egresos"></section>
     <section class="view" id="view-delivery"></section>
+    <section class="view" id="view-clientes"></section>
+    <section class="view" id="view-inventario"></section>
+    <section class="view" id="view-fondo"></section>
     <section class="view" id="view-config"></section>
   </main>
 </div>
@@ -270,6 +319,9 @@ const TITLES = {
   ads: 'Ads',
   egresos: 'Egresos',
   delivery: 'Delivery',
+  clientes: 'Clientes',
+  inventario: 'Inventario',
+  fondo: 'Fondo del negocio',
   config: 'Configuración'
 };
 
@@ -287,14 +339,11 @@ const CHANNELS = [
 const PAYMENT_STATUSES = ['Pendiente', 'Pagado', 'Cancelado'];
 const DELIVERY_STATUSES = ['Pendiente', 'En camino', 'Entregado'];
 
-const EXPENSE_CATEGORIES = [
-  'Empaques y bolsas',
-  'Etiquetas y diseño',
-  'Tostado / Maquila',
-  'Flete / Transporte',
-  'Herramientas / Insumos',
-  'Otros'
-];
+// Gastos de operación: SÍ restan de la utilidad.
+const OPEX_CATEGORIES = ['Sueldos', 'Alquiler / servicios', 'Herramientas / Insumos', 'Otros'];
+// Insumos de producción: ya van dentro del costo del producto, NO restan otra vez de la utilidad.
+const INSUMO_CATEGORIES = ['Empaques y bolsas', 'Etiquetas y diseño', 'Tostado / Maquila', 'Flete / Transporte'];
+const EXPENSE_CATEGORIES = [...OPEX_CATEGORIES, ...INSUMO_CATEGORIES];
 
 const COLORS = {
   bg: '#1C1410',
@@ -316,7 +365,7 @@ let currentView = 'dashboard';
 let selectedDashboardMonth = null; // se fija en todayStr() al primer render
 
 function defaultDB(){ 
-  return { products:[], sales:[], movements:[], ads:[], expenses:[], lotes:[], baseProducts:[] }; 
+  return { products:[], sales:[], movements:[], ads:[], expenses:[], lotes:[], baseProducts:[], settings:{}, fund:[], inv_items:[], inv_events:[] }; 
 }
 
 function loadDB(){
@@ -380,26 +429,164 @@ function updateConnBadge() {
   }
 }
 
+async function fetchJSON(url, opts, timeoutMs) {
+  const ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+  const timer = ctrl ? setTimeout(() => ctrl.abort(), timeoutMs) : null;
+  let text;
+  try {
+    const res = await fetch(url, Object.assign({}, opts, ctrl ? { signal: ctrl.signal } : {}));
+    text = await res.text();
+  } catch (e) {
+    throw new Error(e && e.name === 'AbortError' ? 'Tiempo agotado (el servidor tardó demasiado)' : 'Sin conexión con tu Apps Script (' + ((e && e.message) || e) + ')');
+  } finally { if (timer) clearTimeout(timer); }
+  try { return JSON.parse(text); }
+  catch (e) { throw new Error('Respuesta no válida: no es de tu Apps Script (revisa la URL y que el despliegue sea "Cualquier usuario"). Empieza con: ' + String(text).slice(0, 60).replace(/\s+/g, ' ')); }
+}
+
 async function apiGet() {
   const c = getConnConfig();
   if (!c.url) return null;
   const url = c.url + (c.url.includes('?') ? '&' : '?') + 'token=' + encodeURIComponent(c.token) + '&_t=' + Date.now();
-  const res = await fetch(url);
-  return await res.json();
+  return fetchJSON(url, {}, 45000);
 }
 
 async function apiPost(action, payload) {
   const c = getConnConfig();
   if (!c.url) return null;
-  const res = await fetch(c.url, {
+  return fetchJSON(c.url, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ token: c.token, action, payload })
-  });
-  return await res.json();
+  }, 60000);
 }
 
-let pendingWrites = 0;
+let remoteVersion = 2;
+
+/* ============ COLA DE GUARDADO: nada se pierde si Sheets falla ============ */
+// Cada cambio se guarda primero en este dispositivo y se envía a Sheets desde una cola persistente.
+// Si falla (sin internet, servidor ocupado, script desactualizado) se reintenta solo y NUNCA se
+// reemplaza lo local con lo de Sheets mientras haya cambios pendientes.
+const OUTBOX_KEY = 'casa_vieja_outbox', FAILED_KEY = 'casa_vieja_failed_ops';
+function readLS(key){ try { return JSON.parse(localStorage.getItem(key)) || []; } catch(e){ return []; } }
+let outbox = readLS(OUTBOX_KEY);
+let failedOps = readLS(FAILED_KEY);
+let flushing = false;
+let lastSyncError = '';
+const TRANSIENT_RE = /ocupado|token|conexi|failed to fetch|network|tiempo|abort|respuesta|sin respuesta/i;
+
+function persistOutbox(){
+  try { localStorage.setItem(OUTBOX_KEY, JSON.stringify(outbox)); localStorage.setItem(FAILED_KEY, JSON.stringify(failedOps)); }
+  catch(e){ console.warn('No se pudo guardar la cola de sincronización', e); }
+}
+function hasPendingSync(){ return outbox.length > 0 || flushing; }
+
+function hintForError(e){
+  e = String(e || '');
+  if(/50000/.test(e)) return 'Tu Apps Script es una versión vieja que guardaba todo en una sola celda. Pega la v3.2 y crea una Nueva versión del despliegue.';
+  if(/token/i.test(e)) return 'El token no coincide con el del script (TOKEN_SECRETO). Revísalo en Configuración.';
+  if(/ocupado/i.test(e)) return 'Otra persona estaba guardando. Se reintenta solo.';
+  if(/respuesta no válida/i.test(e)) return 'La URL no responde con datos de tu script. Revisa en Implementar → Administrar implementaciones: Ejecutar como "Yo" y Quién tiene acceso "Cualquier usuario". Usa la URL que termina en /exec.';
+  if(/sin conexi|tiempo agotado/i.test(e)) return 'No hay internet o el script tardó demasiado. Se reintenta solo.';
+  if(/desconocida/i.test(e)) return 'Tu script está desactualizado: pega la v3.2 y crea una Nueva versión.';
+  return 'Si se repite, pega la v3.2 del Apps Script y crea una Nueva versión del despliegue.';
+}
+
+function updateSyncBadge(){
+  let pill = qs('sync-pill');
+  if(!isConnected()){ if(pill) pill.style.display = 'none'; return; }
+  if(!pill){
+    pill = document.createElement('div');
+    pill.id = 'sync-pill';
+    pill.onclick = () => openSyncModal();
+    pill.style.cssText = 'position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:9000;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.4);color:#fff;';
+    document.body.appendChild(pill);
+  }
+  pill.style.display = 'block';
+  const n = outbox.length;
+  if(n === 0){ pill.textContent = '✓ Guardado en Sheets'; pill.style.background = 'rgba(107,143,92,.92)'; pill.style.color = '#fff'; }
+  else if(lastSyncError){ pill.textContent = '⚠ ' + n + ' sin guardar en Sheets — toca para ver'; pill.style.background = 'var(--accent-red)'; pill.style.color = '#fff'; }
+  else { pill.textContent = '⏳ Guardando… (' + n + ')'; pill.style.background = 'var(--accent-gold)'; pill.style.color = '#231A12'; }
+}
+
+async function flushOutbox(){
+  if(flushing || !isConnected()) return;
+  if(!outbox.length){ updateSyncBadge(); return; }
+  flushing = true; updateSyncBadge();
+  try {
+    while(outbox.length){
+      const op = outbox[0];
+      let res = null, err = '';
+      try { res = await apiPost(op.action, op.payload); }
+      catch(e){ err = (e && e.message) || String(e); }
+      if(!err && res && res.error) err = res.error;
+      if(!err && !res) err = 'Sin respuesta del servidor';
+      if(err){
+        op.tries = (op.tries || 0) + 1; op.lastError = err; lastSyncError = err;
+        if(op.tries >= 8 && !TRANSIENT_RE.test(err)){ failedOps.push(outbox.shift()); persistOutbox(); continue; }
+        persistOutbox();
+        return;
+      }
+      outbox.shift(); lastSyncError = ''; persistOutbox(); updateSyncBadge();
+    }
+  } finally { flushing = false; updateSyncBadge(); }
+}
+
+async function syncThenRefresh(){
+  await flushOutbox();
+  if(hasPendingSync()){
+    showSyncBanner('Hay ' + outbox.length + ' cambio(s) sin guardar en Sheets. Se conservan en este dispositivo y se reintentan solos.', true);
+    return false;
+  }
+  return refreshFromRemote();
+}
+
+function closeSyncModal(){ const m = qs('sync-modal'); if(m) m.remove(); }
+function openSyncModal(runDiag){
+  closeSyncModal();
+  const c = getConnConfig();
+  const ops = outbox.slice(0, 8).map(o => `<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;"><b>${esc(o.action)}</b> · ${new Date(o.ts).toLocaleTimeString('es-PE')} · intentos: ${o.tries||0}${o.lastError?`<br><span style="color:var(--accent-red)">${esc(o.lastError)}</span>`:''}</div>`).join('');
+  document.body.insertAdjacentHTML('beforeend', `<div id="sync-modal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;">
+    <div class="card" style="width:92%;max-width:520px;max-height:90vh;overflow-y:auto;background:var(--surface);">
+      <h3>Estado de guardado en Sheets</h3>
+      <div class="hint" style="margin:0 0 8px 0;">Script versión: <b>${remoteVersion>=3.2 ? remoteVersion : remoteVersion+' (conviene la 3.2)'}</b> · URL: ${esc(String(c.url||'').slice(0,48))}…</div>
+      ${outbox.length===0 ? '<div style="color:var(--accent-green);font-weight:600;margin-bottom:8px;">✓ No hay cambios pendientes.</div>' : `<div style="margin-bottom:8px;"><b>${outbox.length}</b> cambio(s) esperando guardarse. Están a salvo en este dispositivo y no se borran.</div>${ops}`}
+      ${lastSyncError ? `<div style="background:rgba(193,67,46,.12);border-left:4px solid var(--accent-red);padding:8px 12px;margin:10px 0;border-radius:4px;font-size:13px;"><b>${esc(lastSyncError)}</b><br><span style="opacity:.9">${esc(hintForError(lastSyncError))}</span></div>` : ''}
+      ${failedOps.length ? `<div class="hint">Hay ${failedOps.length} cambio(s) que el script rechazó. <a href="#" onclick="retryFailedOps();return false;" style="color:var(--accent-gold)">Reintentar</a></div>` : ''}
+      <div id="sync-diag" style="margin:10px 0;font-size:13px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-top:12px;">
+        <button class="btn small danger" onclick="discardOutbox()">Descartar pendientes</button>
+        <button class="btn small secondary" onclick="runDiagnostics()">Diagnóstico</button>
+        <button class="btn small" onclick="flushOutbox().then(()=>openSyncModal())">Reintentar ahora</button>
+        <button class="btn small secondary" onclick="closeSyncModal()">Cerrar</button>
+      </div>
+    </div></div>`);
+  if(runDiag) runDiagnostics();
+}
+function retryFailedOps(){ outbox = failedOps.concat(outbox); failedOps = []; persistOutbox(); flushOutbox().then(()=>openSyncModal()); }
+function discardOutbox(){
+  if(!confirm('¿Descartar los cambios pendientes? Quedarán solo en este dispositivo y NO llegarán a Sheets.')) return;
+  outbox = []; lastSyncError = ''; persistOutbox(); updateSyncBadge(); openSyncModal();
+}
+async function runDiagnostics(){
+  const out = qs('sync-diag'); if(!out) return;
+  out.innerHTML = 'Probando…';
+  const lines = [];
+  try {
+    const g = await apiGet();
+    if(g && g.error) lines.push('✗ Lectura: ' + g.error);
+    else {
+      lines.push('✓ Lectura correcta · versión del script: ' + (g.version || '2 o anterior') + ' · ' + ((g.sales||[]).length) + ' ventas en Sheets');
+      if(!(Number(g.version) >= 3.2)) lines.push('⚠ Tu script no es la v3.2: puede guardar lento o fallar. Pega la v3.2 y crea una Nueva versión.');
+    }
+  } catch(e){ lines.push('✗ Lectura: ' + e.message); }
+  try { const r = await apiPost('ping', {}); lines.push(r && r.error ? '✗ Escritura: ' + r.error : '✓ Escritura: el script responde'); }
+  catch(e){ lines.push('✗ Escritura: ' + e.message); }
+  lines.push(outbox.length ? '⏳ Pendientes en este dispositivo: ' + outbox.length : '✓ No hay cambios pendientes');
+  out.innerHTML = lines.map(l => '<div style="padding:2px 0;">' + esc(l) + '</div>').join('');
+}
+
+let _rapid = {};
+function rapidFire(name, ms){ const now = Date.now(); if(_rapid[name] && now - _rapid[name] < (ms||1200)) return true; _rapid[name] = now; return false; }
 
 function showSyncBanner(message, isError) {
   let banner = qs('sync-banner');
@@ -418,22 +605,12 @@ function showSyncBanner(message, isError) {
 }
 
 async function syncRemote(action, payload) {
-  if (!isConnected()) return { ok: true };
-  pendingWrites++;
-  try {
-    const res = await apiPost(action, payload);
-    if (res && res.error) {
-      console.warn('Advertencia Sheets:', res.error);
-      showSyncBanner('⚠ No se guardó en Sheets (' + action + '): ' + res.error, true);
-    }
-    return res;
-  } catch (e) {
-    console.error('Error al conectar con Google Sheets:', e);
-    showSyncBanner('⚠ Sin conexión con Sheets — "' + action + '" quedó SOLO guardado en este dispositivo. Revisa tu internet y actualiza luego.', true);
-    return { error: e.message };
-  } finally {
-    pendingWrites--;
-  }
+  if (!isConnected()) return { ok: true, local: true };
+  outbox.push({ id: uid(), action, payload, ts: Date.now(), tries: 0, lastError: '' });
+  persistOutbox();
+  updateSyncBadge();
+  flushOutbox(); // sin esperar: la pantalla no se bloquea
+  return { ok: true, queued: true };
 }
 
 function normalizeProduct(p) { return { id: String(p.id), name: String(p.name || ''), price: Number(p.price) || 0, cost: Number(p.cost) || 0, stock: Number(p.stock) || 0, minStock: Number(p.minStock) || 0, weightGrams: Number(p.weightGrams) || 0, packagingCost: Number(p.packagingCost) || 0, grindType: String(p.grindType || 'molido'), baseProductId: String(p.baseProductId || ''), unitsPerSale: Number(p.unitsPerSale) || 1 }; }
@@ -449,14 +626,17 @@ function normalizeLote(l) {
     costPerKgRoasted: Number(l.costPerKgRoasted) || 0, yieldPct: Number(l.yieldPct) || 0, active: (l.active === true || l.active === 'TRUE' || l.active === 1 || l.active === '1')
   };
 }
+function normalizeFund(f) { return { id: String(f.id), date: String(f.date || '').slice(0, 10), concept: String(f.concept || ''), amount: Number(f.amount) || 0 }; }
 function normalizeBaseProduct(b) { return { id: String(b.id), name: String(b.name || ''), grindType: String(b.grindType || 'molido'), stock: Number(b.stock) || 0, minStock: Number(b.minStock) || 0, weightGrams: Number(b.weightGrams) || 500, packagingCost: Number(b.packagingCost) || 0 }; }
 
 async function refreshFromRemote() {
   if (!isConnected()) return false;
+  if (hasPendingSync()) return false; // nunca reemplazar lo local mientras haya cambios sin guardar en Sheets
   try {
     const data = await apiGet();
     if (!data || data.error) { console.error('Error de Sheets:', data && data.error); return false; }
     const source = data.db || data;
+    remoteVersion = Number(data.version) || 2;
     DB = {
       products: (source.products || []).map(normalizeProduct),
       sales: (source.sales || []).map(normalizeSale),
@@ -464,7 +644,12 @@ async function refreshFromRemote() {
       ads: (source.ads || []).map(normalizeAd),
       expenses: (source.expenses || []).map(normalizeExpense),
       lotes: (source.lotes || []).map(normalizeLote),
-      baseProducts: (source.baseProducts || []).map(normalizeBaseProduct)
+      baseProducts: (source.baseProducts || []).map(normalizeBaseProduct),
+      // Con el Apps Script v3 los ajustes y el fondo vienen de Sheets; con el v2 se quedan en este dispositivo.
+      settings: (remoteVersion>=3 && source.settings && typeof source.settings==='object') ? source.settings : (DB.settings||{}),
+      fund: (remoteVersion>=3 && Array.isArray(source.fund)) ? source.fund.map(normalizeFund) : (DB.fund||[]),
+      inv_items: (remoteVersion>=3 && Array.isArray(source.inv_items)) ? source.inv_items.map(normalizeInvItem) : (DB.inv_items||[]),
+      inv_events: (remoteVersion>=3 && Array.isArray(source.inv_events)) ? source.inv_events.map(normalizeInvEvent) : (DB.inv_events||[])
     };
     localStorage.setItem(STORE_KEY, JSON.stringify(DB));
     return true;
@@ -549,8 +734,86 @@ function movementTargets() {
   return targets;
 }
 
+/* ============ AJUSTES (se guardan en Sheets con el Apps Script v3) ============ */
+const SETTING_DEFAULTS = { fundPctSueldo: 10, fundPctUtilidad: 20, fundMonthsTarget: 3, fundStartMonth: '', gramsPerDay: 20, autoPackCost: true };
+
+function getSetting(key){
+  const v = DB.settings && DB.settings[key];
+  return (v === undefined || v === null || v === '') ? SETTING_DEFAULTS[key] : v;
+}
+
+async function saveSettings(obj){
+  DB.settings = Object.assign({}, DB.settings||{}, obj);
+  saveDB(false);
+  for(const k of Object.keys(obj)){ await syncRemote('setSetting', { key:k, value:obj[k] }); }
+}
+
+/* ============ FONDO DEL NEGOCIO (reinversión / ahorro) ============ */
+function fundActive(){ return !!(DB.settings && DB.settings.fundStartMonth); }
+
+// Aporte al fondo de un mes: % de los sueldos + % de la utilidad (solo si es positiva).
+function fundForMonth(mk, sueldosMonth, utilidadMonth){
+  if(!fundActive() || mk < DB.settings.fundStartMonth) return { aporteSueldos:0, aporteUtilidad:0, total:0 };
+  const aporteSueldos = sueldosMonth * (Number(getSetting('fundPctSueldo'))||0) / 100;
+  const aporteUtilidad = Math.max(utilidadMonth,0) * (Number(getSetting('fundPctUtilidad'))||0) / 100;
+  return { aporteSueldos, aporteUtilidad, total: aporteSueldos + aporteUtilidad };
+}
+
+// Resumen financiero de un mes (el mismo cálculo del dashboard, reutilizable)
+function monthFinance(mk){
+  const sales = DB.sales.filter(s=>monthKey(s.date)===mk);
+  const ads = DB.ads.filter(a=>monthKey(a.date)===mk);
+  const exps = DB.expenses.filter(x=>monthKey(x.date)===mk);
+  const rev = sum(sales.map(s=>s.total));
+  const profit = sum(sales.map(s=>s.profit));
+  const adSpend = sum(ads.map(a=>a.amount));
+  const sueldos = sum(exps.filter(x=>x.category==='Sueldos').map(x=>x.amount));
+  const opex = sum(exps.filter(x=>OPEX_CATEGORIES.includes(x.category) && x.category!=='Sueldos').map(x=>x.amount));
+  const utilidad = profit - adSpend - sueldos - opex;
+  return { mk, rev, profit, adSpend, sueldos, opex, utilidad, hasData: (sales.length+ads.length+exps.length)>0, fund: fundForMonth(mk, sueldos, utilidad) };
+}
+
+function prevMonthKey(mk){
+  const [y,m] = mk.split('-').map(Number);
+  const d = new Date(y, m-2, 1);
+  return localISODate(d).slice(0,7);
+}
+
+function fundMonthsRange(){
+  if(!fundActive()) return [];
+  const out = []; let mk = DB.settings.fundStartMonth; const end = monthKey(todayStr());
+  let guard = 0;
+  while(mk <= end && guard++ < 240){ out.push(mk); const [y,m]=mk.split('-').map(Number); mk = localISODate(new Date(y,m,1)).slice(0,7); }
+  return out;
+}
+
+function fundSummary(){
+  const months = fundMonthsRange().map(mk=>monthFinance(mk));
+  const aportes = sum(months.map(m=>m.fund.total));
+  const usos = sum((DB.fund||[]).map(f=>f.amount));
+  const balance = aportes - usos;
+  // meta = N meses de gasto (Ads + sueldos + gastos de operación), promedio de los últimos 3 meses con datos
+  const recent = []; let mk = monthKey(todayStr());
+  for(let i=0;i<3;i++){ const f = monthFinance(mk); if((f.adSpend+f.sueldos+f.opex)>0) recent.push(f); mk = prevMonthKey(mk); }
+  const burn = recent.length ? sum(recent.map(f=>f.adSpend+f.sueldos+f.opex))/recent.length : 0;
+  const target = burn * (Number(getSetting('fundMonthsTarget'))||3);
+  const last3 = months.slice(-3);
+  const pace = last3.length ? sum(last3.map(m=>m.fund.total))/last3.length : 0;
+  return { months, aportes, usos, balance, burn, target, pace };
+}
+
 /* ============ NAVEGACIÓN ============ */
+function toggleMobileNav(force){
+  const nav = qs('navlist');
+  if(!nav) return;
+  const open = (typeof force === 'boolean') ? force : !nav.classList.contains('open');
+  nav.classList.toggle('open', open);
+}
+
 function switchView(name){
+  toggleMobileNav(false);
+  openAccIds.clear();
+  window.scrollTo(0,0);
   currentView = name;
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   qs('view-'+name).classList.add('active');
@@ -566,6 +829,9 @@ function renderView(name){
   else if(name==='ads') renderAds();
   else if(name==='egresos') renderEgresos();
   else if(name==='delivery') renderDelivery();
+  else if(name==='clientes') renderClientes();
+  else if(name==='inventario') renderInventario();
+  else if(name==='fondo') renderFondo();
   else if(name==='config') renderConfig();
 }
 
@@ -667,6 +933,24 @@ function computeDashboardForMonth(thisMonth){
   const adSpendMonth = sum(monthAds.map(a=>a.amount));
   const profitMonthMinusAds = profitMonth - adSpendMonth;
   const adsRevenue = sum(monthSales.filter(s=>s.channel===CHANNELS[0]).map(s=>s.total));
+  const sueldosList = monthExpenses.filter(x=>x.category==='Sueldos');
+  const sueldosMonth = sum(sueldosList.map(x=>x.amount));
+  const opexOtherMonth = sum(monthExpenses.filter(x=>OPEX_CATEGORIES.includes(x.category) && x.category!=='Sueldos').map(x=>x.amount));
+  const insumosMonth = sum(monthExpenses.filter(x=>!OPEX_CATEGORIES.includes(x.category)).map(x=>x.amount));
+  const utilidadMonth = profitMonthMinusAds - sueldosMonth - opexOtherMonth;
+  const fundM = fundForMonth(thisMonth, sueldosMonth, utilidadMonth);
+  const invOn = invEnabled();
+  const lowSupplies = invOn ? lowSupplyItems() : [];
+  const bagsReady = invOn ? bagsReadyTotal() : 0;
+  const prevFin = monthFinance(prevMonthKey(thisMonth));
+  const sueldoByPartner = {};
+  sueldosList.forEach(x=>{ const n = String(x.provider||'').trim() || 'Sin nombre'; sueldoByPartner[n] = (sueldoByPartner[n]||0) + x.amount; });
+  const partnerSueldos = Object.entries(sueldoByPartner).map(([name,amount])=>({name,amount}));
+  const metaSalesCount = monthSales.filter(s=>s.channel===CHANNELS[0]).length;
+  const messagesMonth = sum(monthAds.map(a=>a.messages));
+  const costPerMessage = messagesMonth>0 ? adSpendMonth/messagesMonth : null;
+  const costPerAdSale = metaSalesCount>0 ? adSpendMonth/metaSalesCount : null;
+  const msgToSalePct = messagesMonth>0 ? (metaSalesCount/messagesMonth*100) : null;
   const roas = adSpendMonth>0 ? (adsRevenue/adSpendMonth) : null;
   const totalStock = DB.baseProducts.length>0 ? sum(DB.baseProducts.map(b=>b.stock)) : sum(DB.products.map(p=>p.stock));
   const pendingDeliveries = DB.sales.filter(s=>s.deliveryStatus && s.deliveryStatus!=='Entregado').length;
@@ -674,8 +958,10 @@ function computeDashboardForMonth(thisMonth){
   const byChannel = {};
   monthSales.forEach(s=>{ const ch = s.channel||'Otro'; byChannel[ch]=(byChannel[ch]||0)+s.total; });
   const topChannel = Object.entries(byChannel).sort((a,b)=>b[1]-a[1])[0] || null;
-  return {isCurrentMonth, revToday, revMonth, salesCountMonth, avgTicketMonth, profitMonth, expensesMonth, netProfitMonth, profitMonthMinusAds, adSpendMonth, roas, totalStock, pendingDeliveries, lowStock, monthSales, topChannel};
+  return {invOn, lowSupplies, bagsReady, fundM, prevFin, sueldosMonth, opexOtherMonth, insumosMonth, utilidadMonth, partnerSueldos, metaSalesCount, messagesMonth, costPerMessage, costPerAdSale, msgToSalePct, isCurrentMonth, revToday, revMonth, salesCountMonth, avgTicketMonth, profitMonth, expensesMonth, netProfitMonth, profitMonthMinusAds, adSpendMonth, roas, totalStock, pendingDeliveries, lowStock, monthSales, topChannel};
 }
+
+function thisMonthActive(mk){ return fundActive() && mk >= DB.settings.fundStartMonth; }
 
 function changeDashboardMonth(mk){
   selectedDashboardMonth = mk;
@@ -744,17 +1030,44 @@ function renderDashboard(){
       </select>
     </div>
 
+    <div class="card" style="margin-bottom:18px;">
+      <h3>Utilidad de ${monthLabelFull(selectedDashboardMonth)}<small>Cómo se llega a lo que queda para repartir</small></h3>
+      <div class="wf-row"><span>Ventas del mes</span><b>${money(d.revMonth)}</b></div>
+      <div class="wf-row"><span>Ganancia bruta<small>Ventas − costo de producto y envío</small></span><b style="color:${d.profitMonth>=0?'var(--accent-green)':'var(--accent-red)'}">${money(d.profitMonth)}</b></div>
+      <div class="wf-row neg"><span>− Inversión en Ads</span><b>${money(d.adSpendMonth)}</b></div>
+      <div class="wf-row neg"><span>− Sueldos</span><b>${money(d.sueldosMonth)}</b></div>
+      <div class="wf-row neg"><span>− Otros gastos de operación<small>Alquiler, servicios, herramientas…</small></span><b>${money(d.opexOtherMonth)}</b></div>
+      ${d.fundM.aporteUtilidad>0 ? `<div class="wf-row"><span>Utilidad antes del fondo</span><b>${money(d.utilidadMonth)}</b></div>
+      <div class="wf-row neg"><span>− Fondo del negocio<small>${getSetting('fundPctUtilidad')}% de la utilidad</small></span><b>${money(d.fundM.aporteUtilidad)}</b></div>` : ''}
+      <div class="wf-row total"><span>Utilidad a repartir 50/50</span><b style="color:${(d.utilidadMonth-d.fundM.aporteUtilidad)>=0?'var(--accent-green)':'var(--accent-red)'}">${money(d.utilidadMonth-d.fundM.aporteUtilidad)}</b></div>
+      ${d.prevFin.hasData ? `<p class="hint" style="margin:8px 0 0 0;">${(()=>{ const diff = d.utilidadMonth - d.prevFin.utilidad; return (diff>=0?'▲ ':'▼ ') + money(Math.abs(diff)) + ' de utilidad vs ' + monthLabelFull(d.prevFin.mk) + ' (antes del fondo)'; })()}</p>` : ''}
+
+      <div class="split-grid">
+        ${(d.partnerSueldos.length>0 ? d.partnerSueldos : [{name:'Socio 1',amount:0},{name:'Socio 2',amount:0}]).map(pt=>{
+          const aporteS = pt.amount * (fundActive() && thisMonthActive(selectedDashboardMonth) ? (Number(getSetting('fundPctSueldo'))||0)/100 : 0);
+          const share = (d.utilidadMonth - d.fundM.aporteUtilidad)/2;
+          return `
+          <div class="split-box">
+            <div class="nm">${esc(pt.name)}</div>
+            <div class="ln"><span>Sueldo</span><span>${money(pt.amount)}</span></div>
+            ${aporteS>0 ? `<div class="ln"><span>− Al fondo (${getSetting('fundPctSueldo')}% del sueldo)</span><span>${money(aporteS)}</span></div>` : ''}
+            <div class="ln"><span>50% de la utilidad</span><span>${money(share)}</span></div>
+            <div class="tt"><span>Total para ti</span><span>${money(pt.amount - aporteS + share)}</span></div>
+          </div>`;}).join('')}
+      </div>
+      ${d.partnerSueldos.length===0 ? `<p class="hint" style="margin:10px 0 0 0;">Para ver el total por socio, registra cada sueldo en <b>Egresos</b> (categoría Sueldos, con el nombre del socio).</p>` : (d.partnerSueldos.length===1 ? `<p class="hint" style="margin:10px 0 0 0;">Solo hay un sueldo registrado este mes: falta el del otro socio.</p>` : '')}
+      ${fundActive() ? `<p class="hint" style="margin:10px 0 0 0;">💰 Al fondo del negocio este mes: <b>${money(d.fundM.total)}</b> (${money(d.fundM.aporteSueldos)} de sueldos + ${money(d.fundM.aporteUtilidad)} de utilidad). <a href="#" onclick="switchView('fondo');return false;" style="color:var(--accent-gold)">Ver fondo</a></p>` : `<p class="hint" style="margin:10px 0 0 0;">💰 Aún no activaste el fondo del negocio. <a href="#" onclick="switchView('fondo');return false;" style="color:var(--accent-gold)">Configurarlo</a></p>`}
+      <p class="hint" style="margin:10px 0 0 0;">Compras de insumos del mes: ${money(d.insumosMonth)} — ya están dentro del costo del producto, por eso no se restan otra vez.</p>
+    </div>
+
     <div class="grid grid-kpi">
       ${d.isCurrentMonth ? `<div class="card"><p class="kpi-label">Ventas hoy</p><p class="kpi-value">${money(d.revToday)}</p></div>` : ''}
-      <div class="card"><p class="kpi-label">Ventas del mes</p><p class="kpi-value">${money(d.revMonth)}</p></div>
-      <div class="card"><p class="kpi-label">N° de ventas</p><p class="kpi-value">${d.salesCountMonth}</p><p class="kpi-sub">Ticket promedio: ${money(d.avgTicketMonth)}</p></div>
-      <div class="card"><p class="kpi-label">Ganancia del mes</p><p class="kpi-value ${d.profitMonth>=0?'green':'red'}">${money(d.profitMonth)}</p><p class="kpi-sub">Ventas menos costo de producto y envío</p></div>
-      <div class="card"><p class="kpi-label">Ganancia neta (sin Ads)</p><p class="kpi-value ${d.profitMonthMinusAds>=0?'green':'red'}">${money(d.profitMonthMinusAds)}</p><p class="kpi-sub">Ganancia del mes − inversión en Ads</p></div>
-      <div class="card"><p class="kpi-label">Egresos del mes</p><p class="kpi-value red">${money(d.expensesMonth)}</p><p class="kpi-sub">Materiales, empaques, etc.</p></div>
-      <div class="card"><p class="kpi-label">Ganancia neta (mes)</p><p class="kpi-value ${d.netProfitMonth>=0?'green':'red'}">${money(d.netProfitMonth)}</p><p class="kpi-sub">Ganancia − egresos</p></div>
+      <div class="card"><p class="kpi-label">Ventas del mes</p><p class="kpi-value">${money(d.revMonth)}</p><p class="kpi-sub">${d.salesCountMonth} ventas · ticket promedio ${money(d.avgTicketMonth)}${d.prevFin.rev>0 ? ' · '+((d.revMonth>=d.prevFin.rev)?'▲ ':'▼ ')+Math.abs((d.revMonth-d.prevFin.rev)/d.prevFin.rev*100).toFixed(0)+'% vs mes anterior' : ''}</p></div>
       <div class="card"><p class="kpi-label">Gasto en Ads (mes)</p><p class="kpi-value gold">${money(d.adSpendMonth)}</p><p class="kpi-sub">ROAS aprox: ${d.roas===null?'—':d.roas.toFixed(2)+'x'}</p></div>
+      <div class="card"><p class="kpi-label">Costo por mensaje (Ads)</p><p class="kpi-value gold">${d.costPerMessage===null?'—':money(d.costPerMessage)}</p><p class="kpi-sub">${d.messagesMonth} mensajes generados</p></div>
+      <div class="card"><p class="kpi-label">Costo por venta con Ads</p><p class="kpi-value gold">${d.costPerAdSale===null?'—':money(d.costPerAdSale)}</p><p class="kpi-sub">${d.metaSalesCount} ventas por Ads${d.msgToSalePct===null?'':' · '+d.msgToSalePct.toFixed(0)+'% de los mensajes'}</p></div>
       <div class="card"><p class="kpi-label">Mejor canal del mes</p><p class="kpi-value" style="font-size:16px;">${d.topChannel?esc(d.topChannel[0]):'—'}</p><p class="kpi-sub">${d.topChannel?money(d.topChannel[1]):''}</p></div>
-      <div class="card"><p class="kpi-label">Stock total (actual)</p><p class="kpi-value">${d.totalStock} u.</p><p class="kpi-sub">${d.lowStock.length>0?d.lowStock.length+' producto(s) bajo mínimo':'Niveles normales'}</p></div>
+      ${d.invOn ? `<div class="card"><p class="kpi-label">Bolsas listas (actual)</p><p class="kpi-value">${d.bagsReady}</p><p class="kpi-sub">${d.lowSupplies.length>0 ? '⚠ '+d.lowSupplies.length+' insumo(s) bajo mínimo: '+d.lowSupplies.slice(0,3).map(i=>esc(i.name)).join(', ') : 'Insumos en niveles normales'}</p></div>` : `<div class="card"><p class="kpi-label">Stock total (actual)</p><p class="kpi-value">${d.totalStock} u.</p><p class="kpi-sub">${d.lowStock.length>0?d.lowStock.length+' producto(s) bajo mínimo':'Niveles normales'}</p></div>`}
       <div class="card"><p class="kpi-label">Pedidos por entregar (actual)</p><p class="kpi-value ${d.pendingDeliveries>0?'gold':''}">${d.pendingDeliveries}</p></div>
     </div>
     <div class="grid grid-charts">
@@ -854,6 +1167,7 @@ function renderVentas(){
         <div><label>Costo real de envío (S/)</label><input type="number" id="sf-delcost" step="0.01" value="0"></div>
         <div><label>Cobrado al cliente por envío (S/)</label><input type="number" id="sf-delcharged" step="0.01" value="0"></div>
         <div><label>Zona / dirección</label><input type="text" id="sf-zone" placeholder="Distrito, referencia"></div>
+        ${invEnabled() ? `<div><label>Despacho</label><select id="sf-dispatch"><option value="lima">Lima (bolsa estándar)</option><option value="provincia">Provincia</option></select></div>` : ''}
       </div>
 
       <div id="sf-combo-block" style="display:none; margin-top:10px; padding:14px; border:1px dashed var(--border); border-radius:8px;">
@@ -1024,16 +1338,23 @@ function numberWithinMonth(items){
 }
 
 let historySections = {};
+const historySelectedMonth = {};
 
+const openAccIds = new Set();
 function toggleAccordion(rowId){
   const item = qs(rowId);
-  if(item) item.classList.toggle('open');
+  if(!item) return;
+  const isOpen = item.classList.toggle('open');
+  if(isOpen) openAccIds.add(rowId); else openAccIds.delete(rowId);
+}
+function restoreOpenAccordions(){
+  openAccIds.forEach(id=>{ const el = qs(id); if(el) el.classList.add('open'); });
 }
 
 function renderAccordionList(sectionId, sortedItems, numMap, renderSummary, renderDetail){
   return `<div class="acc-list">
     ${sortedItems.map((it,idx)=>{
-      const rowId = sectionId + '-row-' + idx;
+      const rowId = sectionId + '-' + (it.id || idx);
       const num = numMap.get(it);
       return `<div class="acc-item" id="${rowId}">
         <div class="acc-head" onclick="toggleAccordion('${rowId}')">
@@ -1071,12 +1392,23 @@ function renderHistorySection(config){
       <label style="display:block; margin-bottom:6px;">📂 Ver historial de un mes anterior</label>
       <select id="${config.id}-month-select" onchange="renderPastMonthDetail('${config.id}')">
         <option value="">— selecciona un mes —</option>
-        ${pastMonthKeys.map(mk=>`<option value="${mk}">${monthLabelFull(mk)} (${byMonth[mk].length} registro(s))</option>`).join('')}
+        ${pastMonthKeys.map(mk=>`<option value="${mk}" ${historySelectedMonth[config.id]===mk?'selected':''}>${monthLabelFull(mk)} (${byMonth[mk].length} registro(s))</option>`).join('')}
       </select>
-      <div id="${config.id}-month-detail" style="margin-top:12px;"></div>
+      <div id="${config.id}-month-detail" style="margin-top:12px;">${pastMonthKeys.includes(historySelectedMonth[config.id]) ? pastMonthDetailHTML(config.id, historySelectedMonth[config.id]) : ''}</div>
     </div>`;
   }
 
+  return html;
+}
+
+function pastMonthDetailHTML(id, mk){
+  const section = historySections[id];
+  if(!section || !mk) return '';
+  const items = section.byMonth[mk] || [];
+  const sortedDesc = [...items].sort((a,b)=> (b.date||'').localeCompare(a.date||'') || (b.createdAt||0)-(a.createdAt||0));
+  const numMap = numberWithinMonth(items);
+  let html = renderAccordionList(id+'-past', sortedDesc, numMap, section.renderSummary, section.renderDetail);
+  html += `<div style="margin-top:6px; font-size:0.8rem; color:var(--text-muted);">Total: ${items.length} registro(s) en ${monthLabelFull(mk)}</div>`;
   return html;
 }
 
@@ -1085,15 +1417,9 @@ function renderPastMonthDetail(id){
   const mk = sel ? sel.value : '';
   const container = qs(id+'-month-detail');
   if(!container) return;
-  if(!mk){ container.innerHTML=''; return; }
-  const section = historySections[id];
-  if(!section) return;
-  const items = section.byMonth[mk] || [];
-  const sortedDesc = [...items].sort((a,b)=> (b.date||'').localeCompare(a.date||'') || (b.createdAt||0)-(a.createdAt||0));
-  const numMap = numberWithinMonth(items);
-  let html = renderAccordionList(id+'-past', sortedDesc, numMap, section.renderSummary, section.renderDetail);
-  html += `<div style="margin-top:6px; font-size:0.8rem; color:var(--text-muted);">Total: ${items.length} registro(s) en ${monthLabelFull(mk)}</div>`;
-  container.innerHTML = html;
+  historySelectedMonth[id] = mk;
+  container.innerHTML = mk ? pastMonthDetailHTML(id, mk) : '';
+  restoreOpenAccordions();
 }
 
 function pill(status){
@@ -1103,6 +1429,7 @@ function pill(status){
 }
 
 async function addSale(){
+  if(rapidFire('addSale')) return;
   const isCombo = qs('sf-combo-toggle') && qs('sf-combo-toggle').checked;
   if(isCombo) return addComboSale();
 
@@ -1157,9 +1484,11 @@ async function addSale(){
     mv = { id: uid(), date: sale.date, productId, productName: product.name, type:'salida', qty, reason:'Venta' };
   }
   DB.movements.push(mv);
+  const invEvsSale = invApplySale(sale, [{ grind: product.grindType||'molido', size: presentationBagSize(product), n: qty*(product.unitsPerSale||1), loteId: null }], val('sf-dispatch')||'lima', qty, product.unitsPerSale||1);
   saveDB(false);
   renderVentas();
   await syncRemote('addSale', sale);
+  await syncItems('inv_events', invEvsSale);
   if(base) await syncRemote('updateBaseProduct', base);
   else await syncRemote('updateProduct', product);
   await syncRemote('addMovement', mv);
@@ -1222,10 +1551,20 @@ async function addComboSale(){
     movements.push({ id: uid(), date: sale.date, productId: b.id, productName: b.name, type:'salida', qty: neededByBase[bid], reason: 'Venta combinada: ' + productName + (lotesUsados ? ' (Lotes: '+lotesUsados+')' : '') });
   });
   DB.movements.push(...movements);
+  const comboParts = {};
+  entries.forEach(e=>{
+    const b = baseProductById(e.baseId);
+    const size = (b && Number(b.weightGrams)) || 500;
+    const k = e.grindType+'|'+size+'|'+e.loteId;
+    if(!comboParts[k]) comboParts[k] = { grind:e.grindType, size, n:0, loteId:e.loteId||'' };
+    comboParts[k].n += 1;
+  });
+  const invEvsCombo = invApplySale(sale, Object.values(comboParts), val('sf-dispatch')||'lima', 1, entries.length);
 
   saveDB(false);
   renderVentas();
   await syncRemote('addSale', sale);
+  await syncItems('inv_events', invEvsCombo);
   for(const bid of Object.keys(neededByBase)){
     const b = baseProductById(bid);
     if(b) await syncRemote('updateBaseProduct', b);
@@ -1255,9 +1594,11 @@ async function deleteSale(id){
     }
   }
   DB.sales = DB.sales.filter(s=>s.id!==id);
+  const removedInvIds = invRemoveSaleEvents(id);
   saveDB(false);
   renderVentas();
   await syncRemote('deleteSale', {id});
+  await syncDeleteItems('inv_events', removedInvIds);
   if(base) await syncRemote('updateBaseProduct', base);
   else if(product) await syncRemote('updateProduct', product);
   if(mv) await syncRemote('addMovement', mv);
@@ -1274,6 +1615,14 @@ async function markPaid(id){
 }
 
 /* === EDICIÓN DE VENTAS === */
+function flashSaved(id){
+  const el = qs(id);
+  if(!el) return;
+  el.style.opacity = '1';
+  clearTimeout(el._t);
+  el._t = setTimeout(()=>{ el.style.opacity = '0'; }, 2000);
+}
+
 function closeModalSale(){
   const existingModal = document.getElementById('modal-edit-sale');
   if (existingModal) existingModal.remove();
@@ -1321,8 +1670,9 @@ function editSale(id) {
           </div>
         </div>
         <div style="margin-top:15px; display:flex; gap:10px; justify-content:flex-end;">
-          <button class="btn secondary" onclick="closeModalSale()">Cancelar</button>
-          <button class="btn" onclick="saveSaleEdit('${sale.id}')">Guardar Cambios</button>
+          <span id="es-saved-flag" style="align-self:center; color:var(--accent-green); font-weight:600; font-size:13px; opacity:0; transition:opacity .2s;">✓ Guardado</span>
+          <button class="btn secondary" onclick="closeModalSale()">Cerrar</button>
+          <button class="btn" onclick="saveSaleEdit('${sale.id}')">Guardar</button>
         </div>
       </div>
     </div>
@@ -1346,8 +1696,10 @@ async function saveSaleEdit(id) {
   sale.profit = (sale.total - costTotal) + (sale.deliveryCharged - sale.deliveryCost);
 
   saveDB(false);
-  closeModalSale();
-  renderView(currentView);
+  const y = window.scrollY;
+  renderView(currentView);   // actualiza la lista de fondo; el modal sigue abierto
+  window.scrollTo(0, y);
+  flashSaved('es-saved-flag');
   await syncRemote('updateSale', sale);
 }
 
@@ -1358,41 +1710,42 @@ function renderStock(){
   const html = `
     <div class="section-title">Stock físico (bolsas base)</div>
     ${DB.baseProducts.length===0 ? `<div class="empty">No hay productos base todavía. Créalos en <b>Configuración</b> — son las bolsas físicas de café que empacas.</div>` : `
-    <div class="card table-wrap">
-      <table>
-        <thead><tr><th>Producto base</th><th>Tipo</th><th>Stock</th><th>Mínimo</th></tr></thead>
-        <tbody>
-          ${DB.baseProducts.map(b=>`<tr>
-            <td><b>${esc(b.name)}</b></td>
-            <td><span class="pill ${b.grindType==='grano'?'gold':'blue'}">${b.grindType==='grano'?'En Grano':'Molido'}</span></td>
-            <td>${b.stock<=b.minStock?`<span style="color:${COLORS.red};font-weight:600">${b.stock}</span>`:b.stock}</td>
-            <td>${b.minStock}</td>
-          </tr>`).join('')}
-        </tbody>
-      </table>
+    <div class="acc-list">
+      ${DB.baseProducts.map(b=>{
+        const low = b.stock<=b.minStock;
+        return `<div class="acc-item static"><div class="acc-head"><span class="acc-summary">
+          <span class="acc-main">${esc(b.name)}</span>
+          <span class="pill ${b.grindType==='grano'?'gold':'blue'}">${b.grindType==='grano'?'En Grano':'Molido'}</span>
+          <span class="acc-sub">mín. ${b.minStock}</span>
+          <span class="acc-amt" style="color:${low?COLORS.red:'inherit'}">${b.stock} bolsas</span>
+        </span></div></div>`;
+      }).join('')}
     </div>`}
 
     <div class="section-title">Presentaciones y disponibilidad</div>
     ${DB.products.length===0 ? `<div class="empty">No hay presentaciones todavía. Agrégalas en <b>Configuración</b>.</div>` : `
-    <div class="card table-wrap">
-      <table>
-        <thead><tr><th>Producto</th><th>Gramos</th><th>Tipo</th><th>Precio venta</th><th>Costo prod. (calc)</th><th>Consume</th><th>Stock disponible</th></tr></thead>
-        <tbody>
-          ${DB.products.map(p => {
-            const cost = getProductCost(p);
-            const available = getAvailableUnits(p);
-            return `<tr>
-              <td><b>${esc(p.name)}</b>${p.baseProductId ? `<br><small style="opacity:.65">de: ${esc((baseProductById(p.baseProductId)||{}).name||'—')}</small>` : ''}</td>
-              <td>${p.weightGrams||0} g</td>
-              <td><span class="pill ${p.grindType==='grano'?'gold':'blue'}">${p.grindType==='grano'?'En Grano':'Molido'}</span></td>
-              <td>${money(p.price)}</td>
-              <td style="color:var(--accent-gold); font-weight:600">${money(cost)}</td>
-              <td>${p.baseProductId ? (p.unitsPerSale||1)+' bolsa(s)' : '—'}</td>
-              <td>${available<=p.minStock?`<span style="color:${COLORS.red};font-weight:600">${available}</span>`:available}</td>
-            </tr>`;
-          }).join('')}
-        </tbody>
-      </table>
+    <div class="acc-list">
+      ${DB.products.map(p=>{
+        const cost = getProductCost(p);
+        const available = getAvailableUnits(p);
+        const rowId = 'stk-prod-'+p.id;
+        return `<div class="acc-item" id="${rowId}">
+          <div class="acc-head" onclick="toggleAccordion('${rowId}')">
+            <span class="acc-summary">
+              <span class="acc-main">${esc(p.name)}</span>
+              <span class="pill ${p.grindType==='grano'?'gold':'blue'}">${p.grindType==='grano'?'En Grano':'Molido'}</span>
+              <span class="acc-amt" style="color:${available<=p.minStock?COLORS.red:'inherit'}">${available} disp.</span>
+            </span><span class="acc-caret">▾</span>
+          </div>
+          <div class="acc-body"><div class="acc-fields">
+            <div class="acc-field"><label>Gramos</label><div>${p.weightGrams||0} g</div></div>
+            <div class="acc-field"><label>Precio venta</label><div>${money(p.price)}</div></div>
+            <div class="acc-field"><label>Costo prod. (calc)</label><div style="color:var(--accent-gold);font-weight:600">${money(cost)}</div></div>
+            <div class="acc-field"><label>Consume</label><div>${p.baseProductId ? (p.unitsPerSale||1)+' bolsa(s)' : '—'}</div></div>
+            <div class="acc-field"><label>Producto base</label><div>${p.baseProductId ? esc((baseProductById(p.baseProductId)||{}).name||'—') : 'Sin vincular'}</div></div>
+          </div></div>
+        </div>`;
+      }).join('')}
     </div>`}
 
     <div class="section-title">Registrar movimiento de stock</div>
@@ -1408,13 +1761,24 @@ function renderStock(){
 
     <div class="section-title">Últimos movimientos</div>
     ${moves.length===0 ? `<div class="empty">Sin movimientos registrados.</div>` : `
-    <div class="card table-wrap">
-      <table>
-        <thead><tr><th>Fecha</th><th>Producto</th><th>Tipo</th><th>Cant.</th><th>Motivo</th></tr></thead>
-        <tbody>
-          ${moves.map(m=>`<tr><td>${fmtDate(m.date)}</td><td>${esc(m.productName)}</td><td>${m.type==='entrada'?pill('Entregado'):pill('Pendiente')} ${m.type}</td><td>${m.qty}</td><td>${esc(m.reason||'—')}</td></tr>`).join('')}
-        </tbody>
-      </table>
+    <div class="acc-list">
+      ${moves.map((m,i)=>{
+        const rowId = 'mov-'+(m.id||i);
+        const isIn = m.type==='entrada';
+        return `<div class="acc-item" id="${rowId}">
+          <div class="acc-head" onclick="toggleAccordion('${rowId}')">
+            <span class="acc-summary">
+              <span class="acc-main">${esc(m.productName)}</span>
+              <span class="acc-sub">${fmtDate(m.date)}</span>
+              <span class="pill ${isIn?'green':'red'}">${isIn?'Entrada':'Salida'}</span>
+              <span class="acc-amt">${isIn?'+':'−'}${m.qty}</span>
+            </span><span class="acc-caret">▾</span>
+          </div>
+          <div class="acc-body"><div class="acc-fields">
+            <div class="acc-field"><label>Motivo</label><div>${esc(m.reason||'—')}</div></div>
+          </div></div>
+        </div>`;
+      }).join('')}
     </div>`}
   `;
   qs('view-stock').innerHTML = html;
@@ -1496,6 +1860,7 @@ function renderAds(){
 }
 
 async function addAdSpend(){
+  if(rapidFire('addAd')) return;
   const amount = num('ad-amount');
   if(amount<=0){ alert('Ingresa un monto mayor a 0.'); return; }
   const ad = { id: uid(), date: val('ad-date')||todayStr(), platform: val('ad-platform')||'Meta Ads', campaign: val('ad-campaign'), amount, messages: num('ad-messages') };
@@ -1514,26 +1879,60 @@ async function deleteAd(id){
 }
 
 /* ============ EGRESOS ============ */
+function partnerNamesFromSueldos(){
+  const set = new Set();
+  DB.expenses.filter(x=>x.category==='Sueldos').forEach(x=>{ const n=String(x.provider||'').trim(); if(n) set.add(n); });
+  return Array.from(set);
+}
+
+function onExpenseCategoryChange(){
+  const isSueldo = val('ex-category')==='Sueldos';
+  const lbl = qs('ex-provider-label'); const inp = qs('ex-provider');
+  if(lbl) lbl.textContent = isSueldo ? 'Socio que cobra (obligatorio)' : 'Proveedor (opcional)';
+  if(inp) inp.placeholder = isSueldo ? 'Nombre del socio' : 'Nombre del proveedor';
+  const note = qs('ex-category-note');
+  if(note){
+    note.textContent = INSUMO_CATEGORIES.includes(val('ex-category'))
+      ? 'Ojo: este tipo de gasto ya va dentro del costo del producto; se registra solo como referencia y no resta de la utilidad.'
+      : 'Este gasto resta de la utilidad del mes.';
+  }
+}
+
 function renderEgresos(){
   const thisMonth = monthKey(todayStr());
-  const monthTotal = sum(DB.expenses.filter(x=>monthKey(x.date)===thisMonth).map(x=>x.amount));
+  const monthExp = DB.expenses.filter(x=>monthKey(x.date)===thisMonth);
+  const opexTotal = sum(monthExp.filter(x=>OPEX_CATEGORIES.includes(x.category)).map(x=>x.amount));
+  const sueldosTotal = sum(monthExp.filter(x=>x.category==='Sueldos').map(x=>x.amount));
+  const insumosTotal = sum(monthExp.filter(x=>!OPEX_CATEGORIES.includes(x.category)).map(x=>x.amount));
   const byCat = {};
-  DB.expenses.filter(x=>monthKey(x.date)===thisMonth).forEach(x=>{ byCat[x.category]=(byCat[x.category]||0)+x.amount; });
+  monthExp.forEach(x=>{ byCat[x.category]=(byCat[x.category]||0)+x.amount; });
   const catEntries = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
 
   const html = `
     <div class="grid grid-kpi" style="margin-bottom:18px;">
-      <div class="card"><p class="kpi-label">Egresos del mes</p><p class="kpi-value red">${money(monthTotal)}</p></div>
+      <div class="card"><p class="kpi-label">Gastos de operación (mes)</p><p class="kpi-value red">${money(opexTotal)}</p><p class="kpi-sub">Restan de la utilidad (incluye sueldos)</p></div>
+      <div class="card"><p class="kpi-label">Sueldos (mes)</p><p class="kpi-value">${money(sueldosTotal)}</p></div>
+      <div class="card"><p class="kpi-label">Compras de insumos (mes)</p><p class="kpi-value gold">${money(insumosTotal)}</p><p class="kpi-sub">Ya van en el costo del producto · no restan</p></div>
     </div>
     <div class="section-title">Registrar egreso</div>
     <div class="card">
       <div class="form-grid">
         <div><label>Fecha</label><input type="date" id="ex-date" value="${todayStr()}"></div>
-        <div><label>Categoría</label><select id="ex-category">${EXPENSE_CATEGORIES.map(c=>`<option>${c}</option>`).join('')}</select></div>
-        <div><label>Descripción</label><input type="text" id="ex-desc" placeholder="Ej: Bolsas kraft 500g x200"></div>
+        <div><label>Categoría</label>
+          <select id="ex-category" onchange="onExpenseCategoryChange()">
+            <optgroup label="Gastos de operación (restan de la utilidad)">
+              ${OPEX_CATEGORIES.map(c=>`<option>${c}</option>`).join('')}
+            </optgroup>
+            <optgroup label="Insumos (ya incluidos en el costo del producto)">
+              ${INSUMO_CATEGORIES.map(c=>`<option>${c}</option>`).join('')}
+            </optgroup>
+          </select></div>
+        <div><label>Descripción</label><input type="text" id="ex-desc" placeholder="Ej: Sueldo de octubre / Alquiler"></div>
         <div><label>Monto (S/)</label><input type="number" id="ex-amount" step="0.01" value="0"></div>
-        <div><label>Proveedor (opcional)</label><input type="text" id="ex-provider" placeholder="Nombre del proveedor"></div>
+        <div><label id="ex-provider-label">Socio que cobra (obligatorio)</label><input type="text" id="ex-provider" list="partner-names" placeholder="Nombre del socio">
+          <datalist id="partner-names">${partnerNamesFromSueldos().map(n=>`<option value="${esc(n)}">`).join('')}</datalist></div>
       </div>
+      <p class="hint" id="ex-category-note" style="margin-top:0;">Este gasto resta de la utilidad del mes.</p>
       <button class="btn" onclick="this.disabled=true; addExpense().finally(()=>this.disabled=false)">+ Registrar egreso</button>
     </div>
 
@@ -1549,24 +1948,29 @@ function renderEgresos(){
       emptyText: 'Sin egresos registrados este mes.',
       renderSummary: (x) => `
         <span class="acc-summary">
-          <span class="acc-main">${esc(x.description || x.category)}</span>
+          <span class="acc-main">${esc(x.category==='Sueldos' ? ('Sueldo · '+(x.provider||'—')) : (x.description || x.category))}</span>
           <span class="acc-sub">${fmtDate(x.date)}</span>
+          <span class="pill ${OPEX_CATEGORIES.includes(x.category)?'red':'blue'}">${OPEX_CATEGORIES.includes(x.category)?'Operación':'Insumo'}</span>
           <span class="acc-amt">${money(x.amount)}</span>
         </span>`,
       renderDetail: (x) => `
         <div class="acc-fields">
           <div class="acc-field"><label>Categoría</label><div>${esc(x.category)}</div></div>
-          <div class="acc-field"><label>Proveedor</label><div>${esc(x.provider||'—')}</div></div>
+          <div class="acc-field"><label>Descripción</label><div>${esc(x.description||'—')}</div></div>
+          <div class="acc-field"><label>${x.category==='Sueldos'?'Socio':'Proveedor'}</label><div>${esc(x.provider||'—')}</div></div>
         </div>
         <div class="acc-actions"><button class="btn small danger" onclick="deleteExpense('${x.id}')">Eliminar</button></div>`
     })}
   `;
   qs('view-egresos').innerHTML = html;
+  onExpenseCategoryChange();
 }
 
 async function addExpense(){
+  if(rapidFire('addExpense')) return;
   const amount = num('ex-amount');
   if(amount<=0){ alert('Ingresa un monto mayor a 0.'); return; }
+  if(val('ex-category')==='Sueldos' && !String(val('ex-provider')||'').trim()){ alert('Escribe el nombre del socio que cobra este sueldo.'); return; }
   const expense = { id: uid(), date: val('ex-date')||todayStr(), category: val('ex-category'), description: val('ex-desc'), amount, provider: val('ex-provider') };
   DB.expenses.push(expense);
   saveDB(false);
@@ -1587,7 +1991,7 @@ function renderPendingAccordion(pending){
   if(pending.length===0) return `<div class="empty">No hay pedidos pendientes. Todo entregado 🎉</div>`;
   return `<div class="acc-list">
     ${pending.map((s,idx)=>{
-      const rowId = 'delivery-pending-row-'+idx;
+      const rowId = 'delivery-pending-'+s.id;
       return `<div class="acc-item" id="${rowId}">
         <div class="acc-head" onclick="toggleAccordion('${rowId}')">
           <span class="acc-summary">
@@ -1658,6 +2062,834 @@ async function updateDeliveryStatus(saleId, newStatus){
   }
 }
 
+/* ============ CLIENTES (agrupado por teléfono: historial, LTV, nuevo vs recurrente) ============ */
+function normalizePhone(p){
+  return String(p||'').replace(/\D/g,''); // solo dígitos, para poder agrupar aunque el formato varíe
+}
+
+const DORMANT_DAYS = 30;
+
+function daysBetween(dateStrA, dateStrB){
+  const a = new Date(dateStrA+'T00:00:00');
+  const b = new Date(dateStrB+'T00:00:00');
+  return Math.round((b-a) / 86400000);
+}
+
+function computeCustomers(){
+  const withPhone = {};
+  const noPhone = [];
+  DB.sales.forEach(s=>{
+    const key = normalizePhone(s.phone);
+    if(!key){ noPhone.push(s); return; }
+    if(!withPhone[key]) withPhone[key] = [];
+    withPhone[key].push(s);
+  });
+
+  const today = todayStr();
+  const customers = Object.keys(withPhone).map(key=>{
+    const sales = withPhone[key].slice().sort((a,b)=> (a.date||'').localeCompare(b.date||'') || (a.createdAt||0)-(b.createdAt||0));
+    const first = sales[0];
+    const last = sales[sales.length-1];
+    const totalSpent = sum(sales.map(s=>s.total||0));
+    const totalProfit = sum(sales.map(s=>s.profit||0));
+    const purchaseCount = sales.length;
+    const daysSinceLast = daysBetween(last.date, today);
+    const isRecurrent = purchaseCount > 1;
+    const isDormant = daysSinceLast >= DORMANT_DAYS;
+    // Reposición: cuánto café compró la última vez y cuánto le dura (gramos por día = ajuste)
+    const lastProd = productById(last.productId);
+    const gramsLast = (Array.isArray(last.combo) && last.combo.length>0)
+      ? last.combo.length * 500
+      : ((lastProd && lastProd.weightGrams ? lastProd.weightGrams : 500) * (last.qty||1));
+    const gpd = Number(getSetting('gramsPerDay')) || 20;
+    const daysLeft = Math.round(gramsLast / gpd - daysSinceLast);
+    const needsRestock = daysLeft <= 7 && daysSinceLast < 60;
+    // el nombre más reciente no vacío (por si cambiaron cómo lo escribieron)
+    const nameCandidate = [...sales].reverse().find(s=>String(s.customer||'').trim())?.customer || '';
+    return {
+      phone: key, displayPhone: last.phone || first.phone, name: nameCandidate,
+      sales, firstSale: first, lastSale: last, totalSpent, totalProfit, purchaseCount,
+      daysSinceLast, isRecurrent, isDormant, gramsLast, daysLeft, needsRestock,
+      avgTicket: purchaseCount>0 ? totalSpent/purchaseCount : 0
+    };
+  });
+
+  return { customers, noPhone };
+}
+
+function customerKPIs(customers){
+  const total = customers.length;
+  const recurrentes = customers.filter(c=>c.isRecurrent).length;
+  const dormidos = customers.filter(c=>c.isDormant).length;
+  const pctRecurrentes = total>0 ? (recurrentes/total*100) : 0;
+  const avgLTV = total>0 ? sum(customers.map(c=>c.totalSpent))/total : 0;
+  return { total, recurrentes, dormidos, pctRecurrentes, avgLTV };
+}
+
+function waLink(phoneDigits, name){
+  let d = String(phoneDigits||'').replace(/\D/g,'');
+  if(d.length===9) d = '51'+d;
+  const first = String(name||'').trim().split(' ')[0];
+  const msg = `Hola ${first||''}, soy de Casa Vieja ☕ ¿Cómo te fue con tu café? Si ya se te está acabando, te preparo tu siguiente pedido. ¿Te animas?`;
+  return 'https://wa.me/'+d+'?text='+encodeURIComponent(msg);
+}
+
+let clientesFilter = 'todos';
+
+function setClientesFilter(f){
+  clientesFilter = f;
+  renderClientes();
+}
+
+function renderClientes(){
+  const { customers, noPhone } = computeCustomers();
+  const k = customerKPIs(customers);
+
+  let filtered = customers;
+  if(clientesFilter==='nuevos') filtered = customers.filter(c=>!c.isRecurrent);
+  else if(clientesFilter==='recurrentes') filtered = customers.filter(c=>c.isRecurrent);
+  else if(clientesFilter==='dormidos') filtered = customers.filter(c=>c.isDormant);
+  else if(clientesFilter==='reponer') filtered = customers.filter(c=>c.needsRestock);
+
+  // Orden: primero los más valiosos (mayor LTV), luego por última compra más reciente
+  filtered = [...filtered].sort((a,b)=> b.totalSpent - a.totalSpent);
+
+  const html = `
+    <div class="grid grid-kpi">
+      <div class="card"><p class="kpi-label">Clientes únicos (con teléfono)</p><p class="kpi-value">${k.total}</p></div>
+      <div class="card"><p class="kpi-label">% Recurrentes</p><p class="kpi-value ${k.pctRecurrentes>=20?'green':'gold'}">${k.pctRecurrentes.toFixed(0)}%</p><p class="kpi-sub">${k.recurrentes} de ${k.total} han comprado 2+ veces</p></div>
+      <div class="card"><p class="kpi-label">LTV promedio</p><p class="kpi-value">${money(k.avgLTV)}</p><p class="kpi-sub">Gasto histórico promedio por cliente</p></div>
+      <div class="card"><p class="kpi-label">Reponer pronto</p><p class="kpi-value ${customers.filter(c=>c.needsRestock).length>0?'gold':''}">${customers.filter(c=>c.needsRestock).length}</p><p class="kpi-sub">Se les acaba el café en ≤ 7 días</p></div>
+      <div class="card"><p class="kpi-label">Clientes dormidos (${DORMANT_DAYS}+ días)</p><p class="kpi-value ${k.dormidos>0?'red':'green'}">${k.dormidos}</p><p class="kpi-sub">Candidatos a reactivar</p></div>
+    </div>
+
+    ${noPhone.length>0 ? `<div class="hint" style="margin-top:-10px;">ℹ️ ${noPhone.length} venta(s) sin teléfono registrado no se pudieron agrupar por cliente.</div>` : ''}
+
+    <div class="toolbar" style="margin-top:16px;">
+      <button class="btn small ${clientesFilter==='todos'?'':'secondary'}" onclick="setClientesFilter('todos')">Todos (${customers.length})</button>
+      <button class="btn small ${clientesFilter==='nuevos'?'':'secondary'}" onclick="setClientesFilter('nuevos')">Nuevos (${customers.filter(c=>!c.isRecurrent).length})</button>
+      <button class="btn small ${clientesFilter==='recurrentes'?'':'secondary'}" onclick="setClientesFilter('recurrentes')">Recurrentes (${k.recurrentes})</button>
+      <button class="btn small ${clientesFilter==='reponer'?'':'secondary'}" onclick="setClientesFilter('reponer')">Reponer (${customers.filter(c=>c.needsRestock).length})</button>
+      <button class="btn small ${clientesFilter==='dormidos'?'':'secondary'}" onclick="setClientesFilter('dormidos')">Dormidos (${k.dormidos})</button>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+      <label style="margin:0;">Consumo estimado (g por día)</label>
+      <input type="number" id="cl-gpd" min="5" max="200" value="${Number(getSetting('gramsPerDay'))||20}" style="width:90px;" onchange="saveSettings({gramsPerDay: Number(this.value)||20}).then(()=>renderClientes())">
+      <span class="hint" style="margin:0;">Con esto se estima cuándo se les acaba el café.</span>
+    </div>
+
+    ${filtered.length===0 ? `<div class="empty">No hay clientes en este filtro.</div>` : `
+    <div class="acc-list">
+      ${filtered.map((c,idx)=>{
+        const rowId = 'cliente-'+c.phone;
+        return `<div class="acc-item" id="${rowId}">
+          <div class="acc-head" onclick="toggleAccordion('${rowId}')">
+            <span class="acc-summary">
+              <span class="acc-main">${esc(c.name||'Sin nombre')}</span>
+              <span class="acc-sub">📱 ${esc(c.displayPhone)}</span>
+              ${c.isRecurrent ? '<span class="pill green">Recurrente</span>' : '<span class="pill gold">Nuevo</span>'}
+              ${c.needsRestock ? '<span class="pill gold">Reponer pronto</span>' : ''}
+              ${c.isDormant ? '<span class="pill red">Dormido</span>' : ''}
+              <span class="acc-amt">${money(c.totalSpent)}</span>
+            </span>
+            <span class="acc-caret">▾</span>
+          </div>
+          <div class="acc-body">
+            <div class="acc-fields">
+              <div class="acc-field"><label>N° de compras</label><div>${c.purchaseCount}</div></div>
+              <div class="acc-field"><label>Ticket promedio</label><div>${money(c.avgTicket)}</div></div>
+              <div class="acc-field"><label>Ganancia generada</label><div style="color:${c.totalProfit>=0?COLORS.green:COLORS.red};font-weight:600;">${money(c.totalProfit)}</div></div>
+              <div class="acc-field"><label>Primera compra</label><div>${fmtDate(c.firstSale.date)} — ${esc(c.firstSale.productName||'—')}</div></div>
+              <div class="acc-field"><label>Última compra</label><div>${fmtDate(c.lastSale.date)} (hace ${c.daysSinceLast} día${c.daysSinceLast===1?'':'s'})</div></div>
+              <div class="acc-field"><label>Café restante estimado</label><div>${c.daysLeft>0 ? 'Le alcanza ~'+c.daysLeft+' día(s) más' : 'Ya debería habérsele acabado (hace ~'+Math.abs(c.daysLeft)+' día(s))'}</div></div>
+            </div>
+            <div class="acc-actions"><a class="btn small" href="${waLink(c.phone, c.name)}" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex;align-items:center;">💬 Escribir por WhatsApp</a></div>
+            <label style="margin-top:4px;">Historial de compras</label>
+            <div class="table-wrap" style="margin-top:6px;">
+              <table>
+                <thead><tr><th>Fecha</th><th>Producto</th><th>Cant.</th><th>Total</th><th>Pago</th></tr></thead>
+                <tbody>
+                  ${[...c.sales].reverse().map(s=>`<tr><td>${fmtDate(s.date)}</td><td>${esc(s.productName||'—')}</td><td>${s.qty||0}</td><td>${money(s.total||0)}</td><td>${pill(s.paymentStatus)}</td></tr>`).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`}
+  `;
+  qs('view-clientes').innerHTML = html;
+}
+
+
+/* ============ VISTA: FONDO DEL NEGOCIO ============ */
+const FUND_PRESETS = {
+  suave:       { s: 5,  u: 10, label: 'Suave' },
+  equilibrado: { s: 10, u: 20, label: 'Equilibrado' },
+  crecimiento: { s: 15, u: 35, label: 'Crecimiento' }
+};
+
+function applyFundPreset(k){
+  const pr = FUND_PRESETS[k]; if(!pr) return;
+  qs('fd-pct-s').value = pr.s;
+  qs('fd-pct-u').value = pr.u;
+}
+
+async function saveFundConfig(){
+  const pS = Math.min(100, Math.max(0, num('fd-pct-s')));
+  const pU = Math.min(100, Math.max(0, num('fd-pct-u')));
+  const months = Math.min(12, Math.max(1, num('fd-months') || 3));
+  const start = val('fd-start') || monthKey(todayStr());
+  await saveSettings({ fundPctSueldo: pS, fundPctUtilidad: pU, fundMonthsTarget: months, fundStartMonth: start });
+  renderFondo();
+  showSyncBanner('✓ Fondo guardado', false);
+}
+
+async function addFundUse(){
+  const amount = num('fu-amount');
+  const concept = String(val('fu-concept')||'').trim();
+  if(amount<=0){ alert('Ingresa un monto mayor a 0.'); return; }
+  if(!concept){ alert('Escribe en qué se usó el fondo (ej: máquina de sellado).'); return; }
+  const item = { id: uid(), date: val('fu-date') || todayStr(), concept, amount };
+  DB.fund = DB.fund || [];
+  DB.fund.push(item);
+  saveDB(false);
+  renderFondo();
+  await syncRemote('upsertItem', { collection:'fund', item });
+}
+
+async function deleteFundUse(id){
+  if(!confirm('¿Eliminar este uso del fondo? El saldo vuelve a subir.')) return;
+  DB.fund = (DB.fund||[]).filter(f=>f.id!==id);
+  saveDB(false);
+  renderFondo();
+  await syncRemote('deleteItem', { collection:'fund', id });
+}
+
+function renderFondo(){
+  const f = fundSummary();
+  const active = fundActive();
+  const curMk = monthKey(todayStr());
+  const cur = monthFinance(curMk);
+  const pct = f.target>0 ? Math.max(0, Math.min(100, f.balance/f.target*100)) : 0;
+  const reached = f.target>0 && f.balance >= f.target;
+  const monthsToGo = (f.target>f.balance && f.pace>0) ? Math.ceil((f.target-f.balance)/f.pace) : null;
+  const usos = [...(DB.fund||[])].sort((a,b)=> (b.date||'').localeCompare(a.date||''));
+
+  const html = `
+    ${(isConnected() && remoteVersion<3) ? `<div class="card" style="border-color:var(--accent-red);margin-bottom:16px;"><b style="color:var(--accent-red)">⚠ Tu Apps Script es anterior a la v3.</b><div class="hint" style="margin:6px 0 0 0;">El fondo y los ajustes se guardan solo en este dispositivo hasta que pegues el Apps Script v3 y lo vuelvas a implementar (Nueva versión). Después tendrás que volver a guardar la configuración aquí una vez.</div></div>` : ''}
+
+    <div class="grid grid-kpi">
+      <div class="card"><p class="kpi-label">Saldo del fondo</p><p class="kpi-value ${f.balance>=0?'green':'red'}">${money(f.balance)}</p><p class="kpi-sub">${money(f.aportes)} aportado − ${money(f.usos)} usado</p></div>
+      <div class="card"><p class="kpi-label">Aporte de este mes</p><p class="kpi-value gold">${money(cur.fund.total)}</p><p class="kpi-sub">${active ? 'En curso · se ajusta con tus ventas' : 'Fondo sin activar'}</p></div>
+      <div class="card"><p class="kpi-label">Meta (${Number(getSetting('fundMonthsTarget'))||3} meses de gasto)</p><p class="kpi-value">${money(f.target)}</p><p class="kpi-sub">Gasto mensual promedio: ${money(f.burn)} (Ads + sueldos + operación)</p></div>
+      <div class="card"><p class="kpi-label">Ritmo de aporte</p><p class="kpi-value">${money(f.pace)}<span style="font-size:13px;color:var(--text-muted)"> /mes</span></p><p class="kpi-sub">${reached ? '🎉 Meta alcanzada: puedes bajar el porcentaje' : (monthsToGo ? 'Llegas a la meta en ~'+monthsToGo+' mes(es)' : 'Activa el fondo para ver el ritmo')}</p></div>
+    </div>
+    <div style="margin:-6px 0 22px 0;">
+      <div style="height:10px;background:var(--surface-2);border-radius:6px;overflow:hidden;"><div style="height:100%;width:${pct.toFixed(1)}%;background:var(--accent-gold);"></div></div>
+      <div class="hint" style="margin:6px 0 0 0;">${pct.toFixed(0)}% de la meta</div>
+    </div>
+
+    <div class="section-title">Configuración del fondo</div>
+    <div class="card">
+      <p class="hint" style="margin-top:0;">Cada mes se aparta un % de los sueldos y un % de la utilidad. Elige un punto de partida y ajústalo cuando quieras.</p>
+      <div class="toolbar">
+        ${Object.keys(FUND_PRESETS).map(k=>`<button class="btn small secondary" onclick="applyFundPreset('${k}')">${FUND_PRESETS[k].label} (${FUND_PRESETS[k].s}% / ${FUND_PRESETS[k].u}%)</button>`).join('')}
+      </div>
+      <div class="form-grid">
+        <div><label>% de cada sueldo al fondo</label><input type="number" id="fd-pct-s" min="0" max="100" step="1" value="${Number(getSetting('fundPctSueldo'))}"></div>
+        <div><label>% de la utilidad al fondo</label><input type="number" id="fd-pct-u" min="0" max="100" step="1" value="${Number(getSetting('fundPctUtilidad'))}"></div>
+        <div><label>Meta (meses de gasto)</label><input type="number" id="fd-months" min="1" max="12" step="1" value="${Number(getSetting('fundMonthsTarget'))||3}"></div>
+        <div><label>Empieza a aportar desde</label><input type="month" id="fd-start" value="${(DB.settings&&DB.settings.fundStartMonth)||curMk}"></div>
+      </div>
+      <button class="btn" onclick="saveFundConfig()">${active ? 'Guardar cambios' : 'Activar fondo'}</button>
+    </div>
+
+    <div class="acc-list" style="margin-top:14px;">
+      <div class="acc-item" id="fondo-guia">
+        <div class="acc-head" onclick="toggleAccordion('fondo-guia')">
+          <span class="acc-summary"><span class="acc-main">¿Qué porcentaje elegir? Qué dicen las fuentes</span></span><span class="acc-caret">▾</span>
+        </div>
+        <div class="acc-body" style="font-size:13.5px;line-height:1.55;">
+          <p><b>Lo que sí dicen las fuentes</b> (método Profit First y guías de reserva para negocios pequeños):</p>
+          <ul style="padding-left:18px;margin:6px 0;">
+            <li>Para un negocio pequeño, un reparto de partida muy citado es ~5% de los ingresos reales a ganancia/reserva, ~50% a sueldo del dueño, ~15% a impuestos y ~30% a operación.</li>
+            <li>Como meta de reserva, el punto de partida es 3 meses de gastos de operación (se habla de 3 a 6 según el negocio).</li>
+            <li>Se recomienda empezar con poco y subir de a poco: los porcentajes son una guía ajustable, y conviene revisarlos cada 6 a 12 meses.</li>
+            <li>Una práctica citada: del dinero apartado como ganancia, retirar la mitad cada trimestre y dejar la otra mitad como reserva.</li>
+          </ul>
+          <p><b>Cómo lo traduje a tu caso</b> (esto es mi propuesta, no una cifra de las fuentes):</p>
+          <ul style="padding-left:18px;margin:6px 0;">
+            <li><b>10% del sueldo:</b> 5% de ingresos frente a 50% de sueldo es una proporción de 1 a 10, por eso el 10% sobre el sueldo.</li>
+            <li><b>20% de la utilidad (Equilibrado):</b> punto de partida para reinvertir en máquinas, bolsas, ads y stock sin dejar a los socios sin retorno. Sube a Crecimiento (35%) si quieren expandirse rápido, o baja a Suave si el flujo está apretado.</li>
+            <li>Cuando el saldo llegue a la meta, puedes bajar el porcentaje y mantener el fondo.</li>
+          </ul>
+          <p class="hint" style="margin:8px 0 0 0;">Ojo: ese esquema también aparta ~15% para impuestos y este fondo no los cubre; coméntalo con tu contador. No soy asesor financiero: usa estos números como punto de partida y ajústalos a tu realidad.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">Registrar uso del fondo</div>
+    <div class="card">
+      <div class="form-grid">
+        <div><label>Fecha</label><input type="date" id="fu-date" value="${todayStr()}"></div>
+        <div><label>¿En qué se usó?</label><input type="text" id="fu-concept" placeholder="Ej: Máquina selladora, campaña de ads"></div>
+        <div><label>Monto (S/)</label><input type="number" id="fu-amount" step="0.01" value="0"></div>
+      </div>
+      <button class="btn" onclick="this.disabled=true; addFundUse().finally(()=>this.disabled=false)">+ Registrar uso</button>
+    </div>
+
+    ${usos.length>0 ? `
+    <div class="section-title">Usos del fondo</div>
+    <div class="acc-list">
+      ${usos.map(u=>{ const rowId='fuse-'+u.id; return `<div class="acc-item" id="${rowId}">
+        <div class="acc-head" onclick="toggleAccordion('${rowId}')">
+          <span class="acc-summary"><span class="acc-main">${esc(u.concept)}</span><span class="acc-sub">${fmtDate(u.date)}</span><span class="acc-amt">−${money(u.amount)}</span></span><span class="acc-caret">▾</span>
+        </div>
+        <div class="acc-body"><div class="acc-actions"><button class="btn small danger" onclick="deleteFundUse('${u.id}')">Eliminar</button></div></div>
+      </div>`; }).join('')}
+    </div>` : ''}
+
+    ${active ? `
+    <div class="section-title">Aportes por mes</div>
+    <div class="acc-list">
+      ${[...f.months].reverse().map(m=>`<div class="acc-item static"><div class="acc-head"><span class="acc-summary">
+        <span class="acc-main">${monthLabelFull(m.mk)}${m.mk===curMk?' (en curso)':''}</span>
+        <span class="acc-sub">${money(m.fund.aporteSueldos)} de sueldos + ${money(m.fund.aporteUtilidad)} de utilidad</span>
+        <span class="acc-amt">${money(m.fund.total)}</span>
+      </span></div></div>`).join('')}
+    </div>` : ''}
+  `;
+  qs('view-fondo').innerHTML = html;
+}
+
+
+/* ============ INVENTARIO: café en kg, insumos de empaque, bolsas listas y costos ============ */
+// Todo se calcula a partir de un registro de movimientos (inv_events) que solo se agrega:
+// dos personas pueden registrar a la vez sin pisarse, y cualquier movimiento se puede deshacer.
+const INV_ROLES = {
+  bag: 'Bolsa de café', sticker_front: 'Sticker frontal', sticker_back: 'Sticker trasero', sticker_grind: 'Sticker grano/molido',
+  disp_unit: 'Bolsa de despacho unitaria', disp_tripack: 'Bolsa de despacho tripack', disp_prov: 'Bolsa de despacho provincia', other: 'Otro insumo'
+};
+const INV_SIZED_ROLES = ['bag', 'sticker_front', 'sticker_back'];
+const INV_SIZES = [250, 500, 1000];
+let invTab = 'cafe';
+
+function normalizeInvItem(i){ return { id:String(i.id), name:String(i.name||''), role:String(i.role||'other'), size:Number(i.size)||0, minStock:Number(i.minStock)||0 }; }
+function normalizeInvEvent(e){ return { id:String(e.id), ts:Number(e.ts)||0, date:String(e.date||'').slice(0,10), kind:String(e.kind||''), qty:Number(e.qty)||0, cost:Number(e.cost)||0, loteId:String(e.loteId||''), grind:String(e.grind||''), size:Number(e.size)||0, itemId:String(e.itemId||''), saleId:String(e.saleId||''), batch:String(e.batch||''), note:String(e.note||'') }; }
+function mkEvent(kind, f){ return normalizeInvEvent(Object.assign({ id: uid(), ts: Date.now(), date: todayStr(), kind }, f||{})); }
+
+async function syncItems(collection, items){
+  if(!items || !items.length) return;
+  if(remoteVersion >= 3.1) await syncRemote('upsertItems', { collection, items });
+  else for(const it of items) await syncRemote('upsertItem', { collection, item: it });
+}
+async function syncDeleteItems(collection, ids){
+  if(!ids || !ids.length) return;
+  if(remoteVersion >= 3.1) await syncRemote('deleteItems', { collection, ids });
+  else for(const id of ids) await syncRemote('deleteItem', { collection, id });
+}
+
+/* ---- estado derivado ---- */
+function invEnabled(){ return (DB.inv_items||[]).length > 0; }
+function invEvs(){ return DB.inv_events || []; }
+function loteName(id){ const l=(DB.lotes||[]).find(x=>x.id===id); return l ? l.name : 'Sin lote'; }
+function invItemById(id){ return (DB.inv_items||[]).find(i=>i.id===id); }
+function loteKg(loteId){ return sum(invEvs().filter(e=>e.loteId===loteId && e.kind.indexOf('kg_')===0).map(e=>e.qty)); }
+function bagStockMap(){
+  const m = {};
+  invEvs().forEach(e=>{
+    if(e.kind.indexOf('bag_')!==0) return;
+    const k = e.loteId+'|'+e.grind+'|'+e.size;
+    if(!m[k]) m[k] = { key:k, loteId:e.loteId, grind:e.grind, size:e.size, qty:0 };
+    m[k].qty += e.qty;
+  });
+  return Object.values(m);
+}
+function bagsReadyTotal(){ return sum(bagStockMap().map(b=>b.qty)); }
+function itemStock(id){ return sum(invEvs().filter(e=>e.itemId===id && e.kind.indexOf('sup_')===0).map(e=>e.qty)); }
+// Costo unitario = promedio ponderado de tus compras (incluye flete/motorizado si lo pones en el total)
+function itemUnitCost(id){
+  const evs = invEvs().filter(e=>e.itemId===id && e.kind.indexOf('sup_')===0).sort((a,b)=>(a.ts-b.ts)||a.id.localeCompare(b.id));
+  let stock = 0, avg = 0;
+  evs.forEach(e=>{
+    if(e.kind==='sup_in' && e.qty>0){ avg = stock<=0 ? e.cost/e.qty : (stock*avg + e.cost)/(stock + e.qty); }
+    stock += e.qty;
+  });
+  return avg;
+}
+function lowSupplyItems(){ return (DB.inv_items||[]).filter(i=>i.minStock>0 && itemStock(i.id)<=i.minStock); }
+
+/* ---- receta de empaque ---- */
+function invFindItem(role, size){
+  const items = DB.inv_items||[];
+  return items.find(i=>i.role===role && Number(i.size)===Number(size)) || items.find(i=>i.role===role && !i.size);
+}
+function bagPackItems(size){
+  const out = [];
+  ['bag','sticker_front','sticker_back','sticker_grind'].forEach(r=>{ const it = (r==='sticker_grind') ? invFindItem(r,0) : invFindItem(r,size); if(it) out.push(it); });
+  return out;
+}
+function bagPackMissing(size){
+  const missing = [];
+  [['bag','Bolsa de café '+size+' g'],['sticker_front','Sticker frontal'],['sticker_back','Sticker trasero'],['sticker_grind','Sticker grano/molido']].forEach(([r,label])=>{
+    const it = (r==='sticker_grind') ? invFindItem(r,0) : invFindItem(r,size);
+    if(!it) missing.push(label); else if(itemUnitCost(it.id)<=0) missing.push('Sin costo: '+it.name);
+  });
+  return missing;
+}
+function bagPackCost(size){ return sum(bagPackItems(size).map(i=>itemUnitCost(i.id))); }
+// Provincia usa el costo estándar de la bolsa de despacho (unitaria o tripack); el stock sí se cuenta aparte.
+function dispatchCost(kind){ const it = invFindItem(kind==='tripack'?'disp_tripack':'disp_unit',0); return it ? itemUnitCost(it.id) : 0; }
+function presentationBagSize(p){ return Math.round((Number(p.weightGrams)||0) / (Number(p.unitsPerSale)||1)); }
+function presentationPack(p){
+  const bags = Number(p.unitsPerSale)||1, size = presentationBagSize(p);
+  const kind = bags>=3 ? 'tripack' : 'unit';
+  const missing = bagPackMissing(size);
+  const dispIt = invFindItem(kind==='tripack'?'disp_tripack':'disp_unit',0);
+  if(!dispIt) missing.push('Bolsa de despacho '+(kind==='tripack'?'tripack':'unitaria')); else if(itemUnitCost(dispIt.id)<=0) missing.push('Sin costo: '+dispIt.name);
+  return { size, bags, cost: bags*bagPackCost(size) + dispatchCost(kind), missing };
+}
+function supplyLimitBags(size){
+  const items = bagPackItems(size);
+  if(items.length===0) return null;
+  return Math.max(0, Math.min(...items.map(i=>Math.floor(itemStock(i.id)))));
+}
+
+async function applyPackCosts(){
+  const changed = [];
+  (DB.products||[]).forEach(p=>{
+    if(!(Number(p.weightGrams)>0)) return;
+    const info = presentationPack(p);
+    if(info.missing.length===0 && Math.abs(info.cost-(Number(p.packagingCost)||0))>=0.01){
+      p.packagingCost = Math.round(info.cost*100)/100;
+      p.cost = getProductCost(p);
+      changed.push(p);
+    }
+  });
+  if(changed.length){ saveDB(false); for(const p of changed) await syncRemote('updateProduct', p); }
+  return changed.length;
+}
+async function maybeAutoApplyPackCosts(){
+  if(getSetting('autoPackCost')===false || getSetting('autoPackCost')==='false') return;
+  const n = await applyPackCosts();
+  if(n>0) showSyncBanner('✓ Costo de empaque actualizado en '+n+' presentación(es)', false);
+}
+
+/* ---- ventas: descuento automático ---- */
+function invAllocateBags(grind, size, n){
+  const stock = bagStockMap().filter(b=>b.grind===grind && b.size===size && b.qty>0);
+  const order = (DB.lotes||[]).map(l=>l.id);
+  stock.sort((a,b)=>order.indexOf(a.loteId)-order.indexOf(b.loteId));
+  const out = []; let rem = n;
+  for(const b of stock){ if(rem<=0) break; const take = Math.min(b.qty, rem); out.push({ loteId:b.loteId, qty:take }); rem -= take; }
+  if(rem>0){ const fb = (stock[0] && stock[0].loteId) || ((getActiveLote(grind)||{}).id) || ''; out.push({ loteId:fb, qty:rem }); }
+  return out;
+}
+// parts: [{grind,size,n,loteId|null}] ; devuelve los movimientos creados (ya agregados a DB)
+function invApplySale(sale, parts, dispatch, packs, bagsPerPack){
+  if(!invEnabled()) return [];
+  const evs = [];
+  parts.forEach(pt=>{
+    if(!(pt.size>0) || !(pt.n>0)) return;
+    const alloc = (pt.loteId!==null && pt.loteId!==undefined) ? [{ loteId:pt.loteId, qty:pt.n }] : invAllocateBags(pt.grind, pt.size, pt.n);
+    alloc.forEach(a=> evs.push(mkEvent('bag_out_sale', { qty:-a.qty, loteId:a.loteId, grind:pt.grind, size:pt.size, saleId:sale.id, date:sale.date })));
+  });
+  const role = dispatch==='provincia' ? 'disp_prov' : (bagsPerPack>=3 ? 'disp_tripack' : 'disp_unit');
+  const it = invFindItem(role,0);
+  if(it) evs.push(mkEvent('sup_use_sale', { qty:-(packs||1), itemId:it.id, saleId:sale.id, date:sale.date }));
+  DB.inv_events = (DB.inv_events||[]).concat(evs);
+  return evs;
+}
+function invRemoveSaleEvents(saleId){
+  const ids = invEvs().filter(e=>e.saleId===saleId).map(e=>e.id);
+  if(ids.length) DB.inv_events = DB.inv_events.filter(e=>e.saleId!==saleId);
+  return ids;
+}
+
+/* ---- modal genérico ---- */
+function openInvModal(title, body){
+  closeInvModal();
+  document.body.insertAdjacentHTML('beforeend', `<div id="inv-modal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;"><div class="card" style="width:92%;max-width:480px;max-height:90vh;overflow-y:auto;background:var(--surface);"><h3>${title}</h3>${body}</div></div>`);
+}
+function closeInvModal(){ const m = qs('inv-modal'); if(m) m.remove(); }
+function invModalButtons(submitJs, label){ return `<div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end;"><button class="btn secondary" onclick="closeInvModal()">Cancelar</button><button class="btn" onclick="${submitJs}">${label||'Guardar'}</button></div>`; }
+
+async function commitInvEvents(evs){
+  DB.inv_events = (DB.inv_events||[]).concat(evs);
+  saveDB(false);
+  closeInvModal();
+  renderInventario();
+  await syncItems('inv_events', evs);
+  if(evs.some(e=>e.kind==='sup_in')) await maybeAutoApplyPackCosts();
+}
+
+/* ---- café en kg ---- */
+function openSackModal(loteId){
+  openInvModal('Saco recibido · '+esc(loteName(loteId)), `
+    <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+      <div><label>Fecha</label><input type="date" id="iv-date" value="${todayStr()}"></div>
+      <div><label>Kilos (tostado)</label><input type="number" id="iv-kg" step="0.01" min="0" placeholder="Ej: 28.5"></div>
+      <div style="grid-column:1/-1;"><label>Nota (opcional)</label><input type="text" id="iv-note" placeholder="Ej: saco 1 de 3"></div>
+    </div>${invModalButtons(`submitSack('${loteId}')`)}`);
+}
+async function submitSack(loteId){
+  const kg = num('iv-kg');
+  if(kg<=0){ alert('Escribe los kilos del saco.'); return; }
+  await commitInvEvents([ mkEvent('kg_in', { qty:kg, loteId, date:val('iv-date')||todayStr(), note:val('iv-note') }) ]);
+}
+
+function openBaggingModal(loteId){
+  const l = (DB.lotes||[]).find(x=>x.id===loteId);
+  const sizes = Array.from(new Set(INV_SIZES.slice(0,2).concat((DB.inv_items||[]).filter(i=>i.role==='bag' && i.size).map(i=>Number(i.size))))).sort((a,b)=>a-b);
+  openInvModal('Embolsar · '+esc(loteName(loteId)), `
+    <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+      <div><label>Tipo</label><select id="iv-grind" onchange="refreshBaggingPreview('${loteId}')"><option value="grano" ${l&&l.type==='grano'?'selected':''}>En grano</option><option value="molido" ${l&&l.type==='molido'?'selected':''}>Molido</option></select></div>
+      <div><label>Tamaño</label><select id="iv-size" onchange="refreshBaggingPreview('${loteId}')">${sizes.map(z=>`<option value="${z}" ${z===500?'selected':''}>${z} g</option>`).join('')}</select></div>
+      <div><label>Bolsas hechas</label><input type="number" id="iv-n" min="1" step="1" placeholder="Ej: 40" oninput="refreshBaggingPreview('${loteId}')"></div>
+      <div><label>Kilos usados (opcional)</label><input type="number" id="iv-kg" step="0.01" min="0" placeholder="auto" oninput="refreshBaggingPreview('${loteId}')"></div>
+    </div>
+    <div id="iv-bag-preview" class="hint" style="margin:0;"></div>
+    <div id="iv-date-wrap" style="margin-top:8px;"><label>Fecha</label><input type="date" id="iv-date" value="${todayStr()}"></div>
+    ${invModalButtons(`submitBagging('${loteId}')`, 'Registrar embolsado')}`);
+  refreshBaggingPreview(loteId);
+}
+function refreshBaggingPreview(loteId){
+  const el = qs('iv-bag-preview'); if(!el) return;
+  const size = Number(val('iv-size'))||500, n = parseInt(val('iv-n'))||0;
+  const kgUsed = num('iv-kg') || (n*size/1000);
+  const avail = loteKg(loteId);
+  const items = bagPackItems(size);
+  let h = n>0 ? `Usará <b>${kgUsed.toFixed(2)} kg</b> (quedan ${(avail-kgUsed).toFixed(2)} kg).` : `Disponible: ${avail.toFixed(2)} kg → alcanzan ~${Math.floor(avail/(size/1000))} bolsas de ${size} g.`;
+  if(n>0 && avail-kgUsed < -0.0001) h += ' <span style="color:var(--accent-red)">⚠ No alcanzan los kilos registrados.</span>';
+  if(items.length){
+    h += '<br>Insumos: ' + items.map(i=>{ const st=itemStock(i.id); return `${esc(i.name)} ${n>0?'−'+n+' (hay '+st+')':'(hay '+st+')'}${n>0 && st<n?' <span style="color:var(--accent-red)">⚠</span>':''}`; }).join(' · ');
+  } else h += '<br><span style="color:var(--accent-gold)">Aún no hay insumos creados para este tamaño; el embolsado solo moverá kilos y bolsas.</span>';
+  el.innerHTML = h;
+}
+async function submitBagging(loteId){
+  const size = Number(val('iv-size'))||500, n = parseInt(val('iv-n'))||0, grind = val('iv-grind')||'grano';
+  if(n<=0){ alert('Escribe cuántas bolsas hiciste.'); return; }
+  const kgUsed = num('iv-kg') || (n*size/1000);
+  const warns = [];
+  if(loteKg(loteId) - kgUsed < -0.0001) warns.push('Los kilos registrados de este lote no alcanzan.');
+  const items = bagPackItems(size);
+  items.forEach(i=>{ if(itemStock(i.id) < n) warns.push('Falta stock de '+i.name+' (hay '+itemStock(i.id)+', necesitas '+n+').'); });
+  if(warns.length && !confirm(warns.join('\n')+'\n\n¿Registrar de todas formas?')) return;
+  const batch = uid(), date = val('iv-date')||todayStr();
+  const evs = [
+    mkEvent('kg_bagging', { qty:-kgUsed, loteId, grind, size, batch, date }),
+    mkEvent('bag_in', { qty:n, loteId, grind, size, batch, date })
+  ];
+  items.forEach(i=> evs.push(mkEvent('sup_use_bagging', { qty:-n, itemId:i.id, batch, date })));
+  await commitInvEvents(evs);
+}
+
+function openLooseModal(loteId){
+  openInvModal('Salida suelta de café · '+esc(loteName(loteId)), `
+    <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+      <div><label>Kilos</label><input type="number" id="iv-kg" step="0.01" min="0" placeholder="Ej: 0.3"></div>
+      <div><label>Motivo</label><select id="iv-reason"><option>Merma</option><option>Muestra</option><option>Regalo</option><option>Otro</option></select></div>
+    </div>${invModalButtons(`submitLoose('${loteId}')`)}`);
+}
+async function submitLoose(loteId){
+  const kg = num('iv-kg');
+  if(kg<=0){ alert('Escribe los kilos.'); return; }
+  await commitInvEvents([ mkEvent('kg_loose', { qty:-kg, loteId, note:val('iv-reason') }) ]);
+}
+
+function openKgCountModal(loteId){
+  openInvModal('Ajustar por conteo · '+esc(loteName(loteId)), `
+    <p class="hint" style="margin-top:0;">El sistema tiene <b>${loteKg(loteId).toFixed(2)} kg</b>. Pesa lo que hay de verdad y escríbelo: se registra la diferencia.</p>
+    <div><label>Kilos contados</label><input type="number" id="iv-kg" step="0.01" min="0"></div>
+    ${invModalButtons(`submitKgCount('${loteId}')`)}`);
+}
+async function submitKgCount(loteId){
+  const counted = parseFloat(val('iv-kg'));
+  if(isNaN(counted) || counted<0){ alert('Escribe los kilos contados.'); return; }
+  const sys = loteKg(loteId), delta = Math.round((counted - sys)*1000)/1000;
+  if(delta===0){ closeInvModal(); return; }
+  await commitInvEvents([ mkEvent('kg_adjust', { qty:delta, loteId, note:'Conteo: '+counted+' kg (sistema '+sys.toFixed(2)+')' }) ]);
+}
+
+/* ---- bolsas listas ---- */
+function parseBagKey(key){ const [loteId, grind, size] = key.split('|'); return { loteId, grind, size:Number(size) }; }
+function bagLabel(b){ return loteName(b.loteId)+' · '+(b.grind==='grano'?'Grano':'Molido')+' · '+b.size+' g'; }
+function openBagLooseModal(key){
+  const b = parseBagKey(key);
+  openInvModal('Salida de bolsas listas', `
+    <p class="hint" style="margin-top:0;">${esc(bagLabel(b))}</p>
+    <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+      <div><label>Bolsas</label><input type="number" id="iv-n" min="1" step="1"></div>
+      <div><label>Motivo</label><select id="iv-reason"><option>Regalo</option><option>Muestra</option><option>Merma</option><option>Otro</option></select></div>
+    </div>${invModalButtons(`submitBagLoose('${key}')`)}`);
+}
+async function submitBagLoose(key){
+  const b = parseBagKey(key), n = parseInt(val('iv-n'))||0;
+  if(n<=0){ alert('Escribe cuántas bolsas.'); return; }
+  await commitInvEvents([ mkEvent('bag_loose', { qty:-n, loteId:b.loteId, grind:b.grind, size:b.size, note:val('iv-reason') }) ]);
+}
+function openBagCountModal(key){
+  const b = parseBagKey(key);
+  const cur = (bagStockMap().find(x=>x.key===key)||{qty:0}).qty;
+  openInvModal('Ajustar bolsas por conteo', `
+    <p class="hint" style="margin-top:0;">${esc(bagLabel(b))}. El sistema tiene <b>${cur}</b>. Cuenta las bolsas reales.</p>
+    <div><label>Bolsas contadas</label><input type="number" id="iv-n" min="0" step="1"></div>
+    ${invModalButtons(`submitBagCount('${key}')`)}`);
+}
+async function submitBagCount(key){
+  const b = parseBagKey(key), counted = parseInt(val('iv-n'));
+  if(isNaN(counted) || counted<0){ alert('Escribe las bolsas contadas.'); return; }
+  const cur = (bagStockMap().find(x=>x.key===key)||{qty:0}).qty, delta = counted - cur;
+  if(delta===0){ closeInvModal(); return; }
+  await commitInvEvents([ mkEvent('bag_adjust', { qty:delta, loteId:b.loteId, grind:b.grind, size:b.size, note:'Conteo: '+counted+' (sistema '+cur+')' }) ]);
+}
+
+/* ---- insumos ---- */
+const TYPICAL_ITEMS = [
+  ['Bolsa de café 250 g','bag',250,30],['Bolsa de café 500 g','bag',500,30],
+  ['Sticker frontal 250 g','sticker_front',250,50],['Sticker frontal 500 g','sticker_front',500,50],
+  ['Sticker trasero 250 g','sticker_back',250,50],['Sticker trasero 500 g','sticker_back',500,50],
+  ['Sticker grano/molido','sticker_grind',0,50],
+  ['Bolsa de despacho unitaria','disp_unit',0,20],['Bolsa de despacho tripack','disp_tripack',0,20],['Bolsa de despacho provincia','disp_prov',0,20]
+];
+async function createTypicalItems(){
+  const created = [];
+  TYPICAL_ITEMS.forEach(([name,role,size,min])=>{
+    if((DB.inv_items||[]).some(i=>i.role===role && Number(i.size)===size)) return;
+    created.push(normalizeInvItem({ id:uid(), name, role, size, minStock:min }));
+  });
+  if(!created.length){ alert('Ya tienes todos los insumos típicos.'); return; }
+  DB.inv_items = (DB.inv_items||[]).concat(created);
+  saveDB(false); invTab='insumos'; renderInventario();
+  await syncItems('inv_items', created);
+}
+async function addInvItem(){
+  const name = String(val('ni-name')||'').trim();
+  if(!name){ alert('Ponle un nombre al insumo.'); return; }
+  const role = val('ni-role')||'other';
+  const item = normalizeInvItem({ id:uid(), name, role, size: INV_SIZED_ROLES.includes(role) ? Number(val('ni-size'))||0 : 0, minStock: num('ni-min') });
+  DB.inv_items = (DB.inv_items||[]).concat([item]);
+  saveDB(false); renderInventario();
+  await syncItems('inv_items', [item]);
+}
+async function saveInvItem(id){
+  const it = invItemById(id); if(!it) return;
+  it.name = String(val('ii-name-'+id)||'').trim() || it.name;
+  it.minStock = Number(val('ii-min-'+id))||0;
+  saveDB(false); renderInventario();
+  await syncItems('inv_items', [it]);
+}
+async function deleteInvItem(id){
+  const it = invItemById(id); if(!it) return;
+  const evIds = invEvs().filter(e=>e.itemId===id).map(e=>e.id);
+  if(!confirm('¿Eliminar "'+it.name+'"'+(evIds.length?' y sus '+evIds.length+' movimientos':'')+'?')) return;
+  DB.inv_items = DB.inv_items.filter(i=>i.id!==id);
+  DB.inv_events = DB.inv_events.filter(e=>e.itemId!==id);
+  saveDB(false); renderInventario();
+  await syncDeleteItems('inv_items', [id]);
+  await syncDeleteItems('inv_events', evIds);
+}
+function openPurchaseModal(id){
+  const it = invItemById(id); if(!it) return;
+  openInvModal('Compra · '+esc(it.name), `
+    <p class="hint" style="margin-top:0;">Pon la cantidad y el <b>total pagado</b> (suma el flete o motorizado si quieres que entre al costo). Ej: 100 stickers por S/ 28 → S/ 0.28 c/u.</p>
+    <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+      <div><label>Fecha</label><input type="date" id="iv-date" value="${todayStr()}"></div>
+      <div><label>Cantidad</label><input type="number" id="iv-n" min="1" step="1" oninput="refreshPurchasePreview()"></div>
+      <div style="grid-column:1/-1;"><label>Total pagado (S/)</label><input type="number" id="iv-cost" min="0" step="0.01" oninput="refreshPurchasePreview()"></div>
+    </div>
+    <div id="iv-pur-preview" class="hint" style="margin:0;"></div>
+    ${invModalButtons(`submitPurchase('${id}')`, 'Registrar compra')}`);
+}
+function refreshPurchasePreview(){
+  const n = parseFloat(val('iv-n'))||0, c = parseFloat(val('iv-cost'))||0;
+  const el = qs('iv-pur-preview'); if(el) el.textContent = n>0 ? 'Costo por unidad de esta compra: '+money(c/n) : '';
+}
+async function submitPurchase(id){
+  const n = parseFloat(val('iv-n'))||0, c = parseFloat(val('iv-cost'))||0;
+  if(n<=0){ alert('Escribe la cantidad comprada.'); return; }
+  if(c<=0){ alert('Escribe el total pagado.'); return; }
+  await commitInvEvents([ mkEvent('sup_in', { qty:n, cost:c, itemId:id, date:val('iv-date')||todayStr() }) ]);
+}
+function openItemCountModal(id){
+  const it = invItemById(id); if(!it) return;
+  openInvModal('Ajustar por conteo · '+esc(it.name), `
+    <p class="hint" style="margin-top:0;">El sistema tiene <b>${itemStock(id)}</b>. Cuenta lo que hay de verdad.</p>
+    <div><label>Cantidad contada</label><input type="number" id="iv-n" min="0" step="1"></div>
+    ${invModalButtons(`submitItemCount('${id}')`)}`);
+}
+async function submitItemCount(id){
+  const counted = parseFloat(val('iv-n'));
+  if(isNaN(counted) || counted<0){ alert('Escribe la cantidad contada.'); return; }
+  const cur = itemStock(id), delta = counted - cur;
+  if(delta===0){ closeInvModal(); return; }
+  await commitInvEvents([ mkEvent('sup_adjust', { qty:delta, itemId:id, note:'Conteo: '+counted+' (sistema '+cur+')' }) ]);
+}
+
+/* ---- actividad y deshacer ---- */
+function evGroupKey(e){ return e.saleId ? 'sale:'+e.saleId : (e.batch || e.id); }
+function describeGroup(g){
+  const by = k=>g.filter(e=>e.kind===k);
+  const gl = e=> e.grind==='grano' ? 'grano' : 'molido';
+  const sg = n=> (n>0?'+':'−')+Math.abs(n);
+  if(by('kg_in').length){ const e=by('kg_in')[0]; return 'Saco recibido: +'+e.qty+' kg · '+loteName(e.loteId); }
+  if(by('kg_bagging').length){ const k=by('kg_bagging')[0], b=by('bag_in')[0]; return 'Embolsado: '+(b?b.qty:'?')+' bolsas de '+(b?b.size:'?')+' g ('+(b?gl(b):'')+') · '+loteName(k.loteId)+' · −'+Math.abs(k.qty).toFixed(2)+' kg'; }
+  if(by('kg_loose').length){ const e=by('kg_loose')[0]; return 'Salida suelta: −'+Math.abs(e.qty)+' kg · '+e.note+' · '+loteName(e.loteId); }
+  if(by('kg_adjust').length){ const e=by('kg_adjust')[0]; return 'Conteo de café '+loteName(e.loteId)+': ajuste '+sg(e.qty)+' kg'; }
+  if(g.some(e=>e.saleId)){ const bags=sum(by('bag_out_sale').map(e=>-e.qty)); return 'Venta: −'+bags+' bolsas'+(by('sup_use_sale').length?' y bolsa de despacho':''); }
+  if(by('bag_loose').length){ const e=by('bag_loose')[0]; return 'Bolsas listas: −'+Math.abs(e.qty)+' ('+e.note+') · '+e.size+' g '+gl(e); }
+  if(by('bag_adjust').length){ const e=by('bag_adjust')[0]; return 'Conteo de bolsas '+e.size+' g '+gl(e)+': ajuste '+sg(e.qty); }
+  if(by('sup_in').length){ const e=by('sup_in')[0], it=invItemById(e.itemId); return 'Compra: +'+e.qty+' '+(it?it.name:'insumo')+' · '+money(e.cost); }
+  if(by('sup_adjust').length){ const e=by('sup_adjust')[0], it=invItemById(e.itemId); return 'Conteo de '+(it?it.name:'insumo')+': ajuste '+sg(e.qty); }
+  return 'Movimiento';
+}
+async function undoInvBatch(key){
+  if(!confirm('¿Deshacer este movimiento? Se revierten todos sus efectos.')) return;
+  const ids = invEvs().filter(e=>!e.saleId && evGroupKey(e)===key).map(e=>e.id);
+  if(!ids.length) return;
+  DB.inv_events = DB.inv_events.filter(e=>!ids.includes(e.id));
+  saveDB(false); renderInventario();
+  await syncDeleteItems('inv_events', ids);
+}
+
+/* ---- pantalla ---- */
+function setInvTab(t){ invTab = t; renderInventario(); }
+
+function renderInventario(){
+  const lotes = DB.lotes||[];
+  const totalKg = sum(lotes.map(l=>loteKg(l.id)));
+  const low = lowSupplyItems();
+  const tabs = [['cafe','Café (kg)'],['bolsas','Bolsas listas'],['insumos','Insumos'],['costos','Costos']];
+
+  let body = '';
+  if(invTab==='cafe'){
+    body = lotes.length===0 ? `<div class="empty">Primero crea un lote en <b>Configuración</b>; luego registra aquí sus sacos.</div>` : `
+    <div class="acc-list">${lotes.map(l=>{
+      const kg = loteKg(l.id), rowId = 'ivl-'+l.id;
+      const e500 = Math.floor(kg/0.5), e250 = Math.floor(kg/0.25);
+      const s500 = supplyLimitBags(500), s250 = supplyLimitBags(250);
+      return `<div class="acc-item" id="${rowId}">
+        <div class="acc-head" onclick="toggleAccordion('${rowId}')"><span class="acc-summary">
+          <span class="acc-main">${esc(l.name)}</span>
+          <span class="pill ${l.type==='grano'?'gold':(l.type==='molido'?'blue':'green')}">${l.type==='grano'?'Grano':(l.type==='molido'?'Molido':'Ambos')}</span>
+          ${l.active?'<span class="pill green">ACTIVO</span>':''}
+          <span class="acc-amt" style="color:${kg<0?COLORS.red:'inherit'}">${kg.toFixed(2)} kg</span>
+        </span><span class="acc-caret">▾</span></div>
+        <div class="acc-body">
+          <div class="acc-fields">
+            <div class="acc-field"><label>Con estos kilos salen</label><div>≈ ${Math.max(0,e500)} bolsas de 500 g<br>≈ ${Math.max(0,e250)} bolsas de 250 g</div></div>
+            <div class="acc-field"><label>Tus insumos alcanzan para</label><div>${s500===null&&s250===null ? 'Crea insumos para saberlo' : '500 g: '+(s500===null?'—':s500)+' bolsas<br>250 g: '+(s250===null?'—':s250)+' bolsas'}</div></div>
+          </div>
+          <div class="acc-actions">
+            <button class="btn small" onclick="openSackModal('${l.id}')">+ Saco recibido</button>
+            <button class="btn small" onclick="openBaggingModal('${l.id}')">Embolsar</button>
+            <button class="btn small secondary" onclick="openLooseModal('${l.id}')">Salida suelta</button>
+            <button class="btn small secondary" onclick="openKgCountModal('${l.id}')">Ajustar por conteo</button>
+          </div>
+        </div></div>`;
+    }).join('')}</div>`;
+  } else if(invTab==='bolsas'){
+    const stock = bagStockMap().filter(b=>b.qty!==0 || true).sort((a,b)=>bagLabel(a).localeCompare(bagLabel(b)));
+    body = stock.length===0 ? `<div class="empty">Aún no hay bolsas listas. Se crean al <b>Embolsar</b> café y se descuentan solas al vender.</div>` : `
+    <div class="acc-list">${stock.map(b=>{ const rowId='ivb-'+b.key.replace(/[^a-zA-Z0-9]/g,'_');
+      return `<div class="acc-item" id="${rowId}">
+        <div class="acc-head" onclick="toggleAccordion('${rowId}')"><span class="acc-summary">
+          <span class="acc-main">${esc(loteName(b.loteId))}</span>
+          <span class="pill ${b.grind==='grano'?'gold':'blue'}">${b.grind==='grano'?'Grano':'Molido'}</span>
+          <span class="acc-sub">${b.size} g</span>
+          <span class="acc-amt" style="color:${b.qty<0?COLORS.red:'inherit'}">${b.qty} bolsas</span>
+        </span><span class="acc-caret">▾</span></div>
+        <div class="acc-body"><div class="acc-actions">
+          <button class="btn small secondary" onclick="openBagLooseModal('${b.key}')">Salida (regalo/muestra/merma)</button>
+          <button class="btn small secondary" onclick="openBagCountModal('${b.key}')">Ajustar por conteo</button>
+        </div></div></div>`; }).join('')}</div>`;
+  } else if(invTab==='insumos'){
+    const items = DB.inv_items||[];
+    body = `
+      ${items.length===0 ? `<div class="card" style="margin-bottom:14px;"><b>Empieza aquí.</b><div class="hint" style="margin:6px 0 10px 0;">Crea de una vez tus insumos típicos (bolsas de 250 y 500 g, stickers frontal, trasero y grano/molido, y bolsas de despacho unitaria, tripack y provincia). Luego registra la primera compra de cada uno para fijar su stock y costo.</div><button class="btn" onclick="createTypicalItems()">Crear insumos típicos</button></div>` : ''}
+      <div class="acc-list">${items.map(i=>{
+        const st = itemStock(i.id), uc = itemUnitCost(i.id), rowId = 'ivi-'+i.id, isLow = i.minStock>0 && st<=i.minStock;
+        return `<div class="acc-item" id="${rowId}">
+          <div class="acc-head" onclick="toggleAccordion('${rowId}')"><span class="acc-summary">
+            <span class="acc-main">${esc(i.name)}</span>
+            ${isLow?'<span class="pill red">Bajo mínimo</span>':''}
+            <span class="acc-sub">${uc>0?money(uc)+' c/u':'sin costo'}</span>
+            <span class="acc-amt" style="color:${isLow?COLORS.red:'inherit'}">${st}</span>
+          </span><span class="acc-caret">▾</span></div>
+          <div class="acc-body">
+            <div class="acc-fields">
+              <div class="acc-field"><label>Nombre</label><input type="text" id="ii-name-${i.id}" value="${esc(i.name)}"></div>
+              <div class="acc-field"><label>Alerta cuando queden</label><input type="number" id="ii-min-${i.id}" min="0" value="${i.minStock}"></div>
+              <div class="acc-field"><label>Tipo</label><div>${INV_ROLES[i.role]||'Otro'}${i.size?' · '+i.size+' g':''}</div></div>
+            </div>
+            <div class="acc-actions">
+              <button class="btn small" onclick="openPurchaseModal('${i.id}')">+ Compra</button>
+              <button class="btn small secondary" onclick="openItemCountModal('${i.id}')">Ajustar por conteo</button>
+              <button class="btn small secondary" onclick="saveInvItem('${i.id}')">Guardar nombre/alerta</button>
+              <button class="btn small danger" onclick="deleteInvItem('${i.id}')">Eliminar</button>
+            </div>
+          </div></div>`; }).join('')}
+        <div class="acc-item" id="ivi-new">
+          <div class="acc-head" onclick="toggleAccordion('ivi-new')"><span class="acc-summary"><span class="acc-main" style="color:var(--accent-gold)">＋ Agregar otro insumo</span></span><span class="acc-caret">▾</span></div>
+          <div class="acc-body">
+            <div class="acc-fields">
+              <div class="acc-field"><label>Nombre</label><input type="text" id="ni-name" placeholder="Ej: Caja de envío"></div>
+              <div class="acc-field"><label>Tipo</label><select id="ni-role">${Object.keys(INV_ROLES).map(r=>`<option value="${r}">${INV_ROLES[r]}</option>`).join('')}</select></div>
+              <div class="acc-field"><label>Tamaño (bolsas/stickers)</label><select id="ni-size">${INV_SIZES.map(z=>`<option value="${z}" ${z===500?'selected':''}>${z} g</option>`).join('')}</select></div>
+              <div class="acc-field"><label>Alerta cuando queden</label><input type="number" id="ni-min" min="0" value="20"></div>
+            </div>
+            <div class="acc-actions"><button class="btn small" onclick="addInvItem()">+ Agregar</button></div>
+          </div>
+        </div>
+      </div>`;
+  } else if(invTab==='costos'){
+    const sizes = [250,500].concat((DB.inv_items||[]).filter(i=>i.role==='bag' && i.size===1000).length?[1000]:[]);
+    body = `
+      <p class="hint" style="margin-top:0;">El costo por bolsa = café del lote (S/ por kg tostado × peso) + empaque (bolsa + stickers) al <b>promedio de lo que pagaste</b>.</p>
+      <div class="acc-list">${lotes.map(l=>{ const rowId='ivc-'+l.id; return `<div class="acc-item" id="${rowId}">
+        <div class="acc-head" onclick="toggleAccordion('${rowId}')"><span class="acc-summary"><span class="acc-main">${esc(l.name)}</span><span class="acc-sub">${money(l.costPerKgRoasted)}/kg</span><span class="acc-amt">${money(l.costPerKgRoasted*0.5+bagPackCost(500))}</span></span><span class="acc-caret">▾</span></div>
+        <div class="acc-body"><div class="acc-fields">${sizes.map(z=>`<div class="acc-field"><label>Bolsa ${z} g</label><div>Café ${money(l.costPerKgRoasted*z/1000)} + empaque ${money(bagPackCost(z))}<br><b style="color:var(--accent-gold)">${money(l.costPerKgRoasted*z/1000+bagPackCost(z))}</b></div></div>`).join('')}</div></div></div>`; }).join('')}</div>
+      <div class="section-title">Despacho (por pedido)</div>
+      <div class="card"><div class="acc-fields">
+        <div class="acc-field"><label>Unitaria / Duo</label><div>${money(dispatchCost('unit'))}</div></div>
+        <div class="acc-field"><label>Tripack</label><div>${money(dispatchCost('tripack'))}</div></div>
+        <div class="acc-field"><label>Provincia</label><div>Costo estándar (igual que la bolsa que le corresponde); el stock se cuenta aparte</div></div>
+      </div></div>
+      <div class="section-title">Empaque de tus presentaciones</div>
+      <div class="acc-list">${(DB.products||[]).map(p=>{ const info = presentationPack(p), cur = Number(p.packagingCost)||0, ok = info.missing.length===0;
+        return `<div class="acc-item static"><div class="acc-head"><span class="acc-summary">
+          <span class="acc-main">${esc(p.name)}</span>
+          <span class="pill ${p.grindType==='grano'?'gold':'blue'}">${p.grindType==='grano'?'Grano':'Molido'}</span>
+          <span class="acc-sub">${ok ? 'calculado '+money(info.cost)+' · actual '+money(cur) : 'falta: '+esc(info.missing.join(', '))}</span>
+        </span></div></div>`; }).join('') || '<div class="empty">Aún no tienes presentaciones.</div>'}</div>
+      <div class="card" style="margin-top:12px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><input type="checkbox" id="ivc-auto" style="width:18px;height:18px;" ${getSetting('autoPackCost')===false||getSetting('autoPackCost')==='false'?'':'checked'} onchange="saveSettings({autoPackCost:this.checked})"><label for="ivc-auto" style="margin:0;text-transform:none;font-size:13px;cursor:pointer;">Actualizar el empaque de mis presentaciones automáticamente al registrar compras</label></div>
+        <button class="btn" onclick="this.disabled=true; applyPackCosts().then(n=>{ showSyncBanner(n>0?'✓ Empaque actualizado en '+n+' presentación(es)':'Nada que actualizar (revisa lo que falta)', false); renderInventario(); }).finally(()=>this.disabled=false)">Aplicar ahora a mis presentaciones</button>
+      </div>`;
+  }
+
+  // actividad reciente
+  const groups = {};
+  invEvs().forEach(e=>{ const k=evGroupKey(e); (groups[k]=groups[k]||[]).push(e); });
+  const recent = Object.keys(groups).map(k=>({ key:k, evs:groups[k], ts:Math.max(...groups[k].map(e=>e.ts)) })).sort((a,b)=>b.ts-a.ts).slice(0,20);
+
+  const html = `
+    <div class="grid grid-kpi">
+      <div class="card"><p class="kpi-label">Café en almacén</p><p class="kpi-value">${totalKg.toFixed(2)} kg</p><p class="kpi-sub">${lotes.length} lote(s)</p></div>
+      <div class="card"><p class="kpi-label">Bolsas listas</p><p class="kpi-value">${bagsReadyTotal()}</p></div>
+      <div class="card"><p class="kpi-label">Insumos bajo mínimo</p><p class="kpi-value ${low.length>0?'red':'green'}">${low.length}</p><p class="kpi-sub">${low.length>0?esc(low.slice(0,3).map(i=>i.name).join(', ')):'Todo en orden'}</p></div>
+    </div>
+    ${(isConnected() && remoteVersion<3) ? `<div class="card" style="border-color:var(--accent-red);margin-bottom:14px;"><b style="color:var(--accent-red)">⚠ Tu Apps Script es anterior a la v3.</b><div class="hint" style="margin:6px 0 0 0;">El inventario se guarda solo en este dispositivo hasta que pegues el Apps Script v3.1.</div></div>` : ''}
+    <div class="toolbar">${tabs.map(([k,l])=>`<button class="btn small ${invTab===k?'':'secondary'}" onclick="setInvTab('${k}')">${l}</button>`).join('')}</div>
+    ${body}
+    ${recent.length ? `<div class="section-title">Actividad reciente</div><div class="acc-list">${recent.map(g=>{ const rowId='ivh-'+g.key.replace(/[^a-zA-Z0-9]/g,'_'); const e0=g.evs[0], isSale=g.evs.some(e=>e.saleId);
+      return `<div class="acc-item" id="${rowId}"><div class="acc-head" onclick="toggleAccordion('${rowId}')"><span class="acc-summary"><span class="acc-main" style="white-space:normal;">${esc(describeGroup(g.evs))}</span><span class="acc-sub">${fmtDate(e0.date)}</span></span><span class="acc-caret">▾</span></div>
+      <div class="acc-body"><div class="acc-actions">${isSale ? '<span class="hint" style="margin:0;">Se revierte al eliminar la venta.</span>' : `<button class="btn small danger" onclick="undoInvBatch('${g.key}')">Deshacer</button>`}</div></div></div>`; }).join('')}</div>` : ''}
+  `;
+  qs('view-inventario').innerHTML = html;
+}
+
 /* ============ CONFIGURACIÓN Y GESTIÓN DE LOTES ============ */
 function renderConfig(){
   if(!DB.lotes) DB.lotes = [];
@@ -1696,168 +2928,161 @@ function renderConfig(){
     </div>
 
     ${lotes.length > 0 ? `
-    <div class="card table-wrap" style="margin-bottom:24px;">
-      <table>
-        <thead>
-          <tr>
-            <th>Lote / Origen</th>
-            <th>Productor / Variedad</th>
-            <th>Tipo</th>
-            <th>Kg Verde</th>
-            <th>Flete</th>
-            <th>Kg Tostado</th>
-            <th>Rend.</th>
-            <th>Costo / Kg Tostado</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${lotes.map(l => `
-            <tr style="${l.active ? 'background:rgba(212,160,23,0.08); font-weight:600;' : ''}">
-              <td><b>${esc(l.name)}</b><br><small style="opacity:0.75">${esc(l.origin || '—')}</small></td>
-              <td>${esc(l.producer || '—')}<br><small style="opacity:0.75">${esc(l.variety || '—')} ${l.cupScore ? `(${l.cupScore} pts)` : ''}</small></td>
-              <td><span class="pill ${l.type==='grano'?'gold':(l.type==='molido'?'blue':'green')}">${l.type==='grano'?'Grano':(l.type==='molido'?'Molido':'Ambos')}</span></td>
-              <td>${l.greenKg} kg<br><small style="opacity:0.75">${money(l.greenCostPerKg)}/kg</small></td>
-              <td>${money(l.freightCost || 0)}</td>
-              <td>${l.roastedKg} kg</td>
-              <td>${(l.yieldPct||0).toFixed(1)}%</td>
-              <td style="color:var(--accent-gold); font-size:1.05rem;">${money(l.costPerKgRoasted)}</td>
-              <td>${l.active ? '<span class="pill green">ACTIVO</span>' : '<span class="pill gold" style="opacity:0.5">Inactivo</span>'}</td>
-              <td class="row-actions">
-                <button class="btn small ${l.active ? 'secondary' : ''}" onclick="toggleLoteActive('${l.id}')">
-                  ${l.active ? 'Desactivar' : 'Activar'}
-                </button>
-                <button class="btn small secondary" onclick="editLoteModal('${l.id}')">Editar</button>
-                <button class="btn small danger" onclick="deleteLote('${l.id}')">Eliminar</button>
-              </td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
+    <div class="acc-list" style="margin:14px 0 24px 0;">
+      ${lotes.map(l=>{
+        const rowId = 'lote-'+l.id;
+        return `<div class="acc-item" id="${rowId}">
+          <div class="acc-head" onclick="toggleAccordion('${rowId}')">
+            <span class="acc-summary">
+              <span class="acc-main">${esc(l.name)}</span>
+              <span class="pill ${l.type==='grano'?'gold':(l.type==='molido'?'blue':'green')}">${l.type==='grano'?'Grano':(l.type==='molido'?'Molido':'Ambos')}</span>
+              ${l.active ? '<span class="pill green">ACTIVO</span>' : ''}
+              <span class="acc-amt" style="color:var(--accent-gold)">${money(l.costPerKgRoasted)}/kg</span>
+            </span><span class="acc-caret">▾</span>
+          </div>
+          <div class="acc-body">
+            <div class="acc-fields">
+              <div class="acc-field"><label>Origen</label><div>${esc(l.origin||'—')}</div></div>
+              <div class="acc-field"><label>Productor</label><div>${esc(l.producer||'—')}</div></div>
+              <div class="acc-field"><label>Variedad</label><div>${esc(l.variety||'—')}${l.cupScore?` (${l.cupScore} pts)`:''}</div></div>
+              <div class="acc-field"><label>Kg verde</label><div>${l.greenKg} kg · ${money(l.greenCostPerKg)}/kg</div></div>
+              <div class="acc-field"><label>Flete</label><div>${money(l.freightCost||0)}</div></div>
+              <div class="acc-field"><label>Kg tostado</label><div>${l.roastedKg} kg</div></div>
+              <div class="acc-field"><label>Rendimiento</label><div>${(l.yieldPct||0).toFixed(1)}%</div></div>
+            </div>
+            <div class="acc-actions">
+              <button class="btn small ${l.active?'secondary':''}" onclick="toggleLoteActive('${l.id}')">${l.active?'Desactivar':'Activar'}</button>
+              <button class="btn small secondary" onclick="editLoteModal('${l.id}')">Editar</button>
+              <button class="btn small danger" onclick="deleteLote('${l.id}')">Eliminar</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
     </div>` : ''}
 
     <!-- STOCK FÍSICO REAL (PRODUCTO BASE) -->
     <div class="section-title">Stock físico real (bolsas base)</div>
-    <div class="card table-wrap">
-      <p class="hint" style="margin-top:0;">Esto es lo que de verdad tienes en almacén: bolsas empacadas (ej: "Bolsa 500g Molido — Blend Gourmet"). Las presentaciones de abajo (Unitario, Duopack, Tripack…) descuentan de aquí, no tienen stock propio. <b>Gramos/bolsa</b> y <b>Empaque/bolsa</b> se usan para calcular el costo cuando registras una <b>venta combinada</b> (mezcla de Grano/Molido o de lotes distintos).</p>
-      <table>
-        <thead><tr><th>Nombre</th><th>Tipo</th><th>Gramos/bolsa</th><th>Empaque S//bolsa</th><th>Stock (bolsas)</th><th>Mínimo</th><th></th></tr></thead>
-        <tbody>
-          ${DB.baseProducts.map(b=>`
-            <tr>
-              <td><input type="text" id="bp-name-${b.id}" value="${esc(b.name)}"></td>
-              <td>
+    <p class="hint" style="margin-top:0;">Esto es lo que de verdad tienes en almacén: bolsas empacadas (ej: "Bolsa 500g Molido — Blend Gourmet"). Las presentaciones de abajo (Unitario, Duopack, Tripack…) descuentan de aquí. <b>Gramos/bolsa</b> y <b>Empaque/bolsa</b> se usan para calcular el costo en una <b>venta combinada</b>. Toca una tarjeta para editarla.</p>
+    <div class="acc-list">
+      ${DB.baseProducts.map(b=>{
+        const rowId = 'bp-row-'+b.id;
+        const low = b.stock<=b.minStock;
+        return `<div class="acc-item" id="${rowId}">
+          <div class="acc-head" onclick="toggleAccordion('${rowId}')">
+            <span class="acc-summary">
+              <span class="acc-main">${esc(b.name)}</span>
+              <span class="pill ${b.grindType==='grano'?'gold':'blue'}">${b.grindType==='grano'?'En Grano':'Molido'}</span>
+              <span class="acc-amt" style="color:${low?COLORS.red:'inherit'}">${b.stock} bolsas</span>
+            </span><span class="acc-caret">▾</span>
+          </div>
+          <div class="acc-body">
+            <div class="acc-fields">
+              <div class="acc-field"><label>Nombre</label><input type="text" id="bp-name-${b.id}" value="${esc(b.name)}"></div>
+              <div class="acc-field"><label>Tipo</label>
                 <select id="bp-grind-${b.id}">
                   <option value="molido" ${b.grindType==='molido'?'selected':''}>Molido</option>
                   <option value="grano" ${b.grindType==='grano'?'selected':''}>En Grano</option>
-                </select>
-              </td>
-              <td><input type="number" id="bp-weight-${b.id}" value="${b.weightGrams||500}" style="width:75px;"></td>
-              <td><input type="number" step="0.01" id="bp-pkg-${b.id}" value="${b.packagingCost||0}" style="width:80px;"></td>
-              <td><input type="number" id="bp-stock-${b.id}" value="${b.stock}" style="width:80px;"></td>
-              <td><input type="number" id="bp-min-${b.id}" value="${b.minStock}" style="width:70px;"></td>
-              <td class="row-actions">
-                <button class="btn small secondary" onclick="saveBaseProductRow('${b.id}')">Guardar</button>
-                <button class="btn small danger" onclick="deleteBaseProduct('${b.id}')">Eliminar</button>
-              </td>
-            </tr>
-          `).join('')}
-          <tr>
-            <td><input type="text" id="nbp-name" placeholder="Ej: Bolsa 500g Molido - Blend Gourmet"></td>
-            <td>
-              <select id="nbp-grind">
-                <option value="molido">Molido</option>
-                <option value="grano">En Grano</option>
-              </select>
-            </td>
-            <td><input type="number" id="nbp-weight" placeholder="500" style="width:75px;"></td>
-            <td><input type="number" step="0.01" id="nbp-pkg" placeholder="2.50" style="width:80px;"></td>
-            <td><input type="number" id="nbp-stock" placeholder="0" style="width:80px;"></td>
-            <td><input type="number" id="nbp-min" placeholder="5" style="width:70px;"></td>
-            <td><button class="btn small" onclick="this.disabled=true; addBaseProduct().finally(()=>this.disabled=false)">+ Agregar</button></td>
-          </tr>
-        </tbody>
-      </table>
+                </select></div>
+              <div class="acc-field"><label>Gramos/bolsa</label><input type="number" id="bp-weight-${b.id}" value="${b.weightGrams||500}"></div>
+              <div class="acc-field"><label>Empaque S/ por bolsa</label><input type="number" step="0.01" id="bp-pkg-${b.id}" value="${b.packagingCost||0}"></div>
+              <div class="acc-field"><label>Stock (bolsas)</label><input type="number" id="bp-stock-${b.id}" value="${b.stock}"></div>
+              <div class="acc-field"><label>Mínimo</label><input type="number" id="bp-min-${b.id}" value="${b.minStock}"></div>
+            </div>
+            <div class="acc-actions">
+              <button class="btn small" onclick="saveBaseProductRow('${b.id}')">Guardar</button>
+              <button class="btn small danger" onclick="deleteBaseProduct('${b.id}')">Eliminar</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+      <div class="acc-item" id="bp-new-row">
+        <div class="acc-head" onclick="toggleAccordion('bp-new-row')">
+          <span class="acc-summary"><span class="acc-main" style="color:var(--accent-gold)">＋ Agregar producto base</span></span><span class="acc-caret">▾</span>
+        </div>
+        <div class="acc-body">
+          <div class="acc-fields">
+            <div class="acc-field"><label>Nombre</label><input type="text" id="nbp-name" placeholder="Ej: Bolsa 500g Molido - Blend Gourmet"></div>
+            <div class="acc-field"><label>Tipo</label>
+              <select id="nbp-grind"><option value="molido">Molido</option><option value="grano">En Grano</option></select></div>
+            <div class="acc-field"><label>Gramos/bolsa</label><input type="number" id="nbp-weight" placeholder="500"></div>
+            <div class="acc-field"><label>Empaque S/ por bolsa</label><input type="number" step="0.01" id="nbp-pkg" placeholder="2.50"></div>
+            <div class="acc-field"><label>Stock (bolsas)</label><input type="number" id="nbp-stock" placeholder="0"></div>
+            <div class="acc-field"><label>Mínimo</label><input type="number" id="nbp-min" placeholder="5"></div>
+          </div>
+          <div class="acc-actions"><button class="btn small" onclick="this.disabled=true; addBaseProduct().finally(()=>this.disabled=false)">+ Agregar</button></div>
+        </div>
+      </div>
     </div>
 
     <!-- CATÁLOGO DE PRODUCTOS (PRESENTACIONES) -->
     <div class="section-title">Presentaciones (lo que vendes)</div>
-    <div class="card table-wrap">
-      <p class="hint" style="margin-top:0;">Vincula cada presentación a un producto base y define cuántas bolsas consume por venta (Unitario = 1, Duopack = 2, Tripack = 3…). El <b>Costo Calc.</b> sigue saliendo del lote activo.</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Gramos</th>
-            <th>Empaque (S/)</th>
-            <th>Costo Calc.</th>
-            <th>Precio Venta</th>
-            <th>Producto base</th>
-            <th>Consume</th>
-            <th>Stock disp.</th>
-            <th>Stock Mín.</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          ${DB.products.map(p => {
-            const calcCost = getProductCost(p);
-            const available = getAvailableUnits(p);
-            return `
-            <tr>
-              <td><input type="text" id="p-name-${p.id}" value="${esc(p.name)}" style="width:110px;"></td>
-              <td>
+    <p class="hint" style="margin-top:0;">Vincula cada presentación a un producto base y define cuántas bolsas consume por venta (Unitario = 1, Duopack = 2, Tripack = 3…). El <b>Costo calc.</b> sale del lote activo. Toca una tarjeta para editarla.</p>
+    <div class="acc-list">
+      ${DB.products.map(p=>{
+        const calcCost = getProductCost(p);
+        const available = getAvailableUnits(p);
+        const rowId = 'prod-row-'+p.id;
+        return `<div class="acc-item" id="${rowId}">
+          <div class="acc-head" onclick="toggleAccordion('${rowId}')">
+            <span class="acc-summary">
+              <span class="acc-main">${esc(p.name)}</span>
+              <span class="pill ${p.grindType==='grano'?'gold':'blue'}">${p.grindType==='grano'?'En Grano':'Molido'}</span>
+              <span class="acc-sub">costo ${money(calcCost)}</span>
+              <span class="acc-amt">${money(p.price)}</span>
+            </span><span class="acc-caret">▾</span>
+          </div>
+          <div class="acc-body">
+            <div class="acc-fields">
+              <div class="acc-field"><label>Nombre</label><input type="text" id="p-name-${p.id}" value="${esc(p.name)}"></div>
+              <div class="acc-field"><label>Tipo</label>
                 <select id="p-grind-${p.id}">
                   <option value="molido" ${p.grindType==='molido'?'selected':''}>Molido</option>
                   <option value="grano" ${p.grindType==='grano'?'selected':''}>En Grano</option>
-                </select>
-              </td>
-              <td><input type="number" id="p-weight-${p.id}" value="${p.weightGrams||0}" style="width:65px;"></td>
-              <td><input type="number" step="0.01" id="p-pkg-${p.id}" value="${p.packagingCost||0}" style="width:75px;"></td>
-              <td style="font-weight:bold; color:var(--accent-gold);">${money(calcCost)}</td>
-              <td><input type="number" step="0.01" id="p-price-${p.id}" value="${p.price}" style="width:85px;"></td>
-              <td>
-                <select id="p-base-${p.id}" style="width:140px;">
+                </select></div>
+              <div class="acc-field"><label>Gramos</label><input type="number" id="p-weight-${p.id}" value="${p.weightGrams||0}"></div>
+              <div class="acc-field"><label>Empaque (S/)</label><input type="number" step="0.01" id="p-pkg-${p.id}" value="${p.packagingCost||0}"></div>
+              <div class="acc-field"><label>Precio venta (S/)</label><input type="number" step="0.01" id="p-price-${p.id}" value="${p.price}"></div>
+              <div class="acc-field"><label>Producto base</label>
+                <select id="p-base-${p.id}">
                   <option value="">— sin vincular —</option>
                   ${DB.baseProducts.map(b=>`<option value="${b.id}" ${p.baseProductId===b.id?'selected':''}>${esc(b.name)}</option>`).join('')}
-                </select>
-              </td>
-              <td><input type="number" id="p-units-${p.id}" min="1" value="${p.unitsPerSale||1}" style="width:55px;"></td>
-              <td>${p.baseProductId ? `<b style="color:${available<=p.minStock?'var(--accent-red)':'var(--accent-green)'}">${available}</b>` : `<input type="number" id="p-stock-${p.id}" value="${p.stock}" style="width:60px;">`}</td>
-              <td><input type="number" id="p-min-${p.id}" value="${p.minStock}" style="width:60px;"></td>
-              <td class="row-actions">
-                <button class="btn small secondary" onclick="saveProductRow('${p.id}')">Guardar</button>
-                <button class="btn small danger" onclick="deleteProduct('${p.id}')">Eliminar</button>
-              </td>
-            </tr>`;
-          }).join('')}
-          <tr>
-            <td><input type="text" id="np-name" placeholder="Nuevo producto" style="width:110px;"></td>
-            <td>
-              <select id="np-grind">
-                <option value="molido">Molido</option>
-                <option value="grano">En Grano</option>
-              </select>
-            </td>
-            <td><input type="number" id="np-weight" placeholder="250" style="width:65px;"></td>
-            <td><input type="number" step="0.01" id="np-pkg" placeholder="2.50" style="width:75px;"></td>
-            <td>—</td>
-            <td><input type="number" step="0.01" id="np-price" placeholder="35.00" style="width:85px;"></td>
-            <td>
-              <select id="np-base" style="width:140px;">
+                </select></div>
+              <div class="acc-field"><label>Consume (bolsas)</label><input type="number" id="p-units-${p.id}" min="1" value="${p.unitsPerSale||1}"></div>
+              <div class="acc-field"><label>Stock disponible</label>${p.baseProductId ? `<div><b style="color:${available<=p.minStock?'var(--accent-red)':'var(--accent-green)'}">${available}</b></div>` : `<input type="number" id="p-stock-${p.id}" value="${p.stock}">`}</div>
+              <div class="acc-field"><label>Stock mínimo</label><input type="number" id="p-min-${p.id}" value="${p.minStock}"></div>
+              <div class="acc-field"><label>Costo calculado</label><div style="color:var(--accent-gold);font-weight:700">${money(calcCost)}</div></div>
+            </div>
+            <div class="acc-actions">
+              <button class="btn small" onclick="saveProductRow('${p.id}')">Guardar</button>
+              <button class="btn small danger" onclick="deleteProduct('${p.id}')">Eliminar</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+      <div class="acc-item" id="prod-new-row">
+        <div class="acc-head" onclick="toggleAccordion('prod-new-row')">
+          <span class="acc-summary"><span class="acc-main" style="color:var(--accent-gold)">＋ Agregar presentación</span></span><span class="acc-caret">▾</span>
+        </div>
+        <div class="acc-body">
+          <div class="acc-fields">
+            <div class="acc-field"><label>Nombre</label><input type="text" id="np-name" placeholder="Nuevo producto"></div>
+            <div class="acc-field"><label>Tipo</label>
+              <select id="np-grind"><option value="molido">Molido</option><option value="grano">En Grano</option></select></div>
+            <div class="acc-field"><label>Gramos</label><input type="number" id="np-weight" placeholder="250"></div>
+            <div class="acc-field"><label>Empaque (S/)</label><input type="number" step="0.01" id="np-pkg" placeholder="2.50"></div>
+            <div class="acc-field"><label>Precio venta (S/)</label><input type="number" step="0.01" id="np-price" placeholder="35.00"></div>
+            <div class="acc-field"><label>Producto base</label>
+              <select id="np-base">
                 <option value="">— sin vincular —</option>
                 ${DB.baseProducts.map(b=>`<option value="${b.id}">${esc(b.name)}</option>`).join('')}
-              </select>
-            </td>
-            <td><input type="number" id="np-units" min="1" value="1" style="width:55px;"></td>
-            <td><input type="number" id="np-stock" placeholder="0" style="width:60px;"></td>
-            <td><input type="number" id="np-min" placeholder="5" style="width:60px;"></td>
-            <td><button class="btn small" onclick="this.disabled=true; addProduct().finally(()=>this.disabled=false)">+ Agregar</button></td>
-          </tr>
-        </tbody>
-      </table>
+              </select></div>
+            <div class="acc-field"><label>Consume (bolsas)</label><input type="number" id="np-units" min="1" value="1"></div>
+            <div class="acc-field"><label>Stock</label><input type="number" id="np-stock" placeholder="0"></div>
+            <div class="acc-field"><label>Stock mínimo</label><input type="number" id="np-min" placeholder="5"></div>
+          </div>
+          <div class="acc-actions"><button class="btn small" onclick="this.disabled=true; addProduct().finally(()=>this.disabled=false)">+ Agregar</button></div>
+        </div>
+      </div>
     </div>
 
     <!-- GOOGLE SHEETS -->
@@ -1866,7 +3091,8 @@ function renderConfig(){
       ${isConnected() ? `
         <p class="hint" style="margin-top:0;color:var(--accent-green);">✓ Conectado. Todos los usuarios verán e interactuarán con la misma información.</p>
         <div class="toolbar">
-          <button class="btn secondary" onclick="refreshFromRemote().then(()=>{renderView(currentView);})">↻ Actualizar desde Sheets</button>
+          <button class="btn secondary" onclick="syncThenRefresh().then(()=>{renderView(currentView);})">↻ Actualizar desde Sheets</button>
+          <button class="btn secondary" onclick="openSyncModal(true)">🩺 Diagnóstico de guardado</button>
           <button class="btn danger" onclick="disconnectSheets()">Desconectar</button>
         </div>
       ` : `
@@ -2013,8 +3239,9 @@ function editLoteModal(id){
           <div><label>Costo Tostado (S/)</label><input type="number" step="0.01" id="el-roast-cost" value="${l.roastCost}"></div>
         </div>
         <div style="margin-top:15px; display:flex; gap:10px; justify-content:flex-end;">
-          <button class="btn secondary" onclick="closeModal()">Cancelar</button>
-          <button class="btn" onclick="saveEditedLote('${l.id}')">Guardar Cambios</button>
+          <span id="el-saved-flag" style="align-self:center; color:var(--accent-green); font-weight:600; font-size:13px; opacity:0; transition:opacity .2s;">✓ Guardado</span>
+          <button class="btn secondary" onclick="closeModal()">Cerrar</button>
+          <button class="btn" onclick="saveEditedLote('${l.id}')">Guardar</button>
         </div>
       </div>
     </div>
@@ -2048,8 +3275,11 @@ async function saveEditedLote(id){
   l.yieldPct = l.greenKg > 0 ? (l.roastedKg / l.greenKg) * 100 : 0;
 
   saveDB(false);
-  closeModal();
-  renderConfig();
+  const y = window.scrollY;
+  renderConfig();            // actualiza la tabla de fondo
+  editLoteModal(id);         // reabre el modal con los valores ya guardados
+  window.scrollTo(0, y);
+  flashSaved('el-saved-flag');
   await syncRemote('updateLote', l);
 }
 
@@ -2197,11 +3427,25 @@ function resetAll(){
 }
 
 /* ============ INICIALIZACIÓN Y AUTO-SINCRONIZACIÓN EN VIVO (BLINDADA CONTRA INTERRUPCIONES) ============ */
+// Al redibujar una pantalla tras guardar/editar, conservar la posición de scroll
+// (switchView ya hace scroll arriba ANTES de renderizar, así que al navegar sigue empezando arriba).
+['renderDashboard','renderVentas','renderStock','renderAds','renderEgresos','renderDelivery','renderClientes','renderFondo','renderInventario','renderConfig'].forEach(name=>{
+  const original = window[name];
+  window[name] = function(){
+    const y = window.scrollY;
+    const result = original.apply(this, arguments);
+    restoreOpenAccordions();
+    window.scrollTo(0, y);
+    return result;
+  };
+});
+
 updateConnBadge();
+updateSyncBadge();
 switchView('dashboard');
 
 if(isConnected()){
-  refreshFromRemote().then(ok => { if(ok) renderView(currentView); });
+  syncThenRefresh().then(ok => { if(ok) renderView(currentView); });
 }
 
 // Rastreamos la última vez que el usuario tocó cualquier campo o control.
@@ -2213,15 +3457,15 @@ let lastUserInteraction = Date.now();
   document.addEventListener(evt, ()=>{ lastUserInteraction = Date.now(); }, true);
 });
 
-const SAFE_REFRESH_VIEWS = ['dashboard', 'delivery', 'stock', 'ads', 'egresos'];
+const SAFE_REFRESH_VIEWS = ['dashboard', 'delivery', 'stock', 'ads', 'egresos', 'clientes'];
 const INTERACTION_QUIET_MS = 15000;
 
 async function tryLiveRefresh(){
   if(!isConnected()) return;
   if(document.visibilityState !== 'visible') return;
-  if(pendingWrites > 0) return; // hay un guardado en camino: no pisar con datos viejos de Sheets
+  if(hasPendingSync()) return; // hay cambios sin guardar en Sheets: no pisar con datos viejos
   if(Date.now() - lastUserInteraction < INTERACTION_QUIET_MS) return; // el usuario está activo: no interrumpir
-  if(document.getElementById('modal-edit-sale')) return; // hay un modal de edición abierto
+  if(document.getElementById('modal-edit-sale') || document.getElementById('inv-modal')) return; // hay un modal de edición abierto
 
   const isTyping = document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT' || document.activeElement.tagName === 'TEXTAREA');
   if(isTyping) return;
@@ -2234,9 +3478,11 @@ async function tryLiveRefresh(){
   }
 }
 
-setInterval(tryLiveRefresh, 8000);
-document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') tryLiveRefresh(); });
-window.addEventListener('focus', tryLiveRefresh);
+setInterval(tryLiveRefresh, 15000);
+setInterval(() => { if(outbox.length) flushOutbox(); }, 10000); // reintento automático de lo pendiente
+window.addEventListener('online', () => flushOutbox());
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible'){ flushOutbox().then(tryLiveRefresh); } });
+window.addEventListener('focus', () => { flushOutbox().then(tryLiveRefresh); });
 </script>
 </body>
 </html>

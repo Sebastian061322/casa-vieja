@@ -1,0 +1,204 @@
+{
+  "observedAt": "2026-10-15",
+  "source": "VerificacionesInventarioV3!A4:C4",
+  "id": "commercial-browser-f13fef78-3af4-409c-81e2-d0fcd598bbc5",
+  "kind": "COMMERCIAL_REPORT",
+  "report": {
+    "results": [
+      {
+        "passed": true,
+        "name": "RECEIVE_LOT · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-inventory-0"
+      },
+      {
+        "passed": true,
+        "name": "RECEIVE_LOT · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-inventory-1"
+      },
+      {
+        "passed": true,
+        "name": "RECEIVE_SUPPLY · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-inventory-2"
+      },
+      {
+        "name": "RECEIVE_SUPPLY · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-inventory-3",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "RECEIVE_SUPPLY · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-inventory-4"
+      },
+      {
+        "passed": true,
+        "name": "ROAST · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-inventory-5"
+      },
+      {
+        "name": "PREPARE_BAGS · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-inventory-6",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "PREPARE_BAGS · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-inventory-7"
+      },
+      {
+        "passed": true,
+        "name": "CONFIGURE_OFFER · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c1"
+      },
+      {
+        "passed": true,
+        "name": "CONFIGURE_OFFER · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c2"
+      },
+      {
+        "name": "CONFIGURE_OFFER · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c3",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "AUTHORIZE_DISCOUNT · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c4"
+      },
+      {
+        "passed": true,
+        "name": "REGISTER_SALE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c5"
+      },
+      {
+        "passed": true,
+        "name": "RECORD_PAYMENT · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c6"
+      },
+      {
+        "passed": true,
+        "name": "DISPATCH_SALE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c7"
+      },
+      {
+        "name": "EDIT_SALE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c8",
+        "passed": true
+      },
+      {
+        "name": "DELIVER_SALE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c9",
+        "passed": true
+      },
+      {
+        "name": "RETURN_SALE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c10",
+        "passed": true
+      },
+      {
+        "name": "RECORD_REFUND · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c11",
+        "passed": true
+      },
+      {
+        "name": "REGISTER_SALE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c12",
+        "passed": true
+      },
+      {
+        "name": "CANCEL_SALE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c13",
+        "passed": true
+      },
+      {
+        "name": "REGISTER_SALE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c14",
+        "passed": true
+      },
+      {
+        "name": "RECORD_PAYMENT · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c15",
+        "passed": true
+      },
+      {
+        "name": "DISPATCH_SALE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c16",
+        "passed": true
+      },
+      {
+        "name": "RETURN_SALE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c17",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "RECORD_REFUND · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c18"
+      },
+      {
+        "name": "RETURN_SALE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c19",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "RECORD_REFUND · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c20"
+      },
+      {
+        "passed": true,
+        "name": "RECORD_EXPENSE · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c21"
+      },
+      {
+        "passed": true,
+        "name": "RECORD_EXPENSE_PAYMENT · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c22"
+      },
+      {
+        "passed": true,
+        "name": "RECORD_PURCHASE_PAYMENT · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c23"
+      },
+      {
+        "passed": true,
+        "name": "PREPARE_BAGS · c4-4167cc6f-2ec4-4fd2-b32a-c2d70a4cc7cd-c24"
+      },
+      {
+        "name": "Ingreso neto conserva envío tras retorno de productos",
+        "passed": true
+      },
+      {
+        "name": "Cobros y reembolsos conservan caja real",
+        "passed": true
+      },
+      {
+        "name": "Costo vendido se compensa al recibir todo el producto",
+        "passed": true
+      },
+      {
+        "name": "Compras no duplican gasto operativo",
+        "passed": true
+      },
+      {
+        "name": "Resultado estimado separa distribución y publicidad",
+        "passed": true
+      },
+      {
+        "name": "Reconstrucción conserva 11000 gramos sintéticos",
+        "passed": true
+      },
+      {
+        "name": "Pedidos de ensayo no dejan reservas abiertas",
+        "passed": true
+      },
+      {
+        "name": "Plan comercial interrumpido conserva PREPARED",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "Reintento confirma una única versión comercial"
+      },
+      {
+        "name": "Venta comercial sin conexión conserva comando en IndexedDB",
+        "passed": true
+      },
+      {
+        "name": "Reapertura de IndexedDB conserva el operationId",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "Respuesta comercial perdida no anuncia confirmación"
+      },
+      {
+        "name": "Consulta recupera confirmación comercial original",
+        "passed": true
+      },
+      {
+        "name": "Dos clientes comerciales: uno reserva la última bolsa",
+        "passed": true
+      },
+      {
+        "name": "Stock insuficiente se conserva como rechazo terminal",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "Ensayo no deja reservas ni descuenta físicamente por cobro"
+      }
+    ],
+    "passed": true,
+    "run": "commercial-browser-f13fef78-3af4-409c-81e2-d0fcd598bbc5"
+  }
+}

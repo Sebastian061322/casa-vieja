@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-15",
+  "environment": "localhost, Google services simulated, fictitious data only",
+  "browserChecks": [
+    {
+      "name": "Pedido conservado en IndexedDB tras recargar con conexión simulada interrumpida",
+      "passed": true
+    },
+    {
+      "name": "Reconexión confirma un único pedido coincidente por nombre ficticio",
+      "passed": true
+    },
+    {
+      "name": "Anticipo 1000 céntimos sobre pedido 3500 deja saldo 2500",
+      "passed": true
+    },
+    {
+      "name": "Despacho no confunde cobro parcial con pago completo",
+      "passed": true
+    },
+    {
+      "name": "Devolución física habilita reembolso de anticipo sin fingir pago de dinero",
+      "passed": true
+    },
+    {
+      "name": "Formulario de reembolso confirma movimiento separado",
+      "passed": true
+    },
+    {
+      "name": "Filtros de búsqueda se conservan tras confirmar operación",
+      "passed": true
+    },
+    {
+      "name": "Inventario filtra envasado de 500 g en ancho 390 px",
+      "passed": true
+    },
+    {
+      "name": "Documento sin desbordamiento horizontal: viewport 390, scrollWidth 390",
+      "passed": true
+    }
+  ]
+}

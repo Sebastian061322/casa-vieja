@@ -1,0 +1,523 @@
+{
+  "environment": "Google Apps Script y Google Sheets sintéticos reales",
+  "run": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2",
+  "passed": true,
+  "revisionBefore": 0,
+  "revisionAfter": 5,
+  "stockRestored": true,
+  "rows": [
+    {
+      "name": "DiarioV2",
+      "rows": [
+        {
+          "kind": "PREPARED",
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register",
+          "fingerprint": "{\"deviceId\":\"editor-smoke\",\"epoch\":\"TEST_ONLY_V2\",\"lines\":[{\"qty\":1,\"resourceId\":\"demo:molido\"}],\"metadata\":{\"customer\":\"Prueba sintética\"},\"operationId\":\"smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register\",\"saleId\":\"future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one\",\"schemaVersion\":2,\"totalCents\":3300,\"type\":\"REGISTER_SALE\"}",
+          "command": {
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register",
+            "deviceId": "editor-smoke",
+            "epoch": "TEST_ONLY_V2",
+            "schemaVersion": 2,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+            "type": "REGISTER_SALE",
+            "lines": [
+              {
+                "resourceId": "demo:molido",
+                "qty": 1
+              }
+            ],
+            "totalCents": 3300,
+            "metadata": {
+              "customer": "Prueba sintética"
+            }
+          },
+          "plan": {
+            "sale": {
+              "id": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+              "status": "REGISTERED",
+              "version": 1,
+              "lines": [
+                {
+                  "resourceId": "demo:molido",
+                  "qty": 1,
+                  "lot": "demo-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "unitCostCents": 2000,
+                  "totalCostCents": 2000
+                }
+              ],
+              "totalCents": 3300,
+              "costCents": 2000,
+              "deliveryChargedCents": 0,
+              "deliveryCostCents": 0,
+              "profitCents": 1300,
+              "metadata": {
+                "customer": "Prueba sintética"
+              },
+              "originOperationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register"
+            },
+            "effects": [
+              {
+                "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register:0",
+                "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register",
+                "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+                "resourceId": "demo:molido",
+                "qtyDelta": -1,
+                "kind": "SALE_CONSUMPTION"
+              }
+            ]
+          },
+          "result": {
+            "epoch": "TEST_ONLY_V2",
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register",
+            "state": "COMMITTED",
+            "revision": 1,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+            "saleVersion": 1
+          }
+        },
+        {
+          "kind": "COMMITTED",
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register",
+          "result": {
+            "epoch": "TEST_ONLY_V2",
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register",
+            "state": "COMMITTED",
+            "revision": 1,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+            "saleVersion": 1
+          }
+        },
+        {
+          "kind": "PREPARED",
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel",
+          "fingerprint": "{\"deviceId\":\"editor-smoke\",\"epoch\":\"TEST_ONLY_V2\",\"expectedSaleVersion\":1,\"operationId\":\"smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel\",\"reason\":\"Fin de prueba sintética\",\"saleId\":\"future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one\",\"schemaVersion\":2,\"type\":\"CANCEL_SALE\"}",
+          "command": {
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel",
+            "deviceId": "editor-smoke",
+            "epoch": "TEST_ONLY_V2",
+            "schemaVersion": 2,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+            "type": "CANCEL_SALE",
+            "expectedSaleVersion": 1,
+            "reason": "Fin de prueba sintética"
+          },
+          "plan": {
+            "sale": {
+              "id": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+              "status": "CANCELLED",
+              "version": 2,
+              "lines": [
+                {
+                  "resourceId": "demo:molido",
+                  "qty": 1,
+                  "lot": "demo-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "unitCostCents": 2000,
+                  "totalCostCents": 2000
+                }
+              ],
+              "totalCents": 3300,
+              "costCents": 2000,
+              "deliveryChargedCents": 0,
+              "deliveryCostCents": 0,
+              "profitCents": 1300,
+              "metadata": {
+                "customer": "Prueba sintética"
+              },
+              "originOperationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register",
+              "cancelReason": "Fin de prueba sintética"
+            },
+            "effects": [
+              {
+                "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel:0",
+                "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel",
+                "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+                "resourceId": "demo:molido",
+                "qtyDelta": 1,
+                "kind": "CANCELLATION_COMPENSATION",
+                "reverses": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register:0"
+              }
+            ]
+          },
+          "result": {
+            "epoch": "TEST_ONLY_V2",
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel",
+            "state": "COMMITTED",
+            "revision": 2,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+            "saleVersion": 2
+          }
+        },
+        {
+          "kind": "COMMITTED",
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel",
+          "result": {
+            "epoch": "TEST_ONLY_V2",
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel",
+            "state": "COMMITTED",
+            "revision": 2,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+            "saleVersion": 2
+          }
+        },
+        {
+          "kind": "PREPARED",
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo",
+          "fingerprint": "{\"deviceId\":\"editor-smoke\",\"epoch\":\"TEST_ONLY_V2\",\"lines\":[{\"qty\":1,\"resourceId\":\"demo:molido\"},{\"qty\":1,\"resourceId\":\"demo:grano\"}],\"operationId\":\"smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo\",\"saleId\":\"future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two\",\"schemaVersion\":2,\"totalCents\":6600,\"type\":\"REGISTER_SALE\"}",
+          "command": {
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo",
+            "deviceId": "editor-smoke",
+            "epoch": "TEST_ONLY_V2",
+            "schemaVersion": 2,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+            "type": "REGISTER_SALE",
+            "lines": [
+              {
+                "resourceId": "demo:molido",
+                "qty": 1
+              },
+              {
+                "resourceId": "demo:grano",
+                "qty": 1
+              }
+            ],
+            "totalCents": 6600
+          },
+          "plan": {
+            "sale": {
+              "id": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+              "status": "REGISTERED",
+              "version": 1,
+              "lines": [
+                {
+                  "resourceId": "demo:molido",
+                  "qty": 1,
+                  "lot": "demo-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "unitCostCents": 2000,
+                  "totalCostCents": 2000
+                },
+                {
+                  "resourceId": "demo:grano",
+                  "qty": 1,
+                  "lot": "demo-lot",
+                  "family": "Gourmet",
+                  "grind": "grano",
+                  "grams": 500,
+                  "unitCostCents": 2000,
+                  "totalCostCents": 2000
+                }
+              ],
+              "totalCents": 6600,
+              "costCents": 4000,
+              "deliveryChargedCents": 0,
+              "deliveryCostCents": 0,
+              "profitCents": 2600,
+              "metadata": {},
+              "originOperationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo"
+            },
+            "effects": [
+              {
+                "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo:0",
+                "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo",
+                "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+                "resourceId": "demo:molido",
+                "qtyDelta": -1,
+                "kind": "SALE_CONSUMPTION"
+              },
+              {
+                "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo:1",
+                "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo",
+                "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+                "resourceId": "demo:grano",
+                "qtyDelta": -1,
+                "kind": "SALE_CONSUMPTION"
+              }
+            ]
+          },
+          "result": {
+            "epoch": "TEST_ONLY_V2",
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo",
+            "state": "COMMITTED",
+            "revision": 3,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+            "saleVersion": 1
+          }
+        },
+        {
+          "kind": "COMMITTED",
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo",
+          "result": {
+            "epoch": "TEST_ONLY_V2",
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo",
+            "state": "COMMITTED",
+            "revision": 3,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+            "saleVersion": 1
+          }
+        },
+        {
+          "kind": "PREPARED",
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-edit",
+          "fingerprint": "{\"deviceId\":\"editor-smoke\",\"epoch\":\"TEST_ONLY_V2\",\"expectedSaleVersion\":1,\"metadata\":{\"customer\":\"Combo demo editado\"},\"operationId\":\"smoke-4753b637-7485-4d83-9357-ffaba21e16c2-edit\",\"saleId\":\"future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two\",\"schemaVersion\":2,\"type\":\"EDIT_SALE\"}",
+          "command": {
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-edit",
+            "deviceId": "editor-smoke",
+            "epoch": "TEST_ONLY_V2",
+            "schemaVersion": 2,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+            "type": "EDIT_SALE",
+            "expectedSaleVersion": 1,
+            "metadata": {
+              "customer": "Combo demo editado"
+            }
+          },
+          "plan": {
+            "sale": {
+              "id": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+              "status": "REGISTERED",
+              "version": 2,
+              "lines": [
+                {
+                  "resourceId": "demo:molido",
+                  "qty": 1,
+                  "lot": "demo-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "unitCostCents": 2000,
+                  "totalCostCents": 2000
+                },
+                {
+                  "resourceId": "demo:grano",
+                  "qty": 1,
+                  "lot": "demo-lot",
+                  "family": "Gourmet",
+                  "grind": "grano",
+                  "grams": 500,
+                  "unitCostCents": 2000,
+                  "totalCostCents": 2000
+                }
+              ],
+              "totalCents": 6600,
+              "costCents": 4000,
+              "deliveryChargedCents": 0,
+              "deliveryCostCents": 0,
+              "profitCents": 2600,
+              "metadata": {
+                "customer": "Combo demo editado"
+              },
+              "originOperationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo"
+            },
+            "effects": []
+          },
+          "result": {
+            "epoch": "TEST_ONLY_V2",
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-edit",
+            "state": "COMMITTED",
+            "revision": 4,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+            "saleVersion": 2
+          }
+        },
+        {
+          "kind": "COMMITTED",
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-edit",
+          "result": {
+            "epoch": "TEST_ONLY_V2",
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-edit",
+            "state": "COMMITTED",
+            "revision": 4,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+            "saleVersion": 2
+          }
+        },
+        {
+          "kind": "PREPARED",
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo",
+          "fingerprint": "{\"deviceId\":\"editor-smoke\",\"epoch\":\"TEST_ONLY_V2\",\"expectedSaleVersion\":2,\"operationId\":\"smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo\",\"reason\":\"Fin de prueba combo\",\"saleId\":\"future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two\",\"schemaVersion\":2,\"type\":\"CANCEL_SALE\"}",
+          "command": {
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo",
+            "deviceId": "editor-smoke",
+            "epoch": "TEST_ONLY_V2",
+            "schemaVersion": 2,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+            "type": "CANCEL_SALE",
+            "expectedSaleVersion": 2,
+            "reason": "Fin de prueba combo"
+          },
+          "plan": {
+            "sale": {
+              "id": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+              "status": "CANCELLED",
+              "version": 3,
+              "lines": [
+                {
+                  "resourceId": "demo:molido",
+                  "qty": 1,
+                  "lot": "demo-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "unitCostCents": 2000,
+                  "totalCostCents": 2000
+                },
+                {
+                  "resourceId": "demo:grano",
+                  "qty": 1,
+                  "lot": "demo-lot",
+                  "family": "Gourmet",
+                  "grind": "grano",
+                  "grams": 500,
+                  "unitCostCents": 2000,
+                  "totalCostCents": 2000
+                }
+              ],
+              "totalCents": 6600,
+              "costCents": 4000,
+              "deliveryChargedCents": 0,
+              "deliveryCostCents": 0,
+              "profitCents": 2600,
+              "metadata": {
+                "customer": "Combo demo editado"
+              },
+              "originOperationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo",
+              "cancelReason": "Fin de prueba combo"
+            },
+            "effects": [
+              {
+                "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo:0",
+                "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo",
+                "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+                "resourceId": "demo:molido",
+                "qtyDelta": 1,
+                "kind": "CANCELLATION_COMPENSATION",
+                "reverses": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo:0"
+              },
+              {
+                "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo:1",
+                "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo",
+                "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+                "resourceId": "demo:grano",
+                "qtyDelta": 1,
+                "kind": "CANCELLATION_COMPENSATION",
+                "reverses": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo:1"
+              }
+            ]
+          },
+          "result": {
+            "epoch": "TEST_ONLY_V2",
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo",
+            "state": "COMMITTED",
+            "revision": 5,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+            "saleVersion": 3
+          }
+        },
+        {
+          "kind": "COMMITTED",
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo",
+          "result": {
+            "epoch": "TEST_ONLY_V2",
+            "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo",
+            "state": "COMMITTED",
+            "revision": 5,
+            "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+            "saleVersion": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "EfectosV2",
+      "rows": [
+        {
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register:0",
+          "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register",
+          "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+          "resourceId": "demo:molido",
+          "qtyDelta": -1,
+          "kind": "SALE_CONSUMPTION"
+        },
+        {
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel:0",
+          "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel",
+          "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-one",
+          "resourceId": "demo:molido",
+          "qtyDelta": 1,
+          "kind": "CANCELLATION_COMPENSATION",
+          "reverses": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-register:0"
+        },
+        {
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo:0",
+          "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo",
+          "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+          "resourceId": "demo:molido",
+          "qtyDelta": -1,
+          "kind": "SALE_CONSUMPTION"
+        },
+        {
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo:1",
+          "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo",
+          "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+          "resourceId": "demo:grano",
+          "qtyDelta": -1,
+          "kind": "SALE_CONSUMPTION"
+        },
+        {
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo:0",
+          "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo",
+          "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+          "resourceId": "demo:molido",
+          "qtyDelta": 1,
+          "kind": "CANCELLATION_COMPENSATION",
+          "reverses": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo:0"
+        },
+        {
+          "id": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo:1",
+          "operationId": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-cancel-combo",
+          "saleId": "future:smoke-4753b637-7485-4d83-9357-ffaba21e16c2-two",
+          "resourceId": "demo:grano",
+          "qtyDelta": 1,
+          "kind": "CANCELLATION_COMPENSATION",
+          "reverses": "smoke-4753b637-7485-4d83-9357-ffaba21e16c2-combo:1"
+        }
+      ]
+    },
+    {
+      "name": "AperturaV2",
+      "rows": [
+        {
+          "epoch": "TEST_ONLY_V2",
+          "resources": {
+            "demo:molido": {
+              "lot": "demo-lot",
+              "family": "Gourmet",
+              "grind": "molido",
+              "grams": 500,
+              "qty": 10,
+              "unitCostCents": 2000,
+              "active": true
+            },
+            "demo:grano": {
+              "lot": "demo-lot",
+              "family": "Gourmet",
+              "grind": "grano",
+              "grams": 500,
+              "qty": 8,
+              "unitCostCents": 2000,
+              "active": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

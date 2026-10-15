@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<base target="_top">
+<meta charset="UTF-8">
+<!-- CONFIGURACIÓN DE PWA Y VISTA MÓVIL (IPHONE / PC) -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Casa Vieja">
+
+<title>Casa Vieja · Control de Operaciones</title>
+
+<style>
+  :root{
+    --bg:#1C1410;
+    --surface:#241B15;
+    --surface-2:#2E241C;
+    --surface-3:#382B20;
+    --border:#3D2F24;
+    --text:#F2E9DC;
+    --text-muted:#A8998A;
+    --accent-red:#C1432E;
+    --accent-gold:#D4A34A;
+    --accent-green:#6B8F5C;
+    --accent-blue:#5C7F8F;
+    --radius:10px;
+    --font-display:'Iowan Old Style','Palatino Linotype',Georgia,serif;
+    --font-body:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    min-height:100vh;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  #app{display:flex;min-height:100vh;}
+  
+  /* Sidebar */
+  .sidebar{
+    width:220px;flex-shrink:0;background:var(--surface);
+    border-right:1px solid var(--border);
+    display:flex;flex-direction:column;padding:20px 0;
+  }
+  .brand{padding:0 20px 18px 20px;border-bottom:1px solid var(--border);margin-bottom:10px;}
+  .brand h1{font-family:var(--font-display);font-size:20px;margin:0 0 2px 0;font-weight:600;letter-spacing:.3px;}
+  .brand span{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;}
+  nav.navlist{
+    display:flex;flex-direction:column;gap:2px;padding:0 10px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .nav-btn{
+    display:flex;align-items:center;gap:10px;
+    background:none;border:none;color:var(--text-muted);
+    padding:10px 12px;border-radius:8px;cursor:pointer;
+    font-size:14px;text-align:left;font-family:var(--font-body);
+    transition:background .15s, color .15s;
+  }
+  .nav-btn svg{flex-shrink:0;opacity:.8;}
+  .nav-btn:hover{background:var(--surface-2);color:var(--text);}
+  .nav-btn.active{background:var(--surface-3);color:var(--text);font-weight:600;}
+  .nav-btn.active svg{opacity:1;}
+  .sidebar-footer{margin-top:auto;padding:14px 20px 0 20px;border-top:1px solid var(--border);}
+  .sidebar-footer p{font-size:11px;color:var(--text-muted);line-height:1.5;margin:10px 0 0 0;}
+  #connStatus.online{color:var(--accent-green);}
+  #connStatus.offline{color:var(--text-muted);}
+  
+  /* Main */
+  .main{flex:1;min-width:0;padding:26px 34px 60px 34px;}
+  .topbar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:22px;flex-wrap:wrap;gap:8px;}
+  .topbar h2{font-family:var(--font-display);font-size:26px;margin:0;font-weight:600;}
+  .topbar .today{font-size:13px;color:var(--text-muted);}
+  .view{display:none;}
+  .view.active{display:block;animation:fadein .2s ease;}
+  @keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+  
+  /* Cards / grid */
+  .grid{display:grid;gap:14px;}
+  .grid-kpi{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:22px;}
+  .grid-charts{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));}
+  .card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);padding:16px 18px;
+  }
+  .kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin:0 0 8px 0;}
+  .kpi-value{font-family:var(--font-display);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;margin:0;}
+  .kpi-value.red{color:var(--accent-red);}
+  .kpi-value.gold{color:var(--accent-gold);}
+  .kpi-value.green{color:var(--accent-green);}
+  .kpi-sub{font-size:11px;color:var(--text-muted);margin-top:6px;}
+  .card h3{font-size:14px;margin:0 0 14px 0;font-weight:600;color:var(--text);}
+  .card h3 small{display:block;font-size:11px;color:var(--text-muted);font-weight:400;margin-top:2px;}
+  
+  /* Chart bits */
+  .chart-svg{width:100%;height:auto;display:block;}
+  .legend{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:12px;}
+  .legend-row{display:flex;align-items:center;gap:8px;justify-content:space-between;}
+  .legend-left{display:flex;align-items:center;gap:8px;color:var(--text-muted);}
+  .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .donut-wrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap;}
+  .donut{width:120px;height:120px;border-radius:50%;position:relative;flex-shrink:0;}
+  .donut::after{content:'';position:absolute;inset:22px;background:var(--surface);border-radius:50%;}
+  .donut-center{position:absolute;inset:22px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-muted);text-align:center;z-index:2;}
+  
+  /* Ripeness stock scale */
+  .stock-row{margin-bottom:14px;}
+  .stock-row-head{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px;}
+  .stock-row-head b{font-weight:600;}
+  .stock-row-head span.low{color:var(--accent-red);font-weight:600;}
+  .ripeness-track{position:relative;height:10px;border-radius:6px;overflow:hidden;
+    background:linear-gradient(90deg,var(--accent-red) 0%,var(--accent-gold) 45%,var(--accent-green) 100%);}
+  .ripeness-mask{position:absolute;top:0;right:0;height:100%;background:var(--surface-2);}
+  .ripeness-min{position:absolute;top:-2px;width:2px;height:14px;background:var(--text);opacity:.8;}
+  
+  /* Forms */
+  .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px;}
+  label{display:block;font-size:11px;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px;}
+  input,select{
+    width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+    padding:9px 10px;border-radius:7px;font-size:13.5px;font-family:var(--font-body);
+  }
+  input:focus,select:focus{outline:2px solid var(--accent-gold);outline-offset:1px;}
+  .btn{
+    background:var(--accent-gold);color:#231A12;border:none;padding:10px 16px;
+    border-radius:7px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:var(--font-body);
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn.secondary{background:var(--surface-3);color:var(--text);border:1px solid var(--border);}
+  .btn.danger{background:var(--accent-red);color:#fff;}
+  .btn.small{padding:5px 10px;font-size:12px;}
+  .btn:focus-visible, .nav-btn:focus-visible, select:focus-visible, input:focus-visible{outline:2px solid var(--accent-gold);outline-offset:2px;}
+  
+  /* Table */
+  .table-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{text-align:left;color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap;}
+  td{padding:9px 10px;border-bottom:1px solid var(--border);white-space:nowrap;}
+  tr:last-child td{border-bottom:none;}
+  .pill{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+  .pill.green{background:rgba(107,143,92,.18);color:var(--accent-green);}
+  .pill.gold{background:rgba(212,163,74,.18);color:var(--accent-gold);}
+  .pill.red{background:rgba(193,67,46,.18);color:var(--accent-red);}
+  .empty{color:var(--text-muted);font-size:13px;padding:24px 4px;text-align:center;border:1px dashed var(--border);border-radius:var(--radius);}
+  .section-title{font-family:var(--font-display);font-size:18px;font-weight:600;margin:26px 0 12px 0;}
+  .section-title:first-child{margin-top:0;}
+  .row-actions{display:flex;gap:6px;}
+  .hint{font-size:11.5px;color:var(--text-muted);margin-top:-4px;margin-bottom:14px;}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+  .flexend{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;}
+
+  /* Acordeón (tarjetas desplegables para historiales) */
+  .acc-list{display:flex;flex-direction:column;gap:8px;}
+  .acc-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+  .acc-head{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;user-select:none;}
+  .acc-head:hover{background:var(--surface-2);}
+  .acc-num{flex:0 0 auto;min-width:26px;color:var(--text-muted);font-size:12px;font-weight:600;}
+  .acc-summary{flex:1 1 auto;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;}
+  .acc-summary .acc-main{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .acc-summary .acc-sub{color:var(--text-muted);font-size:12px;white-space:nowrap;}
+  .acc-summary .acc-amt{margin-left:auto;font-weight:700;white-space:nowrap;}
+  .acc-caret{flex:0 0 auto;color:var(--text-muted);transition:transform .15s;font-size:12px;}
+  .acc-item.open .acc-caret{transform:rotate(180deg);}
+  .acc-body{display:none;padding:4px 14px 14px 14px;border-top:1px solid var(--border);}
+  .acc-item.open .acc-body{display:block;}
+  .acc-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px 16px;margin:10px 0;}
+  .acc-field label{margin-bottom:2px;}
+  .acc-field div{font-size:13.5px;}
+  .acc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  .wf-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;}
+  .wf-row small{display:block;color:var(--text-muted);font-size:11px;font-weight:400;}
+  .wf-row b{white-space:nowrap;font-variant-numeric:tabular-nums;}
+  .wf-row.neg b{color:var(--accent-red);}
+  .wf-row.total{border-bottom:none;border-top:2px solid var(--border);margin-top:4px;padding-top:12px;font-size:16px;font-weight:600;}
+  .wf-row.total b{font-family:var(--font-display);font-size:24px;}
+  .split-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:14px;}
+  .split-box{background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
+  .split-box .nm{font-weight:600;margin-bottom:6px;}
+  .split-box .ln{display:flex;justify-content:space-between;font-size:12.5px;color:var(--text-muted);padding:2px 0;}
+  .split-box .tt{display:flex;justify-content:space-between;font-weight:700;padding-top:6px;margin-top:4px;border-top:1px solid var(--border);}
+  .acc-item.static .acc-head{cursor:default;}
+  .acc-item.static .acc-head:hover{background:none;}
+  .acc-field input,.acc-field select{width:100%;}
+  .pill.blue{background:rgba(92,127,143,.18);color:var(--accent-blue);}
+  .acc-list + .acc-list{margin-top:8px;}
+  @media (max-width:880px){
+    .acc-summary .acc-main{max-width:140px;}
+  }
+
+  /* Botón hamburguesa (solo visible en móvil) */
+  .hamburger-btn{
+    display:none;background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+    width:40px;height:40px;border-radius:8px;cursor:pointer;flex-shrink:0;
+    align-items:center;justify-content:center;
+  }
+
+  /* ADAPTACIÓN MÓVIL (IPHONE / SMARTPHONES) */
+  @media (max-width:880px){
+    #app{flex-direction:column;}
+    .sidebar{
+      width:100%;flex-direction:column;align-items:stretch;position:relative;z-index:500;
+      padding: max(12px, env(safe-area-inset-top)) 14px 12px 14px;
+    }
+    .brand{border:none;padding:0;margin:0;display:flex;align-items:center;justify-content:space-between;}
+    .hamburger-btn{display:flex;}
+    nav.navlist{
+      flex-direction:column;padding:0;margin-top:0;max-height:0;overflow:hidden;
+      transition:max-height .2s ease, margin-top .2s ease;
+    }
+    nav.navlist.open{max-height:480px;margin-top:12px;}
+    .sidebar-footer{display:none;}
+    .main{padding:16px 16px 50px 16px;}
+    
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+    
+    .btn, .nav-btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn{justify-content:center;}
+    .nav-btn{justify-content:flex-start;}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <h1>Casa Vieja</h1>
+        <span>Control de operaciones</span>
+      </div>
+      <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Abrir menú">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+      </button>
+    </div>
+    <nav class="navlist" id="navlist">
+      <button class="nav-btn" data-view="dashboard" onclick="switchView('dashboard')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="6" width="4" height="15"/><rect x="17" y="3" width="4" height="18"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-btn" data-view="ventas" onclick="switchView('ventas')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2 3h2l2.6 12.6a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H5.2"/></svg>
+        Ventas
+      </button>
+      <button class="nav-btn" data-view="stock" onclick="switchView('stock')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>
+        Stock
+      </button>
+      <button class="nav-btn" data-view="ads" onclick="switchView('ads')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a4 4 0 0 1 0 8"/></svg>
+        Ads
+      </button>
+      <button class="nav-btn" data-view="egresos" onclick="switchView('egresos')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18v13H3z"/><path d="M3 7l4-4h10l4 4"/><path d="M8 12h8"/></svg>
+        Egresos
+      </button>
+      <button class="nav-btn" data-view="delivery" onclick="switchView('delivery')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="7" width="13" height="9"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="5.5" cy="18" r="1.6"/><circle cx="16.5" cy="18" r="1.6"/></svg>
+        Delivery
+      </button>
+      <button class="nav-btn" data-view="clientes" onclick="switchView('clientes')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.5 14.2c2.6.3 4.5 2.5 4.5 5.3"/></svg>
+        Clientes
+      </button>
+      <button class="nav-btn" data-view="inventario" onclick="switchView('inventario')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+        Inventario
+      </button>
+      <button class="nav-btn" data-view="fondo" onclick="switchView('fondo')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+        Fondo
+      </button>
+      <button class="nav-btn" data-view="config" onclick="switchView('config')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
+        Configuración
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <p id="connStatus">Entorno de pruebas</p>
+      <p>Solo datos ficticios. Producción sin conexión.</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h2 id="pageTitle">Ventas de pruebas</h2>
+      <div class="today" id="todayLabel"></div>
+    </div>
+    <section class="view" id="view-dashboard"></section>
+    <section class="view active" id="view-ventas">
+<div class="card"><b>ENTORNO SINTÉTICO · FASE 2</b><p id="sync-notice" role="status" aria-live="polite">Conectando con la hoja de pruebas…</p><p id="stock"></p></div>
+<div class="section-title">Registrar nueva venta</div>
+<div class="card">
+<label><input type="checkbox" id="sf-combo-toggle"> Venta combinada — mezcla Grano/Molido</label>
+<div class="form-grid">
+<div><label>Fecha</label><input type="date" id="sf-date"></div>
+<div><label>Producto</label><select id="sf-product"><option value="demo:molido">Gourmet Molido 500 g · DEMO</option><option value="demo:grano">Gourmet Grano 500 g · DEMO</option></select></div>
+<div><label>Presentación</label><select id="sf-pack"><option value="1">Bolsa</option><option value="3">Tripack — 3 bolsas</option></select></div>
+<div><label>Cantidad de presentaciones</label><input type="number" min="1" step="1" id="sf-qty" value="1"></div>
+<div><label>Total de venta (S/)</label><input type="number" min="0" step="0.01" id="sf-price" value="0"></div>
+<div><label>Cliente (opcional)</label><input id="sf-customer" maxlength="500" placeholder="Cliente ficticio"></div>
+<div><label>Teléfono (opcional)</label><input id="sf-phone" maxlength="500"></div>
+<div><label>Costo real de envío (S/)</label><input type="number" min="0" step="0.01" id="sf-delcost" value="0"></div>
+<div><label>Cobrado por envío (S/)</label><input type="number" min="0" step="0.01" id="sf-delcharged" value="0"></div>
+<div><label>Zona / dirección</label><input id="sf-zone" maxlength="500"></div>
+</div>
+<div id="sf-combo-block" class="form-grid" style="display:none;margin-top:14px">
+<div><label>Bolsas molido</label><input type="number" min="0" step="1" id="combo-molido" value="1"></div>
+<div><label>Bolsas grano</label><input type="number" min="0" step="1" id="combo-grano" value="1"></div>
+</div>
+<button class="btn" id="register" style="margin-top:14px">+ Registrar venta</button>
+</div>
+<div class="section-title">Sincronización · pendientes: <span id="pending-count">0</span></div><div class="card"><button class="btn secondary" id="retry">Reintentar y descargar</button><div id="queue" style="overflow-wrap:anywhere"></div></div>
+<div class="section-title">Ventas confirmadas de pruebas</div><div id="history"></div><details class="card"><summary>Verificaciones del laboratorio</summary><p>Ejecuta operaciones ficticias y sus compensaciones. Puede tardar varios minutos.</p><button class="btn secondary" id="verify">Verificar sincronización y concurrencia</button><pre id="verification-results" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre></details></section>
+    <section class="view" id="view-stock"></section>
+    <section class="view" id="view-ads"></section>
+    <section class="view" id="view-egresos"></section>
+    <section class="view" id="view-delivery"></section>
+    <section class="view" id="view-clientes"></section>
+    <section class="view" id="view-inventario"></section>
+    <section class="view" id="view-fondo"></section>
+    <section class="view" id="view-config"></section>
+  </main>
+</div>
+

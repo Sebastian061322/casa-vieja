@@ -1,0 +1,122 @@
+{
+  "id": "inventory-browser-0eca30ac-39d7-4140-a839-d8e4a6a98333",
+  "kind": "INVENTORY_REPORT",
+  "report": {
+    "passed": false,
+    "run": "inventory-browser-0eca30ac-39d7-4140-a839-d8e4a6a98333",
+    "results": [
+      {
+        "passed": true,
+        "name": "Flujo real: recepción, tostado, preparación, insumos, ventas y retornos"
+      },
+      {
+        "name": "RECEIVE_LOT g3-b52c5bb2-da19-4787-b799-3b6778170ccc-1",
+        "passed": true
+      },
+      {
+        "name": "RECEIVE_LOT g3-b52c5bb2-da19-4787-b799-3b6778170ccc-2",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "RECEIVE_SUPPLY g3-b52c5bb2-da19-4787-b799-3b6778170ccc-3"
+      },
+      {
+        "name": "RECEIVE_SUPPLY g3-b52c5bb2-da19-4787-b799-3b6778170ccc-4",
+        "passed": true
+      },
+      {
+        "name": "RECEIVE_SUPPLY g3-b52c5bb2-da19-4787-b799-3b6778170ccc-5",
+        "passed": true
+      },
+      {
+        "name": "ROAST g3-b52c5bb2-da19-4787-b799-3b6778170ccc-6",
+        "passed": true
+      },
+      {
+        "name": "PREPARE_BAGS g3-b52c5bb2-da19-4787-b799-3b6778170ccc-7",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "PREPARE_BAGS g3-b52c5bb2-da19-4787-b799-3b6778170ccc-8"
+      },
+      {
+        "passed": true,
+        "name": "RESERVE_SALE g3-b52c5bb2-da19-4787-b799-3b6778170ccc-9"
+      },
+      {
+        "passed": true,
+        "name": "CANCEL_SALE g3-b52c5bb2-da19-4787-b799-3b6778170ccc-10"
+      },
+      {
+        "name": "REGISTER_SALE g3-b52c5bb2-da19-4787-b799-3b6778170ccc-11",
+        "passed": true
+      },
+      {
+        "name": "EDIT_SALE g3-b52c5bb2-da19-4787-b799-3b6778170ccc-12",
+        "passed": true
+      },
+      {
+        "name": "PAY_SALE g3-b52c5bb2-da19-4787-b799-3b6778170ccc-13",
+        "passed": true
+      },
+      {
+        "name": "DISPATCH_SALE g3-b52c5bb2-da19-4787-b799-3b6778170ccc-14",
+        "passed": true
+      },
+      {
+        "name": "DELIVER_SALE g3-b52c5bb2-da19-4787-b799-3b6778170ccc-15",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "RETURN_SALE g3-b52c5bb2-da19-4787-b799-3b6778170ccc-16"
+      },
+      {
+        "name": "RETURN_SALE g3-b52c5bb2-da19-4787-b799-3b6778170ccc-17",
+        "passed": true
+      },
+      {
+        "name": "WASTE g3-b52c5bb2-da19-4787-b799-3b6778170ccc-18",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "Conservación de 11000 gramos ficticios"
+      },
+      {
+        "name": "Conservación del valor y costo de merma",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "Retorno físico completo mantiene costo histórico"
+      },
+      {
+        "passed": true,
+        "name": "Fallo parcial permanece PREPARED"
+      },
+      {
+        "passed": true,
+        "name": "Preparación se recupera una sola vez"
+      },
+      {
+        "passed": true,
+        "name": "Interrupción conserva reserva pendiente en IndexedDB"
+      },
+      {
+        "name": "Respuesta perdida conserva comando original",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "Reconexión recupera confirmación original"
+      },
+      {
+        "passed": false,
+        "name": "SERVER_UNAVAILABLE"
+      }
+    ]
+  }
+}

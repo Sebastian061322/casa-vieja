@@ -1,0 +1,16 @@
+{
+  "source": "Google Sheets sintético, rangos A1:C150 de DiarioInventarioV3 y MovimientosInventarioV3",
+  "reconstructed": true,
+  "revision": 44,
+  "journalRows": 89,
+  "movementRows": 72,
+  "lots": 4,
+  "resources": 18,
+  "sales": 7,
+  "receivedGrams": 22000,
+  "physicalGrams": 17830,
+  "wasteGrams": 4170,
+  "reserved": 0,
+  "inventoryValueCents": 72340,
+  "pendingPrepared": 0
+}

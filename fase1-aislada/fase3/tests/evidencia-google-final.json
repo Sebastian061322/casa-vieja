@@ -1,0 +1,132 @@
+{
+  "observedAt": "2026-10-15",
+  "source": "VerificacionesInventarioV3!A3:C3",
+  "id": "inventory-browser-ac988ecc-c1f5-49db-8ff2-4434e7510d5d",
+  "kind": "INVENTORY_REPORT",
+  "report": {
+    "results": [
+      {
+        "name": "Flujo real: recepción, tostado, preparación, insumos, ventas y retornos",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "RECEIVE_LOT g3-86ebedac-e681-4242-9e22-41aa66a37f03-1"
+      },
+      {
+        "name": "RECEIVE_LOT g3-86ebedac-e681-4242-9e22-41aa66a37f03-2",
+        "passed": true
+      },
+      {
+        "name": "RECEIVE_SUPPLY g3-86ebedac-e681-4242-9e22-41aa66a37f03-3",
+        "passed": true
+      },
+      {
+        "name": "RECEIVE_SUPPLY g3-86ebedac-e681-4242-9e22-41aa66a37f03-4",
+        "passed": true
+      },
+      {
+        "name": "RECEIVE_SUPPLY g3-86ebedac-e681-4242-9e22-41aa66a37f03-5",
+        "passed": true
+      },
+      {
+        "name": "ROAST g3-86ebedac-e681-4242-9e22-41aa66a37f03-6",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "PREPARE_BAGS g3-86ebedac-e681-4242-9e22-41aa66a37f03-7"
+      },
+      {
+        "passed": true,
+        "name": "PREPARE_BAGS g3-86ebedac-e681-4242-9e22-41aa66a37f03-8"
+      },
+      {
+        "name": "RESERVE_SALE g3-86ebedac-e681-4242-9e22-41aa66a37f03-9",
+        "passed": true
+      },
+      {
+        "name": "CANCEL_SALE g3-86ebedac-e681-4242-9e22-41aa66a37f03-10",
+        "passed": true
+      },
+      {
+        "name": "REGISTER_SALE g3-86ebedac-e681-4242-9e22-41aa66a37f03-11",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "EDIT_SALE g3-86ebedac-e681-4242-9e22-41aa66a37f03-12"
+      },
+      {
+        "name": "PAY_SALE g3-86ebedac-e681-4242-9e22-41aa66a37f03-13",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "DISPATCH_SALE g3-86ebedac-e681-4242-9e22-41aa66a37f03-14"
+      },
+      {
+        "name": "DELIVER_SALE g3-86ebedac-e681-4242-9e22-41aa66a37f03-15",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "RETURN_SALE g3-86ebedac-e681-4242-9e22-41aa66a37f03-16"
+      },
+      {
+        "passed": true,
+        "name": "RETURN_SALE g3-86ebedac-e681-4242-9e22-41aa66a37f03-17"
+      },
+      {
+        "passed": true,
+        "name": "WASTE g3-86ebedac-e681-4242-9e22-41aa66a37f03-18"
+      },
+      {
+        "name": "Conservación de 11000 gramos ficticios",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "Conservación del valor y costo de merma"
+      },
+      {
+        "passed": true,
+        "name": "Retorno físico completo mantiene costo histórico"
+      },
+      {
+        "passed": true,
+        "name": "Fallo parcial permanece PREPARED"
+      },
+      {
+        "name": "Preparación se recupera una sola vez",
+        "passed": true
+      },
+      {
+        "name": "Interrupción conserva reserva pendiente en IndexedDB",
+        "passed": true
+      },
+      {
+        "passed": true,
+        "name": "Respuesta perdida conserva comando original"
+      },
+      {
+        "passed": true,
+        "name": "Reconexión recupera confirmación original"
+      },
+      {
+        "name": "Dos clientes compiten: solo uno confirma la última bolsa",
+        "passed": true
+      },
+      {
+        "name": "Cliente concurrente sin stock queda rechazado durable",
+        "passed": true
+      },
+      {
+        "name": "Reserva y cancelación conservan físico y liberan disponibilidad",
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "run": "inventory-browser-ac988ecc-c1f5-49db-8ff2-4434e7510d5d"
+  }
+}

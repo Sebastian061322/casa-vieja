@@ -19,6 +19,7 @@ Se añaden únicamente archivos bajo fase1-aislada/fase2 en la rama dev/fase1-es
 | tests/resultados-locales.txt | Salida de la ejecución final de pruebas |
 | tests/evidencia-google-smoke.json | Registros sintéticos observados en Google |
 | ACTA.md | Resultados, límites y pendientes verificables |
+| tests/evidencia-google-browser.json | Informe real de 11 verificaciones aprobado y leído en Sheets |
 | README.md | Alcance, semántica, riesgos y pasos reproducibles |
 | ARCHIVOS.md | Este inventario |
 

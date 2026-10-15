@@ -1,0 +1,69 @@
+{
+  "observedAt": "2026-10-15",
+  "sourceSpreadsheet": "1CtK6KD995Pu2Fzc_na89Ajc0KQ0QLuGq3UFhj4UdLSA",
+  "sourceRange": "VerificacionesV2!A2:C2",
+  "id": "browser-51ec03ad-6620-4f25-993d-45ee480b8ea6",
+  "kind": "BROWSER_REPORT",
+  "environment": "synthetic",
+  "report": {
+    "run": "browser-51ec03ad-6620-4f25-993d-45ee480b8ea6",
+    "results": [
+      {
+        "detail": "",
+        "passed": true,
+        "name": "Conexión real a Apps Script y Sheets"
+      },
+      {
+        "passed": true,
+        "detail": "",
+        "name": "Interrupción simulada conserva cola en IndexedDB"
+      },
+      {
+        "name": "Reconexión confirma una sola venta",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "detail": "",
+        "passed": true,
+        "name": "Respuesta perdida mantiene operación pendiente"
+      },
+      {
+        "detail": "",
+        "passed": true,
+        "name": "Consulta recupera confirmación original"
+      },
+      {
+        "passed": true,
+        "name": "Dos dispositivos lógicos envían en paralelo",
+        "detail": ""
+      },
+      {
+        "passed": true,
+        "name": "Stock concurrente disminuye exactamente 3 + 2",
+        "detail": ""
+      },
+      {
+        "passed": true,
+        "detail": "{\"cases\":[{\"stage\":\"afterPrepare\",\"recovered\":\"COMMITTED\",\"observed\":\"PREPARED\"},{\"stage\":\"afterEffect\",\"recovered\":\"COMMITTED\",\"observed\":\"PREPARED\"},{\"stage\":\"afterCommit\",\"recovered\":\"COMMITTED\",\"observed\":\"COMMITTED\"}],\"passed\":true}",
+        "name": "Recuperación real después de fallos parciales"
+      },
+      {
+        "passed": true,
+        "name": "Stock insuficiente queda rechazado de forma durable",
+        "detail": ""
+      },
+      {
+        "passed": true,
+        "detail": "",
+        "name": "Rechazo se archiva sin perder comando ni evidencia"
+      },
+      {
+        "detail": "",
+        "passed": true,
+        "name": "Verificaciones dejan el stock como estaba"
+      }
+    ],
+    "passed": true
+  }
+}

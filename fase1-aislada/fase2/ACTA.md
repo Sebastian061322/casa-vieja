@@ -21,7 +21,7 @@ Fecha: 15/10/2026, America/Lima.
 - Prueba real de backend Google: aprobada, 5 comandos confirmados y stock demo restaurado. La repetición de comando devolvió la confirmación original.
 - Interfaz real en Safari: alta confirmada, stock demo 10 a 9 y recarga sin duplicación observada.
 
-La concurrencia local usa dos clientes lógicos; no son dos dispositivos físicos. Los fallos de red locales son inyectados. El paquete de verificaciones de navegador permite probar dos deviceId con RPC paralelos reales y pérdida de respuesta simulada sobre una venta real de pruebas. Su ejecución remota adicional está pendiente de actualizar y comprobar la versión del despliegue privado.
+La concurrencia local usa dos clientes lógicos; no son dos dispositivos físicos. Los fallos de red locales son inyectados. El paquete de verificaciones de navegador permite probar dos deviceId con RPC paralelos reales y pérdida de respuesta simulada sobre una venta real de pruebas. La ejecución remota final aprobó sus 11 verificaciones; evidencia en tests/evidencia-google-browser.json. Dos clientes lógicos ejecutaron RPC paralelos reales; no equivale a dos equipos físicos ni a cortar físicamente la conexión.
 
 ## Límites de alcance
 
@@ -31,7 +31,7 @@ El diseño visual conserva CSS y navegación originales, pero la aplicación pri
 
 ## Estado de entrega de la versión final
 
-57 pruebas locales aprobadas (18 anteriores + 39 nuevas), sin fallos. La corrección final está guardada en el editor de Google. Su actualización en el despliegue privado y la lectura del informe completo del navegador siguen pendientes; no se presentan como verificadas. La ejecución previa del navegador dejó ventas sintéticas canceladas, pero su resultado completo no se recuperó.
+57 pruebas locales aprobadas (18 anteriores + 39 nuevas), sin fallos. El propietario actualizó el despliegue privado conservando Solo yo. Se verificó la versión final ejecutando browser-51ec03ad-6620-4f25-993d-45ee480b8ea6: 11/11 comprobaciones aprobadas, informe persistido y leído en VerificacionesV2!A2:C2. Incluye cola IndexedDB, reconexión, respuesta perdida y recuperación de confirmación original, dos clientes paralelos, descuento exacto 3 + 2, fallos afterPrepare/afterEffect/afterCommit recuperados, rechazo durable, archivo con evidencia y stock restituido. Stock final demo:molido=9 y demo:grano=8, igual que al inicio de esta batería; la venta de interfaz anterior permanece conservada. No se borraron registros de prueba.
 
 ## Riesgos y pendientes
 

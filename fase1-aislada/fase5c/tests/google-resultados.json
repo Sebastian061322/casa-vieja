@@ -1,0 +1,683 @@
+{
+  "records": [
+    {
+      "id": "risk5c-15285322-9a88-4d56-a8a9-68e875105807",
+      "kind": "ACCESS_5C",
+      "passed": true,
+      "checks": [
+        {
+          "name": "Inventario prepara con receta sintética de servidor",
+          "passed": true
+        },
+        {
+          "name": "Vendedor registra con precio y costo de servidor",
+          "passed": true
+        },
+        {
+          "name": "Reintento devuelve confirmación original",
+          "passed": true
+        },
+        {
+          "name": "Última bolsa rechaza segunda reserva",
+          "passed": true
+        },
+        {
+          "name": "No consultar operación ajena",
+          "passed": true
+        },
+        {
+          "name": "Respuesta de vendedor no incluye costos/diario/utilidades",
+          "passed": true
+        },
+        {
+          "name": "Inventario no recibe contactos",
+          "passed": true
+        },
+        {
+          "name": "Vendedor no configura precios",
+          "passed": true
+        },
+        {
+          "name": "No elevar perfil desde navegador",
+          "passed": true
+        },
+        {
+          "name": "Fallo parcial conserva PREPARED",
+          "passed": true
+        },
+        {
+          "name": "Recuperación no duplica reserva",
+          "passed": true
+        },
+        {
+          "name": "Actor y hora de servidor persistidos",
+          "passed": true
+        },
+        {
+          "name": "Diarios anteriores intactos",
+          "passed": true
+        }
+      ],
+      "revision": 99,
+      "identityProvider": "SYNTHETIC_ONLY",
+      "realGoogleSignInTested": false
+    },
+    {
+      "id": "perf5c-bfe674f5-e34f-443e-a91c-48e85a366fd6",
+      "kind": "PERFORMANCE_5C",
+      "environment": "TEST_ONLY",
+      "passed": true,
+      "n": 20,
+      "meanMs": 264.75,
+      "p50Ms": 219,
+      "p95Ms": 489,
+      "maxMs": 877,
+      "samples": [
+        {
+          "loadMs": 465,
+          "replayMs": 21,
+          "reportsMs": 3,
+          "totalMs": 489,
+          "revision": 99
+        },
+        {
+          "loadMs": 209,
+          "replayMs": 18,
+          "reportsMs": 1,
+          "totalMs": 228,
+          "revision": 99
+        },
+        {
+          "loadMs": 221,
+          "replayMs": 19,
+          "reportsMs": 1,
+          "totalMs": 241,
+          "revision": 99
+        },
+        {
+          "loadMs": 240,
+          "replayMs": 16,
+          "reportsMs": 0,
+          "totalMs": 256,
+          "revision": 99
+        },
+        {
+          "loadMs": 200,
+          "replayMs": 18,
+          "reportsMs": 1,
+          "totalMs": 219,
+          "revision": 99
+        },
+        {
+          "loadMs": 190,
+          "replayMs": 13,
+          "reportsMs": 1,
+          "totalMs": 204,
+          "revision": 99
+        },
+        {
+          "loadMs": 181,
+          "replayMs": 10,
+          "reportsMs": 1,
+          "totalMs": 192,
+          "revision": 99
+        },
+        {
+          "loadMs": 223,
+          "replayMs": 22,
+          "reportsMs": 1,
+          "totalMs": 246,
+          "revision": 99
+        },
+        {
+          "loadMs": 239,
+          "replayMs": 23,
+          "reportsMs": 1,
+          "totalMs": 263,
+          "revision": 99
+        },
+        {
+          "loadMs": 193,
+          "replayMs": 26,
+          "reportsMs": 0,
+          "totalMs": 219,
+          "revision": 99
+        },
+        {
+          "loadMs": 173,
+          "replayMs": 15,
+          "reportsMs": 1,
+          "totalMs": 189,
+          "revision": 99
+        },
+        {
+          "loadMs": 178,
+          "replayMs": 14,
+          "reportsMs": 0,
+          "totalMs": 192,
+          "revision": 99
+        },
+        {
+          "loadMs": 189,
+          "replayMs": 13,
+          "reportsMs": 1,
+          "totalMs": 203,
+          "revision": 99
+        },
+        {
+          "loadMs": 208,
+          "replayMs": 14,
+          "reportsMs": 0,
+          "totalMs": 222,
+          "revision": 99
+        },
+        {
+          "loadMs": 199,
+          "replayMs": 17,
+          "reportsMs": 1,
+          "totalMs": 217,
+          "revision": 99
+        },
+        {
+          "loadMs": 211,
+          "replayMs": 17,
+          "reportsMs": 1,
+          "totalMs": 229,
+          "revision": 99
+        },
+        {
+          "loadMs": 184,
+          "replayMs": 19,
+          "reportsMs": 1,
+          "totalMs": 204,
+          "revision": 99
+        },
+        {
+          "loadMs": 862,
+          "replayMs": 14,
+          "reportsMs": 1,
+          "totalMs": 877,
+          "revision": 99
+        },
+        {
+          "loadMs": 191,
+          "replayMs": 14,
+          "reportsMs": 0,
+          "totalMs": 205,
+          "revision": 99
+        },
+        {
+          "loadMs": 185,
+          "replayMs": 15,
+          "reportsMs": 0,
+          "totalMs": 200,
+          "revision": 99
+        }
+      ],
+      "includesNetwork": false,
+      "includesLockWait": false
+    },
+    {
+      "id": "risk5c-13ec2e98-4372-427c-80c8-6fdaf98e4440",
+      "kind": "ACCESS_5C",
+      "passed": true,
+      "checks": [
+        {
+          "name": "Inventario prepara con receta sintética de servidor",
+          "passed": true
+        },
+        {
+          "name": "Vendedor registra con precio y costo de servidor",
+          "passed": true
+        },
+        {
+          "name": "Reintento devuelve confirmación original",
+          "passed": true
+        },
+        {
+          "name": "Última bolsa rechaza segunda reserva",
+          "passed": true
+        },
+        {
+          "name": "No consultar operación ajena",
+          "passed": true
+        },
+        {
+          "name": "Respuesta de vendedor no incluye costos/diario/utilidades",
+          "passed": true
+        },
+        {
+          "name": "Inventario no recibe contactos",
+          "passed": true
+        },
+        {
+          "name": "Vendedor no configura precios",
+          "passed": true
+        },
+        {
+          "name": "No elevar perfil desde navegador",
+          "passed": true
+        },
+        {
+          "name": "Fallo parcial conserva plan recuperable",
+          "passed": true
+        },
+        {
+          "name": "Recuperación no duplica reserva",
+          "passed": true
+        },
+        {
+          "name": "Actor y hora de servidor persistidos",
+          "passed": true
+        },
+        {
+          "name": "Diarios anteriores intactos",
+          "passed": true
+        }
+      ],
+      "revision": 115,
+      "identityProvider": "SYNTHETIC_ONLY",
+      "realGoogleSignInTested": false
+    },
+    {
+      "id": "perf5c-86302a8f-42b1-448a-ac42-74697ac9fa90",
+      "kind": "PERFORMANCE_5C",
+      "environment": "TEST_ONLY",
+      "passed": true,
+      "n": 20,
+      "meanMs": 368.95,
+      "p50Ms": 286,
+      "p95Ms": 593,
+      "maxMs": 1404,
+      "samples": [
+        {
+          "loadMs": 1388,
+          "replayMs": 15,
+          "reportsMs": 1,
+          "totalMs": 1404,
+          "revision": 115
+        },
+        {
+          "loadMs": 220,
+          "replayMs": 21,
+          "reportsMs": 1,
+          "totalMs": 242,
+          "revision": 115
+        },
+        {
+          "loadMs": 249,
+          "replayMs": 15,
+          "reportsMs": 1,
+          "totalMs": 265,
+          "revision": 115
+        },
+        {
+          "loadMs": 232,
+          "replayMs": 17,
+          "reportsMs": 1,
+          "totalMs": 250,
+          "revision": 115
+        },
+        {
+          "loadMs": 247,
+          "replayMs": 18,
+          "reportsMs": 0,
+          "totalMs": 265,
+          "revision": 115
+        },
+        {
+          "loadMs": 275,
+          "replayMs": 12,
+          "reportsMs": 0,
+          "totalMs": 287,
+          "revision": 115
+        },
+        {
+          "loadMs": 217,
+          "replayMs": 18,
+          "reportsMs": 0,
+          "totalMs": 235,
+          "revision": 115
+        },
+        {
+          "loadMs": 258,
+          "replayMs": 17,
+          "reportsMs": 1,
+          "totalMs": 276,
+          "revision": 115
+        },
+        {
+          "loadMs": 280,
+          "replayMs": 39,
+          "reportsMs": 1,
+          "totalMs": 320,
+          "revision": 115
+        },
+        {
+          "loadMs": 558,
+          "replayMs": 26,
+          "reportsMs": 1,
+          "totalMs": 585,
+          "revision": 115
+        },
+        {
+          "loadMs": 311,
+          "replayMs": 19,
+          "reportsMs": 1,
+          "totalMs": 331,
+          "revision": 115
+        },
+        {
+          "loadMs": 246,
+          "replayMs": 29,
+          "reportsMs": 1,
+          "totalMs": 276,
+          "revision": 115
+        },
+        {
+          "loadMs": 572,
+          "replayMs": 21,
+          "reportsMs": 0,
+          "totalMs": 593,
+          "revision": 115
+        },
+        {
+          "loadMs": 284,
+          "replayMs": 17,
+          "reportsMs": 1,
+          "totalMs": 302,
+          "revision": 115
+        },
+        {
+          "loadMs": 271,
+          "replayMs": 13,
+          "reportsMs": 1,
+          "totalMs": 285,
+          "revision": 115
+        },
+        {
+          "loadMs": 286,
+          "replayMs": 15,
+          "reportsMs": 1,
+          "totalMs": 302,
+          "revision": 115
+        },
+        {
+          "loadMs": 272,
+          "replayMs": 14,
+          "reportsMs": 0,
+          "totalMs": 286,
+          "revision": 115
+        },
+        {
+          "loadMs": 247,
+          "replayMs": 21,
+          "reportsMs": 0,
+          "totalMs": 268,
+          "revision": 115
+        },
+        {
+          "loadMs": 266,
+          "replayMs": 20,
+          "reportsMs": 1,
+          "totalMs": 287,
+          "revision": 115
+        },
+        {
+          "loadMs": 295,
+          "replayMs": 24,
+          "reportsMs": 1,
+          "totalMs": 320,
+          "revision": 115
+        }
+      ],
+      "includesNetwork": false,
+      "includesLockWait": false
+    },
+    {
+      "id": "complete5c-9a02700a-0d25-475e-9fb3-2e1df1f0bb91",
+      "kind": "COMPLETE_RESTORE_5C",
+      "passed": true,
+      "targetId": "1zB8s5MZN-LGMpnHL3RkOvA802WVfPOPEkRgXmygNk0o",
+      "range": "Control!D9:F17",
+      "sha256": "4f91c71307ac6a6f469caf31c4ed7d69b0a0c6436ea4f81b8676c13390a96d80",
+      "release": "ca73588111c3d04101d3aad1facff5b1d06ffaacc915631c054e96405b5789b0",
+      "revision": 115,
+      "tableNames": [
+        "Control",
+        "RecursosDemo",
+        "AperturaV2",
+        "DiarioV2",
+        "EfectosV2",
+        "VerificacionesV2",
+        "DiarioInventarioV3",
+        "MovimientosInventarioV3",
+        "VerificacionesInventarioV3",
+        "Operaciones"
+      ],
+      "compressedBytes": 247624,
+      "uncompressedChars": 1264013,
+      "elapsedMs": 10759,
+      "backupMs": 4296,
+      "restoreVerificationMs": 6463,
+      "sourceUnchanged": true,
+      "deviceQueuesIncluded": true,
+      "deviceScope": "LAB_BROWSER_EXPORTS_ONLY_OTHER_DEVICES_UNATTESTED",
+      "secretsIncluded": false,
+      "commercialActivation": false
+    },
+    {
+      "id": "risk5c-13ec2e98-4372-427c-80c8-6fdaf98e4440-race-report",
+      "kind": "RACE_5C",
+      "passed": true,
+      "confirmed": 1,
+      "rejected": 2,
+      "physical": 1,
+      "reserved": 0,
+      "available": 1,
+      "revision": 117,
+      "realGoogleAccountsTested": false
+    },
+    {
+      "id": "perf5c-3b5e4ac1-39ea-4f02-aa70-e9f55880eab4",
+      "kind": "PERFORMANCE_5C",
+      "environment": "TEST_ONLY",
+      "passed": true,
+      "n": 20,
+      "meanMs": 264.75,
+      "p50Ms": 223,
+      "p95Ms": 499,
+      "maxMs": 609,
+      "samples": [
+        {
+          "loadMs": 585,
+          "replayMs": 20,
+          "reportsMs": 4,
+          "totalMs": 609,
+          "revision": 117
+        },
+        {
+          "loadMs": 481,
+          "replayMs": 18,
+          "reportsMs": 0,
+          "totalMs": 499,
+          "revision": 117
+        },
+        {
+          "loadMs": 235,
+          "replayMs": 16,
+          "reportsMs": 0,
+          "totalMs": 251,
+          "revision": 117
+        },
+        {
+          "loadMs": 230,
+          "replayMs": 15,
+          "reportsMs": 0,
+          "totalMs": 245,
+          "revision": 117
+        },
+        {
+          "loadMs": 239,
+          "replayMs": 15,
+          "reportsMs": 1,
+          "totalMs": 255,
+          "revision": 117
+        },
+        {
+          "loadMs": 194,
+          "replayMs": 18,
+          "reportsMs": 0,
+          "totalMs": 212,
+          "revision": 117
+        },
+        {
+          "loadMs": 207,
+          "replayMs": 11,
+          "reportsMs": 0,
+          "totalMs": 218,
+          "revision": 117
+        },
+        {
+          "loadMs": 207,
+          "replayMs": 15,
+          "reportsMs": 1,
+          "totalMs": 223,
+          "revision": 117
+        },
+        {
+          "loadMs": 214,
+          "replayMs": 18,
+          "reportsMs": 0,
+          "totalMs": 232,
+          "revision": 117
+        },
+        {
+          "loadMs": 194,
+          "replayMs": 16,
+          "reportsMs": 1,
+          "totalMs": 211,
+          "revision": 117
+        },
+        {
+          "loadMs": 257,
+          "replayMs": 17,
+          "reportsMs": 0,
+          "totalMs": 274,
+          "revision": 117
+        },
+        {
+          "loadMs": 224,
+          "replayMs": 9,
+          "reportsMs": 1,
+          "totalMs": 234,
+          "revision": 117
+        },
+        {
+          "loadMs": 202,
+          "replayMs": 14,
+          "reportsMs": 0,
+          "totalMs": 216,
+          "revision": 117
+        },
+        {
+          "loadMs": 189,
+          "replayMs": 16,
+          "reportsMs": 0,
+          "totalMs": 205,
+          "revision": 117
+        },
+        {
+          "loadMs": 184,
+          "replayMs": 13,
+          "reportsMs": 0,
+          "totalMs": 197,
+          "revision": 117
+        },
+        {
+          "loadMs": 199,
+          "replayMs": 14,
+          "reportsMs": 1,
+          "totalMs": 214,
+          "revision": 117
+        },
+        {
+          "loadMs": 329,
+          "replayMs": 17,
+          "reportsMs": 1,
+          "totalMs": 347,
+          "revision": 117
+        },
+        {
+          "loadMs": 205,
+          "replayMs": 16,
+          "reportsMs": 0,
+          "totalMs": 221,
+          "revision": 117
+        },
+        {
+          "loadMs": 213,
+          "replayMs": 12,
+          "reportsMs": 1,
+          "totalMs": 226,
+          "revision": 117
+        },
+        {
+          "loadMs": 193,
+          "replayMs": 12,
+          "reportsMs": 1,
+          "totalMs": 206,
+          "revision": 117
+        }
+      ],
+      "includesNetwork": false,
+      "includesLockWait": false
+    },
+    {
+      "id": "complete5c-42650077-8a7d-4406-85cd-85fda161aa36",
+      "kind": "COMPLETE_RESTORE_5C",
+      "passed": true,
+      "targetId": "1zB8s5MZN-LGMpnHL3RkOvA802WVfPOPEkRgXmygNk0o",
+      "range": "Control!D18:F26",
+      "sha256": "c4dad456cea02c5c4274b62748af6e093453103c24bcf3f55cfed05fd5df98b4",
+      "release": "ca73588111c3d04101d3aad1facff5b1d06ffaacc915631c054e96405b5789b0",
+      "revision": 117,
+      "tableNames": [
+        "Control",
+        "RecursosDemo",
+        "AperturaV2",
+        "DiarioV2",
+        "EfectosV2",
+        "VerificacionesV2",
+        "DiarioInventarioV3",
+        "MovimientosInventarioV3",
+        "VerificacionesInventarioV3",
+        "Operaciones"
+      ],
+      "compressedBytes": 249444,
+      "uncompressedChars": 1282292,
+      "elapsedMs": 6915,
+      "backupMs": 3327,
+      "restoreVerificationMs": 3588,
+      "sourceUnchanged": true,
+      "deviceQueuesIncluded": true,
+      "deviceScope": "LAB_BROWSER_EXPORTS_ONLY_OTHER_DEVICES_UNATTESTED",
+      "secretsIncluded": false,
+      "commercialActivation": false
+    }
+  ],
+  "independentDownloadVerification": {
+    "passed": true,
+    "sha256": "c4dad456cea02c5c4274b62748af6e093453103c24bcf3f55cfed05fd5df98b4",
+    "release": "ca73588111c3d04101d3aad1facff5b1d06ffaacc915631c054e96405b5789b0",
+    "revision": 117,
+    "pending": [],
+    "files": 46,
+    "clientStates": 3,
+    "legacyRecovered": true,
+    "repeatedRestoreUnchanged": true,
+    "journalRows": 242,
+    "effectRows": 170,
+    "legacyJournalRows": 57
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "environment": "LOCAL_SYNTHETIC_STATUS_STUB_NOT_REAL_GOOGLE",
+  "before": {
+    "origin": "http://127.0.0.1:8798",
+    "blocked": true,
+    "reason": "UNRESOLVED_QUEUES",
+    "otherOriginsConfirmed": true,
+    "databases": [
+      {
+        "name": "cv-sales-sandbox-v2-owner",
+        "engine": "V2",
+        "epoch": "TEST_ONLY_V2",
+        "origin": "http://127.0.0.1:8798",
+        "status": "UNRESOLVED",
+        "pending": [
+          {
+            "operationId": "synthetic-old-confirmed",
+            "saleId": "future:synthetic-old",
+            "epoch": "TEST_ONLY_V2",
+            "schemaVersion": 2,
+            "state": "PENDING",
+            "deviceId": "synthetic-old-device",
+            "engine": "V2"
+          }
+        ],
+        "receiptCount": 0
+      },
+      {
+        "name": "cv-inventory-sandbox-v3-owner",
+        "engine": "V3",
+        "epoch": "TEST_ONLY_V3",
+        "origin": "http://127.0.0.1:8798",
+        "status": "ABSENT",
+        "pending": [],
+        "receiptCount": 0
+      },
+      {
+        "name": "cv-commercial-sandbox-v4-owner",
+        "engine": "V4",
+        "epoch": "TEST_ONLY_V3",
+        "origin": "http://127.0.0.1:8798",
+        "status": "ABSENT",
+        "pending": [],
+        "receiptCount": 0
+      },
+      {
+        "name": "cv-commercial-sandbox-v5a-owner",
+        "engine": "V4",
+        "epoch": "TEST_ONLY_V3",
+        "origin": "http://127.0.0.1:8798",
+        "status": "CLEAR",
+        "pending": [],
+        "receiptCount": 8
+      }
+    ]
+  },
+  "after": {
+    "origin": "http://127.0.0.1:8798",
+    "blocked": false,
+    "reason": "CLEAR_THIS_ORIGIN",
+    "otherOriginsConfirmed": true,
+    "databases": [
+      {
+        "name": "cv-sales-sandbox-v2-owner",
+        "engine": "V2",
+        "epoch": "TEST_ONLY_V2",
+        "origin": "http://127.0.0.1:8798",
+        "status": "CLEAR",
+        "pending": [],
+        "receiptCount": 1
+      },
+      {
+        "name": "cv-inventory-sandbox-v3-owner",
+        "engine": "V3",
+        "epoch": "TEST_ONLY_V3",
+        "origin": "http://127.0.0.1:8798",
+        "status": "ABSENT",
+        "pending": [],
+        "receiptCount": 0
+      },
+      {
+        "name": "cv-commercial-sandbox-v4-owner",
+        "engine": "V4",
+        "epoch": "TEST_ONLY_V3",
+        "origin": "http://127.0.0.1:8798",
+        "status": "ABSENT",
+        "pending": [],
+        "receiptCount": 0
+      },
+      {
+        "name": "cv-commercial-sandbox-v5a-owner",
+        "engine": "V4",
+        "epoch": "TEST_ONLY_V3",
+        "origin": "http://127.0.0.1:8798",
+        "status": "CLEAR",
+        "pending": [],
+        "receiptCount": 8
+      }
+    ]
+  }
+}

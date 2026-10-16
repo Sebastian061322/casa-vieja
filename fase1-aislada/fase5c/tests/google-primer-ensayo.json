@@ -1,0 +1,13 @@
+{
+  "results": [
+    {
+      "truncated": true,
+      "text": "{\"id\":\"risk5c-15285322-9a88-4d56-a8a9-68e875105807\",\"kind\":\"ACCESS_5C\",\"passed\":true,\"checks\":[{\"name\":\"Inventario prepara con receta sintética de servidor\",\"passed\":true},{\"name\":\"Vendedor registra con precio y costo de servidor\",\"passed\":true},{\"name\":\"Reintento devuelve confirmación original\",\"passed\":true},{\"name\":\"Última bolsa rechaza segunda reserva\",\"passed\":true},{\"name\":\"No consultar operación ajena\",\"passed\":true},{\"name\":\"Respuesta de vendedor no incluye costos/diario/utilidades\",\"passed\":true},{"
+    },
+    {
+      "truncated": true,
+      "text": "{\"id\":\"perf5c-bfe674f5-e34f-443e-a91c-48e85a366fd6\",\"kind\":\"PERFORMANCE_5C\",\"environment\":\"TEST_ONLY\",\"passed\":true,\"n\":20,\"meanMs\":264.75,\"p50Ms\":219,\"p95Ms\":489,\"maxMs\":877,\"samples\":[{\"loadMs\":465,\"replayMs\":21,\"reportsMs\":3,\"totalMs\":489,\"revision\":99},{\"loadMs\":209,\"replayMs\":18,\"reportsMs\":1,\"totalMs\":228,\"revision\":99},{\"loadMs\":221,\"replayMs\":19,\"reportsMs\":1,\"totalMs\":241,\"revision\":99},{\"loadMs\":240,\"replayMs\":16,\"reportsMs\":0,\"totalMs\":256,\"revision\":99},{\"loadMs\":200,\"replayMs\":18,\"reportsMs\":1,"
+    }
+  ],
+  "backupFailure": "Blob sin contentType al descomprimir; corregido pasando application/gzip. No se borraron las filas del intento."
+}

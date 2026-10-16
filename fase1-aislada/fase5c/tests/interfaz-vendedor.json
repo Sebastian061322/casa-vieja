@@ -1,0 +1,26 @@
+{
+  "environment": "LOCAL_SYNTHETIC_NO_GOOGLE_LOGIN",
+  "tests": [
+    {
+      "name": "Vendedor no recibe navegación financiera",
+      "passed": true
+    },
+    {
+      "name": "Reintento conserva una operación",
+      "passed": true
+    },
+    {
+      "name": "Recarga offline conserva ID y borrador",
+      "passed": true
+    },
+    {
+      "name": "Reconexión recupera confirmación original",
+      "passed": true
+    },
+    {
+      "name": "Cancelación propia confirmada",
+      "passed": true
+    }
+  ],
+  "operationId": "72135a41-3cc0-49af-8d7a-7014a9b19f1d"
+}

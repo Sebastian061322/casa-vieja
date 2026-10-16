@@ -1,0 +1,199 @@
+{
+  "environment": "TEST_ONLY",
+  "release": "ca73588111c3d04101d3aad1facff5b1d06ffaacc915631c054e96405b5789b0",
+  "baseCommit": "c013be7c37b682bf7b1901f1d2835df5713e9cef",
+  "files": [
+    {
+      "path": "fase2/apps-script/Server.gs",
+      "sha256": "e7a28055fba473e6792d78919a980d00e4a04d054a80453c3fce89b71c149f5e"
+    },
+    {
+      "path": "fase2/build.cjs",
+      "sha256": "49d12f493c61154ba6fb73821848551805a22b7f4a573d60353ef6e352d048af"
+    },
+    {
+      "path": "fase2/client.js",
+      "sha256": "60bedb147b7be4c5666cefec372f0fac557c0e94633854e623f06739b067cd52"
+    },
+    {
+      "path": "fase2/transactions.js",
+      "sha256": "ab1bb58b30e364cbcffdb044243a3dd4dc36c5117ffbfdcd45b5f971938247ef"
+    },
+    {
+      "path": "fase2/web/app.js",
+      "sha256": "4da1ce6af191619aa1be7c633f1c333085600e5edbacf3c1e6a77d865010938f"
+    },
+    {
+      "path": "fase2/web/shell.html",
+      "sha256": "4ab33e8aae1aac0eb09790eb7897384982ea68154fed3cb72a77ca3d5382bc4a"
+    },
+    {
+      "path": "fase2/web/verification.js",
+      "sha256": "34c4a51daa2f48126e4906acc36b6452f66950a48165e92e49490ec60ee9adf0"
+    },
+    {
+      "path": "fase3/apps-script/Server.gs",
+      "sha256": "6136bf3874151d7c43b606a54c58d977087e827887e1aaeae538212a7d626aef"
+    },
+    {
+      "path": "fase3/build.cjs",
+      "sha256": "bee71b4316f94b7bf17a1239b8e4a4c1936e6b4bba17e39f18f4754a82f2c9f7"
+    },
+    {
+      "path": "fase3/inventory.js",
+      "sha256": "626180bfb1da1bdbcfead62cbe038ff38f0457cae89f863f06c6d7b24e6f4d42"
+    },
+    {
+      "path": "fase3/journal.js",
+      "sha256": "407e063a02df47c943895ec4f4cb96f99e64f112e49ed25ffa1fbd655b23c05b"
+    },
+    {
+      "path": "fase3/scenario.js",
+      "sha256": "34c246c98c4a2c575d60480d7de6f2c794ddc4a05e0770bb330a3db1eaac405e"
+    },
+    {
+      "path": "fase3/web/app.js",
+      "sha256": "41cee9fe2bec72304188dbb5e8521079040c72d7ec32909e528d4544de19bfa6"
+    },
+    {
+      "path": "fase3/web/shell.html",
+      "sha256": "c0b65250a8f383c30d080335263c672a69a12d310baaa8d8f022781ca7c86b71"
+    },
+    {
+      "path": "fase4/apps-script/Server.gs",
+      "sha256": "1a97ce79cc1696db0d41920e4bd311db1047f75bc340e7e351bbacc4da2d314a"
+    },
+    {
+      "path": "fase4/build.cjs",
+      "sha256": "291761f0163cd2aaa4b792eb4ad93eeb2b46a8e99958668bd5f04a23910bfa73"
+    },
+    {
+      "path": "fase4/commercial.js",
+      "sha256": "2da1c338eda4c72beec16c3b806df93a2ca4603cd721b2b2946b68e8f288b8d6"
+    },
+    {
+      "path": "fase4/scenario.js",
+      "sha256": "1b2e256e03dbe6c20dc4e3243dee60c2042b863f796d91eb9e29dff37a821b13"
+    },
+    {
+      "path": "fase4/web/app.js",
+      "sha256": "75442fb6dbcda36f76faa43ac5151fb6ce821a65d498dba604866e98d2e21258"
+    },
+    {
+      "path": "fase4/web/shell.html",
+      "sha256": "a15fa004f32e608096c1d7fedcefd91f4a02c4872dcc1ea8468e5821e69a92b5"
+    },
+    {
+      "path": "fase5a/build.cjs",
+      "sha256": "bf0bdbe1eb9793fcac802e6292ad18588fa156df66e8e98564fb22cb9d7a49dc"
+    },
+    {
+      "path": "fase5a/refinamiento-5a2/components.js",
+      "sha256": "d812c427245572e1c0f47f1ec83f9b7eb2e6c90b2065f1ea6faf820ce8d10d9a"
+    },
+    {
+      "path": "fase5a/refinamiento-5a2/refinement.css",
+      "sha256": "0cbbdc7131e9617df0fb125e99c2879cefd8981a32e73965c96746693ccd7c82"
+    },
+    {
+      "path": "fase5a/refinamiento-5a2/refinement.js",
+      "sha256": "e9dd3ec466966cdc57657f08c1b7d8f0975acb785c5a8cb4d6e631156bc5d7dd"
+    },
+    {
+      "path": "fase5a/web/app.js",
+      "sha256": "2cd8fb635fdd45087746f0b326365cd2e695b64e643b3719036d770a84f28c21"
+    },
+    {
+      "path": "fase5a/web/shell.html",
+      "sha256": "176e5e893ac43bd409051344446ffc32dc5703fde0c1c1bef77ab889a2d9bc11"
+    },
+    {
+      "path": "fase5a/web/ux.css",
+      "sha256": "706dd507a2febd0cc412459185322b9c0e5b558bdbb713ba9cf2a7496eddd679"
+    },
+    {
+      "path": "fase5a/web/ux.js",
+      "sha256": "84d129e8c16b9b316d7ee2466fdc21621af82426cf96c27076136c45e0840d41"
+    },
+    {
+      "path": "fase5b/apps-script/Benchmark.gs",
+      "sha256": "a239a317a0e59767a71b120558c8598db63ccdcf8bf3ecfa950d45e267111740"
+    },
+    {
+      "path": "fase5b/apps-script/ReadApi.gs",
+      "sha256": "58db6eb9b7ee079ef23ceefb25c3182ecd140ecfb9c745098030a164086a1851"
+    },
+    {
+      "path": "fase5b/backup.cjs",
+      "sha256": "958383971770f4800811ef7f08136c9463993aaede6c7cb0136036d8ff031d66"
+    },
+    {
+      "path": "fase5b/build.cjs",
+      "sha256": "08a48bfa3db4c04f1b4adb41882fb974e0423712a97d53ca900cac5184ec3135"
+    },
+    {
+      "path": "fase5c/access.js",
+      "sha256": "76dd5684b0bd9c5024bce9f9e442153458e9bc4cc4dd1a2b7005ed58dedb6cf2"
+    },
+    {
+      "path": "fase5c/apps-script/Gateway.gs",
+      "sha256": "3fb5a83c3a9169b1e7cef9c7a1075eecddeee44e0696022182f5afff1df37ed1"
+    },
+    {
+      "path": "fase5c/apps-script/Laboratory.gs",
+      "sha256": "52f5a3ee0f06785572b73c68ee3f60aea05e1efbdafdcadb354fea2a56c55dbe"
+    },
+    {
+      "path": "fase5c/apps-script/Race.gs",
+      "sha256": "57fddad774592c18031b9c26f220e0cf42292aa4cdc38df6bd185577f6470d57"
+    },
+    {
+      "path": "fase5c/apps-script/appsscript.candidate.json",
+      "sha256": "26223f35278806b2a9031a7fbacfaf7a8a8209a18977d6bbb43f6fda623a731f"
+    },
+    {
+      "path": "fase5c/backup.cjs",
+      "sha256": "e19aa26b71d8279313aa9e030f0cd15f6250863603a86c2c17fbfa71ec5cc859"
+    },
+    {
+      "path": "fase5c/broker.cjs",
+      "sha256": "fbfeda47f31d0def881c9ff09ba3d574acd817da2a170a6f946385352ac78696"
+    },
+    {
+      "path": "fase5c/build.cjs",
+      "sha256": "910bfc8f7581f526381b148811876b72695947b469c68556333c34b912f2fbe7"
+    },
+    {
+      "path": "fase5c/continuity.js",
+      "sha256": "59e101c556a88190f86d7648b14fbc6b17c773d4857e111eae871caad5cf0063"
+    },
+    {
+      "path": "fase5c/web/admin-dashboard.js",
+      "sha256": "7240b5181ee78ac17d71defa89d771e7ba920e52ed4fbe0002432801422f2e29"
+    },
+    {
+      "path": "fase5c/web/guard.js",
+      "sha256": "a2c29bb39b1be05e0f4074020a309550fd085d3cfb959cb1fd2ff29efb6dfae2"
+    },
+    {
+      "path": "fase5c/web/probe.html",
+      "sha256": "48b81454babaf740a504bfd4aabab74d6bcff2068a40900fc30391039b545a51"
+    },
+    {
+      "path": "fase5c/web/role-ui.js",
+      "sha256": "19973f405cf2f8d0647f87906239bfc8406ad4fc43c430c1e7f534620b4f98ae"
+    },
+    {
+      "path": "fase5c/web/session.js",
+      "sha256": "68087ea628f72143d92b1ccbb59dc3f7e51919c592c849f32c8650c04fa5d216"
+    }
+  ],
+  "exposed": [
+    "secureRequest",
+    "ownerRequest",
+    "doPost",
+    "doGet"
+  ],
+  "externalAuthenticationEnabled": false,
+  "productionEnabled": false
+}

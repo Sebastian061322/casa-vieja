@@ -1,0 +1,3625 @@
+{
+  "scope": "LAB_BROWSER_EXPORTS_ONLY_OTHER_DEVICES_UNATTESTED",
+  "origins": [
+    "http://127.0.0.1:8797",
+    "http://127.0.0.1:8798"
+  ],
+  "states": [
+    {
+      "name": "cv-commercial-sandbox-v5c-google:222222",
+      "origin": "http://127.0.0.1:8797",
+      "data": {
+        "generation": 20,
+        "queue": [],
+        "archived": [],
+        "receipts": {
+          "d06f3556-9edb-41e5-bfa2-fa38d06624b3": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "d06f3556-9edb-41e5-bfa2-fa38d06624b3",
+            "state": "COMMITTED",
+            "revision": 34,
+            "saleId": "future:5db1e117-9b7b-43a5-ac69-23b8f1b729ea",
+            "saleVersion": 1
+          },
+          "72135a41-3cc0-49af-8d7a-7014a9b19f1d": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "72135a41-3cc0-49af-8d7a-7014a9b19f1d",
+            "state": "COMMITTED",
+            "revision": 35,
+            "saleId": "future:bf57caf2-6b2a-48bd-a153-7ac5490cac98",
+            "saleVersion": 1
+          },
+          "aabcfd74-30cd-4a01-82f3-33f2877b9146": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "aabcfd74-30cd-4a01-82f3-33f2877b9146",
+            "state": "COMMITTED",
+            "revision": 36,
+            "saleId": "future:bf57caf2-6b2a-48bd-a153-7ac5490cac98",
+            "saleVersion": 2
+          },
+          "fcc42886-9a12-4e4e-96f9-18fa585080df": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "fcc42886-9a12-4e4e-96f9-18fa585080df",
+            "state": "COMMITTED",
+            "revision": 37,
+            "saleId": "future:5db1e117-9b7b-43a5-ac69-23b8f1b729ea",
+            "saleVersion": 2
+          }
+        },
+        "snapshot": {
+          "epoch": "TEST_ONLY_V3",
+          "revision": 38,
+          "profile": "sales",
+          "resources": [
+            {
+              "id": "demo:c4-local-test-id-molido500",
+              "product": "Gourmet molido 500g",
+              "lot": "demo:c4-local-test-id-lot",
+              "stage": "PACKAGED",
+              "family": "Gourmet",
+              "grind": "molido",
+              "grams": 500,
+              "unit": "unit",
+              "physical": 6,
+              "reserved": 0,
+              "qty": 6
+            },
+            {
+              "id": "demo:c4-local-test-id-grano250",
+              "product": "Gourmet grano 250g",
+              "lot": "demo:c4-local-test-id-lot",
+              "stage": "PACKAGED",
+              "family": "Gourmet",
+              "grind": "grano",
+              "grams": 250,
+              "unit": "unit",
+              "physical": 8,
+              "reserved": 0,
+              "qty": 8
+            },
+            {
+              "id": "demo:c4-local-test-id-last-bag",
+              "product": "Gourmet molido 500g",
+              "lot": "demo:c4-local-test-id-lot",
+              "stage": "PACKAGED",
+              "family": "Gourmet",
+              "grind": "molido",
+              "grams": 500,
+              "unit": "unit",
+              "physical": 1,
+              "reserved": 0,
+              "qty": 1
+            },
+            {
+              "id": "demo:172ef896-c08d-4a0b-8aaf-3852a55870c8",
+              "product": "Gourmet molido 500g",
+              "lot": "demo:c4-local-test-id-lot",
+              "stage": "PACKAGED",
+              "family": "Gourmet",
+              "grind": "molido",
+              "grams": 500,
+              "unit": "unit",
+              "physical": 1,
+              "reserved": 0,
+              "qty": 1
+            }
+          ],
+          "sales": [
+            {
+              "id": "future:5db1e117-9b7b-43a5-ac69-23b8f1b729ea",
+              "version": 2,
+              "status": "CANCELLED",
+              "totalCents": 3500,
+              "deliveryChargedCents": 0,
+              "metadata": {
+                "customer": "DEMO rol 5C persistencia",
+                "phone": "",
+                "zone": "Zona ficticia",
+                "note": "",
+                "date": "2026-10-16"
+              },
+              "lines": [
+                {
+                  "resourceId": "demo:c4-local-test-id-molido500",
+                  "qty": 1,
+                  "lot": "demo:c4-local-test-id-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "returned": 0
+                }
+              ]
+            },
+            {
+              "id": "future:bf57caf2-6b2a-48bd-a153-7ac5490cac98",
+              "version": 2,
+              "status": "CANCELLED",
+              "totalCents": 3500,
+              "deliveryChargedCents": 0,
+              "metadata": {
+                "customer": "DEMO 5C offline final",
+                "phone": "",
+                "zone": "Zona ficticia",
+                "note": "",
+                "date": "2026-10-16"
+              },
+              "lines": [
+                {
+                  "resourceId": "demo:c4-local-test-id-molido500",
+                  "qty": 1,
+                  "lot": "demo:c4-local-test-id-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "returned": 0
+                }
+              ]
+            }
+          ],
+          "offers": [
+            {
+              "id": "demo:c4-local-test-id-single",
+              "name": "Oferta ficticia single",
+              "family": "Gourmet",
+              "grind": "molido",
+              "grams": 500,
+              "bags": 1,
+              "priceCents": 3500,
+              "validFrom": "2026-10-16",
+              "validUntil": "2099-12-31",
+              "version": 2
+            },
+            {
+              "id": "demo:c4-local-test-id-tripack",
+              "name": "Oferta ficticia tripack",
+              "family": "Gourmet",
+              "grind": "molido",
+              "grams": 500,
+              "bags": 3,
+              "priceCents": 9900,
+              "validFrom": "2026-10-16",
+              "validUntil": "2099-12-31",
+              "version": 1
+            },
+            {
+              "id": "demo:c4-local-test-id-grain",
+              "name": "Oferta ficticia grain",
+              "family": "Gourmet",
+              "grind": "grano",
+              "grams": 250,
+              "bags": 1,
+              "priceCents": 2500,
+              "validFrom": "2026-10-16",
+              "validUntil": "2099-12-31",
+              "version": 1
+            }
+          ],
+          "next": null
+        },
+        "deviceId": "20d75c20-da67-484c-b6b0-f2f09a3584aa",
+        "subject": "google:222222",
+        "profile": "sales",
+        "roleDraft5c": {
+          "Ventas": {
+            "saleId": "future:b82162fd-2d5f-4f65-a029-65c3074f2470",
+            "outputResourceId": "demo:8a86daab-6c53-4333-9375-42572bc79541",
+            "values": {}
+          }
+        }
+      }
+    },
+    {
+      "name": "cv-commercial-sandbox-v5c-google:444444",
+      "origin": "http://127.0.0.1:8797",
+      "data": {
+        "generation": 5,
+        "queue": [],
+        "archived": [],
+        "receipts": {
+          "dab1f213-a771-49e1-aac4-e8607980fb89": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "dab1f213-a771-49e1-aac4-e8607980fb89",
+            "state": "COMMITTED",
+            "revision": 38,
+            "saleId": "future:a0d0b508-d6fa-4ff3-a2cd-30102b216ead",
+            "saleVersion": 1
+          }
+        },
+        "snapshot": {
+          "epoch": "TEST_ONLY_V3",
+          "revision": 38,
+          "profile": "inventory",
+          "resources": [
+            {
+              "id": "demo:c4-local-test-id-parchment",
+              "product": "pergamino",
+              "lot": "demo:c4-local-test-id-lot",
+              "stage": "PARCHMENT",
+              "family": "Gourmet",
+              "unit": "g",
+              "physical": 0,
+              "reserved": 0,
+              "qty": 0
+            },
+            {
+              "id": "demo:c4-local-test-id-special-parchment",
+              "product": "pergamino",
+              "lot": "demo:c4-local-test-id-special",
+              "stage": "PARCHMENT",
+              "family": "Especialidad",
+              "unit": "g",
+              "physical": 1000,
+              "reserved": 0,
+              "qty": 1000
+            },
+            {
+              "id": "demo:c4-local-test-id-bag250",
+              "product": "BAG250",
+              "lot": "demo:c4-local-test-id-supplies",
+              "stage": "SUPPLY",
+              "unit": "unit",
+              "physical": 22,
+              "reserved": 0,
+              "qty": 22,
+              "supplyKind": "BAG250"
+            },
+            {
+              "id": "demo:c4-local-test-id-bag500",
+              "product": "BAG500",
+              "lot": "demo:c4-local-test-id-supplies",
+              "stage": "SUPPLY",
+              "unit": "unit",
+              "physical": 22,
+              "reserved": 0,
+              "qty": 22,
+              "supplyKind": "BAG500"
+            },
+            {
+              "id": "demo:c4-local-test-id-label",
+              "product": "LABEL",
+              "lot": "demo:c4-local-test-id-labels",
+              "stage": "SUPPLY",
+              "unit": "unit",
+              "physical": 44,
+              "reserved": 0,
+              "qty": 44,
+              "supplyKind": "LABEL"
+            },
+            {
+              "id": "demo:c4-local-test-id-bulk",
+              "product": "tostado",
+              "lot": "demo:c4-local-test-id-lot",
+              "stage": "BULK",
+              "family": "Gourmet",
+              "unit": "g",
+              "physical": 1925,
+              "reserved": 0,
+              "qty": 1925
+            },
+            {
+              "id": "demo:c4-local-test-id-molido500",
+              "product": "Gourmet molido 500g",
+              "lot": "demo:c4-local-test-id-lot",
+              "stage": "PACKAGED",
+              "family": "Gourmet",
+              "grind": "molido",
+              "grams": 500,
+              "unit": "unit",
+              "physical": 6,
+              "reserved": 0,
+              "qty": 6
+            },
+            {
+              "id": "demo:c4-local-test-id-grano250",
+              "product": "Gourmet grano 250g",
+              "lot": "demo:c4-local-test-id-lot",
+              "stage": "PACKAGED",
+              "family": "Gourmet",
+              "grind": "grano",
+              "grams": 250,
+              "unit": "unit",
+              "physical": 8,
+              "reserved": 0,
+              "qty": 8
+            },
+            {
+              "id": "demo:c4-local-test-id-last-bag",
+              "product": "Gourmet molido 500g",
+              "lot": "demo:c4-local-test-id-lot",
+              "stage": "PACKAGED",
+              "family": "Gourmet",
+              "grind": "molido",
+              "grams": 500,
+              "unit": "unit",
+              "physical": 1,
+              "reserved": 0,
+              "qty": 1
+            },
+            {
+              "id": "demo:172ef896-c08d-4a0b-8aaf-3852a55870c8",
+              "product": "Gourmet molido 500g",
+              "lot": "demo:c4-local-test-id-lot",
+              "stage": "PACKAGED",
+              "family": "Gourmet",
+              "grind": "molido",
+              "grams": 500,
+              "unit": "unit",
+              "physical": 1,
+              "reserved": 0,
+              "qty": 1
+            }
+          ],
+          "sales": [],
+          "offers": [],
+          "next": null
+        },
+        "deviceId": "25949662-47fb-4779-a1de-e26f17cb1157",
+        "subject": "google:444444",
+        "profile": "inventory",
+        "roleDraft5c": {}
+      }
+    },
+    {
+      "name": "cv-commercial-sandbox-v5a-owner",
+      "origin": "http://127.0.0.1:8798",
+      "data": {
+        "generation": 41,
+        "queue": [],
+        "archived": [],
+        "receipts": {
+          "b922ecb8-de81-4680-9bfc-4c3bacf466b7": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "b922ecb8-de81-4680-9bfc-4c3bacf466b7",
+            "state": "COMMITTED",
+            "revision": 34,
+            "saleId": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+            "saleVersion": 1
+          },
+          "b3af3647-50f2-4b4a-b6c7-1c5dbaa9c925": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "b3af3647-50f2-4b4a-b6c7-1c5dbaa9c925",
+            "state": "COMMITTED",
+            "revision": 35,
+            "saleId": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+            "saleVersion": 2
+          },
+          "720fbcdf-5c63-4932-b860-8f6745cf12f0": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "720fbcdf-5c63-4932-b860-8f6745cf12f0",
+            "state": "COMMITTED",
+            "revision": 36,
+            "saleId": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+            "saleVersion": 1
+          },
+          "c72bca0f-b8b7-4a49-91be-edb5b5bcb5e3": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "c72bca0f-b8b7-4a49-91be-edb5b5bcb5e3",
+            "state": "COMMITTED",
+            "revision": 37,
+            "saleId": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+            "saleVersion": 2
+          },
+          "6612c510-7286-4100-baf4-ec81addac311": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "6612c510-7286-4100-baf4-ec81addac311",
+            "state": "COMMITTED",
+            "revision": 38,
+            "saleId": "future:76709b91-2400-477a-b505-a044ec065444",
+            "saleVersion": 1
+          },
+          "fb08fbf5-a6a7-4500-8062-1f5f3e8bac56": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "fb08fbf5-a6a7-4500-8062-1f5f3e8bac56",
+            "state": "COMMITTED",
+            "revision": 39,
+            "saleId": "future:76709b91-2400-477a-b505-a044ec065444",
+            "saleVersion": 2
+          },
+          "6a846f33-4334-454a-9151-9d47f04174b4": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "6a846f33-4334-454a-9151-9d47f04174b4",
+            "state": "COMMITTED",
+            "revision": 40,
+            "saleId": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+            "saleVersion": 1
+          },
+          "43cfea35-8564-4248-9b2f-44339087d1ce": {
+            "epoch": "TEST_ONLY_V3",
+            "operationId": "43cfea35-8564-4248-9b2f-44339087d1ce",
+            "state": "COMMITTED",
+            "revision": 41,
+            "saleId": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+            "saleVersion": 2
+          }
+        },
+        "snapshot": {
+          "epoch": "TEST_ONLY_V3",
+          "revision": 41,
+          "resources": {
+            "demo:c4-local-test-id-parchment": {
+              "id": "demo:c4-local-test-id-parchment",
+              "physical": 0,
+              "reserved": 0,
+              "valueCents": 0,
+              "reservedValueCents": 0,
+              "qty": 0,
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "pergamino",
+              "stage": "PARCHMENT",
+              "family": "Gourmet",
+              "unit": "g"
+            },
+            "demo:c4-local-test-id-special-parchment": {
+              "id": "demo:c4-local-test-id-special-parchment",
+              "physical": 1000,
+              "reserved": 0,
+              "valueCents": 4000,
+              "reservedValueCents": 0,
+              "qty": 1000,
+              "lot": "demo:c4-local-test-id-special",
+              "product": "pergamino",
+              "stage": "PARCHMENT",
+              "family": "Especialidad",
+              "unit": "g"
+            },
+            "demo:c4-local-test-id-bag250": {
+              "id": "demo:c4-local-test-id-bag250",
+              "physical": 22,
+              "reserved": 0,
+              "valueCents": 2200,
+              "reservedValueCents": 0,
+              "qty": 22,
+              "lot": "demo:c4-local-test-id-supplies",
+              "product": "BAG250",
+              "stage": "SUPPLY",
+              "unit": "unit",
+              "supplyKind": "BAG250"
+            },
+            "demo:c4-local-test-id-bag500": {
+              "id": "demo:c4-local-test-id-bag500",
+              "physical": 23,
+              "reserved": 0,
+              "valueCents": 2300,
+              "reservedValueCents": 0,
+              "qty": 23,
+              "lot": "demo:c4-local-test-id-supplies",
+              "product": "BAG500",
+              "stage": "SUPPLY",
+              "unit": "unit",
+              "supplyKind": "BAG500"
+            },
+            "demo:c4-local-test-id-label": {
+              "id": "demo:c4-local-test-id-label",
+              "physical": 45,
+              "reserved": 0,
+              "valueCents": 450,
+              "reservedValueCents": 0,
+              "qty": 45,
+              "lot": "demo:c4-local-test-id-labels",
+              "product": "LABEL",
+              "stage": "SUPPLY",
+              "unit": "unit",
+              "supplyKind": "LABEL"
+            },
+            "demo:c4-local-test-id-bulk": {
+              "id": "demo:c4-local-test-id-bulk",
+              "physical": 2425,
+              "reserved": 0,
+              "valueCents": 7275,
+              "reservedValueCents": 0,
+              "qty": 2425,
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "tostado",
+              "stage": "BULK",
+              "unit": "g",
+              "family": "Gourmet"
+            },
+            "demo:c4-local-test-id-molido500": {
+              "id": "demo:c4-local-test-id-molido500",
+              "physical": 6,
+              "reserved": 0,
+              "valueCents": 10410,
+              "reservedValueCents": 0,
+              "qty": 6,
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "stage": "PACKAGED",
+              "unit": "unit",
+              "family": "Gourmet",
+              "grind": "molido",
+              "grams": 500,
+              "preparedBy": "Responsable ficticio"
+            },
+            "demo:c4-local-test-id-grano250": {
+              "id": "demo:c4-local-test-id-grano250",
+              "physical": 8,
+              "reserved": 0,
+              "valueCents": 7355,
+              "reservedValueCents": 0,
+              "qty": 8,
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet grano 250g",
+              "stage": "PACKAGED",
+              "unit": "unit",
+              "family": "Gourmet",
+              "grind": "grano",
+              "grams": 250,
+              "preparedBy": "Responsable ficticio"
+            },
+            "demo:c4-local-test-id-last-bag": {
+              "id": "demo:c4-local-test-id-last-bag",
+              "physical": 1,
+              "reserved": 0,
+              "valueCents": 1610,
+              "reservedValueCents": 0,
+              "qty": 1,
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "stage": "PACKAGED",
+              "unit": "unit",
+              "family": "Gourmet",
+              "grind": "molido",
+              "grams": 500,
+              "preparedBy": "Responsable ficticio"
+            }
+          },
+          "lots": {
+            "demo:c4-local-test-id-lot": {
+              "id": "demo:c4-local-test-id-lot",
+              "origin": "Origen sintético",
+              "coffeeType": "Typica demo",
+              "family": "Gourmet",
+              "receivedGrams": 10000,
+              "acquisitionCents": 20000,
+              "processingCents": 1000,
+              "date": "2026-10-16T11:00:22.558Z",
+              "operationId": "c4-local-test-id-inventory-0",
+              "name": "demo:c4-local-test-id-lot",
+              "producer": "",
+              "freightCents": 0
+            },
+            "demo:c4-local-test-id-special": {
+              "id": "demo:c4-local-test-id-special",
+              "origin": "Otro origen ficticio",
+              "coffeeType": "Caturra demo",
+              "family": "Especialidad",
+              "receivedGrams": 1000,
+              "acquisitionCents": 4000,
+              "processingCents": 0,
+              "date": "2026-10-16T11:00:22.558Z",
+              "operationId": "c4-local-test-id-inventory-1",
+              "name": "demo:c4-local-test-id-special",
+              "producer": "",
+              "freightCents": 0
+            }
+          },
+          "sales": {
+            "future:c4-local-test-id-simple": {
+              "id": "future:c4-local-test-id-simple",
+              "entityType": "sale",
+              "version": 7,
+              "status": "RETURNED",
+              "lines": [
+                {
+                  "resourceId": "demo:c4-local-test-id-molido500",
+                  "qty": 1,
+                  "lot": "demo:c4-local-test-id-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "totalCostCents": 1735,
+                  "returned": 1,
+                  "returnedCostCents": 1735
+                }
+              ],
+              "totalCents": 3400,
+              "costCents": 1735,
+              "profitCents": 1865,
+              "deliveryCostCents": 500,
+              "deliveryChargedCents": 700,
+              "metadata": {
+                "customer": "Cliente ficticio editado",
+                "phone": "999000111",
+                "zone": "Zona sintética",
+                "note": "Ensayo comercial",
+                "date": "2026-10-16"
+              },
+              "originOperationId": "c4-local-test-id-c5",
+              "commercial": {
+                "version": 4,
+                "channel": "WhatsApp",
+                "grossCents": 3500,
+                "discountCents": 100,
+                "authorizationId": "demo:c4-local-test-id-discount",
+                "items": [
+                  {
+                    "offer": {
+                      "id": "demo:c4-local-test-id-single",
+                      "name": "Oferta ficticia single",
+                      "family": "Gourmet",
+                      "grind": "molido",
+                      "grams": 500,
+                      "bags": 1,
+                      "priceCents": 3500,
+                      "validFrom": "2026-10-16",
+                      "validUntil": "2099-12-31",
+                      "active": true,
+                      "version": 1,
+                      "synthetic": true
+                    },
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "presentations": 1,
+                    "qty": 1,
+                    "grossCents": 3500
+                  }
+                ],
+                "allocations": [
+                  {
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "qty": 1,
+                    "grossCents": 3500,
+                    "netCents": 3400
+                  }
+                ],
+                "createdAt": "2026-10-16T11:00:22.572Z"
+              },
+              "paid": true,
+              "delivered": true,
+              "financial": {
+                "dueCents": 700,
+                "paidCents": 4100,
+                "refundedCents": 3400,
+                "cashCents": 700,
+                "outstandingCents": 0,
+                "refundableCents": 0
+              }
+            },
+            "future:c4-local-test-id-pack": {
+              "id": "future:c4-local-test-id-pack",
+              "entityType": "sale",
+              "version": 2,
+              "status": "CANCELLED",
+              "lines": [
+                {
+                  "resourceId": "demo:c4-local-test-id-molido500",
+                  "qty": 3,
+                  "lot": "demo:c4-local-test-id-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "totalCostCents": 5205,
+                  "returned": 0,
+                  "returnedCostCents": 0
+                }
+              ],
+              "totalCents": 9900,
+              "costCents": 5205,
+              "profitCents": 4695,
+              "deliveryCostCents": 0,
+              "deliveryChargedCents": 0,
+              "metadata": {
+                "customer": "Cliente ficticio B",
+                "phone": "",
+                "zone": "",
+                "note": "",
+                "date": "2026-10-16"
+              },
+              "originOperationId": "c4-local-test-id-c12",
+              "commercial": {
+                "version": 4,
+                "channel": "Referido",
+                "grossCents": 9900,
+                "discountCents": 0,
+                "authorizationId": null,
+                "items": [
+                  {
+                    "offer": {
+                      "id": "demo:c4-local-test-id-tripack",
+                      "name": "Oferta ficticia tripack",
+                      "family": "Gourmet",
+                      "grind": "molido",
+                      "grams": 500,
+                      "bags": 3,
+                      "priceCents": 9900,
+                      "validFrom": "2026-10-16",
+                      "validUntil": "2099-12-31",
+                      "active": true,
+                      "version": 1,
+                      "synthetic": true
+                    },
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "presentations": 1,
+                    "qty": 3,
+                    "grossCents": 9900
+                  }
+                ],
+                "allocations": [
+                  {
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "qty": 3,
+                    "grossCents": 9900,
+                    "netCents": 9900
+                  }
+                ],
+                "createdAt": "2026-10-16T11:00:22.584Z"
+              },
+              "cancelReason": "Cancelación ficticia",
+              "financial": {
+                "dueCents": 0,
+                "paidCents": 0,
+                "refundedCents": 0,
+                "cashCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0
+              }
+            },
+            "future:c4-local-test-id-combo": {
+              "id": "future:c4-local-test-id-combo",
+              "entityType": "sale",
+              "version": 7,
+              "status": "RETURNED",
+              "lines": [
+                {
+                  "resourceId": "demo:c4-local-test-id-molido500",
+                  "qty": 3,
+                  "lot": "demo:c4-local-test-id-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "totalCostCents": 5205,
+                  "returned": 3,
+                  "returnedCostCents": 5205
+                },
+                {
+                  "resourceId": "demo:c4-local-test-id-grano250",
+                  "qty": 2,
+                  "lot": "demo:c4-local-test-id-lot",
+                  "family": "Gourmet",
+                  "grind": "grano",
+                  "grams": 250,
+                  "totalCostCents": 1838,
+                  "returned": 2,
+                  "returnedCostCents": 1838
+                }
+              ],
+              "totalCents": 14900,
+              "costCents": 7043,
+              "profitCents": 7857,
+              "deliveryCostCents": 0,
+              "deliveryChargedCents": 0,
+              "metadata": {
+                "customer": "Cliente ficticio A",
+                "phone": "999000111",
+                "zone": "",
+                "note": "",
+                "date": "2026-10-16"
+              },
+              "originOperationId": "c4-local-test-id-c14",
+              "commercial": {
+                "version": 4,
+                "channel": "Meta Ads (manual)",
+                "grossCents": 14900,
+                "discountCents": 0,
+                "authorizationId": null,
+                "items": [
+                  {
+                    "offer": {
+                      "id": "demo:c4-local-test-id-tripack",
+                      "name": "Oferta ficticia tripack",
+                      "family": "Gourmet",
+                      "grind": "molido",
+                      "grams": 500,
+                      "bags": 3,
+                      "priceCents": 9900,
+                      "validFrom": "2026-10-16",
+                      "validUntil": "2099-12-31",
+                      "active": true,
+                      "version": 1,
+                      "synthetic": true
+                    },
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "presentations": 1,
+                    "qty": 3,
+                    "grossCents": 9900
+                  },
+                  {
+                    "offer": {
+                      "id": "demo:c4-local-test-id-grain",
+                      "name": "Oferta ficticia grain",
+                      "family": "Gourmet",
+                      "grind": "grano",
+                      "grams": 250,
+                      "bags": 1,
+                      "priceCents": 2500,
+                      "validFrom": "2026-10-16",
+                      "validUntil": "2099-12-31",
+                      "active": true,
+                      "version": 1,
+                      "synthetic": true
+                    },
+                    "resourceId": "demo:c4-local-test-id-grano250",
+                    "presentations": 2,
+                    "qty": 2,
+                    "grossCents": 5000
+                  }
+                ],
+                "allocations": [
+                  {
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "qty": 3,
+                    "grossCents": 9900,
+                    "netCents": 9900
+                  },
+                  {
+                    "resourceId": "demo:c4-local-test-id-grano250",
+                    "qty": 2,
+                    "grossCents": 5000,
+                    "netCents": 5000
+                  }
+                ],
+                "createdAt": "2026-10-16T11:00:22.588Z"
+              },
+              "paid": true,
+              "financial": {
+                "dueCents": 0,
+                "paidCents": 14900,
+                "refundedCents": 14900,
+                "cashCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0
+              }
+            },
+            "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa": {
+              "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+              "entityType": "sale",
+              "version": 2,
+              "status": "CANCELLED",
+              "lines": [
+                {
+                  "resourceId": "demo:c4-local-test-id-molido500",
+                  "qty": 1,
+                  "lot": "demo:c4-local-test-id-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "totalCostCents": 1735,
+                  "returned": 0,
+                  "returnedCostCents": 0
+                }
+              ],
+              "totalCents": 3500,
+              "costCents": 1735,
+              "profitCents": 1765,
+              "deliveryCostCents": 0,
+              "deliveryChargedCents": 0,
+              "metadata": {
+                "customer": "DEMO suite simple mvauwytk",
+                "phone": "",
+                "zone": "",
+                "note": "",
+                "date": "2026-10-16"
+              },
+              "originOperationId": "b922ecb8-de81-4680-9bfc-4c3bacf466b7",
+              "commercial": {
+                "version": 4,
+                "channel": "WhatsApp",
+                "grossCents": 3500,
+                "discountCents": 0,
+                "authorizationId": null,
+                "items": [
+                  {
+                    "offer": {
+                      "id": "demo:c4-local-test-id-single",
+                      "name": "Oferta ficticia single",
+                      "family": "Gourmet",
+                      "grind": "molido",
+                      "grams": 500,
+                      "bags": 1,
+                      "priceCents": 3500,
+                      "validFrom": "2026-10-16",
+                      "validUntil": "2099-12-31",
+                      "active": true,
+                      "version": 2,
+                      "synthetic": true
+                    },
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "presentations": 1,
+                    "qty": 1,
+                    "grossCents": 3500
+                  }
+                ],
+                "allocations": [
+                  {
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "qty": 1,
+                    "grossCents": 3500,
+                    "netCents": 3500
+                  }
+                ],
+                "createdAt": "2026-10-16T11:00:55.433Z"
+              },
+              "cancelReason": "Fin del ensayo UI ficticio",
+              "financial": {
+                "dueCents": 0,
+                "paidCents": 0,
+                "refundedCents": 0,
+                "cashCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0
+              }
+            },
+            "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5": {
+              "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+              "entityType": "sale",
+              "version": 2,
+              "status": "CANCELLED",
+              "lines": [
+                {
+                  "resourceId": "demo:c4-local-test-id-molido500",
+                  "qty": 3,
+                  "lot": "demo:c4-local-test-id-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "totalCostCents": 5205,
+                  "returned": 0,
+                  "returnedCostCents": 0
+                }
+              ],
+              "totalCents": 9900,
+              "costCents": 5205,
+              "profitCents": 4695,
+              "deliveryCostCents": 0,
+              "deliveryChargedCents": 0,
+              "metadata": {
+                "customer": "DEMO suite tripack mvauwytk",
+                "phone": "",
+                "zone": "",
+                "note": "",
+                "date": "2026-10-16"
+              },
+              "originOperationId": "720fbcdf-5c63-4932-b860-8f6745cf12f0",
+              "commercial": {
+                "version": 4,
+                "channel": "WhatsApp",
+                "grossCents": 9900,
+                "discountCents": 0,
+                "authorizationId": null,
+                "items": [
+                  {
+                    "offer": {
+                      "id": "demo:c4-local-test-id-tripack",
+                      "name": "Oferta ficticia tripack",
+                      "family": "Gourmet",
+                      "grind": "molido",
+                      "grams": 500,
+                      "bags": 3,
+                      "priceCents": 9900,
+                      "validFrom": "2026-10-16",
+                      "validUntil": "2099-12-31",
+                      "active": true,
+                      "version": 1,
+                      "synthetic": true
+                    },
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "presentations": 1,
+                    "qty": 3,
+                    "grossCents": 9900
+                  }
+                ],
+                "allocations": [
+                  {
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "qty": 3,
+                    "grossCents": 9900,
+                    "netCents": 9900
+                  }
+                ],
+                "createdAt": "2026-10-16T11:00:58.085Z"
+              },
+              "cancelReason": "Fin del ensayo UI ficticio",
+              "financial": {
+                "dueCents": 0,
+                "paidCents": 0,
+                "refundedCents": 0,
+                "cashCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0
+              }
+            },
+            "future:76709b91-2400-477a-b505-a044ec065444": {
+              "id": "future:76709b91-2400-477a-b505-a044ec065444",
+              "entityType": "sale",
+              "version": 2,
+              "status": "CANCELLED",
+              "lines": [
+                {
+                  "resourceId": "demo:c4-local-test-id-molido500",
+                  "qty": 1,
+                  "lot": "demo:c4-local-test-id-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "totalCostCents": 1735,
+                  "returned": 0,
+                  "returnedCostCents": 0
+                },
+                {
+                  "resourceId": "demo:c4-local-test-id-grano250",
+                  "qty": 1,
+                  "lot": "demo:c4-local-test-id-lot",
+                  "family": "Gourmet",
+                  "grind": "grano",
+                  "grams": 250,
+                  "totalCostCents": 919,
+                  "returned": 0,
+                  "returnedCostCents": 0
+                }
+              ],
+              "totalCents": 6000,
+              "costCents": 2654,
+              "profitCents": 3346,
+              "deliveryCostCents": 0,
+              "deliveryChargedCents": 0,
+              "metadata": {
+                "customer": "DEMO suite combo mvauwytk",
+                "phone": "",
+                "zone": "",
+                "note": "",
+                "date": "2026-10-16"
+              },
+              "originOperationId": "6612c510-7286-4100-baf4-ec81addac311",
+              "commercial": {
+                "version": 4,
+                "channel": "WhatsApp",
+                "grossCents": 6000,
+                "discountCents": 0,
+                "authorizationId": null,
+                "items": [
+                  {
+                    "offer": {
+                      "id": "demo:c4-local-test-id-single",
+                      "name": "Oferta ficticia single",
+                      "family": "Gourmet",
+                      "grind": "molido",
+                      "grams": 500,
+                      "bags": 1,
+                      "priceCents": 3500,
+                      "validFrom": "2026-10-16",
+                      "validUntil": "2099-12-31",
+                      "active": true,
+                      "version": 2,
+                      "synthetic": true
+                    },
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "presentations": 1,
+                    "qty": 1,
+                    "grossCents": 3500
+                  },
+                  {
+                    "offer": {
+                      "id": "demo:c4-local-test-id-grain",
+                      "name": "Oferta ficticia grain",
+                      "family": "Gourmet",
+                      "grind": "grano",
+                      "grams": 250,
+                      "bags": 1,
+                      "priceCents": 2500,
+                      "validFrom": "2026-10-16",
+                      "validUntil": "2099-12-31",
+                      "active": true,
+                      "version": 1,
+                      "synthetic": true
+                    },
+                    "resourceId": "demo:c4-local-test-id-grano250",
+                    "presentations": 1,
+                    "qty": 1,
+                    "grossCents": 2500
+                  }
+                ],
+                "allocations": [
+                  {
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "qty": 1,
+                    "grossCents": 3500,
+                    "netCents": 3500
+                  },
+                  {
+                    "resourceId": "demo:c4-local-test-id-grano250",
+                    "qty": 1,
+                    "grossCents": 2500,
+                    "netCents": 2500
+                  }
+                ],
+                "createdAt": "2026-10-16T11:01:00.788Z"
+              },
+              "cancelReason": "Fin del ensayo UI ficticio",
+              "financial": {
+                "dueCents": 0,
+                "paidCents": 0,
+                "refundedCents": 0,
+                "cashCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0
+              }
+            },
+            "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf": {
+              "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+              "entityType": "sale",
+              "version": 2,
+              "status": "CANCELLED",
+              "lines": [
+                {
+                  "resourceId": "demo:c4-local-test-id-molido500",
+                  "qty": 1,
+                  "lot": "demo:c4-local-test-id-lot",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "totalCostCents": 1735,
+                  "returned": 0,
+                  "returnedCostCents": 0
+                }
+              ],
+              "totalCents": 3500,
+              "costCents": 1735,
+              "profitCents": 1765,
+              "deliveryCostCents": 0,
+              "deliveryChargedCents": 0,
+              "metadata": {
+                "customer": "DEMO suite offline mvauwytk",
+                "phone": "",
+                "zone": "",
+                "note": "",
+                "date": "2026-10-16"
+              },
+              "originOperationId": "6a846f33-4334-454a-9151-9d47f04174b4",
+              "commercial": {
+                "version": 4,
+                "channel": "WhatsApp",
+                "grossCents": 3500,
+                "discountCents": 0,
+                "authorizationId": null,
+                "items": [
+                  {
+                    "offer": {
+                      "id": "demo:c4-local-test-id-single",
+                      "name": "Oferta ficticia single",
+                      "family": "Gourmet",
+                      "grind": "molido",
+                      "grams": 500,
+                      "bags": 1,
+                      "priceCents": 3500,
+                      "validFrom": "2026-10-16",
+                      "validUntil": "2099-12-31",
+                      "active": true,
+                      "version": 2,
+                      "synthetic": true
+                    },
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "presentations": 1,
+                    "qty": 1,
+                    "grossCents": 3500
+                  }
+                ],
+                "allocations": [
+                  {
+                    "resourceId": "demo:c4-local-test-id-molido500",
+                    "qty": 1,
+                    "grossCents": 3500,
+                    "netCents": 3500
+                  }
+                ],
+                "createdAt": "2026-10-16T11:01:05.232Z"
+              },
+              "cancelReason": "Fin del ensayo UI ficticio",
+              "financial": {
+                "dueCents": 0,
+                "paidCents": 0,
+                "refundedCents": 0,
+                "cashCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0
+              }
+            }
+          },
+          "effects": [
+            {
+              "id": "c4-local-test-id-inventory-0:0",
+              "operationId": "c4-local-test-id-inventory-0",
+              "saleId": "future:c4-local-test-id-lot",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "pergamino",
+              "unit": "g",
+              "resourceId": "demo:c4-local-test-id-parchment",
+              "kind": "LOT_RECEIPT",
+              "qtyDelta": 10000,
+              "reservedDelta": 0,
+              "valueDelta": 21000,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-1:0",
+              "operationId": "c4-local-test-id-inventory-1",
+              "saleId": "future:c4-local-test-id-special",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-special",
+              "product": "pergamino",
+              "unit": "g",
+              "resourceId": "demo:c4-local-test-id-special-parchment",
+              "kind": "LOT_RECEIPT",
+              "qtyDelta": 1000,
+              "reservedDelta": 0,
+              "valueDelta": 4000,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-2:0",
+              "operationId": "c4-local-test-id-inventory-2",
+              "saleId": "future:c4-local-test-id-bag250",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-supplies",
+              "product": "BAG250",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-bag250",
+              "kind": "SUPPLY_RECEIPT",
+              "qtyDelta": 30,
+              "reservedDelta": 0,
+              "valueDelta": 3000,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-3:0",
+              "operationId": "c4-local-test-id-inventory-3",
+              "saleId": "future:c4-local-test-id-bag500",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-supplies",
+              "product": "BAG500",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-bag500",
+              "kind": "SUPPLY_RECEIPT",
+              "qtyDelta": 30,
+              "reservedDelta": 0,
+              "valueDelta": 3000,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-4:0",
+              "operationId": "c4-local-test-id-inventory-4",
+              "saleId": "future:c4-local-test-id-label",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-labels",
+              "product": "LABEL",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-label",
+              "kind": "SUPPLY_RECEIPT",
+              "qtyDelta": 60,
+              "reservedDelta": 0,
+              "valueDelta": 600,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-5:0",
+              "operationId": "c4-local-test-id-inventory-5",
+              "saleId": "future:c4-local-test-id-roast",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "pergamino",
+              "unit": "g",
+              "resourceId": "demo:c4-local-test-id-parchment",
+              "kind": "ROAST_INPUT",
+              "qtyDelta": -10000,
+              "reservedDelta": 0,
+              "valueDelta": -21000,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-5:1",
+              "operationId": "c4-local-test-id-inventory-5",
+              "saleId": "future:c4-local-test-id-roast",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "tostado",
+              "unit": "g",
+              "resourceId": "demo:c4-local-test-id-bulk",
+              "kind": "ROAST_OUTPUT",
+              "qtyDelta": 8000,
+              "reservedDelta": 0,
+              "valueDelta": 24000,
+              "reservedValueDelta": 0,
+              "processingCents": 3000
+            },
+            {
+              "id": "c4-local-test-id-inventory-5:2",
+              "operationId": "c4-local-test-id-inventory-5",
+              "saleId": "future:c4-local-test-id-roast",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "pergamino",
+              "unit": "g",
+              "resourceId": "demo:c4-local-test-id-parchment",
+              "kind": "PROCESS_WASTE",
+              "qtyDelta": 0,
+              "reservedDelta": 0,
+              "valueDelta": 0,
+              "reservedValueDelta": 0,
+              "wasteGrams": 2000,
+              "fromStage": "PARCHMENT"
+            },
+            {
+              "id": "c4-local-test-id-inventory-6:0",
+              "operationId": "c4-local-test-id-inventory-6",
+              "saleId": "future:c4-local-test-id-prep500",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-supplies",
+              "product": "BAG500",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-bag500",
+              "kind": "PREPARATION_SUPPLY",
+              "qtyDelta": -6,
+              "reservedDelta": 0,
+              "valueDelta": -600,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-6:1",
+              "operationId": "c4-local-test-id-inventory-6",
+              "saleId": "future:c4-local-test-id-prep500",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-labels",
+              "product": "LABEL",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-label",
+              "kind": "PREPARATION_SUPPLY",
+              "qtyDelta": -6,
+              "reservedDelta": 0,
+              "valueDelta": -60,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-6:2",
+              "operationId": "c4-local-test-id-inventory-6",
+              "saleId": "future:c4-local-test-id-prep500",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "tostado",
+              "unit": "g",
+              "resourceId": "demo:c4-local-test-id-bulk",
+              "kind": "PREPARATION_COFFEE",
+              "qtyDelta": -3050,
+              "reservedDelta": 0,
+              "valueDelta": -9150,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-6:3",
+              "operationId": "c4-local-test-id-inventory-6",
+              "saleId": "future:c4-local-test-id-prep500",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "PREPARATION_OUTPUT",
+              "qtyDelta": 6,
+              "reservedDelta": 0,
+              "valueDelta": 10410,
+              "reservedValueDelta": 0,
+              "processingCents": 600
+            },
+            {
+              "id": "c4-local-test-id-inventory-6:4",
+              "operationId": "c4-local-test-id-inventory-6",
+              "saleId": "future:c4-local-test-id-prep500",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "tostado",
+              "unit": "g",
+              "resourceId": "demo:c4-local-test-id-bulk",
+              "kind": "PROCESS_WASTE",
+              "qtyDelta": 0,
+              "reservedDelta": 0,
+              "valueDelta": 0,
+              "reservedValueDelta": 0,
+              "wasteGrams": 50,
+              "fromStage": "BULK"
+            },
+            {
+              "id": "c4-local-test-id-inventory-7:0",
+              "operationId": "c4-local-test-id-inventory-7",
+              "saleId": "future:c4-local-test-id-prep250",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-supplies",
+              "product": "BAG250",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-bag250",
+              "kind": "PREPARATION_SUPPLY",
+              "qtyDelta": -8,
+              "reservedDelta": 0,
+              "valueDelta": -800,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-7:1",
+              "operationId": "c4-local-test-id-inventory-7",
+              "saleId": "future:c4-local-test-id-prep250",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-labels",
+              "product": "LABEL",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-label",
+              "kind": "PREPARATION_SUPPLY",
+              "qtyDelta": -8,
+              "reservedDelta": 0,
+              "valueDelta": -80,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-7:2",
+              "operationId": "c4-local-test-id-inventory-7",
+              "saleId": "future:c4-local-test-id-prep250",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "tostado",
+              "unit": "g",
+              "resourceId": "demo:c4-local-test-id-bulk",
+              "kind": "PREPARATION_COFFEE",
+              "qtyDelta": -2025,
+              "reservedDelta": 0,
+              "valueDelta": -6075,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-inventory-7:3",
+              "operationId": "c4-local-test-id-inventory-7",
+              "saleId": "future:c4-local-test-id-prep250",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet grano 250g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-grano250",
+              "kind": "PREPARATION_OUTPUT",
+              "qtyDelta": 8,
+              "reservedDelta": 0,
+              "valueDelta": 7355,
+              "reservedValueDelta": 0,
+              "processingCents": 400
+            },
+            {
+              "id": "c4-local-test-id-inventory-7:4",
+              "operationId": "c4-local-test-id-inventory-7",
+              "saleId": "future:c4-local-test-id-prep250",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "tostado",
+              "unit": "g",
+              "resourceId": "demo:c4-local-test-id-bulk",
+              "kind": "PROCESS_WASTE",
+              "qtyDelta": 0,
+              "reservedDelta": 0,
+              "valueDelta": 0,
+              "reservedValueDelta": 0,
+              "wasteGrams": 25,
+              "fromStage": "BULK"
+            },
+            {
+              "id": "c4-local-test-id-c5:0",
+              "operationId": "c4-local-test-id-c5",
+              "saleId": "future:c4-local-test-id-simple",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "SALE_RESERVATION",
+              "qtyDelta": 0,
+              "reservedDelta": 1,
+              "valueDelta": 0,
+              "reservedValueDelta": 1735
+            },
+            {
+              "id": "c4-local-test-id-c7:0",
+              "operationId": "c4-local-test-id-c7",
+              "saleId": "future:c4-local-test-id-simple",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "DISPATCH",
+              "qtyDelta": -1,
+              "reservedDelta": -1,
+              "valueDelta": -1735,
+              "reservedValueDelta": -1735,
+              "reservationOperationId": "c4-local-test-id-c5"
+            },
+            {
+              "id": "c4-local-test-id-c10:0",
+              "operationId": "c4-local-test-id-c10",
+              "saleId": "future:c4-local-test-id-simple",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "PHYSICAL_RETURN",
+              "qtyDelta": 1,
+              "reservedDelta": 0,
+              "valueDelta": 1735,
+              "reservedValueDelta": 0,
+              "dispatchSaleId": "future:c4-local-test-id-simple",
+              "reason": "Recepción ficticia"
+            },
+            {
+              "id": "c4-local-test-id-c12:0",
+              "operationId": "c4-local-test-id-c12",
+              "saleId": "future:c4-local-test-id-pack",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "SALE_RESERVATION",
+              "qtyDelta": 0,
+              "reservedDelta": 3,
+              "valueDelta": 0,
+              "reservedValueDelta": 5205
+            },
+            {
+              "id": "c4-local-test-id-c13:0",
+              "operationId": "c4-local-test-id-c13",
+              "saleId": "future:c4-local-test-id-pack",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "RESERVATION_RELEASE",
+              "qtyDelta": 0,
+              "reservedDelta": -3,
+              "valueDelta": 0,
+              "reservedValueDelta": -5205,
+              "reverses": "c4-local-test-id-c12"
+            },
+            {
+              "id": "c4-local-test-id-c14:0",
+              "operationId": "c4-local-test-id-c14",
+              "saleId": "future:c4-local-test-id-combo",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "SALE_RESERVATION",
+              "qtyDelta": 0,
+              "reservedDelta": 3,
+              "valueDelta": 0,
+              "reservedValueDelta": 5205
+            },
+            {
+              "id": "c4-local-test-id-c14:1",
+              "operationId": "c4-local-test-id-c14",
+              "saleId": "future:c4-local-test-id-combo",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet grano 250g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-grano250",
+              "kind": "SALE_RESERVATION",
+              "qtyDelta": 0,
+              "reservedDelta": 2,
+              "valueDelta": 0,
+              "reservedValueDelta": 1838
+            },
+            {
+              "id": "c4-local-test-id-c16:0",
+              "operationId": "c4-local-test-id-c16",
+              "saleId": "future:c4-local-test-id-combo",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "DISPATCH",
+              "qtyDelta": -3,
+              "reservedDelta": -3,
+              "valueDelta": -5205,
+              "reservedValueDelta": -5205,
+              "reservationOperationId": "c4-local-test-id-c14"
+            },
+            {
+              "id": "c4-local-test-id-c16:1",
+              "operationId": "c4-local-test-id-c16",
+              "saleId": "future:c4-local-test-id-combo",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet grano 250g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-grano250",
+              "kind": "DISPATCH",
+              "qtyDelta": -2,
+              "reservedDelta": -2,
+              "valueDelta": -1838,
+              "reservedValueDelta": -1838,
+              "reservationOperationId": "c4-local-test-id-c14"
+            },
+            {
+              "id": "c4-local-test-id-c17:0",
+              "operationId": "c4-local-test-id-c17",
+              "saleId": "future:c4-local-test-id-combo",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet grano 250g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-grano250",
+              "kind": "PHYSICAL_RETURN",
+              "qtyDelta": 1,
+              "reservedDelta": 0,
+              "valueDelta": 919,
+              "reservedValueDelta": 0,
+              "dispatchSaleId": "future:c4-local-test-id-combo",
+              "reason": "Retorno parcial ficticio"
+            },
+            {
+              "id": "c4-local-test-id-c19:0",
+              "operationId": "c4-local-test-id-c19",
+              "saleId": "future:c4-local-test-id-combo",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet grano 250g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-grano250",
+              "kind": "PHYSICAL_RETURN",
+              "qtyDelta": 1,
+              "reservedDelta": 0,
+              "valueDelta": 919,
+              "reservedValueDelta": 0,
+              "dispatchSaleId": "future:c4-local-test-id-combo",
+              "reason": "Retorno final ficticio"
+            },
+            {
+              "id": "c4-local-test-id-c19:1",
+              "operationId": "c4-local-test-id-c19",
+              "saleId": "future:c4-local-test-id-combo",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "PHYSICAL_RETURN",
+              "qtyDelta": 3,
+              "reservedDelta": 0,
+              "valueDelta": 5205,
+              "reservedValueDelta": 0,
+              "dispatchSaleId": "future:c4-local-test-id-combo",
+              "reason": "Retorno final ficticio"
+            },
+            {
+              "id": "c4-local-test-id-c24:0",
+              "operationId": "c4-local-test-id-c24",
+              "saleId": "future:c4-local-test-id-one-bag",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-supplies",
+              "product": "BAG500",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-bag500",
+              "kind": "PREPARATION_SUPPLY",
+              "qtyDelta": -1,
+              "reservedDelta": 0,
+              "valueDelta": -100,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-c24:1",
+              "operationId": "c4-local-test-id-c24",
+              "saleId": "future:c4-local-test-id-one-bag",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-labels",
+              "product": "LABEL",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-label",
+              "kind": "PREPARATION_SUPPLY",
+              "qtyDelta": -1,
+              "reservedDelta": 0,
+              "valueDelta": -10,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-c24:2",
+              "operationId": "c4-local-test-id-c24",
+              "saleId": "future:c4-local-test-id-one-bag",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "tostado",
+              "unit": "g",
+              "resourceId": "demo:c4-local-test-id-bulk",
+              "kind": "PREPARATION_COFFEE",
+              "qtyDelta": -500,
+              "reservedDelta": 0,
+              "valueDelta": -1500,
+              "reservedValueDelta": 0
+            },
+            {
+              "id": "c4-local-test-id-c24:3",
+              "operationId": "c4-local-test-id-c24",
+              "saleId": "future:c4-local-test-id-one-bag",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-last-bag",
+              "kind": "PREPARATION_OUTPUT",
+              "qtyDelta": 1,
+              "reservedDelta": 0,
+              "valueDelta": 1610,
+              "reservedValueDelta": 0,
+              "processingCents": 0
+            },
+            {
+              "id": "c4-local-test-id-c24:4",
+              "operationId": "c4-local-test-id-c24",
+              "saleId": "future:c4-local-test-id-one-bag",
+              "date": "2026-10-16T11:00:22.558Z",
+              "responsible": "Responsable ficticio",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "tostado",
+              "unit": "g",
+              "resourceId": "demo:c4-local-test-id-bulk",
+              "kind": "PROCESS_WASTE",
+              "qtyDelta": 0,
+              "reservedDelta": 0,
+              "valueDelta": 0,
+              "reservedValueDelta": 0,
+              "wasteGrams": 0,
+              "fromStage": "BULK"
+            },
+            {
+              "id": "b922ecb8-de81-4680-9bfc-4c3bacf466b7:0",
+              "operationId": "b922ecb8-de81-4680-9bfc-4c3bacf466b7",
+              "saleId": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+              "date": "2026-10-16T11:00:55.433Z",
+              "responsible": "native:sandbox-owner",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "SALE_RESERVATION",
+              "qtyDelta": 0,
+              "reservedDelta": 1,
+              "valueDelta": 0,
+              "reservedValueDelta": 1735
+            },
+            {
+              "id": "b3af3647-50f2-4b4a-b6c7-1c5dbaa9c925:0",
+              "operationId": "b3af3647-50f2-4b4a-b6c7-1c5dbaa9c925",
+              "saleId": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+              "date": "2026-10-16T11:00:56.849Z",
+              "responsible": "native:sandbox-owner",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "RESERVATION_RELEASE",
+              "qtyDelta": 0,
+              "reservedDelta": -1,
+              "valueDelta": 0,
+              "reservedValueDelta": -1735,
+              "reverses": "b922ecb8-de81-4680-9bfc-4c3bacf466b7"
+            },
+            {
+              "id": "720fbcdf-5c63-4932-b860-8f6745cf12f0:0",
+              "operationId": "720fbcdf-5c63-4932-b860-8f6745cf12f0",
+              "saleId": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+              "date": "2026-10-16T11:00:58.085Z",
+              "responsible": "native:sandbox-owner",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "SALE_RESERVATION",
+              "qtyDelta": 0,
+              "reservedDelta": 3,
+              "valueDelta": 0,
+              "reservedValueDelta": 5205
+            },
+            {
+              "id": "c72bca0f-b8b7-4a49-91be-edb5b5bcb5e3:0",
+              "operationId": "c72bca0f-b8b7-4a49-91be-edb5b5bcb5e3",
+              "saleId": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+              "date": "2026-10-16T11:00:59.476Z",
+              "responsible": "native:sandbox-owner",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "RESERVATION_RELEASE",
+              "qtyDelta": 0,
+              "reservedDelta": -3,
+              "valueDelta": 0,
+              "reservedValueDelta": -5205,
+              "reverses": "720fbcdf-5c63-4932-b860-8f6745cf12f0"
+            },
+            {
+              "id": "6612c510-7286-4100-baf4-ec81addac311:0",
+              "operationId": "6612c510-7286-4100-baf4-ec81addac311",
+              "saleId": "future:76709b91-2400-477a-b505-a044ec065444",
+              "date": "2026-10-16T11:01:00.788Z",
+              "responsible": "native:sandbox-owner",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "SALE_RESERVATION",
+              "qtyDelta": 0,
+              "reservedDelta": 1,
+              "valueDelta": 0,
+              "reservedValueDelta": 1735
+            },
+            {
+              "id": "6612c510-7286-4100-baf4-ec81addac311:1",
+              "operationId": "6612c510-7286-4100-baf4-ec81addac311",
+              "saleId": "future:76709b91-2400-477a-b505-a044ec065444",
+              "date": "2026-10-16T11:01:00.788Z",
+              "responsible": "native:sandbox-owner",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet grano 250g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-grano250",
+              "kind": "SALE_RESERVATION",
+              "qtyDelta": 0,
+              "reservedDelta": 1,
+              "valueDelta": 0,
+              "reservedValueDelta": 919
+            },
+            {
+              "id": "fb08fbf5-a6a7-4500-8062-1f5f3e8bac56:0",
+              "operationId": "fb08fbf5-a6a7-4500-8062-1f5f3e8bac56",
+              "saleId": "future:76709b91-2400-477a-b505-a044ec065444",
+              "date": "2026-10-16T11:01:02.211Z",
+              "responsible": "native:sandbox-owner",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "RESERVATION_RELEASE",
+              "qtyDelta": 0,
+              "reservedDelta": -1,
+              "valueDelta": 0,
+              "reservedValueDelta": -1735,
+              "reverses": "6612c510-7286-4100-baf4-ec81addac311"
+            },
+            {
+              "id": "fb08fbf5-a6a7-4500-8062-1f5f3e8bac56:1",
+              "operationId": "fb08fbf5-a6a7-4500-8062-1f5f3e8bac56",
+              "saleId": "future:76709b91-2400-477a-b505-a044ec065444",
+              "date": "2026-10-16T11:01:02.211Z",
+              "responsible": "native:sandbox-owner",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet grano 250g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-grano250",
+              "kind": "RESERVATION_RELEASE",
+              "qtyDelta": 0,
+              "reservedDelta": -1,
+              "valueDelta": 0,
+              "reservedValueDelta": -919,
+              "reverses": "6612c510-7286-4100-baf4-ec81addac311"
+            },
+            {
+              "id": "6a846f33-4334-454a-9151-9d47f04174b4:0",
+              "operationId": "6a846f33-4334-454a-9151-9d47f04174b4",
+              "saleId": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+              "date": "2026-10-16T11:01:05.232Z",
+              "responsible": "native:sandbox-owner",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "SALE_RESERVATION",
+              "qtyDelta": 0,
+              "reservedDelta": 1,
+              "valueDelta": 0,
+              "reservedValueDelta": 1735
+            },
+            {
+              "id": "43cfea35-8564-4248-9b2f-44339087d1ce:0",
+              "operationId": "43cfea35-8564-4248-9b2f-44339087d1ce",
+              "saleId": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+              "date": "2026-10-16T11:01:06.743Z",
+              "responsible": "native:sandbox-owner",
+              "lot": "demo:c4-local-test-id-lot",
+              "product": "Gourmet molido 500g",
+              "unit": "unit",
+              "resourceId": "demo:c4-local-test-id-molido500",
+              "kind": "RESERVATION_RELEASE",
+              "qtyDelta": 0,
+              "reservedDelta": -1,
+              "valueDelta": 0,
+              "reservedValueDelta": -1735,
+              "reverses": "6a846f33-4334-454a-9151-9d47f04174b4"
+            }
+          ],
+          "commerce": {
+            "offers": {
+              "demo:c4-local-test-id-single": {
+                "id": "demo:c4-local-test-id-single",
+                "name": "Oferta ficticia single",
+                "family": "Gourmet",
+                "grind": "molido",
+                "grams": 500,
+                "bags": 1,
+                "priceCents": 3500,
+                "validFrom": "2026-10-16",
+                "validUntil": "2099-12-31",
+                "active": true,
+                "version": 2,
+                "synthetic": true
+              },
+              "demo:c4-local-test-id-tripack": {
+                "id": "demo:c4-local-test-id-tripack",
+                "name": "Oferta ficticia tripack",
+                "family": "Gourmet",
+                "grind": "molido",
+                "grams": 500,
+                "bags": 3,
+                "priceCents": 9900,
+                "validFrom": "2026-10-16",
+                "validUntil": "2099-12-31",
+                "active": true,
+                "version": 1,
+                "synthetic": true
+              },
+              "demo:c4-local-test-id-grain": {
+                "id": "demo:c4-local-test-id-grain",
+                "name": "Oferta ficticia grain",
+                "family": "Gourmet",
+                "grind": "grano",
+                "grams": 250,
+                "bags": 1,
+                "priceCents": 2500,
+                "validFrom": "2026-10-16",
+                "validUntil": "2099-12-31",
+                "active": true,
+                "version": 1,
+                "synthetic": true
+              }
+            },
+            "authorizations": {
+              "demo:c4-local-test-id-discount": {
+                "id": "demo:c4-local-test-id-discount",
+                "saleId": "future:c4-local-test-id-simple",
+                "maxCents": 100,
+                "reason": "Autorización ficticia",
+                "expiresAt": "2099-12-31T23:59:59.000Z",
+                "approvedBy": "owner",
+                "usedBy": "c4-local-test-id-c5"
+              }
+            },
+            "events": [
+              {
+                "id": "c4-local-test-id-inventory-0:commercial:0",
+                "kind": "CAPITALIZED_COST",
+                "operationId": "c4-local-test-id-inventory-0",
+                "saleId": "future:c4-local-test-id-lot",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.560Z",
+                "actorRole": "owner",
+                "category": "MATERIA_PRIMA",
+                "amountCents": 21000,
+                "lotId": "demo:c4-local-test-id-lot",
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-INVOICE-0",
+                "description": "RECEIVE_LOT"
+              },
+              {
+                "id": "c4-local-test-id-inventory-1:commercial:0",
+                "kind": "CAPITALIZED_COST",
+                "operationId": "c4-local-test-id-inventory-1",
+                "saleId": "future:c4-local-test-id-special",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.561Z",
+                "actorRole": "owner",
+                "category": "MATERIA_PRIMA",
+                "amountCents": 4000,
+                "lotId": "demo:c4-local-test-id-special",
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-INVOICE-1",
+                "description": "RECEIVE_LOT"
+              },
+              {
+                "id": "c4-local-test-id-inventory-2:commercial:0",
+                "kind": "CAPITALIZED_COST",
+                "operationId": "c4-local-test-id-inventory-2",
+                "saleId": "future:c4-local-test-id-bag250",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.561Z",
+                "actorRole": "owner",
+                "category": "EMPAQUES",
+                "amountCents": 3000,
+                "lotId": "demo:c4-local-test-id-supplies",
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-INVOICE-2",
+                "description": "RECEIVE_SUPPLY"
+              },
+              {
+                "id": "c4-local-test-id-inventory-3:commercial:0",
+                "kind": "CAPITALIZED_COST",
+                "operationId": "c4-local-test-id-inventory-3",
+                "saleId": "future:c4-local-test-id-bag500",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.562Z",
+                "actorRole": "owner",
+                "category": "EMPAQUES",
+                "amountCents": 3000,
+                "lotId": "demo:c4-local-test-id-supplies",
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-INVOICE-3",
+                "description": "RECEIVE_SUPPLY"
+              },
+              {
+                "id": "c4-local-test-id-inventory-4:commercial:0",
+                "kind": "CAPITALIZED_COST",
+                "operationId": "c4-local-test-id-inventory-4",
+                "saleId": "future:c4-local-test-id-label",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.562Z",
+                "actorRole": "owner",
+                "category": "EMPAQUES",
+                "amountCents": 600,
+                "lotId": "demo:c4-local-test-id-labels",
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-INVOICE-4",
+                "description": "RECEIVE_SUPPLY"
+              },
+              {
+                "id": "c4-local-test-id-inventory-5:commercial:0",
+                "kind": "CAPITALIZED_COST",
+                "operationId": "c4-local-test-id-inventory-5",
+                "saleId": "future:c4-local-test-id-roast",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.563Z",
+                "actorRole": "owner",
+                "category": "PROCESAMIENTO",
+                "amountCents": 3000,
+                "lotId": "demo:c4-local-test-id-lot",
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-INVOICE-5",
+                "description": "ROAST"
+              },
+              {
+                "id": "c4-local-test-id-inventory-6:commercial:0",
+                "kind": "CAPITALIZED_COST",
+                "operationId": "c4-local-test-id-inventory-6",
+                "saleId": "future:c4-local-test-id-prep500",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.564Z",
+                "actorRole": "owner",
+                "category": "PROCESAMIENTO",
+                "amountCents": 600,
+                "lotId": "demo:c4-local-test-id-lot",
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-INVOICE-6",
+                "description": "PREPARE_BAGS"
+              },
+              {
+                "id": "c4-local-test-id-inventory-7:commercial:0",
+                "kind": "CAPITALIZED_COST",
+                "operationId": "c4-local-test-id-inventory-7",
+                "saleId": "future:c4-local-test-id-prep250",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.565Z",
+                "actorRole": "owner",
+                "category": "PROCESAMIENTO",
+                "amountCents": 400,
+                "lotId": "demo:c4-local-test-id-lot",
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-INVOICE-7",
+                "description": "PREPARE_BAGS"
+              },
+              {
+                "id": "c4-local-test-id-c1:commercial:0",
+                "kind": "OFFER",
+                "operationId": "c4-local-test-id-c1",
+                "saleId": "future:c4-local-test-id-single",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.567Z",
+                "actorRole": "owner",
+                "offer": {
+                  "id": "demo:c4-local-test-id-single",
+                  "name": "Oferta ficticia single",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "bags": 1,
+                  "priceCents": 3500,
+                  "validFrom": "2026-10-16",
+                  "validUntil": "2099-12-31",
+                  "active": true,
+                  "version": 1,
+                  "synthetic": true
+                }
+              },
+              {
+                "id": "c4-local-test-id-c2:commercial:0",
+                "kind": "OFFER",
+                "operationId": "c4-local-test-id-c2",
+                "saleId": "future:c4-local-test-id-tripack",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.568Z",
+                "actorRole": "owner",
+                "offer": {
+                  "id": "demo:c4-local-test-id-tripack",
+                  "name": "Oferta ficticia tripack",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "bags": 3,
+                  "priceCents": 9900,
+                  "validFrom": "2026-10-16",
+                  "validUntil": "2099-12-31",
+                  "active": true,
+                  "version": 1,
+                  "synthetic": true
+                }
+              },
+              {
+                "id": "c4-local-test-id-c3:commercial:0",
+                "kind": "OFFER",
+                "operationId": "c4-local-test-id-c3",
+                "saleId": "future:c4-local-test-id-grain",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.569Z",
+                "actorRole": "owner",
+                "offer": {
+                  "id": "demo:c4-local-test-id-grain",
+                  "name": "Oferta ficticia grain",
+                  "family": "Gourmet",
+                  "grind": "grano",
+                  "grams": 250,
+                  "bags": 1,
+                  "priceCents": 2500,
+                  "validFrom": "2026-10-16",
+                  "validUntil": "2099-12-31",
+                  "active": true,
+                  "version": 1,
+                  "synthetic": true
+                }
+              },
+              {
+                "id": "c4-local-test-id-c4:commercial:0",
+                "kind": "DISCOUNT_AUTHORIZATION",
+                "operationId": "c4-local-test-id-c4",
+                "saleId": "future:c4-local-test-id-simple",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.570Z",
+                "actorRole": "owner",
+                "authorization": {
+                  "id": "demo:c4-local-test-id-discount",
+                  "saleId": "future:c4-local-test-id-simple",
+                  "maxCents": 100,
+                  "reason": "Autorización ficticia",
+                  "expiresAt": "2099-12-31T23:59:59.000Z",
+                  "approvedBy": "owner"
+                }
+              },
+              {
+                "id": "c4-local-test-id-c5:commercial:0",
+                "kind": "DISCOUNT_USED",
+                "operationId": "c4-local-test-id-c5",
+                "saleId": "future:c4-local-test-id-simple",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.572Z",
+                "actorRole": "owner",
+                "authorizationId": "demo:c4-local-test-id-discount",
+                "amountCents": 100
+              },
+              {
+                "id": "c4-local-test-id-c5:commercial:1",
+                "kind": "ORDER_REGISTERED",
+                "operationId": "c4-local-test-id-c5",
+                "saleId": "future:c4-local-test-id-simple",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.572Z",
+                "actorRole": "owner",
+                "grossCents": 3500,
+                "discountCents": 100,
+                "amountCents": 4100
+              },
+              {
+                "id": "c4-local-test-id-c6:commercial:0",
+                "kind": "PAYMENT",
+                "operationId": "c4-local-test-id-c6",
+                "saleId": "future:c4-local-test-id-simple",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.573Z",
+                "actorRole": "owner",
+                "amountCents": 4100,
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-PAYMENT-SIMPLE",
+                "method": "Yape ficticio",
+                "reason": ""
+              },
+              {
+                "id": "c4-local-test-id-c7:commercial:0",
+                "kind": "DISPATCH_RECOGNIZED",
+                "operationId": "c4-local-test-id-c7",
+                "saleId": "future:c4-local-test-id-simple",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.575Z",
+                "actorRole": "owner",
+                "amountCents": 4100,
+                "costCents": 1735,
+                "distributionCents": 500
+              },
+              {
+                "id": "c4-local-test-id-c9:commercial:0",
+                "kind": "DELIVERY_RECORDED",
+                "operationId": "c4-local-test-id-c9",
+                "saleId": "future:c4-local-test-id-simple",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.578Z",
+                "actorRole": "owner"
+              },
+              {
+                "id": "c4-local-test-id-c10:commercial:0",
+                "kind": "RETURN_CREDIT",
+                "operationId": "c4-local-test-id-c10",
+                "saleId": "future:c4-local-test-id-simple",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.580Z",
+                "actorRole": "owner",
+                "amountCents": 3400,
+                "costCents": 1735,
+                "reason": "Recepción ficticia"
+              },
+              {
+                "id": "c4-local-test-id-c11:commercial:0",
+                "kind": "REFUND",
+                "operationId": "c4-local-test-id-c11",
+                "saleId": "future:c4-local-test-id-simple",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.582Z",
+                "actorRole": "owner",
+                "amountCents": 3400,
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-REFUND-SIMPLE",
+                "method": "Otro",
+                "reason": "Reembolso ficticio"
+              },
+              {
+                "id": "c4-local-test-id-c12:commercial:0",
+                "kind": "ORDER_REGISTERED",
+                "operationId": "c4-local-test-id-c12",
+                "saleId": "future:c4-local-test-id-pack",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.584Z",
+                "actorRole": "owner",
+                "grossCents": 9900,
+                "discountCents": 0,
+                "amountCents": 9900
+              },
+              {
+                "id": "c4-local-test-id-c13:commercial:0",
+                "kind": "ORDER_CANCELLED",
+                "operationId": "c4-local-test-id-c13",
+                "saleId": "future:c4-local-test-id-pack",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.586Z",
+                "actorRole": "owner",
+                "amountCents": 9900
+              },
+              {
+                "id": "c4-local-test-id-c14:commercial:0",
+                "kind": "ORDER_REGISTERED",
+                "operationId": "c4-local-test-id-c14",
+                "saleId": "future:c4-local-test-id-combo",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.588Z",
+                "actorRole": "owner",
+                "grossCents": 14900,
+                "discountCents": 0,
+                "amountCents": 14900
+              },
+              {
+                "id": "c4-local-test-id-c15:commercial:0",
+                "kind": "PAYMENT",
+                "operationId": "c4-local-test-id-c15",
+                "saleId": "future:c4-local-test-id-combo",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.591Z",
+                "actorRole": "owner",
+                "amountCents": 14900,
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-PAYMENT-COMBO",
+                "method": "Otro",
+                "reason": ""
+              },
+              {
+                "id": "c4-local-test-id-c16:commercial:0",
+                "kind": "DISPATCH_RECOGNIZED",
+                "operationId": "c4-local-test-id-c16",
+                "saleId": "future:c4-local-test-id-combo",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.594Z",
+                "actorRole": "owner",
+                "amountCents": 14900,
+                "costCents": 7043,
+                "distributionCents": 0
+              },
+              {
+                "id": "c4-local-test-id-c17:commercial:0",
+                "kind": "RETURN_CREDIT",
+                "operationId": "c4-local-test-id-c17",
+                "saleId": "future:c4-local-test-id-combo",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.596Z",
+                "actorRole": "owner",
+                "amountCents": 2500,
+                "costCents": 919,
+                "reason": "Retorno parcial ficticio"
+              },
+              {
+                "id": "c4-local-test-id-c18:commercial:0",
+                "kind": "REFUND",
+                "operationId": "c4-local-test-id-c18",
+                "saleId": "future:c4-local-test-id-combo",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.599Z",
+                "actorRole": "owner",
+                "amountCents": 2500,
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-REFUND-COMBO1",
+                "method": "Otro",
+                "reason": "Reembolso parcial ficticio"
+              },
+              {
+                "id": "c4-local-test-id-c19:commercial:0",
+                "kind": "RETURN_CREDIT",
+                "operationId": "c4-local-test-id-c19",
+                "saleId": "future:c4-local-test-id-combo",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.602Z",
+                "actorRole": "owner",
+                "amountCents": 12400,
+                "costCents": 6124,
+                "reason": "Retorno final ficticio"
+              },
+              {
+                "id": "c4-local-test-id-c20:commercial:0",
+                "kind": "REFUND",
+                "operationId": "c4-local-test-id-c20",
+                "saleId": "future:c4-local-test-id-combo",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.605Z",
+                "actorRole": "owner",
+                "amountCents": 12400,
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-REFUND-COMBO2",
+                "method": "Otro",
+                "reason": "Reembolso restante ficticio"
+              },
+              {
+                "id": "c4-local-test-id-c21:commercial:0",
+                "kind": "OPERATING_EXPENSE",
+                "operationId": "c4-local-test-id-c21",
+                "saleId": "future:c4-local-test-id-expense",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.608Z",
+                "actorRole": "owner",
+                "category": "PUBLICIDAD",
+                "amountCents": 500,
+                "description": "Publicidad ficticia",
+                "provider": "Proveedor ficticio",
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-ADS",
+                "campaign": "Campaña ficticia",
+                "messages": 10,
+                "paid": false
+              },
+              {
+                "id": "c4-local-test-id-c22:commercial:0",
+                "kind": "EXPENSE_PAYMENT",
+                "operationId": "c4-local-test-id-c22",
+                "saleId": "future:c4-local-test-id-expense-payment",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.611Z",
+                "actorRole": "owner",
+                "sourceOperationId": "c4-local-test-id-c21",
+                "amountCents": 500,
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-ADS-PAYMENT"
+              },
+              {
+                "id": "c4-local-test-id-c23:commercial:0",
+                "kind": "PURCHASE_PAYMENT",
+                "operationId": "c4-local-test-id-c23",
+                "saleId": "future:c4-local-test-id-purchase-payment",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.614Z",
+                "actorRole": "owner",
+                "sourceOperationId": "c4-local-test-id-inventory-0",
+                "amountCents": 5000,
+                "documentRef": "DEMO-C4-LOCAL-TEST-ID-PURCHASE-PAYMENT"
+              },
+              {
+                "id": "c4-local-test-id-partial:commercial:0",
+                "kind": "OFFER",
+                "operationId": "c4-local-test-id-partial",
+                "saleId": "future:c4-local-test-id-single",
+                "date": "2026-10-16T11:00:22.558Z",
+                "recordedAt": "2026-10-16T11:00:22.558Z",
+                "actorRole": "owner",
+                "offer": {
+                  "id": "demo:c4-local-test-id-single",
+                  "name": "Oferta ficticia single",
+                  "family": "Gourmet",
+                  "grind": "molido",
+                  "grams": 500,
+                  "bags": 1,
+                  "priceCents": 3500,
+                  "validFrom": "2026-10-16",
+                  "validUntil": "2099-12-31",
+                  "active": true,
+                  "version": 2,
+                  "synthetic": true
+                }
+              },
+              {
+                "id": "b922ecb8-de81-4680-9bfc-4c3bacf466b7:commercial:0",
+                "kind": "ORDER_REGISTERED",
+                "operationId": "b922ecb8-de81-4680-9bfc-4c3bacf466b7",
+                "saleId": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                "date": "2026-10-16T11:00:55.433Z",
+                "recordedAt": "2026-10-16T11:00:55.433Z",
+                "actorRole": "administrator",
+                "grossCents": 3500,
+                "discountCents": 0,
+                "amountCents": 3500
+              },
+              {
+                "id": "b3af3647-50f2-4b4a-b6c7-1c5dbaa9c925:commercial:0",
+                "kind": "ORDER_CANCELLED",
+                "operationId": "b3af3647-50f2-4b4a-b6c7-1c5dbaa9c925",
+                "saleId": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                "date": "2026-10-16T11:00:56.849Z",
+                "recordedAt": "2026-10-16T11:00:56.849Z",
+                "actorRole": "administrator",
+                "amountCents": 3500
+              },
+              {
+                "id": "720fbcdf-5c63-4932-b860-8f6745cf12f0:commercial:0",
+                "kind": "ORDER_REGISTERED",
+                "operationId": "720fbcdf-5c63-4932-b860-8f6745cf12f0",
+                "saleId": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                "date": "2026-10-16T11:00:58.085Z",
+                "recordedAt": "2026-10-16T11:00:58.085Z",
+                "actorRole": "administrator",
+                "grossCents": 9900,
+                "discountCents": 0,
+                "amountCents": 9900
+              },
+              {
+                "id": "c72bca0f-b8b7-4a49-91be-edb5b5bcb5e3:commercial:0",
+                "kind": "ORDER_CANCELLED",
+                "operationId": "c72bca0f-b8b7-4a49-91be-edb5b5bcb5e3",
+                "saleId": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                "date": "2026-10-16T11:00:59.476Z",
+                "recordedAt": "2026-10-16T11:00:59.476Z",
+                "actorRole": "administrator",
+                "amountCents": 9900
+              },
+              {
+                "id": "6612c510-7286-4100-baf4-ec81addac311:commercial:0",
+                "kind": "ORDER_REGISTERED",
+                "operationId": "6612c510-7286-4100-baf4-ec81addac311",
+                "saleId": "future:76709b91-2400-477a-b505-a044ec065444",
+                "date": "2026-10-16T11:01:00.788Z",
+                "recordedAt": "2026-10-16T11:01:00.788Z",
+                "actorRole": "administrator",
+                "grossCents": 6000,
+                "discountCents": 0,
+                "amountCents": 6000
+              },
+              {
+                "id": "fb08fbf5-a6a7-4500-8062-1f5f3e8bac56:commercial:0",
+                "kind": "ORDER_CANCELLED",
+                "operationId": "fb08fbf5-a6a7-4500-8062-1f5f3e8bac56",
+                "saleId": "future:76709b91-2400-477a-b505-a044ec065444",
+                "date": "2026-10-16T11:01:02.211Z",
+                "recordedAt": "2026-10-16T11:01:02.211Z",
+                "actorRole": "administrator",
+                "amountCents": 6000
+              },
+              {
+                "id": "6a846f33-4334-454a-9151-9d47f04174b4:commercial:0",
+                "kind": "ORDER_REGISTERED",
+                "operationId": "6a846f33-4334-454a-9151-9d47f04174b4",
+                "saleId": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                "date": "2026-10-16T11:01:05.232Z",
+                "recordedAt": "2026-10-16T11:01:05.232Z",
+                "actorRole": "administrator",
+                "grossCents": 3500,
+                "discountCents": 0,
+                "amountCents": 3500
+              },
+              {
+                "id": "43cfea35-8564-4248-9b2f-44339087d1ce:commercial:0",
+                "kind": "ORDER_CANCELLED",
+                "operationId": "43cfea35-8564-4248-9b2f-44339087d1ce",
+                "saleId": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                "date": "2026-10-16T11:01:06.743Z",
+                "recordedAt": "2026-10-16T11:01:06.743Z",
+                "actorRole": "administrator",
+                "amountCents": 3500
+              }
+            ],
+            "documents": {
+              "DEMO-C4-LOCAL-TEST-ID-INVOICE-0": "c4-local-test-id-inventory-0:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-INVOICE-1": "c4-local-test-id-inventory-1:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-INVOICE-2": "c4-local-test-id-inventory-2:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-INVOICE-3": "c4-local-test-id-inventory-3:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-INVOICE-4": "c4-local-test-id-inventory-4:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-INVOICE-5": "c4-local-test-id-inventory-5:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-INVOICE-6": "c4-local-test-id-inventory-6:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-INVOICE-7": "c4-local-test-id-inventory-7:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-PAYMENT-SIMPLE": "c4-local-test-id-c6:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-REFUND-SIMPLE": "c4-local-test-id-c11:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-PAYMENT-COMBO": "c4-local-test-id-c15:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-REFUND-COMBO1": "c4-local-test-id-c18:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-REFUND-COMBO2": "c4-local-test-id-c20:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-ADS": "c4-local-test-id-c21:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-ADS-PAYMENT": "c4-local-test-id-c22:commercial:0",
+              "DEMO-C4-LOCAL-TEST-ID-PURCHASE-PAYMENT": "c4-local-test-id-c23:commercial:0"
+            }
+          },
+          "reports": {
+            "from": "0000-01-01",
+            "to": "9999-12-31",
+            "registeredOrders": 7,
+            "registeredCents": 51800,
+            "dispatchedOrders": 2,
+            "deliveredOrders": 1,
+            "revenueCents": 700,
+            "collectionsCents": 19000,
+            "refundsCents": 18300,
+            "netCollectionsCents": 700,
+            "cogsCents": 0,
+            "distributionCents": 500,
+            "operatingExpenseCents": 500,
+            "grossMarginCents": 700,
+            "estimatedProfitCents": -300,
+            "stockLossCents": 0,
+            "paidOperatingExpensesCents": 500,
+            "purchasePaymentsCents": 5000,
+            "outstandingCents": 0,
+            "refundableCents": 0,
+            "topProducts": {
+              "Gourmet molido 500g": 4,
+              "Gourmet grano 250g": 2
+            },
+            "customers": [
+              {
+                "id": "999000111",
+                "name": "Cliente ficticio editado",
+                "phone": "999000111",
+                "orders": [
+                  "future:c4-local-test-id-simple",
+                  "future:c4-local-test-id-combo"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 700
+              },
+              {
+                "id": "future:c4-local-test-id-pack",
+                "name": "Cliente ficticio B",
+                "phone": "",
+                "orders": [
+                  "future:c4-local-test-id-pack"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                "name": "DEMO suite simple mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                "name": "DEMO suite tripack mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:76709b91-2400-477a-b505-a044ec065444",
+                "name": "DEMO suite combo mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:76709b91-2400-477a-b505-a044ec065444"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                "name": "DEMO suite offline mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              }
+            ]
+          }
+        },
+        "deviceId": "2de1909c-d429-4f68-b976-b80a268aac8d",
+        "commercialDraftSaleId": "future:4542a6ab-3ba3-4971-8a99-76eff7c9e69e",
+        "uxHome5a2": {
+          "revision": 41,
+          "range": {
+            "from": "2026-10-01",
+            "to": "2026-10-16",
+            "registeredOrders": 7,
+            "registeredCents": 51800,
+            "dispatchedOrders": 2,
+            "deliveredOrders": 1,
+            "revenueCents": 700,
+            "collectionsCents": 19000,
+            "refundsCents": 18300,
+            "netCollectionsCents": 700,
+            "cogsCents": 0,
+            "distributionCents": 500,
+            "operatingExpenseCents": 500,
+            "grossMarginCents": 700,
+            "estimatedProfitCents": -300,
+            "stockLossCents": 0,
+            "paidOperatingExpensesCents": 500,
+            "purchasePaymentsCents": 5000,
+            "outstandingCents": 0,
+            "refundableCents": 0,
+            "topProducts": {
+              "Gourmet molido 500g": 4,
+              "Gourmet grano 250g": 2
+            },
+            "customers": [
+              {
+                "id": "999000111",
+                "name": "Cliente ficticio editado",
+                "phone": "999000111",
+                "orders": [
+                  "future:c4-local-test-id-simple",
+                  "future:c4-local-test-id-combo"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 700
+              },
+              {
+                "id": "future:c4-local-test-id-pack",
+                "name": "Cliente ficticio B",
+                "phone": "",
+                "orders": [
+                  "future:c4-local-test-id-pack"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                "name": "DEMO suite simple mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                "name": "DEMO suite tripack mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:76709b91-2400-477a-b505-a044ec065444",
+                "name": "DEMO suite combo mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:76709b91-2400-477a-b505-a044ec065444"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                "name": "DEMO suite offline mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              }
+            ]
+          },
+          "today": {
+            "from": "2026-10-16",
+            "to": "2026-10-16",
+            "registeredOrders": 7,
+            "registeredCents": 51800,
+            "dispatchedOrders": 2,
+            "deliveredOrders": 1,
+            "revenueCents": 700,
+            "collectionsCents": 19000,
+            "refundsCents": 18300,
+            "netCollectionsCents": 700,
+            "cogsCents": 0,
+            "distributionCents": 500,
+            "operatingExpenseCents": 500,
+            "grossMarginCents": 700,
+            "estimatedProfitCents": -300,
+            "stockLossCents": 0,
+            "paidOperatingExpensesCents": 500,
+            "purchasePaymentsCents": 5000,
+            "outstandingCents": 0,
+            "refundableCents": 0,
+            "topProducts": {
+              "Gourmet molido 500g": 4,
+              "Gourmet grano 250g": 2
+            },
+            "customers": [
+              {
+                "id": "999000111",
+                "name": "Cliente ficticio editado",
+                "phone": "999000111",
+                "orders": [
+                  "future:c4-local-test-id-simple",
+                  "future:c4-local-test-id-combo"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 700
+              },
+              {
+                "id": "future:c4-local-test-id-pack",
+                "name": "Cliente ficticio B",
+                "phone": "",
+                "orders": [
+                  "future:c4-local-test-id-pack"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                "name": "DEMO suite simple mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                "name": "DEMO suite tripack mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:76709b91-2400-477a-b505-a044ec065444",
+                "name": "DEMO suite combo mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:76709b91-2400-477a-b505-a044ec065444"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                "name": "DEMO suite offline mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              }
+            ]
+          },
+          "month": {
+            "from": "2026-10-01",
+            "to": "2026-10-16",
+            "registeredOrders": 7,
+            "registeredCents": 51800,
+            "dispatchedOrders": 2,
+            "deliveredOrders": 1,
+            "revenueCents": 700,
+            "collectionsCents": 19000,
+            "refundsCents": 18300,
+            "netCollectionsCents": 700,
+            "cogsCents": 0,
+            "distributionCents": 500,
+            "operatingExpenseCents": 500,
+            "grossMarginCents": 700,
+            "estimatedProfitCents": -300,
+            "stockLossCents": 0,
+            "paidOperatingExpensesCents": 500,
+            "purchasePaymentsCents": 5000,
+            "outstandingCents": 0,
+            "refundableCents": 0,
+            "topProducts": {
+              "Gourmet molido 500g": 4,
+              "Gourmet grano 250g": 2
+            },
+            "customers": [
+              {
+                "id": "999000111",
+                "name": "Cliente ficticio editado",
+                "phone": "999000111",
+                "orders": [
+                  "future:c4-local-test-id-simple",
+                  "future:c4-local-test-id-combo"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 700
+              },
+              {
+                "id": "future:c4-local-test-id-pack",
+                "name": "Cliente ficticio B",
+                "phone": "",
+                "orders": [
+                  "future:c4-local-test-id-pack"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                "name": "DEMO suite simple mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                "name": "DEMO suite tripack mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:76709b91-2400-477a-b505-a044ec065444",
+                "name": "DEMO suite combo mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:76709b91-2400-477a-b505-a044ec065444"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              },
+              {
+                "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                "name": "DEMO suite offline mvauwytk",
+                "phone": "",
+                "orders": [
+                  "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf"
+                ],
+                "purchaseCount": 0,
+                "totalCents": 0
+              }
+            ]
+          },
+          "daily": [
+            {
+              "day": "2026-10-10",
+              "report": {
+                "from": "2026-10-10",
+                "to": "2026-10-10",
+                "registeredOrders": 0,
+                "registeredCents": 0,
+                "dispatchedOrders": 0,
+                "deliveredOrders": 0,
+                "revenueCents": 0,
+                "collectionsCents": 0,
+                "refundsCents": 0,
+                "netCollectionsCents": 0,
+                "cogsCents": 0,
+                "distributionCents": 0,
+                "operatingExpenseCents": 0,
+                "grossMarginCents": 0,
+                "estimatedProfitCents": 0,
+                "stockLossCents": 0,
+                "paidOperatingExpensesCents": 0,
+                "purchasePaymentsCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0,
+                "topProducts": {},
+                "customers": [
+                  {
+                    "id": "999000111",
+                    "name": "Cliente ficticio editado",
+                    "phone": "999000111",
+                    "orders": [
+                      "future:c4-local-test-id-simple",
+                      "future:c4-local-test-id-combo"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 700
+                  },
+                  {
+                    "id": "future:c4-local-test-id-pack",
+                    "name": "Cliente ficticio B",
+                    "phone": "",
+                    "orders": [
+                      "future:c4-local-test-id-pack"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                    "name": "DEMO suite simple mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                    "name": "DEMO suite tripack mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:76709b91-2400-477a-b505-a044ec065444",
+                    "name": "DEMO suite combo mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:76709b91-2400-477a-b505-a044ec065444"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                    "name": "DEMO suite offline mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  }
+                ]
+              }
+            },
+            {
+              "day": "2026-10-11",
+              "report": {
+                "from": "2026-10-11",
+                "to": "2026-10-11",
+                "registeredOrders": 0,
+                "registeredCents": 0,
+                "dispatchedOrders": 0,
+                "deliveredOrders": 0,
+                "revenueCents": 0,
+                "collectionsCents": 0,
+                "refundsCents": 0,
+                "netCollectionsCents": 0,
+                "cogsCents": 0,
+                "distributionCents": 0,
+                "operatingExpenseCents": 0,
+                "grossMarginCents": 0,
+                "estimatedProfitCents": 0,
+                "stockLossCents": 0,
+                "paidOperatingExpensesCents": 0,
+                "purchasePaymentsCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0,
+                "topProducts": {},
+                "customers": [
+                  {
+                    "id": "999000111",
+                    "name": "Cliente ficticio editado",
+                    "phone": "999000111",
+                    "orders": [
+                      "future:c4-local-test-id-simple",
+                      "future:c4-local-test-id-combo"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 700
+                  },
+                  {
+                    "id": "future:c4-local-test-id-pack",
+                    "name": "Cliente ficticio B",
+                    "phone": "",
+                    "orders": [
+                      "future:c4-local-test-id-pack"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                    "name": "DEMO suite simple mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                    "name": "DEMO suite tripack mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:76709b91-2400-477a-b505-a044ec065444",
+                    "name": "DEMO suite combo mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:76709b91-2400-477a-b505-a044ec065444"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                    "name": "DEMO suite offline mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  }
+                ]
+              }
+            },
+            {
+              "day": "2026-10-12",
+              "report": {
+                "from": "2026-10-12",
+                "to": "2026-10-12",
+                "registeredOrders": 0,
+                "registeredCents": 0,
+                "dispatchedOrders": 0,
+                "deliveredOrders": 0,
+                "revenueCents": 0,
+                "collectionsCents": 0,
+                "refundsCents": 0,
+                "netCollectionsCents": 0,
+                "cogsCents": 0,
+                "distributionCents": 0,
+                "operatingExpenseCents": 0,
+                "grossMarginCents": 0,
+                "estimatedProfitCents": 0,
+                "stockLossCents": 0,
+                "paidOperatingExpensesCents": 0,
+                "purchasePaymentsCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0,
+                "topProducts": {},
+                "customers": [
+                  {
+                    "id": "999000111",
+                    "name": "Cliente ficticio editado",
+                    "phone": "999000111",
+                    "orders": [
+                      "future:c4-local-test-id-simple",
+                      "future:c4-local-test-id-combo"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 700
+                  },
+                  {
+                    "id": "future:c4-local-test-id-pack",
+                    "name": "Cliente ficticio B",
+                    "phone": "",
+                    "orders": [
+                      "future:c4-local-test-id-pack"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                    "name": "DEMO suite simple mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                    "name": "DEMO suite tripack mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:76709b91-2400-477a-b505-a044ec065444",
+                    "name": "DEMO suite combo mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:76709b91-2400-477a-b505-a044ec065444"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                    "name": "DEMO suite offline mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  }
+                ]
+              }
+            },
+            {
+              "day": "2026-10-13",
+              "report": {
+                "from": "2026-10-13",
+                "to": "2026-10-13",
+                "registeredOrders": 0,
+                "registeredCents": 0,
+                "dispatchedOrders": 0,
+                "deliveredOrders": 0,
+                "revenueCents": 0,
+                "collectionsCents": 0,
+                "refundsCents": 0,
+                "netCollectionsCents": 0,
+                "cogsCents": 0,
+                "distributionCents": 0,
+                "operatingExpenseCents": 0,
+                "grossMarginCents": 0,
+                "estimatedProfitCents": 0,
+                "stockLossCents": 0,
+                "paidOperatingExpensesCents": 0,
+                "purchasePaymentsCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0,
+                "topProducts": {},
+                "customers": [
+                  {
+                    "id": "999000111",
+                    "name": "Cliente ficticio editado",
+                    "phone": "999000111",
+                    "orders": [
+                      "future:c4-local-test-id-simple",
+                      "future:c4-local-test-id-combo"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 700
+                  },
+                  {
+                    "id": "future:c4-local-test-id-pack",
+                    "name": "Cliente ficticio B",
+                    "phone": "",
+                    "orders": [
+                      "future:c4-local-test-id-pack"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                    "name": "DEMO suite simple mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                    "name": "DEMO suite tripack mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:76709b91-2400-477a-b505-a044ec065444",
+                    "name": "DEMO suite combo mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:76709b91-2400-477a-b505-a044ec065444"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                    "name": "DEMO suite offline mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  }
+                ]
+              }
+            },
+            {
+              "day": "2026-10-14",
+              "report": {
+                "from": "2026-10-14",
+                "to": "2026-10-14",
+                "registeredOrders": 0,
+                "registeredCents": 0,
+                "dispatchedOrders": 0,
+                "deliveredOrders": 0,
+                "revenueCents": 0,
+                "collectionsCents": 0,
+                "refundsCents": 0,
+                "netCollectionsCents": 0,
+                "cogsCents": 0,
+                "distributionCents": 0,
+                "operatingExpenseCents": 0,
+                "grossMarginCents": 0,
+                "estimatedProfitCents": 0,
+                "stockLossCents": 0,
+                "paidOperatingExpensesCents": 0,
+                "purchasePaymentsCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0,
+                "topProducts": {},
+                "customers": [
+                  {
+                    "id": "999000111",
+                    "name": "Cliente ficticio editado",
+                    "phone": "999000111",
+                    "orders": [
+                      "future:c4-local-test-id-simple",
+                      "future:c4-local-test-id-combo"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 700
+                  },
+                  {
+                    "id": "future:c4-local-test-id-pack",
+                    "name": "Cliente ficticio B",
+                    "phone": "",
+                    "orders": [
+                      "future:c4-local-test-id-pack"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                    "name": "DEMO suite simple mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                    "name": "DEMO suite tripack mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:76709b91-2400-477a-b505-a044ec065444",
+                    "name": "DEMO suite combo mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:76709b91-2400-477a-b505-a044ec065444"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                    "name": "DEMO suite offline mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  }
+                ]
+              }
+            },
+            {
+              "day": "2026-10-15",
+              "report": {
+                "from": "2026-10-15",
+                "to": "2026-10-15",
+                "registeredOrders": 0,
+                "registeredCents": 0,
+                "dispatchedOrders": 0,
+                "deliveredOrders": 0,
+                "revenueCents": 0,
+                "collectionsCents": 0,
+                "refundsCents": 0,
+                "netCollectionsCents": 0,
+                "cogsCents": 0,
+                "distributionCents": 0,
+                "operatingExpenseCents": 0,
+                "grossMarginCents": 0,
+                "estimatedProfitCents": 0,
+                "stockLossCents": 0,
+                "paidOperatingExpensesCents": 0,
+                "purchasePaymentsCents": 0,
+                "outstandingCents": 0,
+                "refundableCents": 0,
+                "topProducts": {},
+                "customers": [
+                  {
+                    "id": "999000111",
+                    "name": "Cliente ficticio editado",
+                    "phone": "999000111",
+                    "orders": [
+                      "future:c4-local-test-id-simple",
+                      "future:c4-local-test-id-combo"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 700
+                  },
+                  {
+                    "id": "future:c4-local-test-id-pack",
+                    "name": "Cliente ficticio B",
+                    "phone": "",
+                    "orders": [
+                      "future:c4-local-test-id-pack"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                    "name": "DEMO suite simple mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                    "name": "DEMO suite tripack mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:76709b91-2400-477a-b505-a044ec065444",
+                    "name": "DEMO suite combo mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:76709b91-2400-477a-b505-a044ec065444"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                    "name": "DEMO suite offline mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  }
+                ]
+              }
+            },
+            {
+              "day": "2026-10-16",
+              "report": {
+                "from": "2026-10-16",
+                "to": "2026-10-16",
+                "registeredOrders": 7,
+                "registeredCents": 51800,
+                "dispatchedOrders": 2,
+                "deliveredOrders": 1,
+                "revenueCents": 700,
+                "collectionsCents": 19000,
+                "refundsCents": 18300,
+                "netCollectionsCents": 700,
+                "cogsCents": 0,
+                "distributionCents": 500,
+                "operatingExpenseCents": 500,
+                "grossMarginCents": 700,
+                "estimatedProfitCents": -300,
+                "stockLossCents": 0,
+                "paidOperatingExpensesCents": 500,
+                "purchasePaymentsCents": 5000,
+                "outstandingCents": 0,
+                "refundableCents": 0,
+                "topProducts": {
+                  "Gourmet molido 500g": 4,
+                  "Gourmet grano 250g": 2
+                },
+                "customers": [
+                  {
+                    "id": "999000111",
+                    "name": "Cliente ficticio editado",
+                    "phone": "999000111",
+                    "orders": [
+                      "future:c4-local-test-id-simple",
+                      "future:c4-local-test-id-combo"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 700
+                  },
+                  {
+                    "id": "future:c4-local-test-id-pack",
+                    "name": "Cliente ficticio B",
+                    "phone": "",
+                    "orders": [
+                      "future:c4-local-test-id-pack"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa",
+                    "name": "DEMO suite simple mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:3e987d80-8926-4c22-9502-91ce6a5d9aaa"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5",
+                    "name": "DEMO suite tripack mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:d7d437b2-ad1b-4bb8-bd0a-cc71438c74a5"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:76709b91-2400-477a-b505-a044ec065444",
+                    "name": "DEMO suite combo mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:76709b91-2400-477a-b505-a044ec065444"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  },
+                  {
+                    "id": "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf",
+                    "name": "DEMO suite offline mvauwytk",
+                    "phone": "",
+                    "orders": [
+                      "future:6cb80e68-aa98-44b0-ac3d-8c80d2ed3eaf"
+                    ],
+                    "purchaseCount": 0,
+                    "totalCents": 0
+                  }
+                ]
+              }
+            }
+          ],
+          "from": "2026-10-01",
+          "to": "2026-10-16",
+          "loadedAt": "2026-10-16T11:01:28.163Z"
+        },
+        "uxDraft5a": {
+          "saleId": "future:4542a6ab-3ba3-4971-8a99-76eff7c9e69e",
+          "mode": "simple",
+          "fields": {
+            "ui-family": "",
+            "ui-grind": "",
+            "ui-grams": "",
+            "customer": "Cliente ficticio editado",
+            "phone": "999000111",
+            "channel": "WhatsApp",
+            "note": "",
+            "zone": "Zona sintética",
+            "deliveryCharged": "0",
+            "deliveryCost": "0",
+            "paymentMethodIntent": "",
+            "discount": "0",
+            "authorizationId": ""
+          },
+          "lines": [
+            {
+              "offer": "demo:c4-local-test-id-grain",
+              "resource": "demo:c4-local-test-id-grano250",
+              "quantity": "1",
+              "filters": {
+                "ui-family": "",
+                "ui-grind": "",
+                "ui-grams": ""
+              }
+            }
+          ],
+          "extraLines": [],
+          "savedAt": "2026-10-16T11:01:30.758Z"
+        }
+      }
+    }
+  ],
+  "otherDevicesCovered": false
+}

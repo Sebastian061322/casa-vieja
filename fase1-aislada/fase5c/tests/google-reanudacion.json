@@ -1,0 +1,19 @@
+[
+  {
+    "kind": "COMMAND_PROGRESS_5C",
+    "operationId": "risk5c-13ec2e98-4372-427c-80c8-6fdaf98e4440-inventory-1",
+    "state": "COMMITTED",
+    "elapsedMs": 2226
+  },
+  {
+    "kind": "COMMAND_PROGRESS_5C",
+    "operationId": "risk5c-13ec2e98-4372-427c-80c8-6fdaf98e4440-inventory-2",
+    "state": "COMMITTED",
+    "elapsedMs": 3745
+  },
+  {
+    "kind": "LAB_PROGRESS_5C",
+    "done": false,
+    "checkpointSaved": true
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "environment": "LOCAL_SYNTHETIC_NO_GOOGLE_LOGIN",
+  "tests": [
+    {
+      "name": "Preparación confirmada por backend de laboratorio",
+      "passed": true
+    },
+    {
+      "name": "Sin campos de costos ni administración",
+      "passed": true
+    }
+  ],
+  "receipt": {
+    "queue": [],
+    "receipts": {
+      "dab1f213-a771-49e1-aac4-e8607980fb89": {
+        "epoch": "TEST_ONLY_V3",
+        "operationId": "dab1f213-a771-49e1-aac4-e8607980fb89",
+        "state": "COMMITTED",
+        "revision": 38,
+        "saleId": "future:a0d0b508-d6fa-4ff3-a2cd-30102b216ead",
+        "saleVersion": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "observed": [
+    "62 container Registro 1. 6:02:36 a.m.. Aviso. Se inició la ejecución.",
+    "65 texto Se inició la ejecución",
+    "66 container Registro 2. 6:08:36 a.m.. Error. Excedió el tiempo máximo de ejecución.. 0 marcos de pila.",
+    "69 container Excedió el tiempo máximo de ejecución..",
+    "70 texto Excedió el tiempo máximo de ejecución."
+  ],
+  "recovery": "Reanudar run y operationId originales mediante checkpoint; no crear otro lote de comandos."
+}

@@ -19,7 +19,7 @@ class BaseEngine {
   if(this.status(p.id).state!=='COMMITTED'){this.hook('beforeCommit',p);this.store.appendJournal({kind:'COMMITTED',id:p.id,result:p.result});this.hook('afterCommit',p);}
   return this.status(p.id);
  }
- recover(){for(const p of this.records().filter(x=>x.kind==='PREPARED'))if(this.status(p.id).state!=='COMMITTED')this.finish(p);}
+ recover(){const rows=this.records(),committed=new Set(rows.filter(x=>x.kind==='COMMITTED').map(x=>x.id));for(const p of rows.filter(x=>x.kind==='PREPARED'))if(!committed.has(p.id)){this.finish(p);committed.add(p.id);}}
  execute(input){
   require_(input&&typeof input==='object'&&!Array.isArray(input),'INVALID_COMMAND');
   require_(JSON.stringify(input).length<25000,'COMMAND_TOO_LARGE');

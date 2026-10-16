@@ -1,0 +1,16 @@
+{
+  "environment": "TEST_ONLY",
+  "deployableToProduction": false,
+  "ownerOnly": true,
+  "exposed": [
+    "commercialInitialize",
+    "commercialExecute",
+    "commercialStatus",
+    "commercialSnapshot",
+    "commercialReports",
+    "commercialPage",
+    "doGet"
+  ],
+  "maintenanceIncluded": false,
+  "legacyRPCIncluded": false
+}

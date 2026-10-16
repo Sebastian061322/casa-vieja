@@ -7,11 +7,13 @@ class Engine extends BaseEngine{
  constructor(store,opening={epoch:EPOCH,resources:{}},hook=()=>{}){check(opening.epoch===EPOCH&&Object.keys(opening.resources).length===0,'INVALID_OPENING');super(store,opening,hook);}
  state(){
   const rows=this.records(),effects=this.effects(),s={epoch:EPOCH,revision:0,resources:{},lots:{},sales:{},effects:[]};
+  const preparedById=new Map(rows.filter(r=>r.kind==='PREPARED').map(r=>[r.id,r]));
+  const effectsById=new Map(effects.map(e=>[e.id,canonical(e)]));
   for(const commit of rows.filter(r=>r.kind==='COMMITTED')){
-   const p=rows.find(r=>r.kind==='PREPARED'&&r.id===commit.id);check(p&&p.result.revision===s.revision+1&&canonical(commit.result)===canonical(p.result)&&p.fingerprint===canonical(p.command),'CORRUPT_COMMIT');
+   const p=preparedById.get(commit.id);check(p&&p.result.revision===s.revision+1&&canonical(commit.result)===canonical(p.result)&&p.fingerprint===canonical(p.command),'CORRUPT_COMMIT');
    for(const r of p.plan.resources||[]){check(!s.resources[r.id],'RESOURCE_EXISTS');s.resources[r.id]=clone(r);}
    for(const lot of p.plan.lots||[]){check(!s.lots[lot.id],'LOT_EXISTS');s.lots[lot.id]=clone(lot);}
-   for(const e of p.plan.effects){check(effects.some(x=>x.id===e.id&&canonical(x)===canonical(e)),'INCOMPLETE_COMMIT');const r=s.resources[e.resourceId];check(r,'RESOURCE_UNAVAILABLE');r.physical+=e.qtyDelta;r.reserved+=e.reservedDelta;r.valueCents+=e.valueDelta;r.reservedValueCents+=e.reservedValueDelta;r.qty=r.physical-r.reserved;check([r.physical,r.reserved,r.valueCents,r.reservedValueCents,r.qty].every(Number.isSafeInteger)&&r.qty>=0&&r.reserved>=0&&r.valueCents>=r.reservedValueCents&&r.reservedValueCents>=0,'CORRUPT_STOCK');s.effects.push(clone(e));}
+   for(const e of p.plan.effects){check(effectsById.get(e.id)===canonical(e),'INCOMPLETE_COMMIT');const r=s.resources[e.resourceId];check(r,'RESOURCE_UNAVAILABLE');r.physical+=e.qtyDelta;r.reserved+=e.reservedDelta;r.valueCents+=e.valueDelta;r.reservedValueCents+=e.reservedValueDelta;r.qty=r.physical-r.reserved;check([r.physical,r.reserved,r.valueCents,r.reservedValueCents,r.qty].every(Number.isSafeInteger)&&r.qty>=0&&r.reserved>=0&&r.valueCents>=r.reservedValueCents&&r.reservedValueCents>=0,'CORRUPT_STOCK');s.effects.push(clone(e));}
    if(p.plan.sale.entityType==='sale')s.sales[p.plan.sale.id]=clone(p.plan.sale);s.revision=p.result.revision;
   }return s;
  }

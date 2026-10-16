@@ -1,5 +1,5 @@
 function commercialEngine_(){const inventory=invEngine_();return new CVCommercial.Engine(inventory.store,inventory.opening,undefined,{role:'owner',now:()=>new Date().toISOString()});}
-function commercialReply_(fn){try{cvOwner_();return cvLocked_(fn);}catch(e){const known=/^[A-Z][A-Z_]+$/.test(e.message);return {error:known?e.message:'SERVER_UNAVAILABLE',retryable:!known};}}
+function commercialReply_(fn){try{cvOwner_();return cvLocked_(fn);}catch(e){const known=/^[A-Z][A-Z_]+$/.test(e.message);return {error:known?e.message:'SERVER_UNAVAILABLE',retryable:!known||['EFFECT_NOT_DURABLE','SERVER_UNAVAILABLE','CONNECTION_TIMEOUT','LOCK_TIMEOUT'].includes(e.message)};}}
 function commercialInitialize(){return commercialReply_(()=>{const ss=cvBook_();for(const name of INV_TABS_)if(!ss.getSheetByName(name))throw Error('AUTHORIZED_LAB_SETUP_REQUIRED');return {initialized:true,epoch:CVInventory.EPOCH,commercialVersion:4};});}
 function commercialExecute(c){return commercialReply_(()=>commercialEngine_().execute(c));}
 function commercialStatus(id){return commercialReply_(()=>commercialEngine_().status(id));}

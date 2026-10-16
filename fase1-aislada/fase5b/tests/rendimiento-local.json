@@ -1,0 +1,58 @@
+{
+  "runtime": "v24.20.0",
+  "environment": "LOCAL_VM_SYNTHETIC",
+  "samplesPerSize": 1,
+  "googleMeasurement": false,
+  "results": [
+    {
+      "commits": 32,
+      "journalRows": 64,
+      "effects": 35,
+      "baselineReplayMs": 8.72,
+      "indexedReplayMs": 1.5,
+      "baselineReportsMs": 0.4,
+      "indexedReportsMs": 0.29,
+      "equivalent": true
+    },
+    {
+      "commits": 160,
+      "journalRows": 320,
+      "effects": 175,
+      "baselineReplayMs": 170.45,
+      "indexedReplayMs": 6.76,
+      "baselineReportsMs": 0.83,
+      "indexedReportsMs": 0.76,
+      "equivalent": true
+    },
+    {
+      "commits": 480,
+      "journalRows": 960,
+      "effects": 525,
+      "baselineReplayMs": 1457.76,
+      "indexedReplayMs": 18.8,
+      "baselineReportsMs": 2.32,
+      "indexedReportsMs": 2.4,
+      "equivalent": true
+    },
+    {
+      "commits": 2048,
+      "journalRows": 4096,
+      "effects": 2240,
+      "baselineReplayMs": null,
+      "indexedReplayMs": 88.77,
+      "baselineReportsMs": null,
+      "indexedReportsMs": 15.46,
+      "equivalent": null
+    },
+    {
+      "commits": 10240,
+      "journalRows": 20480,
+      "effects": 11200,
+      "baselineReplayMs": null,
+      "indexedReplayMs": 458.52,
+      "baselineReportsMs": null,
+      "indexedReportsMs": 261.53,
+      "equivalent": null
+    }
+  ]
+}

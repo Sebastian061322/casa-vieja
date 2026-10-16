@@ -1,0 +1,58 @@
+[
+  {
+    "id": "phase5b-39b17103-b1c2-4a20-8d1a-41c067d8b9a9",
+    "kind": "PERFORMANCE_5B",
+    "environment": "TEST_ONLY",
+    "measuredAt": "2026-10-16T04:05:04.999Z",
+    "journalRows": 166,
+    "effectRows": 113,
+    "revision": 82,
+    "loadMs": 623,
+    "replayMs": 17,
+    "reportsMs": 2,
+    "totalMs": 642,
+    "passed": true,
+    "productionAccess": false
+  },
+  {
+    "id": "safe5b-331b5520-d799-4cb4-bb9f-0b6429af452d",
+    "kind": "WRITE_5B",
+    "environment": "TEST_ONLY",
+    "passed": true,
+    "executeMs": 1112,
+    "retryMs": 6,
+    "revision": 83,
+    "originalPrefixPreserved": true,
+    "effectsAdded": 1,
+    "operationId": "safe5b-331b5520-d799-4cb4-bb9f-0b6429af452d",
+    "measuredAt": "2026-10-16T04:05:06.286Z"
+  },
+  {
+    "id": "restore5b-74d3379b-363d-419c-bf47-68a5d25e371e",
+    "kind": "RESTORE_5B",
+    "environment": "TEST_ONLY",
+    "destinationId": "1zB8s5MZN-LGMpnHL3RkOvA802WVfPOPEkRgXmygNk0o",
+    "revision": 83,
+    "journalRows": 168,
+    "effectRows": 114,
+    "sha256Base64": "2blxtH0I4WGu2TY1vS8HWevdn/9AtsRBmyIrRDvKrIs=",
+    "passed": true,
+    "sourceUnchanged": true,
+    "measuredAt": "2026-10-16T04:05:10.773Z"
+  },
+  {
+    "id": "phase5b-e4dcdc5f-0733-48b1-aa0f-d4cc57e0b3ea",
+    "kind": "PERFORMANCE_5B",
+    "environment": "TEST_ONLY",
+    "measuredAt": "2026-10-16T04:05:11.621Z",
+    "journalRows": 168,
+    "effectRows": 114,
+    "revision": 83,
+    "loadMs": 539,
+    "replayMs": 7,
+    "reportsMs": 0,
+    "totalMs": 546,
+    "passed": true,
+    "productionAccess": false
+  }
+]

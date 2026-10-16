@@ -1,0 +1,10 @@
+{
+  "verifiedAt": "2026-10-16T04:10:20.724Z",
+  "source": "Apps Script · Descripción general · Alcances de OAuth del proyecto",
+  "requestedScopes": 2,
+  "scopes": [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/userinfo.email"
+  ],
+  "permissionsChanged": false
+}

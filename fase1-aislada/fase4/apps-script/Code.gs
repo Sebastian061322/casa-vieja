@@ -188,7 +188,7 @@ class BaseEngine {
   if(this.status(p.id).state!=='COMMITTED'){this.hook('beforeCommit',p);this.store.appendJournal({kind:'COMMITTED',id:p.id,result:p.result});this.hook('afterCommit',p);}
   return this.status(p.id);
  }
- recover(){for(const p of this.records().filter(x=>x.kind==='PREPARED'))if(this.status(p.id).state!=='COMMITTED')this.finish(p);}
+ recover(){const rows=this.records(),committed=new Set(rows.filter(x=>x.kind==='COMMITTED').map(x=>x.id));for(const p of rows.filter(x=>x.kind==='PREPARED'))if(!committed.has(p.id)){this.finish(p);committed.add(p.id);}}
  execute(input){
   require_(input&&typeof input==='object'&&!Array.isArray(input),'INVALID_COMMAND');
   require_(JSON.stringify(input).length<25000,'COMMAND_TOO_LARGE');
@@ -214,11 +214,13 @@ class Engine extends BaseEngine{
  constructor(store,opening={epoch:EPOCH,resources:{}},hook=()=>{}){check(opening.epoch===EPOCH&&Object.keys(opening.resources).length===0,'INVALID_OPENING');super(store,opening,hook);}
  state(){
   const rows=this.records(),effects=this.effects(),s={epoch:EPOCH,revision:0,resources:{},lots:{},sales:{},effects:[]};
+  const preparedById=new Map(rows.filter(r=>r.kind==='PREPARED').map(r=>[r.id,r]));
+  const effectsById=new Map(effects.map(e=>[e.id,canonical(e)]));
   for(const commit of rows.filter(r=>r.kind==='COMMITTED')){
-   const p=rows.find(r=>r.kind==='PREPARED'&&r.id===commit.id);check(p&&p.result.revision===s.revision+1&&canonical(commit.result)===canonical(p.result)&&p.fingerprint===canonical(p.command),'CORRUPT_COMMIT');
+   const p=preparedById.get(commit.id);check(p&&p.result.revision===s.revision+1&&canonical(commit.result)===canonical(p.result)&&p.fingerprint===canonical(p.command),'CORRUPT_COMMIT');
    for(const r of p.plan.resources||[]){check(!s.resources[r.id],'RESOURCE_EXISTS');s.resources[r.id]=clone(r);}
    for(const lot of p.plan.lots||[]){check(!s.lots[lot.id],'LOT_EXISTS');s.lots[lot.id]=clone(lot);}
-   for(const e of p.plan.effects){check(effects.some(x=>x.id===e.id&&canonical(x)===canonical(e)),'INCOMPLETE_COMMIT');const r=s.resources[e.resourceId];check(r,'RESOURCE_UNAVAILABLE');r.physical+=e.qtyDelta;r.reserved+=e.reservedDelta;r.valueCents+=e.valueDelta;r.reservedValueCents+=e.reservedValueDelta;r.qty=r.physical-r.reserved;check([r.physical,r.reserved,r.valueCents,r.reservedValueCents,r.qty].every(Number.isSafeInteger)&&r.qty>=0&&r.reserved>=0&&r.valueCents>=r.reservedValueCents&&r.reservedValueCents>=0,'CORRUPT_STOCK');s.effects.push(clone(e));}
+   for(const e of p.plan.effects){check(effectsById.get(e.id)===canonical(e),'INCOMPLETE_COMMIT');const r=s.resources[e.resourceId];check(r,'RESOURCE_UNAVAILABLE');r.physical+=e.qtyDelta;r.reserved+=e.reservedDelta;r.valueCents+=e.valueDelta;r.reservedValueCents+=e.reservedValueDelta;r.qty=r.physical-r.reserved;check([r.physical,r.reserved,r.valueCents,r.reservedValueCents,r.qty].every(Number.isSafeInteger)&&r.qty>=0&&r.reserved>=0&&r.valueCents>=r.reservedValueCents&&r.reservedValueCents>=0,'CORRUPT_STOCK');s.effects.push(clone(e));}
    if(p.plan.sale.entityType==='sale')s.sales[p.plan.sale.id]=clone(p.plan.sale);s.revision=p.result.revision;
   }return s;
  }
@@ -313,7 +315,7 @@ function invAppend_(ss,name,r){if(!INV_TABS_.includes(name))throw Error('TAB_FOR
 function invEngine_(){
  const ss=cvBook_();let journal=invRead_(ss,INV_TABS_[0]),effects=invRead_(ss,INV_TABS_[1]);
  // Cache solo durante el bloqueo actual. Cada append se relee de Sheets antes de confirmar.
- const append=(index,r)=>{invAppend_(ss,INV_TABS_[index],r);const fresh=invRead_(ss,INV_TABS_[index]);if(!fresh.some(x=>CVInventory.canonical(x)===CVInventory.canonical(r)))throw Error('EFFECT_NOT_DURABLE');if(index===0)journal=fresh;else effects=fresh;};
+ const append=(index,r)=>{const sh=ss.getSheetByName(INV_TABS_[index]),row=sh.getLastRow()+1;invAppend_(ss,INV_TABS_[index],r);const cells=sh.getRange(row,1,1,3).getValues();if(cells.length!==1||cells[0][0]!==r.id||cells[0][1]!==r.kind||CVInventory.canonical(JSON.parse(cells[0][2]))!==CVInventory.canonical(r))throw Error('EFFECT_NOT_DURABLE');if(index===0)journal.push(CVInventory.clone(r));else effects.push(CVInventory.clone(r));};
  return new CVInventory.Engine({readJournal:()=>CVInventory.clone(journal),readEffects:()=>CVInventory.clone(effects),appendJournal:r=>append(0,r),appendEffect:r=>append(1,r)});
 }
 function invReply_(fn){try{cvOwner_();return cvLocked_(fn);}catch(e){const domain=/^(INVALID_|INSUFFICIENT_|PROTOCOL_|WRONG_|OWNER_|SALE_|FUTURE_|COMMAND_|FINANCIAL_|RESOURCE_|REASON_|RETURN_|IDEMPOTENCY_|LOT_|CORRUPT_|JOURNAL_|TAB_|RECORD_|SETUP_)/.test(e.message);return {error:domain?e.message:'SERVER_UNAVAILABLE',retryable:!domain};}}
@@ -350,7 +352,7 @@ const day=iso=>new Date(Date.parse(iso)-5*3600000).toISOString().slice(0,10);
 const ref=s=>text(s,100).toUpperCase();
 class Engine extends Inventory{
  constructor(store,opening,hook,context={role:'owner',now:()=>new Date().toISOString()}){super(store,opening,hook);this.context=context;}
- state(){const s=super.state();s.commerce={offers:{},authorizations:{},events:[],documents:{}};for(const row of this.records().filter(r=>r.kind==='COMMITTED')){const p=this.records().find(r=>r.id===row.id&&r.kind==='PREPARED');for(const e of p.plan.commerceEvents||[]){s.commerce.events.push(clone(e));if(e.documentRef){check(!s.commerce.documents[e.documentRef],'COMMERCIAL_DOCUMENT_CONFLICT');s.commerce.documents[e.documentRef]=e.id;}if(e.kind==='OFFER')s.commerce.offers[e.offer.id]=clone(e.offer);if(e.kind==='DISCOUNT_AUTHORIZATION')s.commerce.authorizations[e.authorization.id]=clone(e.authorization);if(e.kind==='DISCOUNT_USED')s.commerce.authorizations[e.authorizationId].usedBy=e.operationId;}}return s;}
+ state(){const s=super.state();s.commerce={offers:{},authorizations:{},events:[],documents:{}};const records=this.records(),preparedById=new Map(records.filter(r=>r.kind==='PREPARED').map(r=>[r.id,r]));for(const row of records.filter(r=>r.kind==='COMMITTED')){const p=preparedById.get(row.id);for(const e of p.plan.commerceEvents||[]){s.commerce.events.push(clone(e));if(e.documentRef){check(!s.commerce.documents[e.documentRef],'COMMERCIAL_DOCUMENT_CONFLICT');s.commerce.documents[e.documentRef]=e.id;}if(e.kind==='OFFER')s.commerce.offers[e.offer.id]=clone(e.offer);if(e.kind==='DISCOUNT_AUTHORIZATION')s.commerce.authorizations[e.authorization.id]=clone(e.authorization);if(e.kind==='DISCOUNT_USED')s.commerce.authorizations[e.authorizationId].usedBy=e.operationId;}}return s;}
  financial(s,saleId){const sale=s.sales[saleId],events=s.commerce.events.filter(e=>e.saleId===saleId);const sum=k=>events.filter(e=>e.kind===k).reduce((n,e)=>n+e.amountCents,0);const credit=sum('RETURN_CREDIT');const due=sale?.status==='CANCELLED'?0:(sale?.totalCents||0)+(sale?.deliveryChargedCents||0)-credit;const paid=sum('PAYMENT'),refunded=sum('REFUND');return {dueCents:due,paidCents:paid,refundedCents:refunded,cashCents:paid-refunded,outstandingCents:Math.max(0,due-paid+refunded),refundableCents:Math.max(0,paid-refunded-due)};}
  plan(s,c){
   check(c.commercialVersion===4,'COMMERCIAL_VERSION_REQUIRED');check(this.context&&this.context.role==='owner','OWNER_ONLY');const now=this.context.now();check(!Number.isNaN(Date.parse(now)),'INVALID_SERVER_TIME');
@@ -433,7 +435,7 @@ return [...seed,offer('single','molido',500,1,3500),offer('tripack','molido',500
 return {commands};});
 
 function commercialEngine_(){const inventory=invEngine_();return new CVCommercial.Engine(inventory.store,inventory.opening,undefined,{role:'owner',now:()=>new Date().toISOString()});}
-function commercialReply_(fn){try{cvOwner_();return cvLocked_(fn);}catch(e){const known=/^[A-Z][A-Z_]+$/.test(e.message);return {error:known?e.message:'SERVER_UNAVAILABLE',retryable:!known};}}
+function commercialReply_(fn){try{cvOwner_();return cvLocked_(fn);}catch(e){const known=/^[A-Z][A-Z_]+$/.test(e.message);return {error:known?e.message:'SERVER_UNAVAILABLE',retryable:!known||['EFFECT_NOT_DURABLE','SERVER_UNAVAILABLE','CONNECTION_TIMEOUT','LOCK_TIMEOUT'].includes(e.message)};}}
 function commercialInitialize(){return commercialReply_(()=>{const ss=cvBook_();for(const name of INV_TABS_)if(!ss.getSheetByName(name))throw Error('AUTHORIZED_LAB_SETUP_REQUIRED');return {initialized:true,epoch:CVInventory.EPOCH,commercialVersion:4};});}
 function commercialExecute(c){return commercialReply_(()=>commercialEngine_().execute(c));}
 function commercialStatus(id){return commercialReply_(()=>commercialEngine_().status(id));}

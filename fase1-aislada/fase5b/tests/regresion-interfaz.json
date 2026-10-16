@@ -1,0 +1,134 @@
+{
+  "environment": "LOCAL_SYNTHETIC_PHASE4_BACKEND",
+  "passed": true,
+  "results": [
+    {
+      "name": "Borrador conservado al navegar",
+      "passed": true
+    },
+    {
+      "name": "Borrador conservado al recargar",
+      "passed": true
+    },
+    {
+      "name": "Modal de venta abre",
+      "passed": true
+    },
+    {
+      "name": "Modal cierra sin perder formulario",
+      "passed": true
+    },
+    {
+      "name": "Combinada agrega segunda línea",
+      "passed": true
+    },
+    {
+      "name": "Tripack vuelve a una presentación",
+      "passed": true
+    },
+    {
+      "name": "Regreso a combinada recupera líneas",
+      "passed": true
+    },
+    {
+      "name": "Venta simple confirmada por backend",
+      "passed": true
+    },
+    {
+      "name": "Acceso al pedido exacto Venta simple",
+      "passed": true
+    },
+    {
+      "name": "Cancelación trazable DEMO suite simple mvag2jjk",
+      "passed": true
+    },
+    {
+      "name": "Tripack confirmada por backend",
+      "passed": true
+    },
+    {
+      "name": "Acceso al pedido exacto Tripack",
+      "passed": true
+    },
+    {
+      "name": "Cancelación trazable DEMO suite tripack mvag2jjk",
+      "passed": true
+    },
+    {
+      "name": "Combinada confirmada por backend",
+      "passed": true
+    },
+    {
+      "name": "Acceso al pedido exacto Combinada",
+      "passed": true
+    },
+    {
+      "name": "Cancelación trazable DEMO suite combo mvag2jjk",
+      "passed": true
+    },
+    {
+      "name": "Offline conserva cola sin falso éxito",
+      "passed": true
+    },
+    {
+      "name": "Reintento offline conserva una sola cola",
+      "passed": true
+    },
+    {
+      "name": "Recarga offline conserva operación",
+      "passed": true
+    },
+    {
+      "name": "Reconexión confirma por backend",
+      "passed": true
+    },
+    {
+      "name": "Reconexión no duplica pedido",
+      "passed": true
+    },
+    {
+      "name": "Cancelación trazable DEMO suite offline mvag2jjk",
+      "passed": true
+    },
+    {
+      "name": "Atajo filtra envasados",
+      "passed": true
+    },
+    {
+      "name": "Filtro combinado mantiene selección",
+      "passed": true
+    },
+    {
+      "name": "Modal operativo abre",
+      "passed": true
+    },
+    {
+      "name": "Modal operativo cierra",
+      "passed": true
+    },
+    {
+      "name": "Cantidad usa teclado numérico",
+      "passed": true
+    },
+    {
+      "name": "Importes usan teclado decimal",
+      "passed": true
+    },
+    {
+      "name": "Teléfono usa teclado telefónico",
+      "passed": true
+    },
+    {
+      "name": "Landmark y salto accesible",
+      "passed": true
+    },
+    {
+      "name": "Estado anunciado sin alertas invasivas",
+      "passed": true
+    },
+    {
+      "name": "Campos agrupados semánticamente",
+      "passed": true
+    }
+  ]
+}

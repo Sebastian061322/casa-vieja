@@ -1,0 +1,9 @@
+{
+  "sourceAndRestoreIdentical": true,
+  "journalRows": 168,
+  "effects": 114,
+  "revision": 83,
+  "pending": [],
+  "sha256": "1aa0942301241539160f85b2da6a5ec057a43e2e6433fac0841acd8d3330d20e",
+  "verifiedVia": "Google Sheets connector bounded ranges + Node engine"
+}

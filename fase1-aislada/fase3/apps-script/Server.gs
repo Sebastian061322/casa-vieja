@@ -5,7 +5,7 @@ function invAppend_(ss,name,r){if(!INV_TABS_.includes(name))throw Error('TAB_FOR
 function invEngine_(){
  const ss=cvBook_();let journal=invRead_(ss,INV_TABS_[0]),effects=invRead_(ss,INV_TABS_[1]);
  // Cache solo durante el bloqueo actual. Cada append se relee de Sheets antes de confirmar.
- const append=(index,r)=>{invAppend_(ss,INV_TABS_[index],r);const fresh=invRead_(ss,INV_TABS_[index]);if(!fresh.some(x=>CVInventory.canonical(x)===CVInventory.canonical(r)))throw Error('EFFECT_NOT_DURABLE');if(index===0)journal=fresh;else effects=fresh;};
+ const append=(index,r)=>{const sh=ss.getSheetByName(INV_TABS_[index]),row=sh.getLastRow()+1;invAppend_(ss,INV_TABS_[index],r);const cells=sh.getRange(row,1,1,3).getValues();if(cells.length!==1||cells[0][0]!==r.id||cells[0][1]!==r.kind||CVInventory.canonical(JSON.parse(cells[0][2]))!==CVInventory.canonical(r))throw Error('EFFECT_NOT_DURABLE');if(index===0)journal.push(CVInventory.clone(r));else effects.push(CVInventory.clone(r));};
  return new CVInventory.Engine({readJournal:()=>CVInventory.clone(journal),readEffects:()=>CVInventory.clone(effects),appendJournal:r=>append(0,r),appendEffect:r=>append(1,r)});
 }
 function invReply_(fn){try{cvOwner_();return cvLocked_(fn);}catch(e){const domain=/^(INVALID_|INSUFFICIENT_|PROTOCOL_|WRONG_|OWNER_|SALE_|FUTURE_|COMMAND_|FINANCIAL_|RESOURCE_|REASON_|RETURN_|IDEMPOTENCY_|LOT_|CORRUPT_|JOURNAL_|TAB_|RECORD_|SETUP_)/.test(e.message);return {error:domain?e.message:'SERVER_UNAVAILABLE',retryable:!domain};}}

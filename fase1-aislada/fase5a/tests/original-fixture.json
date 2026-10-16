@@ -1,0 +1,13 @@
+{
+  "products": [
+    {"id":"demo-single","name":"Gourmet molido 500 g · DEMO","price":35,"cost":17.35,"stock":6,"minStock":2,"weightGrams":500,"grindType":"molido","baseProductId":"demo-base","unitsPerSale":1},
+    {"id":"demo-tripack","name":"Tripack Gourmet · DEMO","price":99,"cost":52.05,"stock":2,"minStock":1,"weightGrams":1500,"grindType":"molido","baseProductId":"demo-base","unitsPerSale":3},
+    {"id":"demo-grain","name":"Gourmet grano 250 g · DEMO","price":25,"cost":9.19,"stock":8,"minStock":2,"weightGrams":250,"grindType":"grano","baseProductId":"demo-grain-base","unitsPerSale":1}
+  ],
+  "baseProducts": [
+    {"id":"demo-base","name":"Bolsa Gourmet molido 500 g · DEMO","grindType":"molido","stock":6,"minStock":2,"weightGrams":500,"packagingCost":1},
+    {"id":"demo-grain-base","name":"Bolsa Gourmet grano 250 g · DEMO","grindType":"grano","stock":8,"minStock":2,"weightGrams":250,"packagingCost":1}
+  ],
+  "lotes": [{"id":"demo-lot","name":"Lote ficticio 5A","producer":"Productor ficticio","variety":"Typica de prueba","origin":"Origen de prueba","type":"ambos","active":true,"greenKg":10,"greenCostPerKg":20,"roastedKg":8,"roastCost":30,"freightCost":0,"costPerKgRoasted":28.75,"totalLotCost":230}],
+  "sales":[],"movements":[],"ads":[],"expenses":[],"settings":{},"fund":[],"inv_items":[],"inv_events":[]
+}

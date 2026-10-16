@@ -1,0 +1,166 @@
+{
+  "viewports": [
+    {
+      "size": {
+        "width": 320,
+        "height": 740
+      },
+      "measures": {
+        "buttons": [
+          {
+            "height": 50,
+            "label": "⌂\nInicio"
+          },
+          {
+            "height": 50,
+            "label": "＋\nVentas"
+          },
+          {
+            "height": 50,
+            "label": "▤\nPedidos"
+          },
+          {
+            "height": 50,
+            "label": "▦\nInventario"
+          },
+          {
+            "height": 50,
+            "label": "☰\nMás"
+          }
+        ],
+        "scrollWidth": 320,
+        "totalVisible": true,
+        "width": 320
+      },
+      "passed": true
+    },
+    {
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "measures": {
+        "buttons": [
+          {
+            "height": 50,
+            "label": "⌂\nInicio"
+          },
+          {
+            "height": 50,
+            "label": "＋\nVentas"
+          },
+          {
+            "height": 50,
+            "label": "▤\nPedidos"
+          },
+          {
+            "height": 50,
+            "label": "▦\nInventario"
+          },
+          {
+            "height": 50,
+            "label": "☰\nMás"
+          }
+        ],
+        "scrollWidth": 390,
+        "totalVisible": true,
+        "width": 390
+      },
+      "passed": true
+    },
+    {
+      "size": {
+        "width": 430,
+        "height": 932
+      },
+      "measures": {
+        "buttons": [
+          {
+            "height": 50,
+            "label": "⌂\nInicio"
+          },
+          {
+            "height": 50,
+            "label": "＋\nVentas"
+          },
+          {
+            "height": 50,
+            "label": "▤\nPedidos"
+          },
+          {
+            "height": 50,
+            "label": "▦\nInventario"
+          },
+          {
+            "height": 50,
+            "label": "☰\nMás"
+          }
+        ],
+        "scrollWidth": 430,
+        "totalVisible": true,
+        "width": 430
+      },
+      "passed": true
+    },
+    {
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "measures": {
+        "buttons": [
+          {
+            "height": 50,
+            "label": "⌂\nInicio"
+          },
+          {
+            "height": 50,
+            "label": "＋\nVentas"
+          },
+          {
+            "height": 50,
+            "label": "▤\nPedidos"
+          },
+          {
+            "height": 50,
+            "label": "▦\nInventario"
+          },
+          {
+            "height": 50,
+            "label": "☰\nMás"
+          }
+        ],
+        "scrollWidth": 768,
+        "totalVisible": true,
+        "width": 768
+      },
+      "passed": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "Inventario móvil en un toque y filtro de bolsas",
+      "passed": true
+    },
+    {
+      "name": "Menú Más accede a Lotes y se cierra",
+      "passed": true
+    },
+    {
+      "name": "Modal de venta móvil abre",
+      "passed": true
+    },
+    {
+      "name": "Modal de venta móvil cierra",
+      "passed": true
+    },
+    {
+      "name": "Publicidad separa métricas y ventas no verificadas",
+      "passed": true
+    },
+    {
+      "name": "Filtro sin datos muestra estado vacío",
+      "passed": true
+    }
+  ]
+}

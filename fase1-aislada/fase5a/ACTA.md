@@ -27,3 +27,7 @@ Se entregó diagnóstico antes de implementar. La matriz en DIAGNOSTICO.md disti
 ## Pendiente obligatorio
 
 El propietario debe revisar la organización de menú, formulario, total y navegación móvil. No se considera terminada Fase 5A ni se prepara activación comercial. Las limitaciones físicas, integración Google y continuidad de colas V4/V5A están documentadas en README.md. Todo el contenido monetario y de inventario de las capturas es ficticio.
+
+## Continuación 5A.2
+
+El propietario aprobó parcialmente la navegación y solicitó refinamiento visual; no aprobó el cierre. La entrega vigente y sus límites están en refinamiento-5a2/INFORME.md. Se detectó y corrigió una reasignación a const en el filtro de fechas que las pruebas anteriores no cubrían. Backend de Fase 4 intacto; nueva cobertura de carga y errores de JavaScript. Continúa pendiente la aprobación visual.

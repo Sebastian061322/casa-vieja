@@ -1,0 +1,9 @@
+{
+  "environment": "Safari nativo, solo localhost",
+  "tabFromCustomerToPhone": true,
+  "visibleFocusRing": true,
+  "zoom200PercentConfirmedInPageMenu": true,
+  "responsiveNavigationAt200Percent": true,
+  "zoomRestoredWithActualSize": true,
+  "scope": "Comprobaciones b\u00e1sicas, no certificaci\u00f3n completa de accesibilidad ni teclado m\u00f3vil f\u00edsico"
+}

@@ -64,3 +64,7 @@ No se repitieron las 48 verificaciones reales de Google de Fase 4: se conservan 
 La base IndexedDB `cv-commercial-sandbox-v5a-owner` es deliberadamente distinta de V4 para aislar este ensayo. No se borró ni migró la cola V4. No desplegar este candidato sobre un uso existente sin un mecanismo revisado que detecte y gestione operaciones V4 en tránsito. Mantener acceso a la interfaz previa mientras se valide esa continuidad.
 
 Persisten los límites de Fase 4: Fondo, conteos autorizados, restauración, roles, carga y políticas de devolución. La navegación y los reportes propuestos no equivalen a contabilidad fiscal. Publicidad no implementa atribución ni conexión. Fase 5B debe resolver estos puntos con alcance aprobado; no se prepara activación comercial.
+
+## Continuación 5A.2
+
+El candidato navegable actual incorpora refinamiento de Inicio, identidad visual, gráficos SVG y ventas rápidas. Ver `refinamiento-5a2/INFORME.md` y `refinamiento-5a2/REVISION_VISUAL.md`. El backend y la base IndexedDB de 5A se conservan. Se corrigió el filtro de fechas y se amplió la cobertura a 152 pruebas locales, 32 verificaciones anteriores de interfaz y 24 nuevas. Los resultados anteriores de este README documentan la primera entrega; no se ha aprobado el cierre visual ni desplegado el refinamiento.

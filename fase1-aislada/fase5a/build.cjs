@@ -1,5 +1,8 @@
 // Compile an isolated review candidate. No upload or deployment.
 const fs=require('node:fs'),path=require('node:path');const root=__dirname,read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const suffix='/* GENERATED_REFINEMENT_5A2 */';
+const baseUX=read('web/ux.js').split(suffix)[0];fs.writeFileSync(path.join(root,'web/ux.js'),baseUX+suffix+'\n'+read('refinamiento-5a2/components.js')+'\n'+read('refinamiento-5a2/refinement.js'));
+const cssMarker='/* GENERATED_STYLE_5A2 */',baseCSS=read('web/ux.css').split(cssMarker)[0];fs.writeFileSync(path.join(root,'web/ux.css'),baseCSS+cssMarker+'\n'+read('refinamiento-5a2/refinement.css'));
 let shell=read('web/shell.html');const marker=shell.indexOf('/* Evolución visual'),end=shell.indexOf('</style>',marker);if(marker<0||end<0)throw Error('CSS_MARKER');shell=shell.slice(0,marker)+read('web/ux.css')+shell.slice(end);fs.writeFileSync(path.join(root,'web/shell.html'),shell);
 const html=shell+'<script>'+read('../fase2/client.js')+'\n'+read('web/app.js')+'\n'+read('web/ux.js')+'</script></body></html>';
 if(/https:\/\/script.google.com\/macros\/|TOKEN_SECRETO|cv_script_token|Windsor.*(?:token|key)/.test(html))throw Error('UNSAFE_FRONTEND');

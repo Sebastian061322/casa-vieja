@@ -1,0 +1,86 @@
+[
+  {
+    "size": {
+      "width": 320,
+      "height": 740
+    },
+    "homeMeasure": {
+      "chartWidth": 268.4765625,
+      "pointHeight": 44,
+      "scroll": 320,
+      "width": 320
+    },
+    "saleMeasure": {
+      "phoneMode": "tel",
+      "quickHeight": 44,
+      "scroll": 320,
+      "submitHeight": 53,
+      "totalVisible": true,
+      "width": 320
+    },
+    "passed": true
+  },
+  {
+    "size": {
+      "width": 390,
+      "height": 844
+    },
+    "homeMeasure": {
+      "chartWidth": 328,
+      "pointHeight": 44,
+      "scroll": 390,
+      "width": 390
+    },
+    "saleMeasure": {
+      "phoneMode": "tel",
+      "quickHeight": 44,
+      "scroll": 390,
+      "submitHeight": 44,
+      "totalVisible": true,
+      "width": 390
+    },
+    "passed": true
+  },
+  {
+    "size": {
+      "width": 430,
+      "height": 932
+    },
+    "homeMeasure": {
+      "chartWidth": 368,
+      "pointHeight": 44,
+      "scroll": 430,
+      "width": 430
+    },
+    "saleMeasure": {
+      "phoneMode": "tel",
+      "quickHeight": 44,
+      "scroll": 430,
+      "submitHeight": 44,
+      "totalVisible": true,
+      "width": 430
+    },
+    "passed": true
+  },
+  {
+    "size": {
+      "width": 768,
+      "height": 1024
+    },
+    "homeMeasure": {
+      "chartWidth": 706,
+      "pointHeight": 44,
+      "scroll": 768,
+      "width": 768
+    },
+    "saleMeasure": {
+      "phoneMode": "tel",
+      "quickHeight": 44,
+      "scroll": 768,
+      "submitHeight": 44,
+      "totalVisible": true,
+      "width": 768
+    },
+    "passed": true
+  }
+]

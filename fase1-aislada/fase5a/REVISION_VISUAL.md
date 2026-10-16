@@ -1,3 +1,7 @@
+# Revisión vigente: Fase 5A.2
+
+Consulta la [propuesta refinada](refinamiento-5a2/REVISION_VISUAL.md). La galería siguiente conserva la primera entrega como comparación; no representa el diseño vigente.
+
 # Revisión visual pendiente — Casa Vieja Café
 
 Esta es una propuesta funcional de laboratorio, con datos ficticios. No está activada comercialmente y la Fase 5A sigue abierta hasta tu aprobación.

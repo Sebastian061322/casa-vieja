@@ -1,0 +1,8 @@
+{
+  "source": "5A previous compiled HTML, same IndexedDB and origin",
+  "pendingBefore": true,
+  "pendingAfterInterfaceChange": true,
+  "confirmedAfterReconnect": true,
+  "matchingOrders": 1,
+  "noAutomaticPaymentOrDispatch": true
+}

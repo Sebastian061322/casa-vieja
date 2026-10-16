@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Sale modal opens on phone",
+    "passed": true
+  },
+  {
+    "name": "Sale modal closes preserving draft",
+    "passed": true
+  },
+  {
+    "name": "Wide inventory table scrolls within its active container",
+    "passed": true,
+    "measures": {
+      "documentWidth": 390,
+      "tableViewport": 360,
+      "tableWidth": 732,
+      "viewport": 390
+    }
+  },
+  {
+    "name": "Secondary menu reaches advertising and closes",
+    "passed": true
+  },
+  {
+    "name": "Advertising layout contains its table on mobile",
+    "passed": true
+  }
+]

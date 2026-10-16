@@ -1,0 +1,103 @@
+{
+  "environment": "LOCAL_SYNTHETIC_UNCHANGED_PHASE4",
+  "startedAt": "2026-10-16T03:34:28.532Z",
+  "passed": true,
+  "results": [
+    {
+      "name": "Financial waterfall loads from backend reports",
+      "passed": true
+    },
+    {
+      "name": "Fund has no fabricated amount",
+      "passed": true
+    },
+    {
+      "name": "Current balances are explicitly labeled",
+      "passed": true
+    },
+    {
+      "name": "Today filter shows one backend day",
+      "passed": true
+    },
+    {
+      "name": "Seven-day filter creates seven date controls",
+      "passed": true
+    },
+    {
+      "name": "Chart switches to order counts",
+      "passed": true
+    },
+    {
+      "name": "Date detail changes without recalculating finance",
+      "passed": true
+    },
+    {
+      "name": "Accessible chart table includes definitions",
+      "passed": true
+    },
+    {
+      "name": "Chart selection preserves keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "Offline report failure is explicit",
+      "passed": true
+    },
+    {
+      "name": "Offline does not erase previous financial panel",
+      "passed": true
+    },
+    {
+      "name": "Report recovers after reconnect",
+      "passed": true
+    },
+    {
+      "name": "Empty backend period is distinguished from failed fetch",
+      "passed": true
+    },
+    {
+      "name": "Optional product filters collapsed by default",
+      "passed": true
+    },
+    {
+      "name": "Optional filters can open",
+      "passed": true
+    },
+    {
+      "name": "Quick product resolves exact catalog option",
+      "passed": true
+    },
+    {
+      "name": "Lot dropdown uses readable label without raw ID",
+      "passed": true
+    },
+    {
+      "name": "Exact resource ID remains the option value",
+      "passed": true
+    },
+    {
+      "name": "Existing customer data populate draft",
+      "passed": true
+    },
+    {
+      "name": "Client recovery never registers a payment",
+      "passed": true
+    },
+    {
+      "name": "Order date filtering runs without const assignment error",
+      "passed": true
+    },
+    {
+      "name": "Advertising cards clearly marked fictional",
+      "passed": true
+    },
+    {
+      "name": "Advertising chart never certifies ROAS",
+      "passed": true
+    },
+    {
+      "name": "No new JavaScript runtime errors",
+      "passed": true
+    }
+  ]
+}

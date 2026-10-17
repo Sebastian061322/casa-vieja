@@ -1,0 +1,68 @@
+{
+  "baseCommit": "d2687de4fea1a659e5c4767f0770272bd2eaf315",
+  "environment": "TEST_ONLY",
+  "infrastructureMonthlyMandatoryPEN": 0,
+  "externalResourcesCreated": false,
+  "realAccountsAuthorized": false,
+  "billingEnabled": false,
+  "deploymentEnabled": false,
+  "exposed": [
+    "zeroRequest",
+    "doPost",
+    "doGet"
+  ],
+  "files": [
+    {
+      "path": "access.js",
+      "sha256": "b94fdb136c4171ad2352e13615577ed12ab559d2e386bc10b13ec89c07c165b4"
+    },
+    {
+      "path": "identity.mjs",
+      "sha256": "68c32c4ce030d04404f850c18d0f98da75b8c03b17870d6ff1db304c97600340"
+    },
+    {
+      "path": "worker.mjs",
+      "sha256": "4e289bae4c2cddf0a96e1c328dbdeb4b5a8d8b6f70be7b5158e662f7d3a563f3"
+    },
+    {
+      "path": "auth-client.mjs",
+      "sha256": "0c473ed2fbad39758f02bc620976ee0c76d02b2685c078ed162fa1a77204ddd0"
+    },
+    {
+      "path": "apps-script/Gateway.gs",
+      "sha256": "f3ace88ff59a4f15600267f2bdd5e31951147d3e9d1a24a40cf136f574697521"
+    },
+    {
+      "path": "apps-script/Candidate.gs",
+      "sha256": "90b82cc85658b2e6e9a91bac19d7592c94a23cc69d21c97dfd005e2f1901feb4"
+    },
+    {
+      "path": "wrangler.example.jsonc",
+      "sha256": "5e4a3684cf28c64853f216fbcead1d4cbd04b54daf53285b067a09e5360488aa"
+    },
+    {
+      "path": "build.cjs",
+      "sha256": "32d79500b08542d91527b2b699ef5cfae558f5d3c02e498568e248307878681e"
+    },
+    {
+      "path": "web/index.html",
+      "sha256": "467845bcd85add73bbc88d23da8cea60c31b9f5b4d4ec6574d622e61391ef177"
+    },
+    {
+      "path": "web/login.mjs",
+      "sha256": "e30459998396c5bfb2d273bbaf715100754b1f428f8308e4c3a30c2c86355aed"
+    },
+    {
+      "path": "web/style.css",
+      "sha256": "2ff120f7713a60bfa79551c67382ab5ab5bbf86724089c4cfdab856f90b41a65"
+    },
+    {
+      "path": "web/config.json",
+      "sha256": "7585b350b98614240cfc4db7df56bfad769e03c59292a44fea437ef39e4a8039"
+    },
+    {
+      "path": "web/_headers",
+      "sha256": "b09e1f01665ef51a10477b46ae3edac8c9415545d85a5b822cd92b16307dc5ea"
+    }
+  ]
+}

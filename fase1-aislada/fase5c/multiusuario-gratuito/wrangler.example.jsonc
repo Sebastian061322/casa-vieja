@@ -1,0 +1,20 @@
+{
+  "name": "casa-vieja-auth-lab-not-created",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-16",
+  "workers_dev": true,
+  "vars": {
+    "ZERO_LAB_ENABLED": "NO",
+    "FREE_PLAN_ATTESTED": "NO",
+    "BILLING_ENABLED": "NO",
+    "GOOGLE_CLIENT_ID": "NOT_CONFIGURED",
+    "FRONTEND_ORIGIN": "https://not-configured.invalid",
+    "APPS_SCRIPT_URL": "https://not-configured.invalid"
+  },
+  "assets": {
+    "directory": "./web",
+    "run_worker_first": [
+      "/api*"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "environment": "LOCAL_SYNTHETIC_RSA_WEBCRYPTO_AND_APPS_SCRIPT_VM",
+  "baseCommit": "d2687de4fea1a659e5c4767f0770272bd2eaf315",
+  "totalTests": 332,
+  "previousTests": 258,
+  "newTests": 74,
+  "failed": 0,
+  "identities": [
+    "fictitious-administrator",
+    "fictitious-operations-manager",
+    "fictitious-seller"
+  ],
+  "realGoogleTokensUsed": false,
+  "realGoogleAccountsUsed": false,
+  "googleBackendExecuted": false,
+  "cloudflareRuntimeExecuted": false,
+  "physicalDevicesTested": false,
+  "externalResourcesCreated": false,
+  "billingEnabled": false,
+  "productionTouched": false,
+  "mandatoryMonthlyInfrastructureBudgetPEN": 0
+}

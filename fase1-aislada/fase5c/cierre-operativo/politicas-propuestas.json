@@ -1,0 +1,19 @@
+{
+  "environment": "UNAPPROVED",
+  "version": 1,
+  "status": "DRAFT",
+  "effectiveFrom": null,
+  "approvedBy": null,
+  "approvalEvidence": null,
+  "rules": {
+    "collections": null,
+    "dispatch": null,
+    "discounts": null,
+    "cancellations": null,
+    "preparation": null,
+    "returns": null,
+    "lots": null,
+    "adjustments": null,
+    "backups": null
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "environment": "LOCAL_SYNTHETIC_NO_NETWORK",
+  "result": {
+    "environment": "TEST_ONLY",
+    "run": "drill5c-local-evidence",
+    "now": "2026-10-16T12:00:00.000Z",
+    "step": 21,
+    "oldClosed": true,
+    "newHalted": true,
+    "writer": "NONE",
+    "checks": [
+      {
+        "name": "Origen simulado separado del diario nuevo",
+        "passed": true
+      },
+      {
+        "name": "Confirmación perdida conserva recibo",
+        "passed": true
+      },
+      {
+        "name": "Operación antigua parcial recuperable",
+        "passed": true
+      },
+      {
+        "name": "Respaldo anterior incluye PREPARED",
+        "passed": true
+      },
+      {
+        "name": "Recibo perdido recuperado sin venta nueva",
+        "passed": true
+      },
+      {
+        "name": "Reintento parcial original confirmado",
+        "passed": true
+      },
+      {
+        "name": "Reservas antiguas cerradas antes de apertura",
+        "passed": true
+      },
+      {
+        "name": "Ninguna operación antigua PREPARED sin COMMITTED",
+        "passed": true
+      },
+      {
+        "name": "Escritor antiguo bloqueado",
+        "passed": true
+      },
+      {
+        "name": "Apertura parcial recuperable",
+        "passed": true
+      },
+      {
+        "name": "Apertura nueva consume acta una sola vez",
+        "passed": true
+      },
+      {
+        "name": "Reserva no descuenta físico",
+        "passed": true
+      },
+      {
+        "name": "Recibo nuevo recuperado con mismo ID",
+        "passed": true
+      },
+      {
+        "name": "Cobro no vuelve a consumir",
+        "passed": true
+      },
+      {
+        "name": "Despacho parcial recuperable",
+        "passed": true
+      },
+      {
+        "name": "Despacho único: 5 físicas, cero reservadas",
+        "passed": true
+      },
+      {
+        "name": "Contingencia detiene altas nuevas",
+        "passed": true
+      },
+      {
+        "name": "Origen antiguo permanece inmutable",
+        "passed": true
+      },
+      {
+        "name": "Conservación: 5000 g iniciales = 4500 g + 500 g despachados",
+        "passed": true
+      },
+      {
+        "name": "Costo histórico confirmado 3000 céntimos",
+        "passed": true
+      },
+      {
+        "name": "Una apertura y un despacho nuevos por identificador",
+        "passed": true
+      }
+    ],
+    "oldInitialDigest": "bc04766a0e9e553f49b66b11bb2f360131189c7312830eddfcf510ff77ca9c5d",
+    "newInitialDigest": "5267efcdd5f52a14b229241e6537b5c5f01125745c6818862a8b691e3dd6757c",
+    "beforeBackup": {
+      "sha256": "d7f5c2b028cb4ac5192929061e4161e498cf6a8487af4f115b912378e5a89707",
+      "index": 0
+    },
+    "countAct": {
+      "id": "drill5c-local-evidence-count",
+      "approvedBy": "FICTITIOUS_OWNER",
+      "environment": "TEST_ONLY",
+      "rows": [
+        {
+          "id": "demo:drill5c-local-evidence-new-g500",
+          "lot": "demo:drill5c-local-evidence-new-gourmet",
+          "stage": "PACKAGED",
+          "product": "bolsa500",
+          "family": "Gourmet",
+          "grind": "molido",
+          "grams": 500,
+          "unit": "unit",
+          "qty": 6,
+          "reserved": 0,
+          "valueCents": 18000
+        },
+        {
+          "id": "demo:drill5c-local-evidence-new-e250",
+          "lot": "demo:drill5c-local-evidence-new-especial",
+          "stage": "PACKAGED",
+          "product": "bolsa250",
+          "family": "Especialidad",
+          "grind": "grano",
+          "grams": 250,
+          "unit": "unit",
+          "qty": 4,
+          "reserved": 0,
+          "valueCents": 12000
+        },
+        {
+          "id": "demo:drill5c-local-evidence-new-bulk",
+          "lot": "demo:drill5c-local-evidence-new-bulk-lot",
+          "stage": "BULK",
+          "product": "tostado",
+          "family": "Gourmet",
+          "unit": "g",
+          "qty": 1000,
+          "reserved": 0,
+          "valueCents": 6000
+        },
+        {
+          "id": "demo:drill5c-local-evidence-new-bags",
+          "lot": "demo:drill5c-local-evidence-new-supplies",
+          "stage": "SUPPLY",
+          "product": "BAG500",
+          "supplyKind": "BAG500",
+          "unit": "unit",
+          "qty": 10,
+          "reserved": 0,
+          "valueCents": 2000
+        }
+      ],
+      "sha256": "1865b01d609fec1ec609c78f4d2d952c628bcaa77654480addbe92d3d43bfe1b"
+    },
+    "afterBackup": {
+      "sha256": "ee1b6b9f0ec1864c0a7836f84914920c3c818560bad4d4bc38a9caee8c747b8f",
+      "index": 1
+    },
+    "balances": [
+      {
+        "resourceId": "demo:drill5c-local-evidence-new-g500",
+        "physical": 5,
+        "reserved": 0,
+        "available": 5,
+        "valueCents": 15000
+      },
+      {
+        "resourceId": "demo:drill5c-local-evidence-new-e250",
+        "physical": 4,
+        "reserved": 0,
+        "available": 4,
+        "valueCents": 12000
+      },
+      {
+        "resourceId": "demo:drill5c-local-evidence-new-bulk",
+        "physical": 1000,
+        "reserved": 0,
+        "available": 1000,
+        "valueCents": 6000
+      },
+      {
+        "resourceId": "demo:drill5c-local-evidence-new-bags",
+        "physical": 10,
+        "reserved": 0,
+        "available": 10,
+        "valueCents": 2000
+      }
+    ],
+    "done": true,
+    "passed": true
+  },
+  "archives": [
+    {
+      "sha256": "d7f5c2b028cb4ac5192929061e4161e498cf6a8487af4f115b912378e5a89707",
+      "label": "BEFORE_PENDING_RECOVERY"
+    },
+    {
+      "sha256": "ee1b6b9f0ec1864c0a7836f84914920c3c818560bad4d4bc38a9caee8c747b8f",
+      "label": "AFTER_HALT"
+    }
+  ],
+  "businessDevicesTested": false
+}

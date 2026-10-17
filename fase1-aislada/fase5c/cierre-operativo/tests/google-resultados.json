@@ -1,0 +1,380 @@
+{
+  "reports": [
+    {
+      "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-BEFORE_PENDING_RECOVERY",
+      "kind": "OPERATIONAL_BACKUP_5C",
+      "environment": "TEST_ONLY",
+      "passed": true,
+      "range": "Control!D27:F34",
+      "sha256": "3d26df85589ab2615c3326b154c90e39bb97cec141982ce004ecb08d3d2f6d6e",
+      "release": "607e4fb7e685dc27c4d5cf23884b526f8f2d33a4738eb28fdb6d93af6f5097a0",
+      "elapsedMs": 3822,
+      "oldJournalRows": 7,
+      "newJournalRows": 242,
+      "newEffects": 170,
+      "oldAndNewReconstructed": true,
+      "repeatedRestoreUnchanged": true,
+      "newJournalMaterialized": true,
+      "sourceUnchanged": true,
+      "pendingIncluded": true
+    },
+    {
+      "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-AFTER_HALT",
+      "kind": "OPERATIONAL_BACKUP_5C",
+      "environment": "TEST_ONLY",
+      "passed": true,
+      "range": "Control!D35:F42",
+      "sha256": "ba93080f7a0d26483426655ad5d5e5a14f0a330cf754e785afbf366aa68def0f",
+      "release": "607e4fb7e685dc27c4d5cf23884b526f8f2d33a4738eb28fdb6d93af6f5097a0",
+      "elapsedMs": 3604,
+      "oldJournalRows": 12,
+      "newJournalRows": 252,
+      "newEffects": 176,
+      "oldAndNewReconstructed": true,
+      "repeatedRestoreUnchanged": true,
+      "newJournalMaterialized": true,
+      "sourceUnchanged": true,
+      "pendingIncluded": false
+    },
+    {
+      "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89",
+      "kind": "OPERATIONAL_DRILL_5C",
+      "environment": "TEST_ONLY",
+      "run": "drill5c-20065364-0398-445e-b76f-9fb60c596f89",
+      "now": "2026-10-16T12:07:04.418Z",
+      "step": 21,
+      "oldClosed": true,
+      "newHalted": true,
+      "writer": "NONE",
+      "checks": [
+        {
+          "name": "Origen simulado separado del diario nuevo",
+          "passed": true
+        },
+        {
+          "name": "Confirmación perdida conserva recibo",
+          "passed": true
+        },
+        {
+          "name": "Operación antigua parcial recuperable",
+          "passed": true
+        },
+        {
+          "name": "Respaldo anterior incluye PREPARED",
+          "passed": true
+        },
+        {
+          "name": "Recibo perdido recuperado sin venta nueva",
+          "passed": true
+        },
+        {
+          "name": "Reintento parcial original confirmado",
+          "passed": true
+        },
+        {
+          "name": "Reservas antiguas cerradas antes de apertura",
+          "passed": true
+        },
+        {
+          "name": "Ninguna operación antigua PREPARED sin COMMITTED",
+          "passed": true
+        },
+        {
+          "name": "Escritor antiguo bloqueado",
+          "passed": true
+        },
+        {
+          "name": "Apertura parcial recuperable",
+          "passed": true
+        },
+        {
+          "name": "Apertura nueva consume acta una sola vez",
+          "passed": true
+        },
+        {
+          "name": "Reserva no descuenta físico",
+          "passed": true
+        },
+        {
+          "name": "Recibo nuevo recuperado con mismo ID",
+          "passed": true
+        },
+        {
+          "name": "Cobro no vuelve a consumir",
+          "passed": true
+        },
+        {
+          "name": "Despacho parcial recuperable",
+          "passed": true
+        },
+        {
+          "name": "Despacho único: 5 físicas, cero reservadas",
+          "passed": true
+        },
+        {
+          "name": "Contingencia detiene altas nuevas",
+          "passed": true
+        },
+        {
+          "name": "Origen antiguo permanece inmutable",
+          "passed": true
+        },
+        {
+          "name": "Conservación: 5000 g iniciales = 4500 g + 500 g despachados",
+          "passed": true
+        },
+        {
+          "name": "Costo histórico confirmado 3000 céntimos",
+          "passed": true
+        },
+        {
+          "name": "Una apertura y un despacho nuevos por identificador",
+          "passed": true
+        }
+      ],
+      "oldInitialDigest": "83c0e1301c0a89f442bc56b17737ae194e35eb0c8fe773d56e84e4f88ce83e52",
+      "newInitialDigest": "ac3f0077b4b91ba7bae5d4c251dc70b2d0f70e9b424da1d81d97f44ac31fcf0d",
+      "beforeBackup": {
+        "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-BEFORE_PENDING_RECOVERY",
+        "range": "Control!D27:F34",
+        "sha256": "3d26df85589ab2615c3326b154c90e39bb97cec141982ce004ecb08d3d2f6d6e",
+        "restored": true
+      },
+      "countAct": {
+        "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-count",
+        "approvedBy": "FICTITIOUS_OWNER",
+        "environment": "TEST_ONLY",
+        "rows": [
+          {
+            "id": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-g500",
+            "lot": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-gourmet",
+            "stage": "PACKAGED",
+            "product": "bolsa500",
+            "family": "Gourmet",
+            "grind": "molido",
+            "grams": 500,
+            "unit": "unit",
+            "qty": 6,
+            "reserved": 0,
+            "valueCents": 18000
+          },
+          {
+            "id": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-e250",
+            "lot": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-especial",
+            "stage": "PACKAGED",
+            "product": "bolsa250",
+            "family": "Especialidad",
+            "grind": "grano",
+            "grams": 250,
+            "unit": "unit",
+            "qty": 4,
+            "reserved": 0,
+            "valueCents": 12000
+          },
+          {
+            "id": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-bulk",
+            "lot": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-bulk-lot",
+            "stage": "BULK",
+            "product": "tostado",
+            "family": "Gourmet",
+            "unit": "g",
+            "qty": 1000,
+            "reserved": 0,
+            "valueCents": 6000
+          },
+          {
+            "id": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-bags",
+            "lot": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-supplies",
+            "stage": "SUPPLY",
+            "product": "BAG500",
+            "supplyKind": "BAG500",
+            "unit": "unit",
+            "qty": 10,
+            "reserved": 0,
+            "valueCents": 2000
+          }
+        ],
+        "sha256": "a0641db188144943914836bbd4ee959ccd2f315f8a306c1fe762a3dc66b3c469"
+      },
+      "afterBackup": {
+        "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-AFTER_HALT",
+        "range": "Control!D35:F42",
+        "sha256": "ba93080f7a0d26483426655ad5d5e5a14f0a330cf754e785afbf366aa68def0f",
+        "restored": true
+      },
+      "balances": [
+        {
+          "resourceId": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-g500",
+          "physical": 5,
+          "reserved": 0,
+          "available": 5,
+          "valueCents": 15000
+        },
+        {
+          "resourceId": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-e250",
+          "physical": 4,
+          "reserved": 0,
+          "available": 4,
+          "valueCents": 12000
+        },
+        {
+          "resourceId": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-bulk",
+          "physical": 1000,
+          "reserved": 0,
+          "available": 1000,
+          "valueCents": 6000
+        },
+        {
+          "resourceId": "demo:drill5c-20065364-0398-445e-b76f-9fb60c596f89-new-bags",
+          "physical": 10,
+          "reserved": 0,
+          "available": 10,
+          "valueCents": 2000
+        }
+      ],
+      "done": true,
+      "passed": true,
+      "realDevicesTested": false,
+      "realUsersTested": false,
+      "productionTouched": false
+    },
+    {
+      "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-BEFORE_PENDING_RECOVERY_VERIFIED-5bc405480e0d",
+      "kind": "OPERATIONAL_BACKUP_5C",
+      "environment": "TEST_ONLY",
+      "passed": true,
+      "range": "Control!D43:F50",
+      "sha256": "d63747cd6eef5845214aefb348dd0bd0e7d0f3199228f0a5a9744a66325f16c2",
+      "release": "5bc405480e0d3f7772ccad66d7cce0a49c3ce1627f6909123a476509f145c010",
+      "elapsedMs": 4911,
+      "oldJournalRows": 7,
+      "newJournalRows": 242,
+      "newEffects": 170,
+      "oldAndNewReconstructed": true,
+      "repeatedRestoreUnchanged": true,
+      "newJournalMaterialized": true,
+      "sourceUnchanged": true,
+      "pendingIncluded": false
+    },
+    {
+      "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-AFTER_HALT_VERIFIED-5bc405480e0d",
+      "kind": "OPERATIONAL_BACKUP_5C",
+      "environment": "TEST_ONLY",
+      "passed": true,
+      "range": "Control!D51:F59",
+      "sha256": "c741f80235fe52d7b436e366e70b2c566aea5a7eb85568dd26cbd7a061ed9f78",
+      "release": "5bc405480e0d3f7772ccad66d7cce0a49c3ce1627f6909123a476509f145c010",
+      "elapsedMs": 4798,
+      "oldJournalRows": 12,
+      "newJournalRows": 252,
+      "newEffects": 176,
+      "oldAndNewReconstructed": true,
+      "repeatedRestoreUnchanged": true,
+      "newJournalMaterialized": true,
+      "sourceUnchanged": true,
+      "pendingIncluded": false
+    },
+    {
+      "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-archive-repair-5bc405480e0d",
+      "kind": "OPERATIONAL_ARCHIVE_REPAIR_5C",
+      "passed": true,
+      "run": "drill5c-20065364-0398-445e-b76f-9fb60c596f89",
+      "backups": {
+        "before": {
+          "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-BEFORE_PENDING_RECOVERY_VERIFIED-5bc405480e0d",
+          "range": "Control!D43:F50",
+          "sha256": "d63747cd6eef5845214aefb348dd0bd0e7d0f3199228f0a5a9744a66325f16c2",
+          "restored": true
+        },
+        "after": {
+          "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-AFTER_HALT_VERIFIED-5bc405480e0d",
+          "range": "Control!D51:F59",
+          "sha256": "c741f80235fe52d7b436e366e70b2c566aea5a7eb85568dd26cbd7a061ed9f78",
+          "restored": true
+        },
+        "release": "5bc405480e0d3f7772ccad66d7cce0a49c3ce1627f6909123a476509f145c010"
+      },
+      "businessOperationsRepeated": false,
+      "failedSourceBundlesRetained": true
+    },
+    {
+      "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-BEFORE_PENDING_RECOVERY_VERIFIED-106b47719a44",
+      "kind": "OPERATIONAL_BACKUP_5C",
+      "environment": "TEST_ONLY",
+      "passed": true,
+      "range": "Control!D60:F67",
+      "sha256": "f0bddfac0064ff16a56aebf161f34ef376a36dfdb83f9dd6cbf15886b235fd06",
+      "release": "106b47719a441ce0075daf6bcfa1a317387d125a900ada19a358cda1c1b080a4",
+      "elapsedMs": 3032,
+      "oldJournalRows": 7,
+      "newJournalRows": 242,
+      "newEffects": 170,
+      "oldAndNewReconstructed": true,
+      "repeatedRestoreUnchanged": true,
+      "newJournalMaterialized": true,
+      "sourceUnchanged": true,
+      "pendingIncluded": true
+    },
+    {
+      "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-AFTER_HALT_VERIFIED-106b47719a44",
+      "kind": "OPERATIONAL_BACKUP_5C",
+      "environment": "TEST_ONLY",
+      "passed": true,
+      "range": "Control!D68:F76",
+      "sha256": "9615456c504cd210aa75a01bd7605abe2488a287345b8c5af97eada66c73b579",
+      "release": "106b47719a441ce0075daf6bcfa1a317387d125a900ada19a358cda1c1b080a4",
+      "elapsedMs": 3487,
+      "oldJournalRows": 12,
+      "newJournalRows": 252,
+      "newEffects": 176,
+      "oldAndNewReconstructed": true,
+      "repeatedRestoreUnchanged": true,
+      "newJournalMaterialized": true,
+      "sourceUnchanged": true,
+      "pendingIncluded": false
+    },
+    {
+      "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-archive-repair-106b47719a44",
+      "kind": "OPERATIONAL_ARCHIVE_REPAIR_5C",
+      "passed": true,
+      "run": "drill5c-20065364-0398-445e-b76f-9fb60c596f89",
+      "backups": {
+        "before": {
+          "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-BEFORE_PENDING_RECOVERY_VERIFIED-106b47719a44",
+          "range": "Control!D60:F67",
+          "sha256": "f0bddfac0064ff16a56aebf161f34ef376a36dfdb83f9dd6cbf15886b235fd06",
+          "restored": true
+        },
+        "after": {
+          "id": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-AFTER_HALT_VERIFIED-106b47719a44",
+          "range": "Control!D68:F76",
+          "sha256": "9615456c504cd210aa75a01bd7605abe2488a287345b8c5af97eada66c73b579",
+          "restored": true
+        },
+        "release": "106b47719a441ce0075daf6bcfa1a317387d125a900ada19a358cda1c1b080a4"
+      },
+      "businessOperationsRepeated": false,
+      "failedSourceBundlesRetained": true
+    }
+  ],
+  "independentVerification": {
+    "environment": "DOWNLOADED_GOOGLE_SYNTHETIC_ARCHIVES",
+    "passed": true,
+    "run": "drill5c-20065364-0398-445e-b76f-9fb60c596f89",
+    "release": "106b47719a441ce0075daf6bcfa1a317387d125a900ada19a358cda1c1b080a4",
+    "hashes": [
+      "f0bddfac0064ff16a56aebf161f34ef376a36dfdb83f9dd6cbf15886b235fd06",
+      "9615456c504cd210aa75a01bd7605abe2488a287345b8c5af97eada66c73b579"
+    ],
+    "sourceFiles": 53,
+    "previousJournalRowsPreserved": 242,
+    "previousEffectsPreserved": 170,
+    "restoredPendingOriginalId": "drill5c-20065364-0398-445e-b76f-9fb60c596f89-partial",
+    "originalReceiptRecovered": true,
+    "repeatedRestoreUnchanged": true,
+    "oldFrozenUnchanged": true,
+    "finalGourmetBags": 5,
+    "realDevicesTested": false,
+    "productionTouched": false
+  }
+}

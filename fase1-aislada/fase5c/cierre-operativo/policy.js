@@ -1,0 +1,13 @@
+/* Registro prospectivo. No hay políticas comerciales aprobadas ni endpoint de aprobación. */
+(function(root,factory){const api=factory(typeof module==='object'&&module.exports?require('../../fase3/journal.js'):root.CVInventoryBase);if(typeof module==='object'&&module.exports)module.exports=api;else root.CVPolicy=api;})(typeof globalThis==='object'?globalThis:this,function(B){
+'use strict';const {clone,canonical}=B,check=(v,e)=>{if(!v)throw Error(e)};
+const fields=['collections','dispatch','discounts','cancellations','preparation','returns','lots','adjustments','backups'];
+function draft(){return {environment:'UNAPPROVED',version:1,status:'DRAFT',effectiveFrom:null,approvedBy:null,approvalEvidence:null,rules:Object.fromEntries(fields.map(k=>[k,null]))};}
+class Registry{
+ constructor(store,hash,authorize){this.store=store;this.hash=hash;this.authorize=authorize;}
+ create(proposal,actor){this.authorize(actor,'PROPOSE_POLICY');check(proposal.status==='DRAFT'&&proposal.approvedBy===null&&proposal.approvalEvidence===null,'APPROVAL_NOT_CLIENT_CONTROLLED');check(Number.isSafeInteger(proposal.version)&&proposal.version>0,'INVALID_VERSION');check(canonical(Object.keys(proposal.rules).sort())===canonical([...fields].sort()),'INVALID_RULES');const rows=this.store.read();check(!rows.some(r=>r.version===proposal.version),'POLICY_VERSION_EXISTS');const p=clone(proposal),r={kind:'DRAFT',version:p.version,proposal:p,sha256:this.hash(canonical(p))};this.store.append(r);return clone(r);}
+ approve(version,actor,evidence,at){this.authorize(actor,'APPROVE_POLICY');const rows=this.store.read(),p=rows.find(r=>r.kind==='DRAFT'&&r.version===version);check(p,'POLICY_NOT_FOUND');check(!rows.some(r=>r.kind==='APPROVED'&&r.version===version),'POLICY_ALREADY_APPROVED');check(fields.every(k=>p.proposal.rules[k]!==null),'POLICY_INCOMPLETE');check(typeof evidence==='string'&&evidence.length>=10&&Number.isFinite(Date.parse(at)),'APPROVAL_EVIDENCE_REQUIRED');const r={kind:'APPROVED',version,sha256:p.sha256,approvedBy:actor.subject,approvalEvidence:evidence,effectiveFrom:at};this.store.append(r);return this.resolve(version);}
+ resolve(version){const rows=this.store.read(),d=rows.find(r=>r.version===version&&r.kind==='DRAFT'),a=rows.find(r=>r.version===version&&r.kind==='APPROVED');check(d&&a&&d.sha256===a.sha256&&this.hash(canonical(d.proposal))===a.sha256,'POLICY_NOT_APPROVED');return clone({...d.proposal,...a,rules:d.proposal.rules});}
+ pin(plan,approved){const current=this.resolve(approved.version);check(current.sha256===approved.sha256,'POLICY_HASH_MISMATCH');return {...clone(plan),policyRef:{version:current.version,sha256:current.sha256,effectiveFrom:current.effectiveFrom},policySnapshot:clone(current.rules)};}
+}
+return {draft,Registry,fields};});

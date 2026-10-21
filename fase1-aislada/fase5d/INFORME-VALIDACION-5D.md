@@ -9,6 +9,7 @@ Google Identity → Worker de laboratorio → Apps Script aislado → hoja sint�
 | Ensayo real de laboratorio | Evidencia | Resultado |
 |---|---|---|
 | Ingreso administrador | Perfil y actualización del dashboard en Safari | Comprobado |
+| Revocación y restauración del vendedor | ACCESS_DENIED tras desactivar; nuevo ingreso restaurado con tres secciones y conexión confirmada | Comprobado con Google |
 | Ingreso vendedor | Confirmación del propietario y lectura nativa | Comprobado |
 | Vista vendedor | Ventas, Pedidos, Inventario; sin costos, descuentos ni reportes financieros | Comprobado en interfaz |
 | Pedido ficticio de S/35 | Confirmado por servidor y visible una sola vez en administrador | Comprobado |
@@ -35,7 +36,7 @@ Pedido del ensayo: `future:8dc4af32-f795-40dc-acb9-c3cb3c1c065d`. Cliente: PRUEB
 
 ## Seguridad y conservación
 
-La identidad de Google se verifica con firma y audiencia en Worker. El backend recibe la identidad dentro de un mensaje HMAC y resuelve permisos en servidor. Los perfiles no proceden de campos del formulario. Costos y utilidades del vendedor se filtran en la respuesta del backend; además se limita su interfaz. Las pruebas de solicitudes manipuladas y revocación están aprobadas localmente; aún faltan equivalentes con sesiones reales.
+La identidad de Google se verifica con firma y audiencia en Worker. El backend recibe la identidad dentro de un mensaje HMAC y resuelve permisos en servidor. Los perfiles no proceden de campos del formulario. Costos y utilidades del vendedor se filtran en la respuesta del backend; además se limita su interfaz. La revocación y restauración del vendedor se comprobaron también con Google: acceso denegado mientras estaba inactivo y nuevo ingreso con el mismo perfil tras restaurarlo. Siguen pendientes solicitudes manipuladas con una sesión válida.
 
 Los correos autorizados y el secreto HMAC permanecen en configuración privada, fuera del repositorio. No se compartieron las hojas con operadores. Se mantuvieron intactos main, index.html productivo, Apps Script productivo, BaseDatos_CasaVieja y el historial. No se habilitaron facturación, tarjetas, KV ni D1.
 
@@ -52,10 +53,14 @@ Se observaron 50 doPost en la consola del Script sintético. Mediana 2.36 s; med
 | Prioridad | Pendiente | Condición verificable |
 |---|---|---|
 | P0 | Gerente operativo: alcance funcional restante | Ingreso, reportes y menús comprobados; faltan sus propias escrituras y rechazos directos de funciones administrativas |
-| P0 | Autorización adversarial real | Solicitudes manipuladas y revocación verificadas contra Google sin elevar permisos |
+| P0 | Autorización adversarial real | Solicitudes manipuladas con sesión válida; revocación y restauración ya comprobadas |
 | P0 | Recuperación y concurrencia reales | Mismo operationId ante reconexión/respuesta perdida; última unidad sin doble consumo |
 | P1 | Rendimiento | Latencia y CPU con muestras suficientes, incluyendo JWT, diarios y usuarios concurrentes |
 | P1 | Equipos físicos | iPhone y segundo dispositivo; evidencia, sin declarar aprobaciones por emulación |
 | P1 | Continuidad y políticas | Protocolo de todos los equipos productivos y decisiones del propietario, antes de futura transición |
 
 No se declara cerrada Fase 5D ni listo el sistema para producción. Las evidencias visuales locales están en evidencia-local/ y se excluyen de Git para proteger datos de cuenta. tests/evidencia.json y tests/resultados.txt contienen el registro reproducible sin secretos.
+
+## Formulario de usuarios: continuidad visual
+
+Corrección local verificada: sincronizar conservaba los datos del backend, pero recreaba el panel y ocultaba la lista de usuarios cargada. Se conserva ahora el nodo del formulario y sus cambios sin guardar. En localhost se cargaron tres identidades ficticias, se desmarcó el acceso del vendedor sin guardar y se sincronizó: la lista y el cambio pendiente permanecieron. No se envió ningún cambio de permiso. Regresión 362/362. Este ajuste de interfaz todavía no está publicado en el Worker; no cambia la autorización del servidor.

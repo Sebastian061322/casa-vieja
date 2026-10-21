@@ -37,12 +37,15 @@ if(actor.profile==='seller'){
   }catch(e){if($('sale-preview'))$('sale-preview').textContent=e.message;}};
   orderTable=function(){const q=($('order-search')?.value||'').toLowerCase();return commercialSales().filter(s=>(s.id+' '+s.metadata.customer).toLowerCase().includes(q)).map(s=>`<article class="card cv-card-gap"><h3>${esc(s.metadata.customer||'Cliente ficticio')} · ${esc(statusName[s.status])}</h3><p>${esc(s.id)} · ${money(s.totalCents+s.deliveryChargedCents)}</p><p>${esc(s.metadata.zone)} · ${esc(s.metadata.note)}</p>${s.lines.map(l=>`<p>${esc(l.family)} · ${esc(l.grind)} · ${l.grams} g · ${l.qty} bolsa(s)</p>`).join('')}<p class="cv-help">Los cobros y despachos los registran los gerentes.</p></article>`).join('')||'<p>Sin pedidos propios confirmados.</p>';};
 }
+let usersPanel5d=null;
 const render5d=render;
 render=function(){if(!snapshot)return;if(!canView5d.has(view))view=actor.profile==='seller'?'sales':'dashboard';
   if(actor.profile==='seller'&&view==='orders')$('orders').innerHTML='<label>Buscar mis pedidos<input id="order-search"></label><div id="order-list">'+orderTable()+'</div>';
   else if(actor.profile==='seller'&&view==='inventory')$('inventory').innerHTML='<h3>Stock disponible</h3>'+allResources().map(r=>`<article class="card cv-card-gap"><h3>${esc(r.product)}</h3><p>${esc(r.family)} · ${esc(r.grind)} · ${r.grams} g</p><strong>${r.qty} disponibles</strong></article>`).join('');
   else render5d();permissions5d();
-  if(view==='config'&&actor.profile==='administrator')$('config').insertAdjacentHTML('beforeend','<section class="card cv-card-gap"><h3>Usuarios del laboratorio</h3><p>Solo cuentas de prueba previamente autorizadas. Los permisos se verifican en el servidor y cada cambio conserva trazabilidad.</p><button class="btn secondary" data-users5d>Cargar usuarios</button><div id="users5d"></div></section>');
+  if(view==='config'&&actor.profile==='administrator'){$('config').insertAdjacentHTML('beforeend','<section class="card cv-card-gap"><h3>Usuarios del laboratorio</h3><p>Solo cuentas de prueba previamente autorizadas. Los permisos se verifican en el servidor y cada cambio conserva trazabilidad.</p><button class="btn secondary" data-users5d>Cargar usuarios</button><div id="users5d"></div></section>');
+    const placeholder=$('users5d');if(usersPanel5d)placeholder.replaceWith(usersPanel5d);else usersPanel5d=placeholder;
+  }
 };
 const operation5d=operation,orderAction5d=orderAction;
 const saleState5d=saleState;saleState=function(){saleState5d();permissions5d();};

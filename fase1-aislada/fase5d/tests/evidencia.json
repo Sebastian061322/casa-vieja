@@ -1,5 +1,5 @@
 {
-  "observedAtUTC": "2026-10-21T17:27:42.477375+00:00",
+  "observedAtUTC": "2026-10-21T17:58:18.139302+00:00",
   "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
   "environment": "TEST_ONLY",
   "localTests": {
@@ -153,9 +153,27 @@
       "ownerAuthorized": true,
       "targetProfile": "seller",
       "laboratoryOnly": true,
-      "deactivated": false,
-      "restored": false,
-      "pending": "native Safari access to administrator tab"
+      "deactivated": true,
+      "restored": true,
+      "deactivationServerConfirmed": true,
+      "freshGoogleSignInRejected": true,
+      "rejection": "ACCESS_DENIED",
+      "rejectionObservedBy": "owner during deactivation",
+      "restorationServerConfirmed": true,
+      "sameProfileRestored": "seller",
+      "restoredFreshGoogleSignInConfirmed": true,
+      "restoredVisibleSections": [
+        "Ventas",
+        "Pedidos",
+        "Inventario"
+      ],
+      "restoredConnection": "Laboratorio conectado",
+      "restoredQueue": "Sin operaciones pendientes",
+      "restorationVerifiedBy": [
+        "owner confirmation",
+        "native Safari accessibility tree"
+      ],
+      "restoredScreenshotPrivate": "evidencia-local/vendedor-restaurado-confirmado.png"
     },
     "backendTimingObservation": {
       "executed": true,
@@ -198,5 +216,12 @@
   ],
   "appsScriptCreated": true,
   "appsScriptDeployed": true,
-  "authorizedCandidateSHA256": "8b2c817abe5e9489c05ffc0507cceddce5ff4a0f8ad3667c70001aabe41b5c22"
+  "authorizedCandidateSHA256": "8b2c817abe5e9489c05ffc0507cceddce5ff4a0f8ad3667c70001aabe41b5c22",
+  "localInterfaceChecks": {
+    "usersPanelSurvivesSync": true,
+    "unsavedCheckboxSurvivesSync": true,
+    "permissionSubmitted": false,
+    "environment": "localhost synthetic fixture",
+    "remoteDeploymentPending": true
+  }
 }

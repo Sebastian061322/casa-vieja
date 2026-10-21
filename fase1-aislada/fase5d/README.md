@@ -1,3 +1,9 @@
+## Revocación y restauración comprobadas
+
+El vendedor recibió ACCESS_DENIED después de desactivar su acceso. Tras restaurar el mismo perfil, un nuevo ingreso Google mostró Vendedor, Ventas, Pedidos e Inventario, conectado y sin operaciones pendientes; comprobado por el propietario y lectura nativa. Los dos gerentes conservaron sus perfiles. Ver INFORME-VALIDACION-5D.md.
+
+El ajuste que conserva el formulario de usuarios durante sincronización pasó la revisión local; sigue pendiente publicar ese ajuste visual. No se declara terminada Fase 5D.
+
 ## Tres identidades verificadas en el laboratorio
 
 Administrador, vendedor y gerente operativo ingresaron con sus cuentas Google individuales. Gerente operativo: respuesta nueva del dashboard a las 12:22:03 (Lima), conectado y sin avisos de sesión; no hay menús de usuarios ni configuración crítica. Evidencia privada: evidencia-local/gerente-google-confirmado.png. Las pruebas de llamadas administrativas manipuladas con sesión válida siguen pendientes.

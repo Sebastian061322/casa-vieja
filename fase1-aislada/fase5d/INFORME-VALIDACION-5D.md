@@ -4,7 +4,7 @@ Fecha: 21 de octubre de 2026. Solo TEST_ONLY. No habilita producción ni Fase 6.
 
 ## Resultado comprobado
 
-Google Identity → Worker de laboratorio → Apps Script aislado → hoja sintética funciona para administrador y vendedor. Se conservó la interfaz aprobada 5A.2. La regresión completa pasó 362/362 pruebas locales, incluidas 30 específicas de 5D. No son 357 pruebas con Google.
+Google Identity → Worker de laboratorio → Apps Script aislado → hoja sintética funciona para administrador, vendedor y gerente operativo. Se conservó la interfaz aprobada 5A.2. La regresión completa pasó 362/362 pruebas locales, incluidas 30 específicas de 5D. No son 357 pruebas con Google.
 
 | Ensayo real de laboratorio | Evidencia | Resultado |
 |---|---|---|
@@ -18,13 +18,13 @@ Google Identity → Worker de laboratorio → Apps Script aislado → hoja sint�
 | Costo histórico | S/17.35; margen inicial S/17.65 | Comprobado en pedido |
 | Despacho ficticio | Estado Despachado; físico 84 → 83; reservado 3 → 2 | Comprobado |
 | Actualización en vendedor | Mismo pedido Despachado, sin datos financieros internos | Comprobado |
-| Gerente operativo | Acceso personal de Google preparado | Pendiente de intervención del propietario |
+| Gerente operativo | Perfil y actualización real 12:22:03 Lima; sin usuarios/configuración crítica | Comprobado en interfaz |
 
 Pedido del ensayo: `future:8dc4af32-f795-40dc-acb9-c3cb3c1c065d`. Cliente: PRUEBA 5D GOOGLE VENDEDOR 20261021. Referencia de pago: TEST_ONLY_5D_PAGO_20261021_01. Son datos y eventos ficticios, sin dinero ni entrega reales. No borrar ni cancelar estos registros de evidencia.
 
 ## Corrección posterior de sesión
 
-**Alto, corregido localmente y desplegado en laboratorio; validación remota pendiente:** SESSION_CHANGED por respuestas de intentos de ingreso anteriores. Solo el intento vigente puede mostrar la interfaz o invalidar su sesión; una denegación actual sigue cerrando acceso. Cinco pruebas nuevas de concurrencia de ingreso, deduplicación y cancelación. El primer ajuste abrió el panel Gerente operativo, pero apareció ACCOUNT_OR_PROFILE_CHANGED; se protegió también el montaje único y se repite la comprobación con versión 356ce6ca. No se alteran roles, credenciales ni colas.
+**Alto, corregido y verificado con actualización real de gerente:** SESSION_CHANGED por respuestas de intentos de ingreso anteriores. Solo el intento vigente puede mostrar la interfaz o invalidar su sesión; una denegación actual sigue cerrando acceso. Cinco pruebas nuevas de concurrencia de ingreso, deduplicación y cancelación. El primer ajuste abrió el panel Gerente operativo, pero apareció ACCOUNT_OR_PROFILE_CHANGED; se protegió también el montaje único y se comprobó la actualización real sin avisos con versión 356ce6ca. No se alteran roles, credenciales ni colas.
 
 ## Correcciones verificadas
 
@@ -41,11 +41,17 @@ Los correos autorizados y el secreto HMAC permanecen en configuración privada, 
 
 El propietario confirmó que el laboratorio solo se usó en esta computadora. Antes del pedido se revisaron las pestañas sintéticas conocidas: laboratorio privado anterior, administrador y vendedor, sin pendientes. La comprobación automática del origen actual sigue ejecutándose antes de encolar. Esto no acredita dispositivos productivos ni autoriza un corte comercial.
 
+## Seguridad pública y tiempos observados
+
+Siete rechazos remotos aprobados: origen ausente/ajeno, identidad ausente, firma inválida, rol administrador declarado con firma inválida, credencial demasiado larga y método GET no admitido. Sin credenciales reales ni escritura comercial. No sustituyen pruebas de autorización con una sesión válida.
+
+Se observaron 50 doPost en la consola del Script sintético. Mediana 2.36 s; media 3.73418 s; mínimo 0.9 s; máximo 32.417 s; p95 descriptivo por rango más próximo 17.245 s. Son peticiones mezcladas y estados de ejecución Completada, no resultados comerciales confirmados. No se midió latencia completa ni capacidad con carga simultánea. Los casos lentos permanecen como riesgo de rendimiento.
+
 ## Pendientes y condiciones de cierre
 
 | Prioridad | Pendiente | Condición verificable |
 |---|---|---|
-| P0 | Gerente operativo | Cuenta individual entra, puede gestionar operación y consultar reportes; no usuarios/configuración crítica |
+| P0 | Gerente operativo: alcance funcional restante | Ingreso, reportes y menús comprobados; faltan sus propias escrituras y rechazos directos de funciones administrativas |
 | P0 | Autorización adversarial real | Solicitudes manipuladas y revocación verificadas contra Google sin elevar permisos |
 | P0 | Recuperación y concurrencia reales | Mismo operationId ante reconexión/respuesta perdida; última unidad sin doble consumo |
 | P1 | Rendimiento | Latencia y CPU con muestras suficientes, incluyendo JWT, diarios y usuarios concurrentes |

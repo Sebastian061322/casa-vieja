@@ -1,0 +1,58 @@
+{
+  "environment": "TEST_ONLY",
+  "observedAtUTC": "2026-10-21T17:20:55.235Z",
+  "realCredentialsUsed": false,
+  "commercialPerformanceMeasured": false,
+  "passed": true,
+  "results": [
+    {
+      "name": "sin origen",
+      "status": 403,
+      "error": "ORIGIN_DENIED",
+      "passed": true,
+      "elapsedMs": 375
+    },
+    {
+      "name": "origen ajeno",
+      "status": 403,
+      "error": "ORIGIN_DENIED",
+      "passed": true,
+      "elapsedMs": 338
+    },
+    {
+      "name": "sin identidad",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 151
+    },
+    {
+      "name": "firma inválida",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 119
+    },
+    {
+      "name": "rol administrador declarado con firma inválida",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 603
+    },
+    {
+      "name": "credencial demasiado larga",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 141
+    },
+    {
+      "name": "GET con origen permitido",
+      "status": 400,
+      "error": "INVALID_REQUEST",
+      "passed": true,
+      "elapsedMs": 141
+    }
+  ]
+}

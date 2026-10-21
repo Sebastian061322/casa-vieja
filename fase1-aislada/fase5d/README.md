@@ -1,3 +1,9 @@
+## Tres identidades verificadas en el laboratorio
+
+Administrador, vendedor y gerente operativo ingresaron con sus cuentas Google individuales. Gerente operativo: respuesta nueva del dashboard a las 12:22:03 (Lima), conectado y sin avisos de sesión; no hay menús de usuarios ni configuración crítica. Evidencia privada: evidencia-local/gerente-google-confirmado.png. Las pruebas de llamadas administrativas manipuladas con sesión válida siguen pendientes.
+
+La prueba remota pública pasó 7/7 rechazos sin credenciales reales. En 50 llamadas doPost observadas en la consola de Google: mediana 2.36 s, media 3.73418 s, máximo 32.417 s y p95 descriptivo 17.245 s. Son llamadas mezcladas; Completada no garantiza éxito comercial y estos datos no son latencia de usuario ni capacidad bajo carga. Ver tests/tiempos-google-observados.json.
+
 ### Sesión vigente: montaje protegido
 
 Se agregó deduplicación de callbacks Google idénticos mientras el ingreso está en tránsito. El montaje se registra antes de esperar su finalización, evitando que dos callbacks inicien dos interfaces y sus actualizadores. La primera corrección permitió abrir Gerente operativo pero dejó un aviso ACCOUNT_OR_PROFILE_CHANGED; por ello no se declaró validado y se publicó este ajuste adicional. Worker sintético 356ce6ca. Regresión completa: 362/362 (30 de 5D). Resultado remoto posterior pendiente.

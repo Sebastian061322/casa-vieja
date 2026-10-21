@@ -1,0 +1,366 @@
+{
+  "environment": "TEST_ONLY",
+  "source": "Google Apps Script executions UI",
+  "timeZone": "America/Lima",
+  "sampleType": "50 most recent mixed doPost calls; not a controlled load test",
+  "businessSuccessInferred": false,
+  "endToEndLatencyMeasured": false,
+  "sampleCount": 50,
+  "meanSeconds": 3.7341800000000007,
+  "minSeconds": 0.9,
+  "maxSeconds": 32.417,
+  "p50NearestRank": 2.36,
+  "p95NearestRank": 17.245,
+  "rows": [
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:22:41 p.m.",
+      "durationSeconds": 4.135,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:22:37 p.m.",
+      "durationSeconds": 1.82,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:22:10 p.m.",
+      "durationSeconds": 2.479,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:22:06 p.m.",
+      "durationSeconds": 2.464,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:21:59 p.m.",
+      "durationSeconds": 3.553,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:21:55 p.m.",
+      "durationSeconds": 1.965,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:21:39 p.m.",
+      "durationSeconds": 2.647,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:21:36 p.m.",
+      "durationSeconds": 1.356,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:21:09 p.m.",
+      "durationSeconds": 2.713,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:21:06 p.m.",
+      "durationSeconds": 1.634,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:20:39 p.m.",
+      "durationSeconds": 3.213,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:20:36 p.m.",
+      "durationSeconds": 1.791,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:20:09 p.m.",
+      "durationSeconds": 2.605,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:20:06 p.m.",
+      "durationSeconds": 1.337,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:19:43 p.m.",
+      "durationSeconds": 1.742,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:19:38 p.m.",
+      "durationSeconds": 3.193,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:19:36 p.m.",
+      "durationSeconds": 1.27,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:19:33 p.m.",
+      "durationSeconds": 1.19,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:19:30 p.m.",
+      "durationSeconds": 1.349,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:18:08 p.m.",
+      "durationSeconds": 1.275,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:17:39 p.m.",
+      "durationSeconds": 3.062,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:17:36 p.m.",
+      "durationSeconds": 1.473,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:17:03 p.m.",
+      "durationSeconds": 4.102,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:17:00 p.m.",
+      "durationSeconds": 1.847,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:16:52 p.m.",
+      "durationSeconds": 1.316,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 12:16:43 p.m.",
+      "durationSeconds": 5.261,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:56:58 a.m.",
+      "durationSeconds": 1.303,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:39:02 a.m.",
+      "durationSeconds": 2.498,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:38:59 a.m.",
+      "durationSeconds": 1.245,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:38:32 a.m.",
+      "durationSeconds": 3.823,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:38:29 a.m.",
+      "durationSeconds": 2.36,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:38:10 a.m.",
+      "durationSeconds": 3.835,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:38:08 a.m.",
+      "durationSeconds": 1.04,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:38:08 a.m.",
+      "durationSeconds": 1.686,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:38:01 a.m.",
+      "durationSeconds": 5.741,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:37:59 a.m.",
+      "durationSeconds": 0.9,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:37:56 a.m.",
+      "durationSeconds": 1.293,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:37:36 a.m.",
+      "durationSeconds": 17.245,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:34:43 a.m.",
+      "durationSeconds": 2.602,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:34:40 a.m.",
+      "durationSeconds": 1.409,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:34:28 a.m.",
+      "durationSeconds": 3.37,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:34:26 a.m.",
+      "durationSeconds": 1.324,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:33:51 a.m.",
+      "durationSeconds": 3.757,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:33:50 a.m.",
+      "durationSeconds": 3.484,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:33:48 a.m.",
+      "durationSeconds": 1.159,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:33:47 a.m.",
+      "durationSeconds": 1.765,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:33:38 a.m.",
+      "durationSeconds": 6.584,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:33:21 a.m.",
+      "durationSeconds": 22.542,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:33:11 a.m.",
+      "durationSeconds": 32.417,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    },
+    {
+      "startedAtDisplayed": "21 oct 2026, 8:33:08 a.m.",
+      "durationSeconds": 2.535,
+      "executionState": "Completada",
+      "function": "doPost",
+      "version": 1
+    }
+  ]
+}

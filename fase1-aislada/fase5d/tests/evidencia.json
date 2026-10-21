@@ -1,5 +1,5 @@
 {
-  "observedAtUTC": "2026-10-21T17:19:18.625251+00:00",
+  "observedAtUTC": "2026-10-21T17:27:42.477375+00:00",
   "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
   "environment": "TEST_ONLY",
   "localTests": {
@@ -127,13 +127,42 @@
     "operationsLogin": {
       "prepared": true,
       "ownerCredentialEntryRequired": true,
-      "confirmed": false,
+      "confirmed": true,
       "observedError": "SESSION_CHANGED",
       "loginRaceFixDeployed": true,
       "workerVersionShort": "356ce6ca",
       "retryInitiated": true,
       "observedAfterFirstFix": "Gerente operativo panel with ACCOUNT_OR_PROFILE_CHANGED warning",
-      "duplicateMountFixDeployed": true
+      "duplicateMountFixDeployed": true,
+      "liveRefresh": "2026-10-21 12:22:03 America/Lima",
+      "connection": "Laboratorio conectado",
+      "sessionWarningsPresent": false,
+      "userAdministrationVisible": false,
+      "criticalConfigurationVisible": false,
+      "financialDashboardVisible": true
+    },
+    "publicAccessRejections": {
+      "executed": true,
+      "passed": 7,
+      "failed": 0,
+      "evidence": "tests/resultados-red-publica.json",
+      "realCredentialsUsed": false,
+      "authenticatedRoleEscalationTested": false
+    },
+    "revocation": {
+      "ownerAuthorized": true,
+      "targetProfile": "seller",
+      "laboratoryOnly": true,
+      "deactivated": false,
+      "restored": false,
+      "pending": "native Safari access to administrator tab"
+    },
+    "backendTimingObservation": {
+      "executed": true,
+      "sampleCount": 50,
+      "evidence": "tests/tiempos-google-observados.json",
+      "controlledLoadTest": false,
+      "businessSuccessInferred": false
     }
   },
   "productionModified": false,

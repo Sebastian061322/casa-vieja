@@ -1,0 +1,58 @@
+{
+  "observedAtUTC": "2026-10-21T04:45:16.912709+00:00",
+  "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
+  "environment": "TEST_ONLY",
+  "localTests": {
+    "previous": 332,
+    "new": 11,
+    "passed": 343,
+    "failed": 0,
+    "runtime": "Node.js v24.20.0",
+    "actualGoogleTokens": false,
+    "actualSheetsAdapter": false
+  },
+  "remoteTests": {
+    "workerClosedGetApi": {
+      "executed": true,
+      "status": 503,
+      "versionShort": "891eeeb1",
+      "operationsEnabled": false
+    },
+    "googleOAuthSignIn": {
+      "executed": false
+    },
+    "multiuserCommercialFlow": {
+      "executed": false
+    },
+    "physicalDevices": {
+      "executed": false
+    }
+  },
+  "productionModified": false,
+  "files": [
+    {
+      "path": "closed-worker.mjs",
+      "sha256": "ba67edc11457e97437038300448873fabdf14fd354e75afe33b316d7a23c165e"
+    },
+    {
+      "path": "build.cjs",
+      "sha256": "833a5fa64101f1df0f53ed99eb200d8fd4b96b320ea9efe316280c6473fec413"
+    },
+    {
+      "path": "apps-script/Replay.gs",
+      "sha256": "14014c55bf3a23a9178ea1d85bfe96caa63dce481d066c20a1998cf3360aea2e"
+    },
+    {
+      "path": "web/session.mjs",
+      "sha256": "429c49395e68b468ad8223bbc6edd59e2c41f0931e3b2816ca7e2b59fbd8dc28"
+    },
+    {
+      "path": "tests/security.test.mjs",
+      "sha256": "24893a49a50c26420d06e72b89f0058d9a554a639502035660d123cf7ec5449b"
+    },
+    {
+      "path": "tests/fixture.mjs",
+      "sha256": "5e0151e3dd32d0540475994305b8b031da19b985ef844cae1f57e7976d1c8a1e"
+    }
+  ]
+}

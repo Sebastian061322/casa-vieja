@@ -1,0 +1,18 @@
+{
+  "environment": "TEST_ONLY",
+  "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
+  "workerName": "casa-vieja-lab-auth",
+  "origin": "https://casa-vieja-lab-auth.portopelaez1009.workers.dev",
+  "workerPlan": "Free",
+  "billingRequired": false,
+  "additionalStorage": [],
+  "googleProjectId": "casa-vieja-lab-auth-20261020",
+  "googleProjectName": "Casa Vieja Lab Auth",
+  "oauthClientName": "Casa Vieja Lab Web",
+  "oauthClientType": "web",
+  "identityScopes": ["openid", "email", "profile"],
+  "googleClientId": "855760462749-rectr62q59fo3j2jvs0dmhpomels7ueh.apps.googleusercontent.com",
+  "realAccountsEnabled": false,
+  "signedBackendEnabled": false,
+  "productionEnabled": false
+}

@@ -1,11 +1,11 @@
 {
-  "observedAtUTC": "2026-10-21T04:50:49.055437+00:00",
+  "observedAtUTC": "2026-10-21T13:01:07.499849+00:00",
   "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
   "environment": "TEST_ONLY",
   "localTests": {
     "previous": 332,
-    "new": 12,
-    "passed": 344,
+    "new": 22,
+    "passed": 354,
     "failed": 0,
     "runtime": "Node.js v24.20.0",
     "actualGoogleTokens": false,
@@ -19,13 +19,34 @@
       "operationsEnabled": false
     },
     "googleOAuthSignIn": {
-      "executed": false
+      "executed": true,
+      "accountSelected": true,
+      "basicIdentityConsentContinued": true,
+      "backendConfirmationVerified": false,
+      "blocker": "Safari automation stopped responding after OAuth popup closed"
     },
     "multiuserCommercialFlow": {
       "executed": false
     },
     "physicalDevices": {
       "executed": false
+    },
+    "publicBackendGet": {
+      "executed": true,
+      "result": "AUTHENTICATED_POST_REQUIRED",
+      "environment": "TEST_ONLY"
+    },
+    "workerIntegratedLoginPage": {
+      "executed": true,
+      "googleButtonVisible": true,
+      "privateDataVisible": false
+    },
+    "workerDirectApiGet": {
+      "executed": true,
+      "result": "ORIGIN_DENIED"
+    },
+    "oauthTestUsers": {
+      "verifiedCount": 3
     }
   },
   "productionModified": false,
@@ -36,7 +57,7 @@
     },
     {
       "path": "build.cjs",
-      "sha256": "d5c78fca0786cb6294158354ff00a48e7275bbb79a61947f1852e9094bf3032c"
+      "sha256": "7646f6c76d04bbf6940c1ded2fea7f4bfdd67171cdb011d4b3c98f70625f05df"
     },
     {
       "path": "apps-script/Replay.gs",
@@ -60,6 +81,6 @@
     }
   ],
   "appsScriptCreated": true,
-  "appsScriptDeployed": false,
-  "authorizedCandidateSHA256": "0e5e27081e5493f54b235053b63b1fb476be6cc066316d38b8cb5e63192595e6"
+  "appsScriptDeployed": true,
+  "authorizedCandidateSHA256": "8b2c817abe5e9489c05ffc0507cceddce5ff4a0f8ad3667c70001aabe41b5c22"
 }

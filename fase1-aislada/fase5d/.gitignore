@@ -1,3 +1,10 @@
 evidencia-local/
 apps-script/Candidate.gs
+worker-bundle.mjs
+web/approved-app.js
+web/approved.css
+web/client.js
+web/continuity-core.js
+web/index.html
+web/config.json
 

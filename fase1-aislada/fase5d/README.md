@@ -1,3 +1,25 @@
+## Estado verificado — 21 de octubre de 2026
+
+El Worker autorizado ya sirve la interfaz 5A.2 y el acceso Google. El Apps Script nuevo tiene implementación web versión 1 ejecutada por el propietario, con acceso de red Cualquiera y controles HMAC en el código. Se comprobaron tres usuarios OAuth de prueba; los correos y sus vínculos iniciales permanecen exclusivamente en configuración privada.
+
+El GET público del backend devuelve TEST_ONLY / AUTHENTICATED_POST_REQUIRED. El GET directo de /api del Worker devuelve ORIGIN_DENIED. La interfaz sin sesión muestra el botón Google y oculta los datos. Se seleccionó la cuenta administradora autorizada y se continuó el consentimiento de identidad básica, pero Safari dejó de responder al cerrar la ventana OAuth: la confirmación del backend NO está verificada. No declarar validado el acceso real todavía.
+
+Se ejecutaron 22 pruebas específicas de 5D, todas aprobadas. La regresión previa completa suma 354 pruebas locales aprobadas; no equivale a 354 pruebas con Google. La interfaz local con identidades ficticias permitió registrar pedido, cobrar, despachar y consultar el estado desde vendedor sin costos internos. Falta repetir ese flujo contra Google, comprobar las otras identidades, revocación real, rendimiento del Worker con JWT y equipos físicos.
+
+Los indicadores realAccountsEnabled y signedBackendEnabled describen la configuración de laboratorio habilitada, no una certificación del recorrido completo. productionEnabled sigue false. No se modificaron producción ni historial. No se habilitó facturación, tarjeta, KV ni D1.
+
+Continuidad: también se detectan colas administrativas adminQueue5d pendientes, sin borrarlas. Los cambios de permisos conservan operationId y recuperan el recibo tras una respuesta perdida. La interfaz administrativa aún necesita prueba real.
+
+### Continuación necesaria
+
+1. Recuperar lectura de Safari y comprobar si el inicio Google terminó o qué error muestra.
+2. Confirmar bootstrap, perfil y snapshot por el puente Worker → Apps Script → hoja sintética.
+3. Probar ventas ficticias, rechazos por perfil, reintentos, concurrencia y revocación.
+4. Medir latencia/CPU reales; el dato anterior de 1 ms correspondía al Worker cerrado, no al flujo con JWT.
+5. Ejecutar protocolo físico con intervención del propietario. Mantener NO-GO para producción y Fase 6.
+
+---
+
 # Fase 5D — avance verificable de infraestructura
 
 Fecha de inspección: 20 de octubre de 2026, America/Lima. **Fase en ejecución; NO-GO para Fase 6.**

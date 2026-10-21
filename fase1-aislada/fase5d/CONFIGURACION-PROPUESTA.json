@@ -10,10 +10,15 @@
   "googleProjectName": "Casa Vieja Lab Auth",
   "oauthClientName": "Casa Vieja Lab Web",
   "oauthClientType": "web",
-  "identityScopes": ["openid", "email", "profile"],
+  "identityScopes": [
+    "openid",
+    "email",
+    "profile"
+  ],
   "googleClientId": "855760462749-rectr62q59fo3j2jvs0dmhpomels7ueh.apps.googleusercontent.com",
   "appsScriptId": "1m79GZ0TkADVZuji4E1XFnPmdMCAHCWI-FRZvawkx9vGnxzmao0NfPki3",
-  "realAccountsEnabled": false,
-  "signedBackendEnabled": false,
-  "productionEnabled": false
+  "realAccountsEnabled": true,
+  "signedBackendEnabled": true,
+  "productionEnabled": false,
+  "appsScriptUrl": "https://script.google.com/macros/s/AKfycbx76BrWzeqJPu-1SK2pSpHiEQU5Srg6jXfN9xC1LrQlSRC9JTu1p5oXkePEFRvsv5oHsw/exec"
 }

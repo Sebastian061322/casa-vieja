@@ -16,9 +16,14 @@ if (process.argv.includes('--authorized-script')) {
 }
 replaceOnce('owns(this,c.operationId);return super.execute(c);',
   "const prior=this.records().find(r=>r.id===c.operationId&&['PREPARED','REJECTED'].includes(r.kind));if(prior)check((prior.plan?.audit||prior.audit)?.subject===this.actor.subject,'OPERATION_ACTOR_MISMATCH');owns(this,c.operationId);return super.execute(c);");
+replaceOnce("if(old){check(old.fingerprint===canonical(p)","if(old){check(old.actor===actor.subject,'OPERATION_ACTOR_MISMATCH');check(old.fingerprint===canonical(p)");
+replaceOnce("if(request.action==='snapshot')return snapshot(engine,p||{});",
+  "if(request.action==='dashboard')return CV5DView.dashboard(engine,p);if(request.action==='snapshot')return p?.format==='ui5d'?CV5DView.snapshot(engine):snapshot(engine,p||{});");
 replaceOnce("if(!approved||ScriptApp.getScriptId()!==approved)throw Error('APPROVED_LAB_REQUIRED');const service=",
-  "if(!approved||ScriptApp.getScriptId()!==approved)throw Error('APPROVED_LAB_REQUIRED');const current=zeroProof_(envelope);CVZeroAccess.principal(current.subject,zeroPropertyLog_('ZERO_USER_').read());zeroConsumeNonce_(current,p,Date.now());const service=");
+  "if(!approved||ScriptApp.getScriptId()!==approved)throw Error('APPROVED_LAB_REQUIRED');const current=zeroProof_(envelope);zeroActor_(current,zeroPropertyLog_('ZERO_USER_'),p);zeroConsumeNonce_(current,p,Date.now());const service=");
 code += '\n' + read('apps-script/Replay.gs');
+code += '\n' + read('apps-script/Enrollment.gs');
+code += '\n' + read('ui-view.js');
 const context = vm.createContext({});
 vm.runInContext(code, context);
 const exposed = Object.keys(context).filter(k => typeof context[k] === 'function' && !k.endsWith('_'));

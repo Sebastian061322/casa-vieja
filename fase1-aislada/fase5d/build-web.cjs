@@ -13,6 +13,9 @@ const financial="discountCents:cents(f.discount),authorizationId:f.authorization
 if(app.split(financial).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
 app=app.replace(financial,"...(actor.profile==='seller'?{}:{discountCents:cents(f.discount||'0'),authorizationId:f.authorizationId||'',deliveryCostCents:cents(f.deliveryCost||'0'),deliveryChargedCents:cents(f.deliveryCharged||'0')})");
 app=app.replace('finally{if(b)b.disabled=false;}',"finally{if(b)b.disabled=form.id==='sale-form'&&!!snapshot?.sales[draftSaleId];}");
+const pendingNotice="notice('Guardada en este equipo. Esperando confirmación del servidor.');await sync();";
+if(app.split(pendingNotice).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
+app=app.replace(pendingNotice,"notice('Guardada en este equipo. Esperando confirmación del servidor.');$('pending').textContent='Operación pendiente de confirmación';$('queue').innerHTML='<p>Operación guardada localmente. Esperando confirmación del servidor.</p>';await sync();");
 const dashboard=read('../fase5c/web/admin-dashboard.js').replace("cv5cRPC('dashboard',","rpc('dashboard',");
 const appModule="import {checkContinuity} from './continuity.mjs';\nimport {adminMutation} from './admin-queue.mjs';\nwindow.mount5D=async function(actor,session,labStore){\n"+app+'\n'+read('../fase5a/web/ux.js')+'\n'+dashboard+'\n'+read('web/presentation.js')+'\n};\n';
 // La sintaxis del cuerpo se valida sin ejecutarlo ni abrir un navegador.

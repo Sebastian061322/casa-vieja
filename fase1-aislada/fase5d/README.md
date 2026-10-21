@@ -1,3 +1,13 @@
+## Validación operativa real actual
+
+Consultar [INFORME-VALIDACION-5D.md](INFORME-VALIDACION-5D.md): acceso administrador y vendedor confirmados, pedido ficticio S/35 reservado, cobrado y despachado sin doble descuento; vendedor recibe el nuevo estado. Regresión completa 357/357. Falta gerente operativo, pruebas adversariales y recuperación/concurrencia contra Google, rendimiento y equipos físicos. No se declara lista producción.
+
+### Vendedor confirmado en Google
+
+Tras el ajuste de carga, el propietario confirmó el acceso y se verificó directamente la interfaz nativa: perfil Vendedor, navegación limitada a Ventas/Pedidos/Inventario, stock sin valoración monetaria, formulario con precio de catálogo y sin descuentos ni botones de cobro/despacho. Evidencia visual privada: evidencia-local/vendedor-google-confirmado.png. No se publica información identificable de las cuentas.
+
+No confundir este resultado con una prueba real de solicitudes manipuladas: esos rechazos están cubiertos localmente, pero faltan pruebas equivalentes con sesión Google. La casilla de revisión de otros orígenes/equipos del laboratorio permanece desmarcada; no se enviaron pedidos nuevos en esta validación. Se pidió al propietario identificar los equipos que usaron laboratorio antes de completar dicha revisión.
+
 ### Carga de interfaz tras OAuth
 
 La sesión del vendedor falló con `Importing a module script failed` después de superar el acceso. Se eliminó la descarga tardía de módulos al volver del popup: el arranque servido incorpora sesión, continuidad, cola administrativa e interfaz, y sigue montando datos solo tras autenticar. No se ampliaron permisos. Paquete verificado sintácticamente y con prueba específica de arranque sin importaciones tardías. Worker laboratorio versión corta 701d7120, visible como Active Latest.

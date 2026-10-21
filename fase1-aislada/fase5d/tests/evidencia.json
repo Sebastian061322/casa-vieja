@@ -1,5 +1,5 @@
 {
-  "observedAtUTC": "2026-10-21T13:17:22.589052+00:00",
+  "observedAtUTC": "2026-10-21T13:30:26.053999+00:00",
   "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
   "environment": "TEST_ONLY",
   "localTests": {
@@ -33,7 +33,39 @@
       ]
     },
     "multiuserCommercialFlow": {
-      "executed": false
+      "executed": true,
+      "environment": "TEST_ONLY",
+      "saleId": "future:8dc4af32-f795-40dc-acb9-c3cb3c1c065d",
+      "sellerSaleConfirmed": true,
+      "saleTotalCents": 3500,
+      "adminSeesSameOrderOnce": true,
+      "costCents": 1735,
+      "initialMarginCents": 1765,
+      "baseline": {
+        "physicalBags": 84,
+        "reservedBags": 2
+      },
+      "afterSale": {
+        "physicalBags": 84,
+        "reservedBags": 3
+      },
+      "payment": {
+        "amountCents": 3500,
+        "reference": "TEST_ONLY_5D_PAGO_20261021_01",
+        "initiallyPending": true,
+        "eventuallyConfirmed": true,
+        "outstandingCents": 0,
+        "netCollectedCents": 3500,
+        "physicalBags": 84,
+        "reservedBags": 3
+      },
+      "dispatch": {
+        "initiated": true,
+        "confirmed": true,
+        "physicalBags": 83,
+        "reservedBags": 2,
+        "sellerSeesDispatchedAfterSync": true
+      }
     },
     "physicalDevices": {
       "executed": false
@@ -66,10 +98,36 @@
     "sellerSignIn": {
       "initiated": true,
       "googleBasicIdentityConsentContinued": true,
-      "roleAndDataVisibilityConfirmed": false,
+      "roleAndDataVisibilityConfirmed": true,
       "observedError": "Importing a module script failed",
       "interfaceLoadFixDeployed": true,
-      "retryInitiated": true
+      "retryInitiated": true,
+      "verifiedBy": [
+        "owner confirmation",
+        "native UI seller stock and sale form"
+      ],
+      "visibleSections": [
+        "Ventas",
+        "Pedidos",
+        "Inventario"
+      ],
+      "internalCostsVisible": false,
+      "financialReportsVisible": false,
+      "priceEditable": false,
+      "paymentDispatchActionsVisible": false
+    },
+    "queueReview": {
+      "scope": "known laboratory tabs on this computer only",
+      "ownerConfirmedOnlyThisComputer": true,
+      "previousPrivateLabPending": 0,
+      "adminPendingBeforeTest": 0,
+      "sellerPendingBeforeTest": 0,
+      "productionInspected": false
+    },
+    "operationsLogin": {
+      "prepared": true,
+      "ownerCredentialEntryRequired": true,
+      "confirmed": false
     }
   },
   "productionModified": false,

@@ -10,7 +10,7 @@ test('arranque único evita importaciones tras OAuth y conserva montaje autentic
   assert.match(response.headers.get('content-type'),/javascript/);
   const source=await response.text();new Script(source);
   assert.doesNotMatch(source,/^import\s|\bimport\(/m);
-  assert.match(source,/await session\.login\(response\.credential\)/);
+  assert.match(source,/await session\.login\(credential\)/);
   assert.match(source,/await window\.mount5D\(actor,session,store\)/);
   assert.match(source,/ADMIN_PENDING_RECOVERY_REQUIRED/);
   assert.match(source,/OTHER_QUEUE_REVIEW_REQUIRED/);

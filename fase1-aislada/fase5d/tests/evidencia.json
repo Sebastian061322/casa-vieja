@@ -1,17 +1,17 @@
 {
-  "observedAtUTC": "2026-10-21T13:30:26.053999+00:00",
+  "observedAtUTC": "2026-10-21T17:19:18.625251+00:00",
   "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
   "environment": "TEST_ONLY",
   "localTests": {
     "previous": 332,
-    "new": 25,
-    "passed": 357,
+    "new": 30,
+    "passed": 362,
     "failed": 0,
     "runtime": "Node.js v24.20.0",
     "actualGoogleTokens": false,
     "actualSheetsAdapter": false,
     "previousFullRegressionPassed": 354,
-    "currentFocusedPassed": 25,
+    "currentFocusedPassed": 30,
     "currentFullRegressionRepeated": true
   },
   "remoteTests": {
@@ -127,7 +127,13 @@
     "operationsLogin": {
       "prepared": true,
       "ownerCredentialEntryRequired": true,
-      "confirmed": false
+      "confirmed": false,
+      "observedError": "SESSION_CHANGED",
+      "loginRaceFixDeployed": true,
+      "workerVersionShort": "356ce6ca",
+      "retryInitiated": true,
+      "observedAfterFirstFix": "Gerente operativo panel with ACCOUNT_OR_PROFILE_CHANGED warning",
+      "duplicateMountFixDeployed": true
     }
   },
   "productionModified": false,
@@ -150,7 +156,7 @@
     },
     {
       "path": "web/session.mjs",
-      "sha256": "429c49395e68b468ad8223bbc6edd59e2c41f0931e3b2816ca7e2b59fbd8dc28"
+      "sha256": "38dc989026d5abe32e059c3eff49437e5beed5c1f72bad41983acd889e192661"
     },
     {
       "path": "tests/security.test.mjs",

@@ -1,3 +1,13 @@
+### Sesión vigente: montaje protegido
+
+Se agregó deduplicación de callbacks Google idénticos mientras el ingreso está en tránsito. El montaje se registra antes de esperar su finalización, evitando que dos callbacks inicien dos interfaces y sus actualizadores. La primera corrección permitió abrir Gerente operativo pero dejó un aviso ACCOUNT_OR_PROFILE_CHANGED; por ello no se declaró validado y se publicó este ajuste adicional. Worker sintético 356ce6ca. Regresión completa: 362/362 (30 de 5D). Resultado remoto posterior pendiente.
+
+### Sesión del gerente: carrera corregida
+
+Se observó SESSION_CHANGED en el ingreso de gerente. Una respuesta de un intento anterior podía cerrar un intento más reciente desde el manejador de errores. La coordinación de ingreso descarta respuestas anteriores, protege montaje tardío y mueve el cierre por denegación a la sesión vigente. La identidad y los permisos siguen verificándose en backend. Las pruebas cubren éxito/error tardíos, cierre durante preparación y denegación vigente.
+
+361/361 pruebas completas aprobadas (29 de 5D). Worker sintético versión corta 8deac842. Se recargó solo la pestaña del gerente, sin limpiar IndexedDB, y se repitió su ingreso. Falta comprobar el resultado remoto; no declarar confirmado por las pruebas locales.
+
 ## Validación operativa real actual
 
 Consultar [INFORME-VALIDACION-5D.md](INFORME-VALIDACION-5D.md): acceso administrador y vendedor confirmados, pedido ficticio S/35 reservado, cobrado y despachado sin doble descuento; vendedor recibe el nuevo estado. Regresión completa 357/357. Falta gerente operativo, pruebas adversariales y recuperación/concurrencia contra Google, rendimiento y equipos físicos. No se declara lista producción.

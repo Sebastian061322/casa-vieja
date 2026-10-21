@@ -4,7 +4,7 @@ Fecha: 21 de octubre de 2026. Solo TEST_ONLY. No habilita producción ni Fase 6.
 
 ## Resultado comprobado
 
-Google Identity → Worker de laboratorio → Apps Script aislado → hoja sintética funciona para administrador y vendedor. Se conservó la interfaz aprobada 5A.2. La regresión completa pasó 357/357 pruebas locales, incluidas 25 específicas de 5D. No son 357 pruebas con Google.
+Google Identity → Worker de laboratorio → Apps Script aislado → hoja sintética funciona para administrador y vendedor. Se conservó la interfaz aprobada 5A.2. La regresión completa pasó 362/362 pruebas locales, incluidas 30 específicas de 5D. No son 357 pruebas con Google.
 
 | Ensayo real de laboratorio | Evidencia | Resultado |
 |---|---|---|
@@ -21,6 +21,10 @@ Google Identity → Worker de laboratorio → Apps Script aislado → hoja sint�
 | Gerente operativo | Acceso personal de Google preparado | Pendiente de intervención del propietario |
 
 Pedido del ensayo: `future:8dc4af32-f795-40dc-acb9-c3cb3c1c065d`. Cliente: PRUEBA 5D GOOGLE VENDEDOR 20261021. Referencia de pago: TEST_ONLY_5D_PAGO_20261021_01. Son datos y eventos ficticios, sin dinero ni entrega reales. No borrar ni cancelar estos registros de evidencia.
+
+## Corrección posterior de sesión
+
+**Alto, corregido localmente y desplegado en laboratorio; validación remota pendiente:** SESSION_CHANGED por respuestas de intentos de ingreso anteriores. Solo el intento vigente puede mostrar la interfaz o invalidar su sesión; una denegación actual sigue cerrando acceso. Cinco pruebas nuevas de concurrencia de ingreso, deduplicación y cancelación. El primer ajuste abrió el panel Gerente operativo, pero apareció ACCOUNT_OR_PROFILE_CHANGED; se protegió también el montaje único y se repite la comprobación con versión 356ce6ca. No se alteran roles, credenciales ni colas.
 
 ## Correcciones verificadas
 

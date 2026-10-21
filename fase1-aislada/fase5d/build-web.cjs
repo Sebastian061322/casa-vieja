@@ -33,12 +33,12 @@ html+='<script src="/client.js"></script><script src="/continuity-core.js"></scr
 write('web/index.html',html);write('web/client.js',read('../fase2/client.js'));write('web/continuity-core.js',read('../fase5c/continuity.js'));
 const config=JSON.parse(read('CONFIGURACION-PROPUESTA.json'));
 write('web/config.json',JSON.stringify({environment:'TEST_ONLY',enabled:config.realAccountsEnabled===true,realAccountsAuthorized:config.realAccountsEnabled===true,googleClientId:config.googleClientId}));
-const files=['index.html','approved.css','approved-app.js','entry.mjs','session.mjs','continuity.mjs','admin-queue.mjs','client.js','continuity-core.js','config.json'];
+const files=['index.html','approved.css','approved-app.js','entry.mjs','session.mjs','login-flow.mjs','continuity.mjs','admin-queue.mjs','client.js','continuity-core.js','config.json'];
 const assets=Object.fromEntries(files.map(file=>['/'+file,read('web/'+file)]));assets['/']=assets['/index.html'];
 // Un único módulo de arranque: no descargar código al regresar del popup OAuth.
 // El montaje y cualquier consulta privada siguen requiriendo sesión confirmada.
 const stripImports=source=>source.replace(/^import .*\n/gm,'');
-const entryBundle=[read('web/session.mjs').replace(/^export /gm,''),
+const entryBundle=[read('web/session.mjs').replace(/^export /gm,''),read('web/login-flow.mjs').replace(/^export /gm,''),
   read('web/continuity.mjs').replace(/^export /gm,''),
   read('web/admin-queue.mjs').replace(/^export /gm,''),stripImports(appModule),
   stripImports(read('web/entry.mjs')).replace("await import('./approved-app.js');",'')].join('\n');

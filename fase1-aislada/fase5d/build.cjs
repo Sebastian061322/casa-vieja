@@ -7,6 +7,13 @@ function replaceOnce(before, after) {
   if (code.split(before).length !== 2) throw Error('BASE_CHANGED_REVIEW_REQUIRED');
   code = code.replace(before, after);
 }
+const ownerGuard = read('../fase2/apps-script/Server.gs').split('function cvOwner_(){')[1].split('function cvLocked_')[0];
+replaceOnce('function cvOwner_(){' + ownerGuard, '');
+if (process.argv.includes('--authorized-script')) {
+  const approved = JSON.parse(read('CONFIGURACION-PROPUESTA.json')).appsScriptId;
+  if (approved !== '1m79GZ0TkADVZuji4E1XFnPmdMCAHCWI-FRZvawkx9vGnxzmao0NfPki3') throw Error('APPROVED_LAB_REQUIRED');
+  replaceOnce("const CV_TEST_SCRIPT_ID_ = 'ZERO_NOT_APPROVED_SCRIPT';", 'const CV_TEST_SCRIPT_ID_ = '+JSON.stringify(approved)+';');
+}
 replaceOnce('owns(this,c.operationId);return super.execute(c);',
   "const prior=this.records().find(r=>r.id===c.operationId&&['PREPARED','REJECTED'].includes(r.kind));if(prior)check((prior.plan?.audit||prior.audit)?.subject===this.actor.subject,'OPERATION_ACTOR_MISMATCH');owns(this,c.operationId);return super.execute(c);");
 replaceOnce("if(!approved||ScriptApp.getScriptId()!==approved)throw Error('APPROVED_LAB_REQUIRED');const service=",

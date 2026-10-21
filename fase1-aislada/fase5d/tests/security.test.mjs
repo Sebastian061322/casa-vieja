@@ -8,6 +8,16 @@ import closedWorker from '../closed-worker.mjs';
 const actor = (subject='111111',profile='administrator') => ({subject:'google:'+subject,profile,environment:'TEST_ONLY',destination:'TEST_ONLY_ZERO_1'});
 const deferred = () => {let resolve;const promise=new Promise(r=>resolve=r);return {promise,resolve};};
 
+test('candidato mínimo no utiliza Session y conserva destino sintético fijo',()=>{
+  const source=fs.readFileSync(new URL('../apps-script/Candidate.gs',import.meta.url),'utf8');
+  assert.doesNotMatch(source,/Session\.getActiveUser|Session\.getEffectiveUser|function cvOwner_/);
+  assert.match(source,/const CV_TEST_SHEET_ID_ = '1CtK6KD995Pu2Fzc_na89Ajc0KQ0QLuGq3UFhj4UdLSA'/);
+  assert.match(source,/getName\(\)!=='CasaVieja_Pruebas_SINTETICA'/);
+  assert.match(source,/getRange\('B3'\)\.getValue\(\)!=='TEST_ONLY'/);
+  const manifest=JSON.parse(fs.readFileSync(new URL('../apps-script/appsscript.candidate.json',import.meta.url),'utf8'));
+  assert.deepEqual(manifest.oauthScopes,['https://www.googleapis.com/auth/spreadsheets']);
+});
+
 test('un mensaje firmado solo se acepta una vez; el reintento nuevo recupera la misma venta',async()=>{
   const {f,c,mem,sign}=context();f.properties.ZERO_LAB_ENABLED='YES';
   const sale=mem.sale(),message=await sign('111111','execute',sale);

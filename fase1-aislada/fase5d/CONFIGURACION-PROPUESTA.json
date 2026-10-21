@@ -12,6 +12,7 @@
   "oauthClientType": "web",
   "identityScopes": ["openid", "email", "profile"],
   "googleClientId": "855760462749-rectr62q59fo3j2jvs0dmhpomels7ueh.apps.googleusercontent.com",
+  "appsScriptId": "1m79GZ0TkADVZuji4E1XFnPmdMCAHCWI-FRZvawkx9vGnxzmao0NfPki3",
   "realAccountsEnabled": false,
   "signedBackendEnabled": false,
   "productionEnabled": false

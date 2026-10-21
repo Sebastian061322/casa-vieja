@@ -19,9 +19,9 @@ Se continuó desde `779381b014db806f1fc8d6e81fd756fb90ee6b83`, posterior al cier
 | Facturación Google | El panel del proyecto nuevo confirmó que no tiene cuenta de facturación vinculada. No se activó prueba gratuita ni servicios de pago. |
 | Consentimiento | Se configuró la aplicación Casa Vieja Lab Auth, externa, modo Testing. La aceptación de Google API Services User Data Policy fue autorizada por separado en el momento de realizarla. |
 | Cliente OAuth | Se creó Casa Vieja Lab Web, aplicación web, con el único origen HTTPS del Worker. Google aceptó el origen. ID público en CONFIGURACION-PROPUESTA.json; no se descargó JSON de credenciales ni se guardó el secreto del cliente. Google Identity en el navegador no requiere ese secreto. |
-| Usuarios reales | Audiencia: 0 usuarios de prueba, 0 otros. No se habilitaron cuentas reales. Falta identificar y autorizar las tres cuentas y sus perfiles. |
-| Backend nuevo | Candidato mínimo preparado y probado localmente. Creación de un Apps Script separado pendiente de aprobación específica. No se amplió ningún endpoint de Apps Script. |
-| Pruebas | 332 anteriores + 11 nuevas = 343 locales aprobadas, cero fallos. RSA/JWT y Sheets usan adaptadores sintéticos; no equivalen a login real ni a escrituras remotas. |
+| Usuarios reales | El propietario proporcionó tres cuentas por perfil. La última lectura confirmada fue 0 usuarios, antes del intento de guardar la primera; falta verificar persistencia de esa lista. No hay roles backend reales habilitados ni login acreditado. |
+| Backend nuevo | Se creó y guardó, con autorización específica, CasaVieja_AUTH_TEST_ONLY_5D. La recarga del editor confirmó persistencia y guardas de Script/Sheet. No se ejecutó ni desplegó. El endpoint firmado y su secreto fueron autorizados después, pero siguen pendientes de configuración y prueba. |
+| Pruebas | 332 anteriores + 12 nuevas = 344 locales aprobadas, cero fallos. RSA/JWT y Sheets usan adaptadores sintéticos; no equivalen a login real ni a escrituras remotas. |
 
 La palabra «production» en la ruta interna del panel del Worker designa el entorno predeterminado de **ese servicio de laboratorio**. No se publicó ni se modificó la plataforma comercial de Casa Vieja.
 
@@ -33,15 +33,15 @@ La palabra «production» en la ruta interna del panel del Worker designa el ent
 
 La ventana antirrepetición admite 64 peticiones activas y hasta 7 500 caracteres; al llenarse falla cerrada. Solo expira metadatos de transporte de 30 segundos. No elimina información comercial. Falta medir y ajustar esta capacidad con el patrón real de llamadas del dashboard, sin aumentar permisos ni contratar almacenamiento.
 
-`build.cjs` toma el Candidate.gs probado de la fase anterior y añade cambios estrictamente identificados. Si cambia la base, exige revisión. Genera `apps-script/Candidate.gs`, ignorado en Git por ser reproducible. Mantiene exclusivamente `zeroRequest`, `doPost`, `doGet` públicos; conserva el ID imposible `ZERO_NOT_APPROVED_SCRIPT` y los interruptores apagados. **No pegar este candidato encima del laboratorio completo ni en producción.**
+`build.cjs` toma el Candidate.gs probado de la fase anterior y añade cambios estrictamente identificados. Si cambia la base, exige revisión. Genera `apps-script/Candidate.gs`, ignorado en Git por ser reproducible. Mantiene exclusivamente `zeroRequest`, `doPost`, `doGet` públicos; conserva por defecto el ID imposible `ZERO_NOT_APPROVED_SCRIPT` y los interruptores apagados. La opción `--authorized-script` compila exclusivamente el ID del Script nuevo autorizado. Se retiró la función privada heredada que consultaba Session; el manifiesto propuesto solicita solo Sheets y aún debe guardarse en el recurso remoto. **No pegar este candidato encima del laboratorio completo ni en producción.**
 
 ## Pendientes para terminar 5D
 
 | Prioridad | Condición pendiente |
 |---|---|
-| P0 | Crear y revisar Apps Script mínimo separado después de autorización; vincular SU ID al constructor y verificar restricción exclusiva al Sheet sintético. |
-| P0 | Autorizar en el momento correspondiente el endpoint firmado, sus permisos de red y el registro seguro del HMAC. No se han realizado. |
-| P0 | Identificar tres Gmail autorizados; enlazar sujetos Google verificados a sus perfiles en backend y comprobar revocación real. No basta el correo declarado por el navegador. |
+| P0 | Completar configuración del Script mínimo ya creado. Constructor `--authorized-script` enlazado a su ID; las guardas de Script/Sheet se verificaron tras recarga. |
+| P0 | El endpoint firmado y el HMAC ya fueron autorizados específicamente. Falta que el propietario introduzca la credencial directamente, luego configurar y probar el despliegue. |
+| P0 | Se proporcionaron tres Gmail por perfil. Falta verificar la persistencia de la lista OAuth, enlazar sujetos Google verificados a sus perfiles en backend y comprobar revocación real. No basta el correo declarado por el navegador. |
 | P0 | Integrar la sesión nueva con la interfaz 5A/5A.2, conservando dashboard y formularios, y limitar datos/funciones por perfil. El portal mínimo de 5C no sustituye esta integración. El Worker cerrado actual tampoco es la aplicación final. |
 | P0 | Validar continuidad por identidad/origen, borradores, perfiles modificados y confirmaciones perdidas desde la interfaz integrada. No migrar colas de motores incompatibles. |
 | P0 | Ejecutar OAuth/JWT reales → Worker → Apps Script → Sheet sintético. Las pruebas locales no cierran este bloqueo. |
@@ -64,3 +64,7 @@ node --test fase1-aislada/fase5d/tests/*.test.mjs
 La regresión ejecutada incorpora acceptance.cjs, las suites de Fases 2, 3, 4, 5A, refinamiento 5A.2, 5B, 5C, cierre-operativo, multiusuario-gratuito y 5D. `tests/evidencia.json` identifica alcance y artefactos. Las capturas locales de paneles se excluyen del repositorio para evitar divulgar datos de cuenta.
 
 Fuentes técnicas consultadas: [Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/), [configurar Google Identity](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid), [validar ID tokens](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token). Las condiciones particulares de plan, pagos y proyectos se leyeron en la cuenta real; no se dedujeron de esas páginas generales.
+
+## Punto de continuación
+
+Se autorizó crear el Script separado, registrar el secreto y preparar su endpoint público firmado. El Script se creó y guardó sin ejecución ni despliegue. El propietario pidió ayuda para generar la clave: se generó con 32 bytes criptográficos (64 caracteres hexadecimales), exclusivamente en un archivo local privado fuera del repositorio, con permisos 0600. El contenido no se leyó ni se imprimió. El propietario debe introducirla directamente en ambos formularios y cerrarlos antes de reanudar la automatización. Esta autorización no habilitó producción.

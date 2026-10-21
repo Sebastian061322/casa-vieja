@@ -1,11 +1,11 @@
 {
-  "observedAtUTC": "2026-10-21T04:45:16.912709+00:00",
+  "observedAtUTC": "2026-10-21T04:50:49.055437+00:00",
   "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
   "environment": "TEST_ONLY",
   "localTests": {
     "previous": 332,
-    "new": 11,
-    "passed": 343,
+    "new": 12,
+    "passed": 344,
     "failed": 0,
     "runtime": "Node.js v24.20.0",
     "actualGoogleTokens": false,
@@ -36,11 +36,15 @@
     },
     {
       "path": "build.cjs",
-      "sha256": "833a5fa64101f1df0f53ed99eb200d8fd4b96b320ea9efe316280c6473fec413"
+      "sha256": "d5c78fca0786cb6294158354ff00a48e7275bbb79a61947f1852e9094bf3032c"
     },
     {
       "path": "apps-script/Replay.gs",
       "sha256": "14014c55bf3a23a9178ea1d85bfe96caa63dce481d066c20a1998cf3360aea2e"
+    },
+    {
+      "path": "apps-script/appsscript.candidate.json",
+      "sha256": "4cc4f32ea4bb2574c9be91c14bd19e3754e6c49f354024620fa5758b52da22d6"
     },
     {
       "path": "web/session.mjs",
@@ -48,11 +52,14 @@
     },
     {
       "path": "tests/security.test.mjs",
-      "sha256": "24893a49a50c26420d06e72b89f0058d9a554a639502035660d123cf7ec5449b"
+      "sha256": "d7397d1ca6d90df715ed6bd28702af813d85a03142f2754fba1531a3e85fcca9"
     },
     {
       "path": "tests/fixture.mjs",
       "sha256": "5e0151e3dd32d0540475994305b8b031da19b985ef844cae1f57e7976d1c8a1e"
     }
-  ]
+  ],
+  "appsScriptCreated": true,
+  "appsScriptDeployed": false,
+  "authorizedCandidateSHA256": "0e5e27081e5493f54b235053b63b1fb476be6cc066316d38b8cb5e63192595e6"
 }

@@ -26,3 +26,11 @@ test('Worker verifica JWT y firma correo de Google; ignorar correo en payload',a
   const response=await worker.fetch(new Request(origin+'/api',{method:'POST',headers:{origin,'content-type':'application/json',authorization:'Bearer '+token('333333')},body:JSON.stringify({action:'bootstrap',payload:{verifiedEmail:'admin@example.test',role:'administrator'}})}),env);
   assert.equal(response.status,200);assert.equal(captured.request.verifiedEmail,'333333@example.test');assert.equal(captured.request.subject,'google:333333');
 });
+test('diagnóstico distingue certificados y respuesta del backend sin exponer excepciones',async()=>{
+  const env={ZERO_LAB_ENABLED:'YES',FREE_PLAN_ATTESTED:'YES',BILLING_ENABLED:'NO',GOOGLE_CLIENT_ID:audience,FRONTEND_ORIGIN:origin,GATEWAY_SECRET:'fictitious-secret-'.repeat(4),APPS_SCRIPT_URL:'https://script.google.com/macros/s/TEST_ONLY/exec'};
+  const request=()=>new Request(origin+'/api',{method:'POST',headers:{origin,'content-type':'application/json',authorization:'Bearer '+token('333333')},body:JSON.stringify({action:'bootstrap',payload:null})});
+  const unavailable=createWorker({fetcher:async()=>{throw Error('private diagnostic never returned')}});
+  assert.equal((await (await unavailable.fetch(request(),env)).json()).error,'GOOGLE_IDENTITY_UNAVAILABLE');
+  const malformed=createWorker({fetcher:async url=>url.includes('/certs')?new Response(JSON.stringify({keys:[testJwk]}),{headers:{'cache-control':'max-age=3600'}}):new Response('<html>not a backend receipt</html>')});
+  assert.equal((await (await malformed.fetch(request(),env)).json()).error,'BACKEND_RESPONSE_UNAVAILABLE');
+});

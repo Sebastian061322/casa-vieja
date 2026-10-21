@@ -1,18 +1,18 @@
 {
-  "observedAtUTC": "2026-10-21T13:12:51.942415+00:00",
+  "observedAtUTC": "2026-10-21T13:17:22.589052+00:00",
   "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
   "environment": "TEST_ONLY",
   "localTests": {
     "previous": 332,
-    "new": 24,
-    "passed": 354,
+    "new": 25,
+    "passed": 357,
     "failed": 0,
     "runtime": "Node.js v24.20.0",
     "actualGoogleTokens": false,
     "actualSheetsAdapter": false,
     "previousFullRegressionPassed": 354,
-    "currentFocusedPassed": 24,
-    "currentFullRegressionRepeated": false
+    "currentFocusedPassed": 25,
+    "currentFullRegressionRepeated": true
   },
   "remoteTests": {
     "workerClosedGetApi": {
@@ -25,8 +25,12 @@
       "executed": true,
       "accountSelected": true,
       "basicIdentityConsentContinued": true,
-      "backendConfirmationVerified": false,
-      "blocker": "Safari automation stopped responding after OAuth popup closed"
+      "backendConfirmationVerified": true,
+      "verifiedBy": [
+        "owner screen confirmation",
+        "native UI administrator profile and synthetic inventory",
+        "authenticated dashboard refresh 2026-10-21 08:15 Lima"
+      ]
     },
     "multiuserCommercialFlow": {
       "executed": false
@@ -58,6 +62,14 @@
       "afterStatus": 401,
       "afterError": "IDENTITY_REQUIRED",
       "realCredentialsUsed": false
+    },
+    "sellerSignIn": {
+      "initiated": true,
+      "googleBasicIdentityConsentContinued": true,
+      "roleAndDataVisibilityConfirmed": false,
+      "observedError": "Importing a module script failed",
+      "interfaceLoadFixDeployed": true,
+      "retryInitiated": true
     }
   },
   "productionModified": false,

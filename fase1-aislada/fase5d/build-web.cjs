@@ -32,6 +32,15 @@ const config=JSON.parse(read('CONFIGURACION-PROPUESTA.json'));
 write('web/config.json',JSON.stringify({environment:'TEST_ONLY',enabled:config.realAccountsEnabled===true,realAccountsAuthorized:config.realAccountsEnabled===true,googleClientId:config.googleClientId}));
 const files=['index.html','approved.css','approved-app.js','entry.mjs','session.mjs','continuity.mjs','admin-queue.mjs','client.js','continuity-core.js','config.json'];
 const assets=Object.fromEntries(files.map(file=>['/'+file,read('web/'+file)]));assets['/']=assets['/index.html'];
+// Un único módulo de arranque: no descargar código al regresar del popup OAuth.
+// El montaje y cualquier consulta privada siguen requiriendo sesión confirmada.
+const stripImports=source=>source.replace(/^import .*\n/gm,'');
+const entryBundle=[read('web/session.mjs').replace(/^export /gm,''),
+  read('web/continuity.mjs').replace(/^export /gm,''),
+  read('web/admin-queue.mjs').replace(/^export /gm,''),stripImports(appModule),
+  stripImports(read('web/entry.mjs')).replace("await import('./approved-app.js');",'')].join('\n');
+new vm.Script(entryBundle);
+assets['/entry.mjs']=entryBundle;
 let identity=read('identity.mjs').replace(/^export /gm,'');
 let api=read('api-worker.mjs').replace("import {verifier,proof} from './identity.mjs';",'').replace('export function createWorker','function createWorker').replace('export default createWorker();','const apiWorker=createWorker();');
 const bundle=identity+'\n'+api+'\nconst assets='+JSON.stringify(assets)+';\n'+`export default {async fetch(request,env){const url=new URL(request.url);if(url.pathname==='/api')return apiWorker.fetch(request,env);if(!['GET','HEAD'].includes(request.method))return new Response('Método no permitido',{status:405});const body=assets[url.pathname];if(body===undefined)return new Response('No encontrado',{status:404});const type=url.pathname.endsWith('.css')?'text/css':url.pathname.endsWith('.js')||url.pathname.endsWith('.mjs')?'text/javascript':url.pathname.endsWith('.json')?'application/json':'text/html';return new Response(request.method==='HEAD'?null:body,{headers:{'content-type':type+'; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff','referrer-policy':'no-referrer','cross-origin-opener-policy':'same-origin-allow-popups','content-security-policy':"default-src 'self'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; frame-src https://accounts.google.com/gsi/; connect-src 'self' https://accounts.google.com/gsi/; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"}});}};\n`;

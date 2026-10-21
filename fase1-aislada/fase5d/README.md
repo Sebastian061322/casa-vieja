@@ -1,3 +1,21 @@
+### Carga de interfaz tras OAuth
+
+La sesión del vendedor falló con `Importing a module script failed` después de superar el acceso. Se eliminó la descarga tardía de módulos al volver del popup: el arranque servido incorpora sesión, continuidad, cola administrativa e interfaz, y sigue montando datos solo tras autenticar. No se ampliaron permisos. Paquete verificado sintácticamente y con prueba específica de arranque sin importaciones tardías. Worker laboratorio versión corta 701d7120, visible como Active Latest.
+
+Regresión completa actual: 357/357 aprobadas, incluidas 25 de 5D. Se inició un nuevo ingreso vendedor; falta verificar su resultado real. El administrador sí está confirmado con lectura y actualización auténticas del backend.
+
+## Acceso administrador confirmado — 21 de octubre de 2026
+
+El propietario confirmó que el panel abre y permite navegar. Se verificó después mediante la interfaz nativa: perfil Administrador principal, inventario sintético y dashboard financiero. La actualización autenticada del panel terminó con nueva hora de consulta 08:15:02 (Lima). Esto verifica el recorrido Google → Worker → Apps Script → datos sintéticos para lectura con administrador.
+
+La regresión completa posterior pasó 356/356 pruebas locales (24 específicas de 5D), sin fallos. La segunda sesión Google del vendedor fue iniciada con la cuenta autorizada; falta comprobar visualmente perfil y ocultamiento de datos porque la automatización de Safari deja de responder tras OAuth. No se declara aprobada esa prueba ni la del gerente operativo.
+
+Pendientes: ejecución comercial real contra Google con datos ficticios, permisos negativos con sesiones reales, revocación, concurrencia, recuperación de confirmaciones, dispositivos físicos y medición de latencia/CPU. No se marcó como realizada la revisión de colas de otros dispositivos. No se creó ninguna venta nueva en esta comprobación; la actualización del panel fue de lectura.
+
+Las secciones inferiores conservan el registro cronológico de avances y bloqueos anteriores; este estado sustituye las menciones previas de acceso administrador pendiente.
+
+---
+
 ### Corrección posterior del acceso Google
 
 Se reprodujo GOOGLE_IDENTITY_UNAVAILABLE en el Worker real usando una firma ficticia inválida, sin credenciales de usuario. Se sustituyó el modo redirect:error de la consulta fija de certificados Google por redirect:manual, rechazando cualquier respuesta no exitosa sin seguir redirecciones. El mismo ensayo remoto cambió de 503/GOOGLE_IDENTITY_UNAVAILABLE a 401/IDENTITY_REQUIRED: el verificador ya llega a rechazar la firma inválida. El resto de cambios en esa rutina solo clasifica excepciones en códigos fijos, sin publicar mensajes internos.

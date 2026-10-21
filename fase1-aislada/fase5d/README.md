@@ -1,3 +1,9 @@
+### Corrección posterior del acceso Google
+
+Se reprodujo GOOGLE_IDENTITY_UNAVAILABLE en el Worker real usando una firma ficticia inválida, sin credenciales de usuario. Se sustituyó el modo redirect:error de la consulta fija de certificados Google por redirect:manual, rechazando cualquier respuesta no exitosa sin seguir redirecciones. El mismo ensayo remoto cambió de 503/GOOGLE_IDENTITY_UNAVAILABLE a 401/IDENTITY_REQUIRED: el verificador ya llega a rechazar la firma inválida. El resto de cambios en esa rutina solo clasifica excepciones en códigos fijos, sin publicar mensajes internos.
+
+24 pruebas específicas aprobadas tras esta corrección; la regresión completa previa fue de 354. No se repitió aún la regresión completa. Se inició otro ingreso administrador real; falta observar su confirmación porque Safari deja de responder a la automatización al cerrar OAuth. No confundir el rechazo correcto de una firma inválida con la aprobación del acceso real.
+
 ## Estado verificado — 21 de octubre de 2026
 
 El Worker autorizado ya sirve la interfaz 5A.2 y el acceso Google. El Apps Script nuevo tiene implementación web versión 1 ejecutada por el propietario, con acceso de red Cualquiera y controles HMAC en el código. Se comprobaron tres usuarios OAuth de prueba; los correos y sus vínculos iniciales permanecen exclusivamente en configuración privada.

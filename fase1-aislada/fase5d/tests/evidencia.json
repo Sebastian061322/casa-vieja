@@ -1,15 +1,18 @@
 {
-  "observedAtUTC": "2026-10-21T13:01:07.499849+00:00",
+  "observedAtUTC": "2026-10-21T13:12:51.942415+00:00",
   "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
   "environment": "TEST_ONLY",
   "localTests": {
     "previous": 332,
-    "new": 22,
+    "new": 24,
     "passed": 354,
     "failed": 0,
     "runtime": "Node.js v24.20.0",
     "actualGoogleTokens": false,
-    "actualSheetsAdapter": false
+    "actualSheetsAdapter": false,
+    "previousFullRegressionPassed": 354,
+    "currentFocusedPassed": 24,
+    "currentFullRegressionRepeated": false
   },
   "remoteTests": {
     "workerClosedGetApi": {
@@ -47,6 +50,14 @@
     },
     "oauthTestUsers": {
       "verifiedCount": 3
+    },
+    "invalidSignatureGoogleKeys": {
+      "executed": true,
+      "beforeStatus": 503,
+      "beforeError": "GOOGLE_IDENTITY_UNAVAILABLE",
+      "afterStatus": 401,
+      "afterError": "IDENTITY_REQUIRED",
+      "realCredentialsUsed": false
     }
   },
   "productionModified": false,

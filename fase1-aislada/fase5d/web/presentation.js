@@ -66,3 +66,22 @@ document.addEventListener('submit',async event=>{if(!event.target.matches('[data
     if(result.state!=='COMMITTED')throw Error('PERMISSION_NOT_CONFIRMED');usersRevision5d=result.revision;notice('Cambio de permiso confirmado por el servidor del laboratorio.');
   }catch(error){notice(explain(error));}finally{button.disabled=false;}
 });
+// Conserva rechazo definitivo y pendiente como estados diferentes, también en el resumen móvil.
+let queueView5d={queue:[],archived:[]};
+const explainBase5d=explain;
+explain=function(error){if((error.message||error)==='SHIPPING_ZONE_REQUIRED')return 'Selecciona o escribe una zona de envío antes de guardar el pedido.';return (error.message||error)==='SHIPPING_POLICY_REQUIRED'?'La zona no tiene una política de envío aplicable. No se confirmó la venta.':explainBase5d(error);};
+function refreshQueueState5d(){
+ const status=queueStatus(queueView5d,draftSaleId);$('pending').textContent=status.label;
+ if(!status.pending&&status.rejected)$('connection').textContent='Rechazo confirmado · revisar';
+ if(!queueView5d.queue.length&&status.archived)$('queue').innerHTML='<p class="cv-help">Sin operaciones pendientes. '+status.archived+' rechazo(s) conservado(s) con su evidencia.</p>';
+ if(view==='sales'&&$('draft-state')&&!snapshot?.sales[draftSaleId]){
+  if(status.saleRejected){$('draft-state').textContent='Rechazo confirmado. No se registró la venta. Conserva la evidencia y usa «Nuevo pedido» solo después de revisar la causa.';$('submit-sale').disabled=true;document.querySelector('[data-save-step="pending"]').textContent='2 · Rechazado';}
+  else if(status.salePending){$('draft-state').textContent='Guardado en este equipo · pendiente de confirmación.';document.querySelector('[data-save-step="pending"]').textContent='2 · Pendiente';}
+ }
+}
+const syncQueue5d=sync;
+sync=async function(){await syncQueue5d();queueView5d=await client.view();refreshQueueState5d();updateMobileStatus();};
+const saleQueueState5d=saleState;
+saleState=function(){saleQueueState5d();refreshQueueState5d();updateMobileStatus();};
+
+$('sync').onclick=()=>sync();

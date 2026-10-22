@@ -1,3 +1,5 @@
+> Estado actual: Worker 4c2cd709; 385 pruebas locales aprobadas. Incidente de iPhone corregido en laboratorio y pendiente de repetición física. NO-GO Fase 6. Véase INFORME-VALIDACION-5D.md.
+
 ## Estado vigente: Worker 08092eb0 y vendedor comprobado
 
 374 pruebas locales aprobadas. El vendedor pasó 11 verificaciones con Google: denegaciones del backend, rol falsificado, redacción de costos y revisión del diario sin cambios. Evidencia: tests/validacion-google-vendedor.json. Formulario de usuarios corregido, informe accesible y pausa de consultas en pestañas ocultas publicados; archivos comparados por SHA256 y 7/7 rechazos públicos aprobados.

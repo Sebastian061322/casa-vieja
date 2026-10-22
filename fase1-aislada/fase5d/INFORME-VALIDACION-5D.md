@@ -6,7 +6,7 @@ Actualizado el 21 de octubre de 2026 (Lima). Exclusivamente TEST_ONLY. **NO-GO p
 
 Google Identity Services → Worker casa-vieja-lab-auth → Apps Script CasaVieja_AUTH_TEST_ONLY_5D → CasaVieja_Pruebas_SINTETICA. No se comparte Sheets con operadores. La identidad se verifica criptográficamente en Worker y se firma con HMAC hacia Apps Script; los permisos se resuelven en backend, antes de acceder a datos. Se reutiliza el motor recuperable de inventario/comercio y la interfaz 5A.2.
 
-Worker final **af55b8af**, activo y verificado en Cloudflare. entry.mjs, approved.css y config.json publicados coinciden por SHA256 con el paquete probado; cabecera no-store. Apps Script conserva el candidato mínimo previo: SHA256 8b2c817abe5e9489c05ffc0507cceddce5ff4a0f8ad3667c70001aabe41b5c22. En esta continuación no se modificó ni desplegó Apps Script, no se crearon recursos ni credenciales adicionales.
+Worker actual **4c2cd709**, activo y verificado en Cloudflare. entry.mjs, approved.css y config.json publicados coinciden por SHA256 con el paquete probado; cabecera no-store. Apps Script conserva el candidato mínimo previo: SHA256 8b2c817abe5e9489c05ffc0507cceddce5ff4a0f8ad3667c70001aabe41b5c22. En esta continuación no se modificó ni desplegó Apps Script, no se crearon recursos ni credenciales adicionales.
 
 Recursos aprobados en plan Free, proyecto Google sin facturación, sin tarjeta ni KV/D1. El portal público exige identidad y el endpoint sintético exige firma; una URL pública no implica autorización. No se promete disponibilidad ilimitada ni protección completa contra agotamiento de cuotas por tráfico externo.
 
@@ -16,17 +16,17 @@ main conserva 12a5f997845f9d31dc1a5d8ae7dc49770928da3d. No se modificaron index.
 
 | Comprobación | Entorno y evidencia | Resultado |
 |---|---|---|
-| Regresión de fases anteriores y 5D | Node, adaptadores ficticios; tests/resultados.txt | 374 aprobadas, 0 fallos; 42 específicas de 5D |
+| Regresión de fases anteriores y 5D | Node, adaptadores ficticios; tests/resultados.txt | 385 aprobadas, 0 fallos; 53 específicas de 5D |
 | JWT → Worker → HMAC → candidato mínimo → adaptador Sheets | tests/full-path.test.mjs | 3 aprobadas: ACK perdido, tres solicitudes por una bolsa, revocación/conservación; no es infraestructura Google real |
 | Rechazos públicos | tests/resultados-red-publica.json | 7/7; sin credenciales reales ni escrituras comerciales |
 | Integridad de publicación | Mismo archivo anterior | 3 archivos idénticos al paquete final y no-store |
 | Vendedor con sesión Google válida | tests/validacion-google-vendedor.json; lectura Safari y propietario | 11/11 sobre 08092eb0: redacción de costos, users/reports/dashboard/setUser/configure denegados, rol falsificado rechazado, consultas y diario sin cambios |
 | Gerente operativo con sesión Google válida | tests/validacion-google-gerente.json; lectura Safari y propietario | 8/8 sobre 08092eb0: users/setUser/configure denegados, rol falsificado rechazado, consultas y diario sin cambios |
 | Revocación y restauración del vendedor | tests/evidencia.json y capturas privadas | ACCESS_DENIED mientras inactivo; nuevo ingreso restaurado con mismo perfil y tres secciones |
-| iPhone/Safari | Confirmación del propietario | Ingreso/formulario visibles; pedido ficticio guardado como pendiente sin internet y sin confirmación del servidor. Reconexión pendiente de evidencia |
+| iPhone/Safari | Confirmación del propietario | Ingreso/formulario visibles; pedido ficticio guardado como pendiente sin internet y sin confirmación del servidor. Reconexión detectó SHIPPING_POLICY_REQUIRED: servidor REJECTED; la interfaz antigua lo conservaba erróneamente PENDING. Corrección publicada; recuperación física pendiente |
 | Pedido, cobro y despacho ficticios | Ensayo previo real descrito abajo | Confirmados con inventario consistente |
 
-Las denegaciones autenticadas se ejecutaron sobre 08092eb0. El paquete final af55b8af conserva la misma autenticación/backend y corrige el resumen de importes del gerente; no se afirma haber repetido todas las pruebas autenticadas sobre esa versión. No se cuentan las pruebas locales como pruebas con Google.
+Las denegaciones autenticadas se ejecutaron sobre 08092eb0. El paquete actual 4c2cd709 conserva la misma autenticación/backend y corrige el resumen de importes del gerente; no se afirma haber repetido todas las pruebas autenticadas sobre esa versión. No se cuentan las pruebas locales como pruebas con Google.
 
 ## Correcciones implementadas
 
@@ -73,3 +73,11 @@ Credenciales solo en memoria; secreto HMAC y correos autorizados fuera de Git. C
 | P1 | Verificar aislamiento de equipos/perfiles, continuidad comercial, respaldo y políticas pendientes antes de transición |
 
 No activar producción ni Fase 6. Reproducción local: node fase1-aislada/fase5d/tests/run-all.mjs; conserva el candidato previo y no contacta servicios externos. El ensayo de red tests/probe-public-auth.mjs es separado, explícito y limitado a destinos públicos del laboratorio.
+
+## Incidente de reconexión del iPhone — 21 de octubre
+
+La lectura acotada del diario sintético confirmó que la zona enviada era `"Zona ficticia "`, con un espacio final. La operación dabf64df-fdc2-446a-b5fa-4bf4dfc8238d quedó REJECTED en la fila 260 de DiarioInventarioV3, por SHIPPING_POLICY_REQUIRED. No fue una venta confirmada. No se cambió su comando ni el registro del servidor.
+
+Hallazgos altos: el transporte de sesión perdía el recibo estructurado del rechazo, y la presentación seguía mostrando pendiente. Ahora conserva el recibo, distingue rechazo definitivo de fallo temporal y permite archivarlo únicamente con evidencia verificada; el borrador rechazado no se puede reenviar como venta. Para pedidos nuevos, se recortan espacios exteriores de la zona antes de crear el comando; no se transforman operaciones ya encoladas ni se aceptan zonas desconocidas.
+
+385 pruebas locales aprobadas. En navegador local con IndexedDB se comprobó: rechazo visible tras recarga, archivo conservando evidencia y borrador bloqueado, y un pedido NUEVO con espacio final confirmado por el servidor simulado. Esto no sustituye la prueba física. Versión 4c2cd709 publicada en el Worker autorizado; siete rechazos públicos y tres archivos verificados por SHA256. Apps Script sin cambios. Pendiente: que el iPhone recupere el rechazo, conserve su evidencia y complete un nuevo ensayo de desconexión/reconexión. No aprobar todavía ese caso ni la transición.

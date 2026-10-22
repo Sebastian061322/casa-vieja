@@ -6,15 +6,18 @@ const start=app.indexOf('const rpc='),end=app.indexOf('\nlet snapshot=',start);
 if(start<0||end<0)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
 app=app.slice(0,start)+`const store=labStore;
 const rpc=async(name,arg)=>{const current=session.current();if(!current||current.subject!==actor.subject||current.profile!==actor.profile)throw Error('ACCOUNT_OR_PROFILE_CHANGED');const action=({initialize:'bootstrap',execute:'execute',status:'status',snapshot:'snapshot',reports:'reports',dashboard:'dashboard',users:'users',setUser:'setUser'})[name];if(!action)throw Error('NOT_EXPOSED');return session.invoke(action,name==='snapshot'?{format:'ui5d'}:arg??null);};
-const transport={execute:c=>rpc('execute',c),status:id=>rpc('status',id),snapshot:()=>rpc('snapshot')};
+const transport={execute:c=>operationResult(()=>rpc('execute',c)),status:id=>operationResult(()=>rpc('status',id)),snapshot:()=>rpc('snapshot')};
 const GuardedClient=class extends CVClient.Client{async enqueue(payload){await checkContinuity(store);return super.enqueue(payload);}};
 const client=new GuardedClient(store,transport,'TEST_ONLY_V3',uuid);`+app.slice(end);
 const oldPolling="window.addEventListener('online',sync);setInterval(()=>{if(!verifying)sync();},30000);";
 if(app.split(oldPolling).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
-app=app.replace(oldPolling,"startLabPolling({sync,allowed:()=>!verifying&&session.current()?.subject===actor.subject&&session.current()?.profile===actor.profile});");
+app=app.replace(oldPolling,"startLabPolling({sync:()=>sync(),allowed:()=>!verifying&&session.current()?.subject===actor.subject&&session.current()?.profile===actor.profile});");
 const oldPreviewDiscount="net=total-cents(f.discount);";
 if(app.split(oldPreviewDiscount).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
 app=app.replace(oldPreviewDiscount,"net=total-cents(f.discount??'0');");
+const oldCustomer="customer:{name:f.customer,phone:f.phone,zone:f.zone,note:f.note}";
+if(app.split(oldCustomer).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
+app=app.replace(oldCustomer,"customer:prepareCustomer(f,actor.profile)");
 const financial="discountCents:cents(f.discount),authorizationId:f.authorizationId,deliveryCostCents:cents(f.deliveryCost),deliveryChargedCents:cents(f.deliveryCharged)";
 if(app.split(financial).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
 app=app.replace(financial,"...(actor.profile==='seller'?{}:{discountCents:cents(f.discount||'0'),authorizationId:f.authorizationId||'',deliveryCostCents:cents(f.deliveryCost||'0'),deliveryChargedCents:cents(f.deliveryCharged||'0')})");
@@ -23,7 +26,7 @@ const pendingNotice="notice('Guardada en este equipo. Esperando confirmación de
 if(app.split(pendingNotice).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
 app=app.replace(pendingNotice,"notice('Guardada en este equipo. Esperando confirmación del servidor.');$('pending').textContent='Operación pendiente de confirmación';$('queue').innerHTML='<p>Operación guardada localmente. Esperando confirmación del servidor.</p>';await sync();");
 const dashboard=read('../fase5c/web/admin-dashboard.js').replace("cv5cRPC('dashboard',","rpc('dashboard',");
-const appModule="import {startLabPolling} from './polling.mjs';\nimport {checkContinuity} from './continuity.mjs';\nimport {adminMutation} from './admin-queue.mjs';\nwindow.mount5D=async function(actor,session,labStore){\n"+app+'\n'+read('../fase5a/web/ux.js')+'\n'+dashboard+'\n'+read('web/presentation.js')+'\n};\n';
+const appModule="import {prepareCustomer} from './customer.mjs';\nimport {queueStatus} from './queue-status.mjs';\nimport {operationResult} from './api-response.mjs';\nimport {startLabPolling} from './polling.mjs';\nimport {checkContinuity} from './continuity.mjs';\nimport {adminMutation} from './admin-queue.mjs';\nwindow.mount5D=async function(actor,session,labStore){\n"+app+'\n'+read('../fase5a/web/ux.js')+'\n'+dashboard+'\n'+read('web/presentation.js')+'\n};\n';
 // La sintaxis del cuerpo se valida sin ejecutarlo ni abrir un navegador.
 new vm.Script(appModule.replace(/^import .*\n/gm,''));write('web/approved-app.js',appModule);
 let html=read('../fase5a/web/shell.html');
@@ -39,12 +42,12 @@ html+='<script src="/client.js"></script><script src="/continuity-core.js"></scr
 write('web/index.html',html);write('web/client.js',read('../fase2/client.js'));write('web/continuity-core.js',read('../fase5c/continuity.js'));
 const config=JSON.parse(read('CONFIGURACION-PROPUESTA.json'));
 write('web/config.json',JSON.stringify({environment:'TEST_ONLY',enabled:config.realAccountsEnabled===true,realAccountsAuthorized:config.realAccountsEnabled===true,googleClientId:config.googleClientId}));
-const files=['index.html','approved.css','approved-app.js','entry.mjs','session.mjs','login-flow.mjs','validation.mjs','polling.mjs','continuity.mjs','admin-queue.mjs','client.js','continuity-core.js','config.json'];
+const files=['index.html','approved.css','approved-app.js','entry.mjs','session.mjs','login-flow.mjs','validation.mjs','api-response.mjs','queue-status.mjs','customer.mjs','polling.mjs','continuity.mjs','admin-queue.mjs','client.js','continuity-core.js','config.json'];
 const assets=Object.fromEntries(files.map(file=>['/'+file,read('web/'+file)]));assets['/']=assets['/index.html'];
 // Un único módulo de arranque: no descargar código al regresar del popup OAuth.
 // El montaje y cualquier consulta privada siguen requiriendo sesión confirmada.
 const stripImports=source=>source.replace(/^import .*\n/gm,'');
-const entryBundle=[read('web/session.mjs').replace(/^export /gm,''),read('web/login-flow.mjs').replace(/^export /gm,''),read('web/validation.mjs').replace(/^export /gm,''),
+const entryBundle=[read('web/session.mjs').replace(/^export /gm,''),read('web/login-flow.mjs').replace(/^export /gm,''),read('web/validation.mjs').replace(/^export /gm,''),read('web/api-response.mjs').replace(/^export /gm,''),read('web/queue-status.mjs').replace(/^export /gm,''),read('web/customer.mjs').replace(/^export /gm,''),
   read('web/continuity.mjs').replace(/^export /gm,''),read('web/polling.mjs').replace(/^export /gm,''),
   read('web/admin-queue.mjs').replace(/^export /gm,''),stripImports(appModule),
   stripImports(read('web/entry.mjs')).replace("await import('./approved-app.js');",'')].join('\n');

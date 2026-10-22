@@ -1,13 +1,14 @@
 import {createSession} from './session.mjs';
 import {createLoginFlow} from './login-flow.mjs';
 import {mountLabValidation} from './validation.mjs';
+import {readLabResponse} from './api-response.mjs';
 const $=id=>document.getElementById(id),status=text=>$('auth-status').textContent=text;
 let mounted=null;
 const session=createSession({send:async(token,action,payload)=>{
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),45000);
   try{const response=await fetch('/api',{method:'POST',credentials:'omit',cache:'no-store',signal:controller.signal,
     headers:{'content-type':'application/json',authorization:'Bearer '+token},body:JSON.stringify({action,payload})});
-    const body=await response.json();if(body.error)throw Error(body.error);if(!response.ok)throw Error('SERVICE_UNAVAILABLE');return body;
+    return await readLabResponse(response,action);
   }finally{clearTimeout(timer);}
 },clearView:()=>{
   $('app').hidden=true;document.querySelector('.mobile-tabs').hidden=true;$('logout5d').hidden=true;

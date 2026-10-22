@@ -1,17 +1,17 @@
 {
-  "observedAtUTC": "2026-10-22T00:56:09.898620+00:00",
+  "observedAtUTC": "2026-10-22T03:49:31.549123+00:00",
   "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
   "environment": "TEST_ONLY",
   "localTests": {
     "previous": 332,
-    "new": 42,
-    "passed": 374,
+    "new": 53,
+    "passed": 385,
     "failed": 0,
     "runtime": "Node.js v24.20.0",
     "actualGoogleTokens": false,
     "actualSheetsAdapter": false,
     "previousFullRegressionPassed": 354,
-    "currentFocusedPassed": 42,
+    "currentFocusedPassed": 53,
     "currentFullRegressionRepeated": true,
     "minimalFullPath": {
       "executed": true,
@@ -289,5 +289,15 @@
     "browserIsolation": "Each person uses own device or separate browser profile",
     "sharedBrowserProfileApproved": false,
     "encryptionImplemented": false
+  },
+  "iphoneIncident": {
+    "operationId": "dabf64df-fdc2-446a-b5fa-4bf4dfc8238d",
+    "serverState": "REJECTED",
+    "error": "SHIPPING_POLICY_REQUIRED",
+    "trailingZoneSpaceConfirmed": true,
+    "workerCorrectionVersion": "4c2cd709",
+    "physicalRecoveryVerified": false,
+    "localIndexedDbReloadAndArchiveVerified": true,
+    "originalCommandChanged": false
   }
 }

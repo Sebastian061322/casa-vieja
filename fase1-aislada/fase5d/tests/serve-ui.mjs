@@ -10,7 +10,7 @@ const server=http.createServer(async(req,res)=>{try{
     const {action,payload}=JSON.parse(raw),result=f.c.zeroRequest(await f.sign(subjects[role],action,payload));
     res.writeHead(200,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(result));return;
   }
-  const allowed=new Set(['index.html','entry.mjs','session.mjs','login-flow.mjs','validation.mjs','polling.mjs','approved-app.js','approved.css','client.js','continuity-core.js','continuity.mjs','admin-queue.mjs','config.json']);
+  const allowed=new Set(['index.html','entry.mjs','session.mjs','login-flow.mjs','validation.mjs','api-response.mjs','queue-status.mjs','customer.mjs','polling.mjs','approved-app.js','approved.css','client.js','continuity-core.js','continuity.mjs','admin-queue.mjs','config.json']);
   const name=url.pathname==='/'?'index.html':url.pathname.slice(1);if(!allowed.has(name)){res.writeHead(404);res.end();return;}
   let body=fs.readFileSync(new URL('../web/'+name,import.meta.url),'utf8');
   if(name==='entry.mjs')body=body.replace("start().catch(()=>status('No se pudo abrir el acceso. No se confirmó ninguna operación.'));","window.google={accounts:{id:{disableAutoSelect(){}}}};status('PRUEBA LOCAL · IDENTIDAD FICTICIA');login({credential:'local-demo-'+(new URLSearchParams(location.search).get('role')||'administrator')});");

@@ -38,3 +38,6 @@ En vendedor se esperan denegaciones de usuarios, reportes, dashboard, modificaci
 Tres consultas de snapshot informan duración de ida y vuelta incluyendo la comprobación de sesión. Tres muestras no permiten afirmar capacidad, p95 ni rendimiento bajo carga. Un error de red, sesión o cuota deja el ensayo incompleto; no equivale a aprobado. El ensayo es optativo y exclusivo del paquete de laboratorio, sin nuevos endpoints ni funciones de mantenimiento.
 
 Aplicar la decisión de SEGURIDAD-ALMACENAMIENTO-LOCAL-5D.md: equipos o perfiles de navegador separados por persona. Cambiar la cuenta Google dentro del mismo perfil no aísla los datos de IndexedDB.
+
+## Incidente iPhone: reconexión no aprobada todavía
+El pedido offline original fue rechazado por zona con espacio final. La interfaz antigua lo mostraba pendiente. Worker 4c2cd709 conserva el recibo definitivo y normaliza solo zonas de pedidos nuevos. Recuperar primero el rechazo mediante Sincronizar; archivar con evidencia tras verificarlo; nunca borrar IndexedDB. Repetir con un pedido nuevo, identificadores nuevos y datos ficticios. No contar el rechazo original como venta ni como ensayo exitoso.

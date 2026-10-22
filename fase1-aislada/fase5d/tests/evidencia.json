@@ -1,18 +1,26 @@
 {
-  "observedAtUTC": "2026-10-21T17:58:18.139302+00:00",
+  "observedAtUTC": "2026-10-22T00:34:58.209214+00:00",
   "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
   "environment": "TEST_ONLY",
   "localTests": {
     "previous": 332,
-    "new": 30,
-    "passed": 362,
+    "new": 41,
+    "passed": 373,
     "failed": 0,
     "runtime": "Node.js v24.20.0",
     "actualGoogleTokens": false,
     "actualSheetsAdapter": false,
     "previousFullRegressionPassed": 354,
-    "currentFocusedPassed": 30,
-    "currentFullRegressionRepeated": true
+    "currentFocusedPassed": 41,
+    "currentFullRegressionRepeated": true,
+    "minimalFullPath": {
+      "executed": true,
+      "passed": 3,
+      "actualGoogle": false,
+      "scope": "RSA ficticio -> Worker -> HMAC -> Apps Script minimo -> Sheets simulado",
+      "lastUnitRequestsInFlight": 3,
+      "physicalConcurrencyVerified": false
+    }
   },
   "remoteTests": {
     "workerClosedGetApi": {
@@ -181,6 +189,18 @@
       "evidence": "tests/tiempos-google-observados.json",
       "controlledLoadTest": false,
       "businessSuccessInferred": false
+    },
+    "deployedPackage": {
+      "versionShort": "afcb7fcf",
+      "activeLatestVerified": true,
+      "sourceMatchedPublishedAssets": true,
+      "evidence": "tests/resultados-red-publica.json",
+      "pollingFixIncluded": false
+    },
+    "authenticatedValidation": {
+      "executed": false,
+      "reason": "Awaiting Safari main-window access after seller Google sign-in",
+      "reportMustNotBeAssumedApproved": true
     }
   },
   "productionModified": false,
@@ -222,6 +242,17 @@
     "unsavedCheckboxSurvivesSync": true,
     "permissionSubmitted": false,
     "environment": "localhost synthetic fixture",
-    "remoteDeploymentPending": true
+    "remoteDeploymentPending": false,
+    "permissionValidationPanel": {
+      "executed": true,
+      "profile": "seller",
+      "passed": true,
+      "fixtureOnly": true,
+      "checks": 11
+    },
+    "polling": {
+      "automatedTestsPassed": 3,
+      "remoteDeploymentPending": true
+    }
   }
 }

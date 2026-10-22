@@ -1,5 +1,6 @@
 import {createSession} from './session.mjs';
 import {createLoginFlow} from './login-flow.mjs';
+import {mountLabValidation} from './validation.mjs';
 const $=id=>document.getElementById(id),status=text=>$('auth-status').textContent=text;
 let mounted=null;
 const session=createSession({send:async(token,action,payload)=>{
@@ -23,7 +24,7 @@ const loginFlow=createLoginFlow({session,prepare:async(actor,current)=>{
       if(s.zeroProfile!==actor.profile||s.snapshot?.uiVersion!=='5D'){s.snapshot=null;delete s.uxHome5a2;}
       s.zeroProfile=actor.profile;s.zeroEngine=4;
     });
-    if(!current())return;await import('./approved-app.js');if(!current())return;mounted=actor;await window.mount5D(actor,session,store);if(!current())return;
+    if(!current())return;await import('./approved-app.js');if(!current())return;mounted=actor;await window.mount5D(actor,session,store);mountLabValidation(session);if(!current())return;
   }
 },show:actor=>{
   $('auth-gate').hidden=true;$('app').hidden=false;document.querySelector('.mobile-tabs').hidden=false;

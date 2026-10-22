@@ -1,6 +1,29 @@
 {
+  "assets": [
+    {
+      "path": "/entry.mjs",
+      "status": 200,
+      "sha256": "a341b2347c643bb00d82e3c99e57e7a26d9e033e87ba0f9345735d9d9cbf131f",
+      "passed": true,
+      "noStore": true
+    },
+    {
+      "path": "/approved.css",
+      "status": 200,
+      "sha256": "ada08eb88007d9f4b3720594107282b36d93fb0581576bd5dcefd999979cde12",
+      "passed": true,
+      "noStore": true
+    },
+    {
+      "path": "/config.json",
+      "status": 200,
+      "sha256": "c3b95bc8e7df542cc2010f01e65a44cab453a42441e34c17d407d1a1985f7cec",
+      "passed": true,
+      "noStore": true
+    }
+  ],
   "environment": "TEST_ONLY",
-  "observedAtUTC": "2026-10-21T17:20:55.235Z",
+  "observedAtUTC": "2026-10-22T00:32:29.016Z",
   "realCredentialsUsed": false,
   "commercialPerformanceMeasured": false,
   "passed": true,
@@ -10,49 +33,49 @@
       "status": 403,
       "error": "ORIGIN_DENIED",
       "passed": true,
-      "elapsedMs": 375
+      "elapsedMs": 322
     },
     {
       "name": "origen ajeno",
       "status": 403,
       "error": "ORIGIN_DENIED",
       "passed": true,
-      "elapsedMs": 338
+      "elapsedMs": 322
     },
     {
       "name": "sin identidad",
       "status": 401,
       "error": "IDENTITY_REQUIRED",
       "passed": true,
-      "elapsedMs": 151
+      "elapsedMs": 125
     },
     {
       "name": "firma inválida",
       "status": 401,
       "error": "IDENTITY_REQUIRED",
       "passed": true,
-      "elapsedMs": 119
+      "elapsedMs": 123
     },
     {
       "name": "rol administrador declarado con firma inválida",
       "status": 401,
       "error": "IDENTITY_REQUIRED",
       "passed": true,
-      "elapsedMs": 603
+      "elapsedMs": 1443
     },
     {
       "name": "credencial demasiado larga",
       "status": 401,
       "error": "IDENTITY_REQUIRED",
       "passed": true,
-      "elapsedMs": 141
+      "elapsedMs": 216
     },
     {
       "name": "GET con origen permitido",
       "status": 400,
       "error": "INVALID_REQUEST",
       "passed": true,
-      "elapsedMs": 141
+      "elapsedMs": 120
     }
   ]
 }

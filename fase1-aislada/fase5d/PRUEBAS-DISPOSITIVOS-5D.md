@@ -28,3 +28,11 @@ Una pérdida de respuesta real requiere un ensayo separado y controlado: no equi
 Registrar fecha/hora de Lima, equipo/navegador, perfil, nombre TEST_ONLY, saleId/operationId visible cuando exista, estado antes/después, físico/reservado antes/después y resultado observado. Si hay error, copiar el código y conservar el pendiente. No exportar tokens ni contenido de IndexedDB.
 
 No cancelar ni borrar pedidos como limpieza del ensayo. Mantener los registros como evidencia; una compensación necesita seguir la política comercial aprobada. Cualquier resultado inesperado suspende el siguiente paso y debe documentarse.
+
+## Ensayo de permisos con sesión individual
+
+Abrir la misma URL del Worker con `?validation=5d`, ingresar con la cuenta individual autorizada y pulsar «Comprobar permisos y consultas». No compartir credenciales ni abrir la consola del navegador. El informe visible contiene solo perfil, códigos de resultado y tiempos; no incluye datos de clientes ni tokens.
+
+En vendedor se esperan denegaciones de usuarios, reportes, dashboard, modificación de usuarios y configuración, más rechazo del rol falsificado. En gerente operativo se esperan denegaciones de usuarios y configuración. Los comandos administrativos usan un identificador inválido y no contienen cambios válidos: incluso una regresión de permisos no debe producir una modificación. El ensayo verifica además que la revisión del diario permanezca igual. Si hay otra operación concurrente, esa última comprobación puede fallar y exige investigar, no repetir escrituras.
+
+Tres consultas de snapshot informan duración de ida y vuelta incluyendo la comprobación de sesión. Tres muestras no permiten afirmar capacidad, p95 ni rendimiento bajo carga. Un error de red, sesión o cuota deja el ensayo incompleto; no equivale a aprobado. El ensayo es optativo y exclusivo del paquete de laboratorio, sin nuevos endpoints ni funciones de mantenimiento.

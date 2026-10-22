@@ -4,7 +4,7 @@ Fecha: 21 de octubre de 2026. Solo TEST_ONLY. No habilita producción ni Fase 6.
 
 ## Resultado comprobado
 
-Google Identity → Worker de laboratorio → Apps Script aislado → hoja sintética funciona para administrador, vendedor y gerente operativo. Se conservó la interfaz aprobada 5A.2. La regresión completa pasó 362/362 pruebas locales, incluidas 30 específicas de 5D. No son 357 pruebas con Google.
+Google Identity → Worker de laboratorio → Apps Script aislado → hoja sintética funciona para administrador, vendedor y gerente operativo. Se conservó la interfaz aprobada 5A.2. La regresión completa pasó 373/373 pruebas locales, incluidas 41 específicas de 5D. No son 357 pruebas con Google.
 
 | Ensayo real de laboratorio | Evidencia | Resultado |
 |---|---|---|
@@ -63,4 +63,18 @@ No se declara cerrada Fase 5D ni listo el sistema para producción. Las evidenci
 
 ## Formulario de usuarios: continuidad visual
 
-Corrección local verificada: sincronizar conservaba los datos del backend, pero recreaba el panel y ocultaba la lista de usuarios cargada. Se conserva ahora el nodo del formulario y sus cambios sin guardar. En localhost se cargaron tres identidades ficticias, se desmarcó el acceso del vendedor sin guardar y se sincronizó: la lista y el cambio pendiente permanecieron. No se envió ningún cambio de permiso. Regresión 362/362. Este ajuste de interfaz todavía no está publicado en el Worker; no cambia la autorización del servidor.
+Corrección local verificada: sincronizar conservaba los datos del backend, pero recreaba el panel y ocultaba la lista de usuarios cargada. Se conserva ahora el nodo del formulario y sus cambios sin guardar. En localhost se cargaron tres identidades ficticias, se desmarcó el acceso del vendedor sin guardar y se sincronizó: la lista y el cambio pendiente permanecieron. No se envió ningún cambio de permiso. Regresión 362/362. Publicado en Worker afcb7fcf. Los archivos entry.mjs, approved.css y config.json publicados coinciden por SHA256 con el paquete probado; no cambia la autorización del servidor.
+
+## Continuación del 21 de octubre, tarde (Lima)
+
+Base preservada: 03bee405f93e6d2116ba1718593e16d28f0445a3 en dev/fase1-estabilizacion. main conserva 12a5f997845f9d31dc1a5d8ae7dc49770928da3d. No se modificó Apps Script ni se crearon recursos adicionales.
+
+- Ensayo opcional `?validation=5d`: usa la sesión individual existente, sin leer/exportar tokens. Prueba rutas restringidas, rol falsificado, redacción del vendedor, tres consultas y revisión del diario. Los comandos administrativos son inválidos y no contienen permisos o reglas aplicables. No añade endpoints. Verificado localmente con los tres perfiles; ejecutado en interfaz local con vendedor (11 comprobaciones). Publicado en afcb7fcf. Verificación real con vendedor aún pendiente de recuperar la lectura de Safari después de Google: no darla por aprobada.
+- Tres pruebas nuevas recorren JWT RSA ficticio → Worker actual → HMAC → candidato mínimo → adaptador simulado de Sheets. Recuperación de respuesta perdida conserva operationId y deja un recibo/efecto; tres peticiones en vuelo reservan una sola bolsa; revocación/restauración conserva tablas previas. No son prueba de la infraestructura concurrente de Google ni de dos equipos físicos.
+- **Medio, confirmado por código:** el temporizador consultaba cada 30 segundos también en pestañas ocultas. Corrección local: pausa consultas automáticas cuando la pestaña no está visible, no hay red o la sesión ya no corresponde; retoma al volver al frente o reconectar y evita solapamientos. No borra ni cambia colas. Tres pruebas aprobadas. Publicación de esta optimización todavía pendiente; no se afirma ahorro medido en Google.
+- Repetición remota: 7/7 rechazos públicos aprobados; tres archivos públicos idénticos al paquete afcb7fcf y con no-store. Es comprobación de despliegue, no prueba de permisos con token válido ni carga.
+- Panel general de Cloudflare observado durante esta sesión: 422 invocaciones del Worker, indicador CPU Time 3 ms y Errors 0 en últimas 24 horas. La portada de cuenta mostró CPU P90 6 ms y otras cifras actualizadas; son agregados de ventanas/peticiones distintas, no mediciones por operación ni capacidad garantizada. No se infieren cuotas consumidas de Apps Script o Identity a partir de esos indicadores.
+
+Reproducción local: `node fase1-aislada/fase5d/tests/run-all.mjs`. Conserva el candidato previo al terminar, construye el adaptador ficticio para las pruebas y no contacta servicios externos. Evidencia completa: tests/resultados.txt. El ensayo de red es separado y explícito: tests/probe-public-auth.mjs.
+
+**NO-GO para Fase 6:** persisten autorización adversarial con sesión válida, pérdida de respuesta y última unidad contra Google, pruebas de celular/segundo equipo, tiempos bajo carga y decisiones/continuidad comercial. Las pruebas locales no cierran esos bloqueos.

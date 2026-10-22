@@ -1,3 +1,9 @@
+## Continuación: 373 pruebas y ensayo remoto preparado
+
+Worker afcb7fcf activo: formulario de usuarios conservado y ensayo optativo de permisos en `?validation=5d`. 7/7 rechazos públicos y SHA256 de tres archivos publicados verificados. La prueba con sesión válida está pendiente; no asumirla aprobada. La optimización de consultas en pestañas ocultas pasó tres pruebas, pero sigue sin publicar. Ver INFORME-VALIDACION-5D.md.
+
+Regresión reproducible: `node fase1-aislada/fase5d/tests/run-all.mjs`. No publica ni usa Google.
+
 ## Revocación y restauración comprobadas
 
 El vendedor recibió ACCESS_DENIED después de desactivar su acceso. Tras restaurar el mismo perfil, un nuevo ingreso Google mostró Vendedor, Ventas, Pedidos e Inventario, conectado y sin operaciones pendientes; comprobado por el propietario y lectura nativa. Los dos gerentes conservaron sus perfiles. Ver INFORME-VALIDACION-5D.md.

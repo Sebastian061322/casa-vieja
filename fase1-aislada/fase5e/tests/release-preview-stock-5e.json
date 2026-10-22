@@ -1,6 +1,6 @@
 {
   "environment": "TEST_ONLY",
-  "status": "AUTHORIZED_NOT_DEPLOYED",
+  "status": "DEPLOYED_PUBLIC_PROBE_PASSED",
   "baseCommit": "34eca552469ce99f8591d4a4c77d3fd61ebe0c67",
   "previousWorkerVersion": "37306312",
   "previousWorkerSha256": "a09881983136afefb2d5a2797f88576a6d0b3181e1dfbb6b7088ccd1536e5add",
@@ -24,5 +24,12 @@
   "localFullUiVerified": true,
   "basePreviewSideEffectsPreserved": true,
   "confirmedOrderStateNotOverridden": true,
-  "ownerApproval": "Explicit approval of final 5d94dd500066d1917f4628aa85b527dc6860bf2e4f98a468f0c9222f90bbe0ce; intermediate candidates retired"
+  "ownerApproval": "Explicit approval of final 5d94dd500066d1917f4628aa85b527dc6860bf2e4f98a468f0c9222f90bbe0ce; intermediate candidates retired",
+  "sourceCommit": "cdb630e12d66e4d17c017f0e37f5b6c7c9315abc",
+  "activeWorkerVersionPrefix": "9a3a6e2b",
+  "observedAtUTC": "2026-10-22T13:51:32.083Z",
+  "publicProbePassed": true,
+  "matchingAssets": 3,
+  "invalidRequestsRejected": 7,
+  "authenticatedVisualFinalCheck": "PENDING"
 }

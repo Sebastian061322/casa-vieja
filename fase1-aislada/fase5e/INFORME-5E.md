@@ -1,5 +1,8 @@
 # Fase 5E — avance verificado al 22 de octubre de 2026
 
+> Actualización de cierre: [CIERRE-VALIDACION-5E.md](CIERRE-VALIDACION-5E.md) contiene la continuación vigente: Worker 9a3a6e2b, 447 pruebas locales y nueva evidencia de administrador/Android. Los resultados anteriores mantienen su alcance y versión; no equivalen al cierre de toda la fase.
+
+
 Estado: laboratorio en validación, sin activación comercial. Rama dev/fase1-estabilizacion. Fuentes publicadas en 4c2a04c5b43858db32d9e130e2590c25b92d6522; primera evidencia en 1ea579a1decf81d349f3be5248b674ce39325cee. Apps Script sintético versión 2 y Worker 37306312. La corrección visual posterior fue autorizada, publicada en de17516f69b0e7ef5ceca3270e13d779bcf7a2e6 y desplegada; siete rechazos públicos y tres activos por hash aprobados. No se modificó main, index.html comercial, Apps Script productivo, BaseDatos_CasaVieja ni historial anterior.
 
 ## Resultados concretos

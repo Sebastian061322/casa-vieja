@@ -1,6 +1,6 @@
 # Cierre de validación 5E — trabajo en curso, 22/10/2026
 
-No constituye autorización comercial ni cierre definitivo de la fase. Referencia remota comprobada: `34eca552469ce99f8591d4a4c77d3fd61ebe0c67`, rama `dev/fase1-estabilizacion`. Worker de laboratorio `37306312`; Apps Script sintético versión 2. Los archivos nuevos de esta continuación son locales con autorización específica de publicación del candidato definitivo 5d94dd50, todavía sin despliegue al redactar esta actualización.
+No constituye autorización comercial ni cierre definitivo de la fase. Referencia remota comprobada: `34eca552469ce99f8591d4a4c77d3fd61ebe0c67`, rama `dev/fase1-estabilizacion`. Worker de laboratorio `9a3a6e2b`; Apps Script sintético versión 2. Fuentes y pruebas publicadas en cdb630e12d66e4d17c017f0e37f5b6c7c9315abc con autorización específica. Candidato definitivo 5d94dd50 desplegado como 9a3a6e2b.
 
 ## Comprobaciones de esta continuación
 
@@ -41,7 +41,7 @@ No agregar una identidad inventada al plan, reescribir el comando ni transferirl
 | P0 | Integridad del diario durable | Aprobada nuevamente en lectura. |
 | P0 | Respaldo separado, hashes, interrupción/reanudación | Datos ficticios en Google aprobados. Recuperación integral de infraestructura real no demostrada. |
 | P0 | Permisos sobre versión final | Gerente: ocho comprobaciones observadas en Worker 37306312 / backend 2 después de recargar la interfaz. Evidencia tests/permisos-google-operations-final-5e.json. Administrador: cinco comprobaciones nativas aprobadas. Vendedor en Android: resultado general aprobado reportado por propietario. Pendiente comprobación posterior al parche adicional. |
-| P1 | Aviso y disponibilidad tras rechazo | Verificación nativa aprobada: borrador y partida conservados, cero pendientes, rechazo archivado y disponible 0. Hallazgo adicional de estimación en partida agotada corregido localmente; publicación pendiente. |
+| P1 | Aviso y disponibilidad tras rechazo | Verificación nativa aprobada: borrador y partida conservados, cero pendientes, rechazo archivado y disponible 0. Hallazgo adicional de estimación en partida agotada corregido localmente; desplegado como 9a3a6e2b; comprobación autenticada final pendiente. |
 | P1 | Rendimiento | Medidas reales agregadas existentes; falta desglose por correlación y comparación por acción equivalente. No inventar mejoras remotas. |
 | P1 | Privacidad local | Minimización e IndexedDB real aprobados en entorno ficticio. Perfiles separados decididos por propietario; evidencia física pendiente. |
 | P1 | Pruebas móviles | iPhone previo y concurrencia física aprobados; reinicio completo y revisión final de UX pendientes. Android/Chrome: acceso y permisos aprobados por reporte del propietario, sin tiempos ni observación automática; UX y reinicio pendientes. |
@@ -52,7 +52,7 @@ Dictamen provisional: continuar laboratorio y diseño sintético 5F; no declarar
 
 ## Hallazgo visual adicional
 
-Confirmado, severidad media: la estimación gerencial de una partida agotada mostraba costo cero y margen completo. Se omitirá costo/margen cuando las bolsas requeridas superen disponibilidad; se agregan las líneas repetidas y las bolsas de cada combo. No modifica precios, costo histórico, comandos ni registros. Cuatro pruebas específicas y la regresión de 447 pasan. Paquete local 5d94dd500066d1917f4628aa85b527dc6860bf2e4f98a468f0c9222f90bbe0ce, autorizado específicamente; pendiente de despliegue. Backend conserva huella a0c7222ce06b9bc695e29a6997728115036ec61b000c11f62aacc36ef17b3ce4.
+Confirmado, severidad media: la estimación gerencial de una partida agotada mostraba costo cero y margen completo. Se omitirá costo/margen cuando las bolsas requeridas superen disponibilidad; se agregan las líneas repetidas y las bolsas de cada combo. No modifica precios, costo histórico, comandos ni registros. Cuatro pruebas específicas y la regresión de 447 pasan. Paquete local 5d94dd500066d1917f4628aa85b527dc6860bf2e4f98a468f0c9222f90bbe0ce, autorizado específicamente y desplegado como Worker 9a3a6e2b. Backend conserva huella a0c7222ce06b9bc695e29a6997728115036ec61b000c11f62aacc36ef17b3ce4.
 
 La comprobación completa de interfaz local verificó 7 bolsas con 6 disponibles: omite estimación y conserva total de catálogo S/245. Al volver a 1 bolsa, reaparecen costo S/17.35, margen S/17.65 y total S/35. No se registró ninguna operación. El envoltorio conserva los efectos de formulario de la previsualización original y no declara desconocido un pedido confirmado. Los paquetes intermedios e49498a1 y 9fc2ebc6 quedan retirados, sin despliegue.
 
@@ -61,3 +61,7 @@ Se detectó una expectativa inestable en la prueba de doble clic: suponía que l
 ## Aclaración de pestaña y cuenta
 
 El propietario indicó que no aparecía el borrador. Se inspeccionó primero la pestaña Administrador principal: formulario nuevo sin cliente. Al seleccionar la pestaña Gerente operativo se corroboró el mismo cliente TEST_ONLY_5E_ULTIMA_PC_20261022_01, partida 2 con 0 disponibles, cantidad 1, rechazo definitivo, cero pendientes y un rechazo archivado. El aislamiento por subject explica la diferencia; no se borró ni recreó el comando.
+
+## Publicación final autorizada
+
+Solo se publicó el candidato 5d94dd500066d1917f4628aa85b527dc6860bf2e4f98a468f0c9222f90bbe0ce, Worker activo 9a3a6e2b. Los intermedios retirados no se desplegaron. Prueba pública final aprobada: siete solicitudes inválidas rechazadas y tres activos remotos iguales por SHA256, todos no-store. Fuente cdb630e1; backend permanece en versión 2, sin cambios de permisos ni secretos. Evidencia tests/resultados-red-publica-definitivo-5e.json.

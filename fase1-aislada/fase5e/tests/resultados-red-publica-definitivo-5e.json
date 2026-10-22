@@ -1,0 +1,81 @@
+{
+  "assets": [
+    {
+      "path": "/entry.mjs",
+      "status": 200,
+      "sha256": "6aa018f71d17bb088cad742b70050d9fc1a48e7d530216b5c0b928e7067f8546",
+      "passed": true,
+      "noStore": true
+    },
+    {
+      "path": "/approved.css",
+      "status": 200,
+      "sha256": "ada08eb88007d9f4b3720594107282b36d93fb0581576bd5dcefd999979cde12",
+      "passed": true,
+      "noStore": true
+    },
+    {
+      "path": "/config.json",
+      "status": 200,
+      "sha256": "c3b95bc8e7df542cc2010f01e65a44cab453a42441e34c17d407d1a1985f7cec",
+      "passed": true,
+      "noStore": true
+    }
+  ],
+  "environment": "TEST_ONLY",
+  "observedAtUTC": "2026-10-22T13:51:32.083Z",
+  "realCredentialsUsed": false,
+  "commercialPerformanceMeasured": false,
+  "passed": true,
+  "results": [
+    {
+      "name": "sin origen",
+      "status": 403,
+      "error": "ORIGIN_DENIED",
+      "passed": true,
+      "elapsedMs": 381
+    },
+    {
+      "name": "origen ajeno",
+      "status": 403,
+      "error": "ORIGIN_DENIED",
+      "passed": true,
+      "elapsedMs": 485
+    },
+    {
+      "name": "sin identidad",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 213
+    },
+    {
+      "name": "firma inválida",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 268
+    },
+    {
+      "name": "rol administrador declarado con firma inválida",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 121
+    },
+    {
+      "name": "credencial demasiado larga",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 108
+    },
+    {
+      "name": "GET con origen permitido",
+      "status": 400,
+      "error": "INVALID_REQUEST",
+      "passed": true,
+      "elapsedMs": 159
+    }
+  ]
+}

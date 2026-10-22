@@ -1,5 +1,8 @@
 # Resultados reales 5E — 22 de octubre de 2026
 
+> Actualización de cierre: [CIERRE-VALIDACION-5E.md](CIERRE-VALIDACION-5E.md) contiene la continuación vigente: Worker 9a3a6e2b, 447 pruebas locales y nueva evidencia de administrador/Android. Los resultados anteriores mantienen su alcance y versión; no equivalen al cierre de toda la fase.
+
+
 Esta actualización prevalece sobre los pendientes de las notas preparatorias. Laboratorio exclusivamente; no se activa Fase 6 ni se modifica producción.
 
 | Ensayo | Evidencia | Resultado |

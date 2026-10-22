@@ -1,0 +1,41 @@
+{
+  "environment": "TEST_ONLY",
+  "executed": false,
+  "approved": false,
+  "destination": "1zB8s5MZN-LGMpnHL3RkOvA802WVfPOPEkRgXmygNk0o",
+  "preserveExistingTabs": [
+    "Control",
+    "DiarioInventarioV3",
+    "MovimientosInventarioV3"
+  ],
+  "sourceId": "TEST_ONLY:5e-google-recovery-fixture",
+  "sha256": "b05b5de02ddddeadd342b5291849ee7796362b8ec40194fa04798567079d79e2",
+  "release": "4c2a04c5b43858db32d9e130e2590c25b92d6522",
+  "tables": [
+    {
+      "name": "TEST_ONLY_5E_20261022_ARCHIVE",
+      "rows": 39,
+      "columns": 4
+    },
+    {
+      "name": "TEST_ONLY_5E_20261022_JOURNAL",
+      "rows": 26,
+      "columns": 3
+    },
+    {
+      "name": "TEST_ONLY_5E_20261022_EFFECTS",
+      "rows": 21,
+      "columns": 3
+    },
+    {
+      "name": "TEST_ONLY_5E_20261022_CONTROL",
+      "rows": 5,
+      "columns": 2
+    }
+  ],
+  "containsRealUsers": false,
+  "containsProductionData": false,
+  "containsSecrets": false,
+  "accountsRestored": false,
+  "oauthRestored": false
+}

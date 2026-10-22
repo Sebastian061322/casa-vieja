@@ -1,0 +1,55 @@
+{
+  "environment": "TEST_ONLY",
+  "actualGoogle": true,
+  "approved": true,
+  "destination": "1zB8s5MZN-LGMpnHL3RkOvA802WVfPOPEkRgXmygNk0o",
+  "preservedOriginalSheetIds": [
+    0,
+    427186992,
+    1790454727
+  ],
+  "newSheets": [
+    {
+      "name": "TEST_ONLY_5E_20261022_ARCHIVE",
+      "id": 5022101
+    },
+    {
+      "name": "TEST_ONLY_5E_20261022_JOURNAL",
+      "id": 5022102
+    },
+    {
+      "name": "TEST_ONLY_5E_20261022_EFFECTS",
+      "id": 5022103
+    },
+    {
+      "name": "TEST_ONLY_5E_20261022_CONTROL",
+      "id": 5022104
+    }
+  ],
+  "sha256": "b05b5de02ddddeadd342b5291849ee7796362b8ec40194fa04798567079d79e2",
+  "source": "TEST_ONLY:5e-google-recovery-fixture",
+  "journalRows": 25,
+  "effects": 20,
+  "committed": 12,
+  "pendingPreparedPreserved": 1,
+  "releaseFiles": 7,
+  "configurationScope": "Fictitious users only",
+  "devicesScope": "One complete synthetic queue; no export of actual phone queues",
+  "interruptedAfterArchiveParts": 10,
+  "totalArchiveParts": 38,
+  "resumedMissingRows": 28,
+  "allSectionsReadBack": true,
+  "hashVerified": true,
+  "inventoryReconstructedFromGoogleReadback": true,
+  "repeatPlanRows": 0,
+  "completeMarkerAppendedOnce": true,
+  "verified": true,
+  "wallMsIncludingInspectionAndInterleavedTasks": 116951,
+  "fullServiceRtoMeasured": false,
+  "sourceProductionData": false,
+  "accountsRestored": false,
+  "secretsRestored": false,
+  "applicationPointedAtRecoverySheet": false,
+  "actualPendingCommandExecutedInRecoverySheet": false,
+  "rollback": "Stop; preserve synthetic evidence; never overwrite later data"
+}

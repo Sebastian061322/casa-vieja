@@ -1,0 +1,65 @@
+{
+  "environment": "TEST_ONLY",
+  "observedAtUTC": "2026-10-22T05:26:42.084Z",
+  "actualDevices": [
+    "Computer Safari operations",
+    "iPhone Safari seller"
+  ],
+  "ownerReportedBothSubmittedOnce": true,
+  "workerVersionPrefix": "5b787b57",
+  "appsScriptVersion": 2,
+  "passed": true,
+  "fixture": {
+    "resourceId": "demo:g3-b52c5bb2-da19-4787-b799-3b6778170ccc-recovery",
+    "before": {
+      "physical": 1,
+      "reserved": 0,
+      "available": 1
+    },
+    "after": {
+      "physical": 1,
+      "reserved": 1,
+      "available": 0
+    }
+  },
+  "winner": {
+    "device": "iPhone Safari",
+    "role": "seller",
+    "operationId": "14a921bb-8467-4c8e-aa43-112160eb62b8",
+    "submittedAt": "2026-10-22T05:23:28.080Z",
+    "serverAt": "2026-10-22T05:23:38.060Z",
+    "receipt": {
+      "epoch": "TEST_ONLY_V3",
+      "operationId": "14a921bb-8467-4c8e-aa43-112160eb62b8",
+      "state": "COMMITTED",
+      "revision": 128,
+      "saleId": "future:3f277326-1ac7-456a-a371-dd7fcfface2c",
+      "saleVersion": 1
+    },
+    "effects": 1
+  },
+  "rejected": {
+    "device": "Computer Safari",
+    "role": "operations",
+    "operationId": "717b5160-89c1-4eda-9d6a-ea1dea231b37",
+    "submittedAt": "2026-10-22T05:23:25.261Z",
+    "serverAt": "2026-10-22T05:23:45.735Z",
+    "error": "INSUFFICIENT_STOCK",
+    "effects": 0
+  },
+  "authenticatedSubjectsDistinct": true,
+  "submittedGapMs": 2819,
+  "exactLockOverlapMeasured": false,
+  "physicalInventoryDecremented": false,
+  "paymentOrDispatchCreated": false,
+  "revision": 128,
+  "journalRows": 266,
+  "effectsTotal": 181,
+  "pending": 0,
+  "iPhoneRepeatSyncOwnerConfirmed": {
+    "sameReservedOrder": true,
+    "noPending": true,
+    "fixtureAvailability": 0,
+    "previousArchivedRejectionPreserved": true
+  }
+}

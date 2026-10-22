@@ -1,0 +1,80 @@
+{
+  "environment": "TEST_ONLY",
+  "workerVersionPrefix": "5b787b57",
+  "appsScriptVersion": 2,
+  "role": "seller",
+  "passed": true,
+  "startedAtUTC": "2026-10-22T05:09:58.192Z",
+  "finishedAtUTC": "2026-10-22T05:11:09.422Z",
+  "evidence": "Owner confirmation plus native accessibility result with current 5E recovery panel",
+  "checks": [
+    {
+      "name": "seller-response-redacted",
+      "error": null,
+      "elapsedMs": null,
+      "passed": true
+    },
+    {
+      "name": "deny-users",
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 6087,
+      "passed": true
+    },
+    {
+      "name": "deny-reports",
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 6665,
+      "passed": true
+    },
+    {
+      "name": "deny-dashboard",
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 6667,
+      "passed": true
+    },
+    {
+      "name": "deny-setUser",
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 5236,
+      "passed": true
+    },
+    {
+      "name": "deny-configure",
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 5199,
+      "passed": true
+    },
+    {
+      "name": "reject-forged-role",
+      "error": "IDENTITY_SPOOFING",
+      "elapsedMs": 8128,
+      "passed": true
+    },
+    {
+      "name": "read-snapshot-1",
+      "error": null,
+      "elapsedMs": 6165,
+      "passed": true
+    },
+    {
+      "name": "read-snapshot-2",
+      "error": null,
+      "elapsedMs": 5860,
+      "passed": true
+    },
+    {
+      "name": "read-snapshot-3",
+      "error": null,
+      "elapsedMs": 6968,
+      "passed": true
+    },
+    {
+      "name": "journal-revision-unchanged",
+      "error": null,
+      "elapsedMs": null,
+      "passed": true
+    }
+  ],
+  "writesCreated": false,
+  "earlierLoadFailed": "Recovered on fresh same-origin laboratory page; cause not established, transient incidence retained"
+}

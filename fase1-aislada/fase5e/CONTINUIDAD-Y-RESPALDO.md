@@ -1,3 +1,5 @@
+Estado 22/10/2026: además del ensayo local descrito, se materializó y verificó una copia totalmente ficticia en cuatro pestañas separadas de la hoja Google de recuperación existente, con interrupción/reanudación y cero filas al planificar repetición. Ver tests/restauracion-google-5e.json y PLAN-RESTAURACION-GOOGLE-5E.md. No se restauraron cuentas, secretos, despliegues ni colas reales.
+
 # Respaldo y continuidad — propuesta 5E
 
 ## Copia y restauración implementadas
@@ -27,4 +29,4 @@ RTO inicial propuesto: cuatro horas laborales desde disponer de copia, credencia
 5. No confirmar cobros, despachos ni recurrir a otra plataforma por una supuesta venta perdida sin inspeccionar primero la operación.
 6. Si el portal no abre, conservar navegador/perfil y dispositivo. Cerrar una pestaña conserva IndexedDB; borrar almacenamiento puede destruir pendientes. No se promete carga offline del portal en una pestaña nueva.
 
-La hoja Google de recuperación ya autorizada se conserva como recurso para un ensayo remoto posterior. No se sobrescribió ni se anexó una copia 5E allí. Antes de materializar, comprobar el destino y evitar cualquier sobrescritura de ensayos previos; no se habilita restauración desde el endpoint público multiusuario.
+La hoja Google de recuperación ya autorizada se conserva como recurso para un ensayo remoto posterior. Se añadieron únicamente cuatro pestañas 5E autorizadas, sin sobrescribir las anteriores. Antes de materializar, comprobar el destino y evitar cualquier sobrescritura de ensayos previos; no se habilita restauración desde el endpoint público multiusuario.

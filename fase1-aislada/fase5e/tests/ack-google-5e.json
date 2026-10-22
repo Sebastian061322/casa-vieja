@@ -1,0 +1,39 @@
+{
+  "environment": "TEST_ONLY",
+  "workerVersionPrefix": "5b787b57",
+  "appsScriptVersion": 2,
+  "operationId": "8ba1180c-36c6-46bf-9e28-df64a1f4eb2c",
+  "customer": "TEST_ONLY_5E_ACK_GOOGLE_20261022_01",
+  "serverState": "COMMITTED",
+  "prepareRows": 1,
+  "commitRows": 1,
+  "effects": [
+    {
+      "id": "8ba1180c-36c6-46bf-9e28-df64a1f4eb2c:0",
+      "kind": "SALE_RESERVATION",
+      "resourceId": "demo:g3-b52c5bb2-da19-4787-b799-3b6778170ccc-molido500",
+      "qtyDelta": 0,
+      "reservedDelta": 1
+    }
+  ],
+  "clientObservedState": "WORKER_ACK_WITHHELD",
+  "clientPending": false,
+  "clientFalseSuccess": false,
+  "recoveryVerified": true,
+  "reopenAttempt": "Safari restored auxiliary Google transform popup; form resubmission cancelled, not counted as successful laboratory tab reopen",
+  "physicalReopenRequested": true,
+  "receipt": {
+    "operationId": "8ba1180c-36c6-46bf-9e28-df64a1f4eb2c",
+    "state": "COMMITTED",
+    "revision": 127,
+    "saleId": "future:9c63873a-27a9-499a-accf-c3438c2a0e41",
+    "saleVersion": 1
+  },
+  "recoveryEvidence": {
+    "ownerReported": "RECOVERED_COMMITTED_BY_STATUS, no pending, reserved after manually reopening and signing in",
+    "nativeUiObserved": "Same TEST_ONLY customer, no pending, confirmed reserved; reopened page URL validation=5d did not expose recovery panel",
+    "serverRecheck": "One PREPARED, one COMMITTED and one SALE_RESERVATION with qtyDelta=0/reservedDelta=1; no payment or dispatch",
+    "repeatSync": "Clicked Sync once after recovery; same original receipt and effect remain"
+  },
+  "fullBrowserRestartTested": false
+}

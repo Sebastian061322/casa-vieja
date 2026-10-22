@@ -1,3 +1,5 @@
+Estado actualizado al 22/10/2026: consultar [RESULTADOS-REALES-5E.md](RESULTADOS-REALES-5E.md). La recuperación de confirmación, última unidad física y materialización/restauración Google ya tienen evidencia. Las notas de preparación reflejan el estado anterior. La corrección visual posterior está preparada y pendiente de publicación.
+
 # Fase 5E — paquete local de estabilización
 
 Base remota verificada: `4e9c95bd09be526a17fb86173eca1a66126e5566`, rama `dev/fase1-estabilizacion`. No se publicó este paquete ni se cambió el escritor comercial. Los datos utilizados son sintéticos.

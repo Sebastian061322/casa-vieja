@@ -296,8 +296,49 @@
     "error": "SHIPPING_POLICY_REQUIRED",
     "trailingZoneSpaceConfirmed": true,
     "workerCorrectionVersion": "4c2cd709",
-    "physicalRecoveryVerified": false,
+    "physicalRecoveryVerified": true,
     "localIndexedDbReloadAndArchiveVerified": true,
-    "originalCommandChanged": false
+    "originalCommandChanged": false,
+    "physicalRecoveryEvidence": "Propietario confirma en iPhone/Safari: Rechazos por revisar: 1, REGISTER_SALE REJECTED y botón Archivar rechazo con evidencia tras recarga y sincronización.",
+    "physicalArchiveVerified": true,
+    "observedRecoveryAtUTC": "2026-10-22T03:52:12.238604+00:00",
+    "physicalArchiveEvidence": "Propietario confirma: Sin operaciones pendientes y 1 rechazo(s) conservado(s) con su evidencia.",
+    "observedArchiveAtUTC": "2026-10-22T03:53:43.110331+00:00"
+  },
+  "iphoneOfflineRetry": {
+    "environment": "TEST_ONLY",
+    "workerVersion": "4c2cd709",
+    "device": "iPhone/Safari físico del propietario",
+    "evidenceSource": [
+      "Confirmación del propietario en chat",
+      "Lectura acotada de Sheets sintético"
+    ],
+    "operationId": "c51a384a-1486-4e87-bc81-397989ba737c",
+    "saleId": "future:c9168589-3498-4c4d-a542-5ff152c85168",
+    "customer": "TEST_ONLY_IPHONE_OFFLINE_REINTENTO_02",
+    "offlinePendingReported": true,
+    "serverConfirmationReported": true,
+    "journalRows": {
+      "PREPARED": 261,
+      "COMMITTED": 262
+    },
+    "state": "COMMITTED",
+    "saleStatus": "RESERVED",
+    "revision": 126,
+    "movementRow": 180,
+    "movementKind": "SALE_RESERVATION",
+    "matchingMovementsInReadRange": 1,
+    "physicalQuantityDelta": 0,
+    "reservedQuantityDelta": 1,
+    "paymentRegisteredByThisOperation": false,
+    "dispatchRegisteredByThisOperation": false,
+    "pendingQueueEmptyAfterConfirmationVerified": true,
+    "originalRejectedOperationRetained": true,
+    "simultaneousTwoPhysicalDevicesVerified": false,
+    "resyncWithoutDuplicateVerified": true,
+    "archivedRejectionStillVisibleReported": true,
+    "postResyncJournalLastRow": 262,
+    "postResyncMovementLastRow": 180,
+    "verifiedAtUTC": "2026-10-22T04:03:09.594188+00:00"
   }
 }

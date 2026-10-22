@@ -41,3 +41,5 @@ Aplicar la decisión de SEGURIDAD-ALMACENAMIENTO-LOCAL-5D.md: equipos o perfiles
 
 ## Incidente iPhone: reconexión no aprobada todavía
 El pedido offline original fue rechazado por zona con espacio final. La interfaz antigua lo mostraba pendiente. Worker 4c2cd709 conserva el recibo definitivo y normaliza solo zonas de pedidos nuevos. Recuperar primero el rechazo mediante Sincronizar; archivar con evidencia tras verificarlo; nunca borrar IndexedDB. Repetir con un pedido nuevo, identificadores nuevos y datos ficticios. No contar el rechazo original como venta ni como ensayo exitoso.
+
+Ensayo físico repetido: APROBADO offline/reconexión/resincronización en iPhone Safari. Nuevo pedido COMMITTED, una reserva, sin movimientos adicionales tras repetir Sincronizar; cola vacía y rechazo anterior archivado conservado confirmados por propietario. Ver tests/iphone-offline-confirmado.json. Concurrencia física entre dos equipos sigue pendiente.

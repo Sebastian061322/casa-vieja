@@ -1,0 +1,16 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+async function setup(queue,noticeText='Operación pendiente. Se recuperará sin duplicarse al reconectar.'){
+  const {queueStatus}=await import('../../fase5d/web/queue-status.mjs');
+  const nodes=Object.fromEntries(['pending','connection','queue','draft-state','submit-sale','notice'].map(id=>[id,{textContent:'',innerHTML:'',disabled:false}]));nodes.notice.textContent=noticeText;
+  const option={value:'resource',textContent:'Partida · 1 disponibles'},select={value:'resource',options:[option]},row={quantity:1,querySelector:()=>select},step={textContent:''};
+  const state={queue,archived:[]},snapshot={sales:{},resources:{resource:{id:'resource',lot:'same-lot',qty:0}}};
+  const ctx=vm.createContext({queueStatus,queueView5d:state,draftSaleId:'future:original',snapshot,view:'sales',$:id=>nodes[id],notice:text=>nodes.notice.textContent=text,document:{querySelector:()=>step,querySelectorAll:()=>[row]},shortLot:()=> 'Partida'});
+  const ux=fs.readFileSync(__dirname+'/../../fase5a/web/ux.js','utf8');vm.runInContext(ux.split('\n').find(line=>line.startsWith('function readableLots(')),ctx);
+  const code=fs.readFileSync(__dirname+'/../../fase5d/web/presentation.js','utf8'),start=code.indexOf('function refreshQueueState5d(){'),end=code.indexOf('\nconst syncQueue5d=',start);vm.runInContext(code.slice(start,end),ctx);
+  return {ctx,nodes,state,snapshot,option,select,row};
+}
+const command={operationId:'original-id',saleId:'future:original'};
+test('confirmed rejection arriving after a pending notice updates all visible status without changing the command',async()=>{const f=await setup([{command,state:'REJECTED',lastError:'INSUFFICIENT_STOCK'}]),before=JSON.stringify(f.state);f.ctx.refreshQueueState5d();assert.match(f.nodes.notice.textContent,/Rechazo confirmado/);assert.doesNotMatch(f.nodes.notice.textContent,/reconectar/);assert.equal(f.nodes['submit-sale'].disabled,true);assert.equal(JSON.stringify(f.state),before)});
+test('fresh snapshot updates lot availability while preserving selected lot and draft quantity',async()=>{const f=await setup([{command,state:'REJECTED'}]);f.ctx.refreshQueueState5d();assert.match(f.option.textContent,/0 disponibles/);assert.equal(f.select.value,'resource');assert.equal(f.row.quantity,1);assert.equal(f.state.queue[0].command.operationId,'original-id')});
+test('mixed queue keeps genuinely pending message and does not imply a server confirmation',async()=>{const f=await setup([{command,state:'PENDING'},{command:{operationId:'another',saleId:'future:another'},state:'REJECTED'}]);f.ctx.refreshQueueState5d();assert.match(f.nodes.notice.textContent,/Operación pendiente/);assert.doesNotMatch(f.nodes.notice.textContent,/confirmada por el servidor/)});
+test('queue refresh preserves unrelated error and empty queue never invents a sale confirmation',async()=>{const f=await setup([{command,state:'REJECTED'}],'No se pudo abrir un reporte');f.ctx.refreshQueueState5d();assert.equal(f.nodes.notice.textContent,'No se pudo abrir un reporte');const empty=await setup([],'Borrador local sin enviar');empty.ctx.refreshQueueState5d();assert.equal(empty.nodes.notice.textContent,'Borrador local sin enviar')});

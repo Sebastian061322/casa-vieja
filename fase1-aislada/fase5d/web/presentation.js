@@ -72,7 +72,13 @@ const explainBase5d=explain;
 explain=function(error){if((error.message||error)==='SHIPPING_ZONE_REQUIRED')return 'Selecciona o escribe una zona de envío antes de guardar el pedido.';return (error.message||error)==='SHIPPING_POLICY_REQUIRED'?'La zona no tiene una política de envío aplicable. No se confirmó la venta.':explainBase5d(error);};
 function refreshQueueState5d(){
  const status=queueStatus(queueView5d,draftSaleId);$('pending').textContent=status.label;
- if(!status.pending&&status.rejected)$('connection').textContent='Rechazo confirmado · revisar';
+ if(!status.pending&&status.rejected){
+  $('connection').textContent='Rechazo confirmado · revisar';
+  if(/^(Operación pendiente\.|Guardada en este equipo\.|Operación guardada localmente\.)/.test($('notice').textContent||''))notice('Rechazo confirmado. No se registró la operación. Revisa la evidencia antes de preparar otro pedido.');
+ }
+ // A fresh snapshot may arrive while the draft is dirty. Update labels only;
+ // never replace the selected lot, quantity, customer or original command.
+ if(snapshot)for(const row of document.querySelectorAll('#sale-lines .cv-line'))readableLots(row);
  if(!queueView5d.queue.length&&status.archived)$('queue').innerHTML='<p class="cv-help">Sin operaciones pendientes. '+status.archived+' rechazo(s) conservado(s) con su evidencia.</p>';
  if(view==='sales'&&$('draft-state')&&!snapshot?.sales[draftSaleId]){
   if(status.saleRejected){$('draft-state').textContent='Rechazo confirmado. No se registró la venta. Conserva la evidencia y usa «Nuevo pedido» solo después de revisar la causa.';$('submit-sale').disabled=true;document.querySelector('[data-save-step="pending"]').textContent='2 · Rechazado';}

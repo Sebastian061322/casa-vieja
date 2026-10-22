@@ -1,0 +1,20 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "AUTHORIZED_NOT_DEPLOYED",
+  "worker": "casa-vieja-lab-auth",
+  "previousVersion": "5b787b57",
+  "previousSha256": "211b3e353f916fa1ca83ed5f470ce90446af5e7c9c4d0e01d8c000d9849679bb",
+  "candidateSha256": "a09881983136afefb2d5a2797f88576a6d0b3181e1dfbb6b7088ccd1536e5add",
+  "modifiedRuntimeSource": "fase1-aislada/fase5d/web/presentation.js",
+  "changes": [
+    "Replace obsolete pending notice after definitive rejection with no genuinely pending operations",
+    "Refresh lot availability labels from authenticated snapshot without replacing selected lot, draft or operation"
+  ],
+  "backendChanged": false,
+  "permissionsChanged": false,
+  "queueWritesChanged": false,
+  "fullRegressionPassed": 438,
+  "newRegressionTests": 4,
+  "beforeFixFailingTests": 2,
+  "rollback": "Restore Worker version 5b787b57; preserve IndexedDB and every server record"
+}

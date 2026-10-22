@@ -3,7 +3,7 @@
     {
       "path": "/entry.mjs",
       "status": 200,
-      "sha256": "a341b2347c643bb00d82e3c99e57e7a26d9e033e87ba0f9345735d9d9cbf131f",
+      "sha256": "d3832a6ab611f1bd449d853fe94a852994d6102b6f7083828063ade7c093686c",
       "passed": true,
       "noStore": true
     },
@@ -23,7 +23,7 @@
     }
   ],
   "environment": "TEST_ONLY",
-  "observedAtUTC": "2026-10-22T00:32:29.016Z",
+  "observedAtUTC": "2026-10-22T00:50:31.818Z",
   "realCredentialsUsed": false,
   "commercialPerformanceMeasured": false,
   "passed": true,
@@ -33,49 +33,49 @@
       "status": 403,
       "error": "ORIGIN_DENIED",
       "passed": true,
-      "elapsedMs": 322
+      "elapsedMs": 485
     },
     {
       "name": "origen ajeno",
       "status": 403,
       "error": "ORIGIN_DENIED",
       "passed": true,
-      "elapsedMs": 322
+      "elapsedMs": 314
     },
     {
       "name": "sin identidad",
       "status": 401,
       "error": "IDENTITY_REQUIRED",
       "passed": true,
-      "elapsedMs": 125
+      "elapsedMs": 156
     },
     {
       "name": "firma inválida",
       "status": 401,
       "error": "IDENTITY_REQUIRED",
       "passed": true,
-      "elapsedMs": 123
+      "elapsedMs": 249
     },
     {
       "name": "rol administrador declarado con firma inválida",
       "status": 401,
       "error": "IDENTITY_REQUIRED",
       "passed": true,
-      "elapsedMs": 1443
+      "elapsedMs": 1442
     },
     {
       "name": "credencial demasiado larga",
       "status": 401,
       "error": "IDENTITY_REQUIRED",
       "passed": true,
-      "elapsedMs": 216
+      "elapsedMs": 251
     },
     {
       "name": "GET con origen permitido",
       "status": 400,
       "error": "INVALID_REQUEST",
       "passed": true,
-      "elapsedMs": 120
+      "elapsedMs": 101
     }
   ]
 }

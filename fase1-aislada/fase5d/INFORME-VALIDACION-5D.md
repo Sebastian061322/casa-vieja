@@ -1,80 +1,75 @@
-# Fase 5D — validación del laboratorio
+# Fase 5D — estado verificable del laboratorio
 
-Fecha: 21 de octubre de 2026. Solo TEST_ONLY. No habilita producción ni Fase 6.
+Actualizado el 21 de octubre de 2026 (Lima). Exclusivamente TEST_ONLY. **NO-GO para Fase 6.**
 
-## Resultado comprobado
+## Arquitectura y recursos
 
-Google Identity → Worker de laboratorio → Apps Script aislado → hoja sintética funciona para administrador, vendedor y gerente operativo. Se conservó la interfaz aprobada 5A.2. La regresión completa pasó 373/373 pruebas locales, incluidas 41 específicas de 5D. No son 357 pruebas con Google.
+Google Identity Services → Worker casa-vieja-lab-auth → Apps Script CasaVieja_AUTH_TEST_ONLY_5D → CasaVieja_Pruebas_SINTETICA. No se comparte Sheets con operadores. La identidad se verifica criptográficamente en Worker y se firma con HMAC hacia Apps Script; los permisos se resuelven en backend, antes de acceder a datos. Se reutiliza el motor recuperable de inventario/comercio y la interfaz 5A.2.
 
-| Ensayo real de laboratorio | Evidencia | Resultado |
+Worker final **af55b8af**, activo y verificado en Cloudflare. entry.mjs, approved.css y config.json publicados coinciden por SHA256 con el paquete probado; cabecera no-store. Apps Script conserva el candidato mínimo previo: SHA256 8b2c817abe5e9489c05ffc0507cceddce5ff4a0f8ad3667c70001aabe41b5c22. En esta continuación no se modificó ni desplegó Apps Script, no se crearon recursos ni credenciales adicionales.
+
+Recursos aprobados en plan Free, proyecto Google sin facturación, sin tarjeta ni KV/D1. El portal público exige identidad y el endpoint sintético exige firma; una URL pública no implica autorización. No se promete disponibilidad ilimitada ni protección completa contra agotamiento de cuotas por tráfico externo.
+
+main conserva 12a5f997845f9d31dc1a5d8ae7dc49770928da3d. No se modificaron index.html productivo, Apps Script productivo, BaseDatos_CasaVieja ni registros comerciales históricos. Trabajo únicamente en dev/fase1-estabilizacion.
+
+## Pruebas y evidencia
+
+| Comprobación | Entorno y evidencia | Resultado |
 |---|---|---|
-| Ingreso administrador | Perfil y actualización del dashboard en Safari | Comprobado |
-| Revocación y restauración del vendedor | ACCESS_DENIED tras desactivar; nuevo ingreso restaurado con tres secciones y conexión confirmada | Comprobado con Google |
-| Ingreso vendedor | Confirmación del propietario y lectura nativa | Comprobado |
-| Vista vendedor | Ventas, Pedidos, Inventario; sin costos, descuentos ni reportes financieros | Comprobado en interfaz |
-| Pedido ficticio de S/35 | Confirmado por servidor y visible una sola vez en administrador | Comprobado |
-| Reserva | Físico 84 → 84; reservado 2 → 3 | Comprobado |
-| Cobro ficticio | Referencia única; pendiente inicial, luego confirmado; saldo por cobrar S/0 y cobrado S/35 | Comprobado |
-| Inventario tras cobro | Físico 84, reservado 3 | Comprobado |
-| Costo histórico | S/17.35; margen inicial S/17.65 | Comprobado en pedido |
-| Despacho ficticio | Estado Despachado; físico 84 → 83; reservado 3 → 2 | Comprobado |
-| Actualización en vendedor | Mismo pedido Despachado, sin datos financieros internos | Comprobado |
-| Gerente operativo | Perfil y actualización real 12:22:03 Lima; sin usuarios/configuración crítica | Comprobado en interfaz |
+| Regresión de fases anteriores y 5D | Node, adaptadores ficticios; tests/resultados.txt | 374 aprobadas, 0 fallos; 42 específicas de 5D |
+| JWT → Worker → HMAC → candidato mínimo → adaptador Sheets | tests/full-path.test.mjs | 3 aprobadas: ACK perdido, tres solicitudes por una bolsa, revocación/conservación; no es infraestructura Google real |
+| Rechazos públicos | tests/resultados-red-publica.json | 7/7; sin credenciales reales ni escrituras comerciales |
+| Integridad de publicación | Mismo archivo anterior | 3 archivos idénticos al paquete final y no-store |
+| Vendedor con sesión Google válida | tests/validacion-google-vendedor.json; lectura Safari y propietario | 11/11 sobre 08092eb0: redacción de costos, users/reports/dashboard/setUser/configure denegados, rol falsificado rechazado, consultas y diario sin cambios |
+| Gerente operativo con sesión Google válida | tests/validacion-google-gerente.json; lectura Safari y propietario | 8/8 sobre 08092eb0: users/setUser/configure denegados, rol falsificado rechazado, consultas y diario sin cambios |
+| Revocación y restauración del vendedor | tests/evidencia.json y capturas privadas | ACCESS_DENIED mientras inactivo; nuevo ingreso restaurado con mismo perfil y tres secciones |
+| iPhone/Safari | Confirmación del propietario | Ingreso/formulario visibles; pedido ficticio guardado como pendiente sin internet y sin confirmación del servidor. Reconexión pendiente de evidencia |
+| Pedido, cobro y despacho ficticios | Ensayo previo real descrito abajo | Confirmados con inventario consistente |
 
-Pedido del ensayo: `future:8dc4af32-f795-40dc-acb9-c3cb3c1c065d`. Cliente: PRUEBA 5D GOOGLE VENDEDOR 20261021. Referencia de pago: TEST_ONLY_5D_PAGO_20261021_01. Son datos y eventos ficticios, sin dinero ni entrega reales. No borrar ni cancelar estos registros de evidencia.
+Las denegaciones autenticadas se ejecutaron sobre 08092eb0. El paquete final af55b8af conserva la misma autenticación/backend y corrige el resumen de importes del gerente; no se afirma haber repetido todas las pruebas autenticadas sobre esa versión. No se cuentan las pruebas locales como pruebas con Google.
 
-## Corrección posterior de sesión
+## Correcciones implementadas
 
-**Alto, corregido y verificado con actualización real de gerente:** SESSION_CHANGED por respuestas de intentos de ingreso anteriores. Solo el intento vigente puede mostrar la interfaz o invalidar su sesión; una denegación actual sigue cerrando acceso. Cinco pruebas nuevas de concurrencia de ingreso, deduplicación y cancelación. El primer ajuste abrió el panel Gerente operativo, pero apareció ACCOUNT_OR_PROFILE_CHANGED; se protegió también el montaje único y se comprobó la actualización real sin avisos con versión 356ce6ca. No se alteran roles, credenciales ni colas.
-
-## Correcciones verificadas
-
-- **Alto, corregido:** consulta de certificados Google incompatible con el modo de redirección usado en Workers. Se usa modo manual y se rechazan desvíos. Una prueba remota sin credenciales pasó de 503/GOOGLE_IDENTITY_UNAVAILABLE a 401/IDENTITY_REQUIRED para firma ficticia inválida.
-- **Alto, corregido:** fallo al importar la interfaz después del popup OAuth. El arranque ahora incluye sus módulos antes del acceso, manteniendo el montaje privado condicionado a sesión confirmada. Vendedor entró tras la corrección.
-- **Medio, corregido en nuevo paquete:** mientras se esperaba confirmación, otro indicador podía conservar temporalmente el texto anterior de cola vacía. Ahora se muestra pendiente inmediatamente después de guardar localmente. Las pestañas abiertas reciben este cambio en su siguiente recarga; no se fuerza su cierre.
-- **Medio, observado:** el cobro pudo quedar pendiente antes de confirmarse. Se recuperó la misma operación sin volver a registrar el pago ni cambiar la referencia. No se simuló pérdida de respuesta contra Google: esa prueba permanece pendiente.
-
-## Seguridad y conservación
-
-La identidad de Google se verifica con firma y audiencia en Worker. El backend recibe la identidad dentro de un mensaje HMAC y resuelve permisos en servidor. Los perfiles no proceden de campos del formulario. Costos y utilidades del vendedor se filtran en la respuesta del backend; además se limita su interfaz. La revocación y restauración del vendedor se comprobaron también con Google: acceso denegado mientras estaba inactivo y nuevo ingreso con el mismo perfil tras restaurarlo. Siguen pendientes solicitudes manipuladas con una sesión válida.
-
-Los correos autorizados y el secreto HMAC permanecen en configuración privada, fuera del repositorio. No se compartieron las hojas con operadores. Se mantuvieron intactos main, index.html productivo, Apps Script productivo, BaseDatos_CasaVieja y el historial. No se habilitaron facturación, tarjetas, KV ni D1.
-
-El propietario confirmó que el laboratorio solo se usó en esta computadora. Antes del pedido se revisaron las pestañas sintéticas conocidas: laboratorio privado anterior, administrador y vendedor, sin pendientes. La comprobación automática del origen actual sigue ejecutándose antes de encolar. Esto no acredita dispositivos productivos ni autoriza un corte comercial.
-
-## Seguridad pública y tiempos observados
-
-Siete rechazos remotos aprobados: origen ausente/ajeno, identidad ausente, firma inválida, rol administrador declarado con firma inválida, credencial demasiado larga y método GET no admitido. Sin credenciales reales ni escritura comercial. No sustituyen pruebas de autorización con una sesión válida.
-
-Se observaron 50 doPost en la consola del Script sintético. Mediana 2.36 s; media 3.73418 s; mínimo 0.9 s; máximo 32.417 s; p95 descriptivo por rango más próximo 17.245 s. Son peticiones mezcladas y estados de ejecución Completada, no resultados comerciales confirmados. No se midió latencia completa ni capacidad con carga simultánea. Los casos lentos permanecen como riesgo de rendimiento.
-
-## Pendientes y condiciones de cierre
-
-| Prioridad | Pendiente | Condición verificable |
+| Severidad | Hallazgo confirmado | Corrección y verificación |
 |---|---|---|
-| P0 | Gerente operativo: alcance funcional restante | Ingreso, reportes y menús comprobados; faltan sus propias escrituras y rechazos directos de funciones administrativas |
-| P0 | Autorización adversarial real | Solicitudes manipuladas con sesión válida; revocación y restauración ya comprobadas |
-| P0 | Recuperación y concurrencia reales | Mismo operationId ante reconexión/respuesta perdida; última unidad sin doble consumo |
-| P1 | Rendimiento | Latencia y CPU con muestras suficientes, incluyendo JWT, diarios y usuarios concurrentes |
-| P1 | Equipos físicos | iPhone y segundo dispositivo; evidencia, sin declarar aprobaciones por emulación |
-| P1 | Continuidad y políticas | Protocolo de todos los equipos productivos y decisiones del propietario, antes de futura transición |
+| Alto | Consulta de claves Google incompatible con redirección usada en Worker | Modo manual, rechazos de desvíos; prueba pública dejó de fallar con GOOGLE_IDENTITY_UNAVAILABLE y rechaza firma inválida con 401 |
+| Alto | Importación de interfaz fallaba tras popup OAuth | Módulo de arranque único antes de autenticar; montaje privado condicionado a sesión confirmada; vendedor ingresó |
+| Alto | Respuestas de ingreso antiguas cerraban una sesión nueva; montaje duplicado | Coordinador por intento, deduplicación y montaje único; cinco pruebas y actualización real del gerente sin SESSION_CHANGED/ACCOUNT_OR_PROFILE_CHANGED |
+| Medio | Sincronizar recreaba la lista de usuarios y perdía cambios visuales sin guardar | Conserva el nodo del formulario. Prueba local: lista y casilla sin guardar sobreviven a sincronizar. Publicado |
+| Medio | Indicador podía mostrar cola vacía mientras aguardaba ACK | Pendiente visible inmediatamente tras persistir. Publicado; no confirma pagos/ventas antes del servidor |
+| Medio | Consultas cada 30 s incluso con pestaña oculta/sin red/sesión cerrada | Pausa automática, retoma al volver o reconectar, evita solapamientos. Tres pruebas; publicado. Sin ahorro real cuantificado |
+| Medio | Resumen del gerente leía descuento inexistente | Cero por defecto solo si el campo falta; importes inválidos siguen rechazándose. Prueba ejecuta el formulario generado, comprueba total/costo/margen. Publicado af55b8af; relectura real del formulario pendiente |
+| Bajo | Informe opcional se solapaba con resumen fijo del pedido | Informe dentro del contenido principal y lista accesible por comprobación. Verificado en informes reales de vendedor y gerente |
 
-No se declara cerrada Fase 5D ni listo el sistema para producción. Las evidencias visuales locales están en evidencia-local/ y se excluyen de Git para proteger datos de cuenta. tests/evidencia.json y tests/resultados.txt contienen el registro reproducible sin secretos.
+## Flujo comercial real previamente comprobado
 
-## Formulario de usuarios: continuidad visual
+Pedido future:8dc4af32-f795-40dc-acb9-c3cb3c1c065d, cliente PRUEBA 5D GOOGLE VENDEDOR 20261021, S/35. Costo histórico S/17.35; margen inicial S/17.65. Visible una vez en administrador. Físico/reservado: 84/2 antes, 84/3 tras reservar, 84/3 tras cobrar, 83/2 tras despachar. Referencia ficticia de cobro TEST_ONLY_5D_PAGO_20261021_01; saldo S/0 y cobrado S/35. Vendedor vio Despachado sin datos financieros internos. Sin dinero, cliente ni entrega reales. Conservar registros de evidencia.
 
-Corrección local verificada: sincronizar conservaba los datos del backend, pero recreaba el panel y ocultaba la lista de usuarios cargada. Se conserva ahora el nodo del formulario y sus cambios sin guardar. En localhost se cargaron tres identidades ficticias, se desmarcó el acceso del vendedor sin guardar y se sincronizó: la lista y el cambio pendiente permanecieron. No se envió ningún cambio de permiso. Regresión 362/362. Publicado en Worker afcb7fcf. Los archivos entry.mjs, approved.css y config.json publicados coinciden por SHA256 con el paquete probado; no cambia la autorización del servidor.
+El cobro estuvo inicialmente pendiente y luego se confirmó recuperando la misma operación. No fue una simulación controlada de pérdida de respuesta contra Google. Esa prueba sigue pendiente.
 
-## Continuación del 21 de octubre, tarde (Lima)
+## Rendimiento observado y sus límites
 
-Base preservada: 03bee405f93e6d2116ba1718593e16d28f0445a3 en dev/fase1-estabilizacion. main conserva 12a5f997845f9d31dc1a5d8ae7dc49770928da3d. No se modificó Apps Script ni se crearon recursos adicionales.
+- 50 doPost mixtos observados: mediana 2.36 s, media 3.73418 s, máximo 32.417 s, p95 descriptivo 17.245 s. tests/tiempos-google-observados.json. Estado Completada no demuestra éxito comercial. No es carga controlada ni latencia completa.
+- Snapshot con sesión válida de vendedor: 4268, 6177 y 5596 ms. Gerente: 5100, 5247 y 4385 ms. Incluyen ida/vuelta y comprobación de sesión. Tres muestras por perfil no permiten p95 o capacidad garantizada.
+- Panel Worker observado durante esta sesión: 422 invocaciones, indicador CPU Time 3 ms, Errors 0 en últimas 24 h. La portada de cuenta mostró CPU P90 6 ms, otra agregación. No son CPU por venta ni garantía de margen ante límites Free. No se infiere consumo de Apps Script/Identity desde esos indicadores.
 
-- Ensayo opcional `?validation=5d`: usa la sesión individual existente, sin leer/exportar tokens. Prueba rutas restringidas, rol falsificado, redacción del vendedor, tres consultas y revisión del diario. Los comandos administrativos son inválidos y no contienen permisos o reglas aplicables. No añade endpoints. Verificado localmente con los tres perfiles; ejecutado en interfaz local con vendedor (11 comprobaciones). Publicado en afcb7fcf. Verificación real con vendedor aún pendiente de recuperar la lectura de Safari después de Google: no darla por aprobada.
-- Tres pruebas nuevas recorren JWT RSA ficticio → Worker actual → HMAC → candidato mínimo → adaptador simulado de Sheets. Recuperación de respuesta perdida conserva operationId y deja un recibo/efecto; tres peticiones en vuelo reservan una sola bolsa; revocación/restauración conserva tablas previas. No son prueba de la infraestructura concurrente de Google ni de dos equipos físicos.
-- **Medio, confirmado por código:** el temporizador consultaba cada 30 segundos también en pestañas ocultas. Corrección local: pausa consultas automáticas cuando la pestaña no está visible, no hay red o la sesión ya no corresponde; retoma al volver al frente o reconectar y evita solapamientos. No borra ni cambia colas. Tres pruebas aprobadas. Publicación de esta optimización todavía pendiente; no se afirma ahorro medido en Google.
-- Repetición remota: 7/7 rechazos públicos aprobados; tres archivos públicos idénticos al paquete afcb7fcf y con no-store. Es comprobación de despliegue, no prueba de permisos con token válido ni carga.
-- Panel general de Cloudflare observado durante esta sesión: 422 invocaciones del Worker, indicador CPU Time 3 ms y Errors 0 en últimas 24 horas. La portada de cuenta mostró CPU P90 6 ms y otras cifras actualizadas; son agregados de ventanas/peticiones distintas, no mediciones por operación ni capacidad garantizada. No se infieren cuotas consumidas de Apps Script o Identity a partir de esos indicadores.
+## Privacidad y continuidad
 
-Reproducción local: `node fase1-aislada/fase5d/tests/run-all.mjs`. Conserva el candidato previo al terminar, construye el adaptador ficticio para las pruebas y no contacta servicios externos. Evidencia completa: tests/resultados.txt. El ensayo de red es separado y explícito: tests/probe-public-auth.mjs.
+**Alto, condicionado al equipo:** IndexedDB no cifra datos por usuario; cambiar cuenta Google en el mismo perfil no aísla copias gerenciales ya guardadas. El propietario confirmó equipos o perfiles de navegador separados por persona. Aplicar SEGURIDAD-ALMACENAMIENTO-LOCAL-5D.md; si alguien puede abrir el perfil ajeno, esa separación no basta. No se implementó cifrado ni se declara seguro el uso compartido de un mismo perfil. Verificación física de la separación pendiente antes de Fase 6.
 
-**NO-GO para Fase 6:** persisten autorización adversarial con sesión válida, pérdida de respuesta y última unidad contra Google, pruebas de celular/segundo equipo, tiempos bajo carga y decisiones/continuidad comercial. Las pruebas locales no cierran esos bloqueos.
+Se mantienen operationId, cola y recibos persistentes por cuenta/destino. Nunca limpiar IndexedDB para resolver pendientes ni transformar automáticamente comandos incompatibles. El laboratorio se usaba solo en esta computadora hasta el nuevo ingreso confirmado del iPhone; revisar ambos antes de futuras actualizaciones. No se han inspeccionado ni exportado colas productivas.
+
+Credenciales solo en memoria; secreto HMAC y correos autorizados fuera de Git. Capturas privadas en evidencia-local/, excluidas del repositorio. El ensayo opcional ?validation=5d no expone tokens ni incorpora endpoints de mantenimiento; sus comandos administrativos son deliberadamente inválidos y no pueden aplicar cambios de usuarios/reglas.
+
+## Condiciones todavía pendientes
+
+| Prioridad | Condición |
+|---|---|
+| P0 | Releer el resumen corregido del gerente y comprobar sus propias escrituras operativas reales |
+| P0 | Última unidad concurrente contra Google; no sustituirla por Promise.all local |
+| P0 | Desconexión/reconexión y pérdida controlada de respuesta contra Google, mismo operationId sin duplicar efectos |
+| P1 | iPhone/Safari y segundo equipo: completar navegación, teclado, persistencia y operaciones; ingreso inicial no equivale a prueba completa |
+| P1 | Latencia/CPU con muestras y carga representativas; investigar colas largas observadas |
+| P1 | Verificar aislamiento de equipos/perfiles, continuidad comercial, respaldo y políticas pendientes antes de transición |
+
+No activar producción ni Fase 6. Reproducción local: node fase1-aislada/fase5d/tests/run-all.mjs; conserva el candidato previo y no contacta servicios externos. El ensayo de red tests/probe-public-auth.mjs es separado, explícito y limitado a destinos públicos del laboratorio.

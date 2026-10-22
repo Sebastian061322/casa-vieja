@@ -1,3 +1,9 @@
+## Estado vigente: Worker 08092eb0 y vendedor comprobado
+
+374 pruebas locales aprobadas. El vendedor pasó 11 verificaciones con Google: denegaciones del backend, rol falsificado, redacción de costos y revisión del diario sin cambios. Evidencia: tests/validacion-google-vendedor.json. Formulario de usuarios corregido, informe accesible y pausa de consultas en pestañas ocultas publicados; archivos comparados por SHA256 y 7/7 rechazos públicos aprobados.
+
+Gerente operativo pasó 8 verificaciones reales de permisos. iPhone/Safari: ingreso y formulario confirmados; desconexión pendiente. Paquete actual af55b8af corrige el resumen del gerente. Pendientes: escrituras del gerente, concurrencia/recuperación contra Google, protocolo físico completo y carga. NO-GO para Fase 6. Los apartados siguientes conservan la cronología; prevalece este estado vigente.
+
 ## Continuación: 373 pruebas y ensayo remoto preparado
 
 Worker afcb7fcf activo: formulario de usuarios conservado y ensayo optativo de permisos en `?validation=5d`. 7/7 rechazos públicos y SHA256 de tres archivos publicados verificados. La prueba con sesión válida está pendiente; no asumirla aprobada. La optimización de consultas en pestañas ocultas pasó tres pruebas, pero sigue sin publicar. Ver INFORME-VALIDACION-5D.md.

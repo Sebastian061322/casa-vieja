@@ -1,0 +1,71 @@
+{
+  "environment": "TEST_ONLY",
+  "profile": "seller",
+  "workerVersion": "08092eb0",
+  "startedAt": "2026-10-22T00:42:25.140Z",
+  "completedAt": "2026-10-22T00:43:18.479Z",
+  "observedVia": "native Safari visible report",
+  "passed": true,
+  "checks": [
+    {
+      "id": "seller-response-redacted",
+      "passed": true
+    },
+    {
+      "id": "deny-users",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 3438
+    },
+    {
+      "id": "deny-reports",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 6077
+    },
+    {
+      "id": "deny-dashboard",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 5257
+    },
+    {
+      "id": "deny-setUser",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 3416
+    },
+    {
+      "id": "deny-configure",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 5736
+    },
+    {
+      "id": "reject-forged-role",
+      "passed": true,
+      "error": "IDENTITY_SPOOFING",
+      "elapsedMs": 4792
+    },
+    {
+      "id": "read-snapshot-1",
+      "passed": true,
+      "elapsedMs": 4268
+    },
+    {
+      "id": "read-snapshot-2",
+      "passed": true,
+      "elapsedMs": 6177
+    },
+    {
+      "id": "read-snapshot-3",
+      "passed": true,
+      "elapsedMs": 5596
+    },
+    {
+      "id": "journal-revision-unchanged",
+      "passed": true
+    }
+  ],
+  "ownerConfirmed": true
+}

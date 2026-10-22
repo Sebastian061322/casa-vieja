@@ -1,17 +1,17 @@
 {
-  "observedAtUTC": "2026-10-22T00:34:58.209214+00:00",
+  "observedAtUTC": "2026-10-22T00:56:09.898620+00:00",
   "baseCommit": "779381b014db806f1fc8d6e81fd756fb90ee6b83",
   "environment": "TEST_ONLY",
   "localTests": {
     "previous": 332,
-    "new": 41,
-    "passed": 373,
+    "new": 42,
+    "passed": 374,
     "failed": 0,
     "runtime": "Node.js v24.20.0",
     "actualGoogleTokens": false,
     "actualSheetsAdapter": false,
     "previousFullRegressionPassed": 354,
-    "currentFocusedPassed": 41,
+    "currentFocusedPassed": 42,
     "currentFullRegressionRepeated": true,
     "minimalFullPath": {
       "executed": true,
@@ -76,7 +76,18 @@
       }
     },
     "physicalDevices": {
-      "executed": false
+      "executed": true,
+      "completedScope": "initial sign-in, seller form visibility, and pending operation while offline",
+      "ownerConfirmed": true,
+      "device": "iPhone",
+      "browser": "Safari",
+      "profile": "seller",
+      "offlineRecoveryPassed": false,
+      "concurrentLastUnitPassed": false,
+      "offlinePendingConfirmed": true,
+      "offlineSaleCustomer": "TEST_ONLY_IPHONE_OFFLINE_20261021",
+      "offlineServerConfirmationShown": false,
+      "reconnectionVerificationPending": true
     },
     "publicBackendGet": {
       "executed": true,
@@ -155,7 +166,7 @@
       "failed": 0,
       "evidence": "tests/resultados-red-publica.json",
       "realCredentialsUsed": false,
-      "authenticatedRoleEscalationTested": false
+      "authenticatedRoleEscalationTested": true
     },
     "revocation": {
       "ownerAuthorized": true,
@@ -191,16 +202,35 @@
       "businessSuccessInferred": false
     },
     "deployedPackage": {
-      "versionShort": "afcb7fcf",
+      "versionShort": "af55b8af",
       "activeLatestVerified": true,
       "sourceMatchedPublishedAssets": true,
       "evidence": "tests/resultados-red-publica.json",
-      "pollingFixIncluded": false
+      "pollingFixIncluded": true
     },
     "authenticatedValidation": {
-      "executed": false,
-      "reason": "Awaiting Safari main-window access after seller Google sign-in",
-      "reportMustNotBeAssumedApproved": true
+      "executed": true,
+      "profile": "seller",
+      "passed": true,
+      "checks": 11,
+      "workerVersion": "08092eb0",
+      "evidence": "tests/validacion-google-vendedor.json",
+      "ownerConfirmed": true,
+      "commercialWritesPerformed": false
+    },
+    "operationsAccessValidation": {
+      "executed": true,
+      "passed": true,
+      "checks": 8,
+      "workerVersion": "08092eb0",
+      "ownerConfirmed": true,
+      "evidence": "tests/validacion-google-gerente.json"
+    },
+    "managerPreview": {
+      "observedBug": "Missing discount field caused invalid-amount message",
+      "localRegressionPassed": true,
+      "fixPublishedVersion": "af55b8af",
+      "realInterfaceRecheckPending": true
     }
   },
   "productionModified": false,
@@ -252,7 +282,12 @@
     },
     "polling": {
       "automatedTestsPassed": 3,
-      "remoteDeploymentPending": true
+      "remoteDeploymentPending": false
     }
+  },
+  "ownerDecisions": {
+    "browserIsolation": "Each person uses own device or separate browser profile",
+    "sharedBrowserProfileApproved": false,
+    "encryptionImplemented": false
   }
 }

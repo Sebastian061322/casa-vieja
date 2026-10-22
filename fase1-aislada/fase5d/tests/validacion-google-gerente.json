@@ -1,0 +1,55 @@
+{
+  "environment": "TEST_ONLY",
+  "profile": "operations",
+  "workerVersion": "08092eb0",
+  "startedAt": "2026-10-22T00:46:16.143Z",
+  "completedAt": "2026-10-22T00:47:15.044Z",
+  "observedVia": "native Safari visible report",
+  "ownerConfirmed": true,
+  "passed": true,
+  "checks": [
+    {
+      "id": "deny-users",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 4299
+    },
+    {
+      "id": "deny-setUser",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 5815
+    },
+    {
+      "id": "deny-configure",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 4326
+    },
+    {
+      "id": "reject-forged-role",
+      "passed": true,
+      "error": "IDENTITY_SPOOFING",
+      "elapsedMs": 6872
+    },
+    {
+      "id": "read-snapshot-1",
+      "passed": true,
+      "elapsedMs": 5100
+    },
+    {
+      "id": "read-snapshot-2",
+      "passed": true,
+      "elapsedMs": 5247
+    },
+    {
+      "id": "read-snapshot-3",
+      "passed": true,
+      "elapsedMs": 4385
+    },
+    {
+      "id": "journal-revision-unchanged",
+      "passed": true
+    }
+  ]
+}

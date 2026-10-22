@@ -23,7 +23,9 @@ export function mountLabValidation(session){
  const title=document.createElement('h2');title.textContent='Verificaciones de laboratorio';
  const help=document.createElement('p');help.textContent='Solo TEST_ONLY. Comprueba permisos y tiempos de consultas sin crear ventas, cambiar usuarios ni mostrar credenciales. No equivale a una prueba de carga ni de celulares.';
  const button=document.createElement('button');button.className='btn secondary';button.textContent='Comprobar permisos y consultas';
- const output=document.createElement('pre');output.setAttribute('role','status');output.style.whiteSpace='pre-wrap';
- button.onclick=async()=>{button.disabled=true;output.textContent='Ensayo en curso…';try{const result=await validateLabAccess(session,{onResult:r=>{output.textContent+='\n'+r.id+': '+(r.passed?'APROBADO':'FALLÓ')+(r.error?' · '+r.error:'');}});output.textContent=JSON.stringify(result,null,2);}catch(e){output.textContent+='\nEnsayo incompleto: '+e.message;}finally{button.disabled=false;}};
- section.append(title,help,button,output);document.getElementById('app').append(section);
+ const output=document.createElement('ul');output.setAttribute('aria-live','polite');
+ const line=text=>{const row=document.createElement('li');row.textContent=text;output.append(row);};
+ const describe=r=>r.id+': '+(r.passed?'APROBADO':'FALLÓ')+(r.error?' · '+r.error:'')+(Number.isFinite(r.elapsedMs)?' · '+r.elapsedMs+' ms':'');
+ button.onclick=async()=>{button.disabled=true;output.replaceChildren();line('Ensayo en curso…');try{const result=await validateLabAccess(session,{onResult:r=>line(describe(r))});output.replaceChildren();line('Resultado: '+(result.passed?'APROBADO':'FALLÓ')+' · '+result.profile+' · TEST_ONLY');line('Inicio UTC: '+result.startedAt);for(const row of result.checks)line(describe(row));line('Fin UTC: '+result.completedAt);}catch(e){line('Ensayo incompleto: '+e.message);}finally{button.disabled=false;}};
+ section.append(title,help,button,output);document.getElementById('main-content').append(section);
 }

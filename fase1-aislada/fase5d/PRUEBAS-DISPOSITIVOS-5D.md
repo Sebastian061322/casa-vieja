@@ -1,6 +1,6 @@
 # Pruebas físicas pendientes — laboratorio 5D
 
-No ejecutadas todavía. Usar exclusivamente la URL del Worker de laboratorio y nombres TEST_ONLY; nunca registrar clientes, pagos ni inventario reales. No abrir BaseDatos_CasaVieja ni borrar almacenamiento del navegador.
+Estado actualizado: propietario confirmó ingreso del vendedor y formulario visible en iPhone/Safari. El resto de casos permanece pendiente salvo evidencia individual posterior. Usar exclusivamente la URL del Worker de laboratorio y nombres TEST_ONLY; nunca registrar clientes, pagos ni inventario reales. No abrir BaseDatos_CasaVieja ni borrar almacenamiento del navegador.
 
 ## Preparación
 
@@ -36,3 +36,5 @@ Abrir la misma URL del Worker con `?validation=5d`, ingresar con la cuenta indiv
 En vendedor se esperan denegaciones de usuarios, reportes, dashboard, modificación de usuarios y configuración, más rechazo del rol falsificado. En gerente operativo se esperan denegaciones de usuarios y configuración. Los comandos administrativos usan un identificador inválido y no contienen cambios válidos: incluso una regresión de permisos no debe producir una modificación. El ensayo verifica además que la revisión del diario permanezca igual. Si hay otra operación concurrente, esa última comprobación puede fallar y exige investigar, no repetir escrituras.
 
 Tres consultas de snapshot informan duración de ida y vuelta incluyendo la comprobación de sesión. Tres muestras no permiten afirmar capacidad, p95 ni rendimiento bajo carga. Un error de red, sesión o cuota deja el ensayo incompleto; no equivale a aprobado. El ensayo es optativo y exclusivo del paquete de laboratorio, sin nuevos endpoints ni funciones de mantenimiento.
+
+Aplicar la decisión de SEGURIDAD-ALMACENAMIENTO-LOCAL-5D.md: equipos o perfiles de navegador separados por persona. Cambiar la cuenta Google dentro del mismo perfil no aísla los datos de IndexedDB.

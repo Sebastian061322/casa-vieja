@@ -12,6 +12,9 @@ const client=new GuardedClient(store,transport,'TEST_ONLY_V3',uuid);`+app.slice(
 const oldPolling="window.addEventListener('online',sync);setInterval(()=>{if(!verifying)sync();},30000);";
 if(app.split(oldPolling).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
 app=app.replace(oldPolling,"startLabPolling({sync,allowed:()=>!verifying&&session.current()?.subject===actor.subject&&session.current()?.profile===actor.profile});");
+const oldPreviewDiscount="net=total-cents(f.discount);";
+if(app.split(oldPreviewDiscount).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
+app=app.replace(oldPreviewDiscount,"net=total-cents(f.discount??'0');");
 const financial="discountCents:cents(f.discount),authorizationId:f.authorizationId,deliveryCostCents:cents(f.deliveryCost),deliveryChargedCents:cents(f.deliveryCharged)";
 if(app.split(financial).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
 app=app.replace(financial,"...(actor.profile==='seller'?{}:{discountCents:cents(f.discount||'0'),authorizationId:f.authorizationId||'',deliveryCostCents:cents(f.deliveryCost||'0'),deliveryChargedCents:cents(f.deliveryCharged||'0')})");

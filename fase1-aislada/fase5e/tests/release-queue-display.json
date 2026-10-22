@@ -1,6 +1,6 @@
 {
   "environment": "TEST_ONLY",
-  "status": "AUTHORIZED_NOT_DEPLOYED",
+  "status": "DEPLOYED_PUBLIC_PROBE_PASSED",
   "worker": "casa-vieja-lab-auth",
   "previousVersion": "5b787b57",
   "previousSha256": "211b3e353f916fa1ca83ed5f470ce90446af5e7c9c4d0e01d8c000d9849679bb",
@@ -16,5 +16,16 @@
   "fullRegressionPassed": 438,
   "newRegressionTests": 4,
   "beforeFixFailingTests": 2,
-  "rollback": "Restore Worker version 5b787b57; preserve IndexedDB and every server record"
+  "rollback": "Restore Worker version 5b787b57; preserve IndexedDB and every server record",
+  "activeVersionPrefix": "37306312",
+  "sourceCommit": "de17516f69b0e7ef5ceca3270e13d779bcf7a2e6",
+  "observedAtUTC": "2026-10-22T13:00:36.527Z",
+  "publicProbePassed": true,
+  "matchingAssets": 3,
+  "invalidRequestsRejected": 7,
+  "authenticatedVisualCheck": "PENDING_RELOGIN",
+  "limitations": [
+    "La descarga de snapshot sigue bloqueada mientras existan rechazos sin revisar. Archivar con evidencia antes de sincronizar; no se cambia esa regla.",
+    "Administrador 5E y comprobación visual autenticada del parche todavía pendientes."
+  ]
 }

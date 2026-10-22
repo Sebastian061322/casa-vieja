@@ -1,74 +1,96 @@
-# Informe de avance 5E — paquete local verificable
+# Fase 5E — avance verificado al 22 de octubre de 2026
 
-Referencia inicial: 4e9c95bd09be526a17fb86173eca1a66126e5566, dev/fase1-estabilizacion. Publicación autorizada expresamente por el propietario y fuentes guardadas en commit 4c2a04c5b43858db32d9e130e2590c25b92d6522. El 22 de octubre de 2026 se verificó Apps Script sintético versión 2, mismo endpoint, propietario y acceso Cualquiera con HMAC; Worker de laboratorio activo 5b787b57. Siete rechazos públicos correctos y tres activos coincidentes por SHA256 y no-store. Las pruebas autenticadas, de negocio y restauración Google de 5E siguen pendientes; estas comprobaciones públicas no las sustituyen. main conserva 12a5f997845f9d31dc1a5d8ae7dc49770928da3d; no se activó producción.
+Estado: laboratorio en validación, sin activación comercial. Rama dev/fase1-estabilizacion. Fuentes publicadas en 4c2a04c5b43858db32d9e130e2590c25b92d6522; primera evidencia en 1ea579a1decf81d349f3be5248b674ce39325cee. Apps Script sintético versión 2 y Worker 37306312. La corrección visual posterior fue autorizada, publicada en de17516f69b0e7ef5ceca3270e13d779bcf7a2e6 y desplegada; siete rechazos públicos y tres activos por hash aprobados. No se modificó main, index.html comercial, Apps Script productivo, BaseDatos_CasaVieja ni historial anterior.
 
-## Bloqueos puntuales y cambios
+## Resultados concretos
 
-| Riesgo | Cambio local y evidencia | Falta para cerrar |
+| Comprobación | Resultado y alcance |
+|---|---|
+| Respuesta perdida real | COMMITTED en Google, respuesta retenida por Worker, navegador PENDING sin éxito anticipado. Reapertura por el propietario, mismo pedido reservado y sin pendientes; una sola reserva al releer Google. |
+| Última unidad en dos equipos | Computadora/Safari con gerente e iPhone/Safari con vendedor, identidades autenticadas distintas. Una reserva y un rechazo INSUFFICIENT_STOCK; físico 1, reservado 1, disponible 0. |
+| Reintento posterior | El propietario confirmó el mismo pedido en iPhone, cero pendientes y disponibilidad 0 tras Sincronizar. La resincronización del pedido con ACK retenido tampoco añadió efectos. |
+| Integridad Google | Última lectura: 266 filas del diario, 181 movimientos, revisión 128 y cero PREPARED incompletos. Reconstrucción independiente aprobada. |
+| Restauración Google separada | Archivo ficticio restaurado en cuatro pestañas nuevas de la hoja de recuperación existente, sin editar sus tres pestañas previas; lectura posterior y hashes correctos. Interrupción y reanudación verificadas. |
+| Acceso vigente | Gerente: ocho comprobaciones. Vendedor: once. Administrador: repetición 5E todavía pendiente. Siete rechazos públicos y tres activos verificados por SHA256. |
+| Pruebas locales | 438 aprobadas, cero fallos en el candidato más reciente: 429 iniciales, cinco de transporte de recuperación y cuatro de interfaz. La corrección está desplegada; falta su comprobación visual autenticada. |
+
+No se equipara un ensayo físico con una simulación. Los dos envíos físicos estuvieron separados por 2819 ms según los comandos recibidos; no se midió el solapamiento exacto del ScriptLock. La identidad autoritativa y la hora del servidor se comprobaron en audit, no en el campo responsible declarado por el navegador.
+
+## Dónde se almacena la información
+
+| Capa | Datos y protección |
+|---|---|
+| Google Identity | Identidad individual verificada de las tres cuentas autorizadas; no se comparten contraseñas en el código ni en el chat. |
+| Cloudflare Worker del laboratorio | Interfaz y pasarela. Verifica identidad y origen; firma la comunicación al backend. HMAC en secreto del proveedor, no en archivos públicos. |
+| Apps Script aislado | Valida firma, caducidad, repetición y permisos backend; usa ScriptLock y restringe el destino a la hoja sintética autorizada. |
+| Google Sheets sintético | Diario y movimientos durables. Los saldos se reconstruyen; el navegador no fija existencias absolutas ni costos autoritativos. |
+| IndexedDB de cada perfil | Comandos originales, borradores, recibos y rechazos conservados. Proyecciones financieras gerenciales pasan a memoria; no se eliminan las colas. |
+| Hoja de recuperación TEST_ONLY | Cuatro pestañas 5E separadas contienen diario, movimientos, copia integral ficticia por fragmentos y eventos de verificación. |
+
+La arquitectura sigue Google Identity → Worker → HMAC → Apps Script → Sheets. Los vendedores no reciben acceso directo a las hojas. El acceso de red Cualquiera del endpoint no equivale a autorización comercial: se exige la firma y la identidad autorizada. Un atacante puede consumir cuota enviando tráfico inválido; no se promete disponibilidad absoluta.
+
+Permanece amplio el permiso OAuth de Sheets concedido al proyecto propietario. La guarda del ID limita el código normal, pero no reduce el alcance OAuth. Las colas y borradores necesarios aún pueden contener información sensible; no se implementó cifrado. Mantener equipos/perfiles separados y protegidos por persona, como decidió el propietario.
+
+## Recuperación de confirmación comprobada
+
+Pedido TEST_ONLY_5E_ACK_GOOGLE_20261022_01, operationId 8ba1180c-36c6-46bf-9e28-df64a1f4eb2c, recibo revisión 127 y saleId future:9c63873a-27a9-499a-accf-c3438c2a0e41. Google conservó un PREPARED, un COMMITTED y un movimiento SALE_RESERVATION, cantidad física 0 y reserva +1.
+
+El navegador mostró WORKER_ACK_WITHHELD y PENDING sin recibo comercial. El propietario reabrió la pestaña y comunicó RECOVERED_COMMITTED_BY_STATUS; se corroboró por interfaz el mismo cliente, reservado y sin pendientes, y se releyó el único recibo/movimiento en Google. La pestaña inspeccionada tras el reingreso terminó en validation=5d, por lo que el texto de recuperación procede del reporte del propietario y no de una captura automatizada del panel de ensayo. No se reinició todo Safari. La automatización restauró inicialmente una ventana auxiliar de Google; su reenvío de formulario fue cancelado y no cuenta como ensayo exitoso.
+
+## Última unidad física
+
+El iPhone confirmó 14a921bb-8467-4c8e-aa43-112160eb62b8, revisión 128. La computadora recibió rechazo definitivo 717b5160-89c1-4eda-9d6a-ea1dea231b37, sin movimiento. La partida existente demo:g3-b52c5bb2-da19-4787-b799-3b6778170ccc-recovery pasó de físico/reserva/disponible 1/0/1 a 1/1/0. No se crearon productos adicionales, cobros ni despachos.
+
+La identidad autenticada del ganador fue seller y la del rechazo operations; se comprobó que sus sujetos son distintos sin publicarlos. El diario conserva el rechazo. Se intentó archivarlo por la interfaz para mantener su evidencia, pero no se corroboró el archivo local; no se declara eliminado ni archivado. El iPhone conservó el rechazo anterior ya archivado.
+
+## Hallazgo visual y corrección desplegada
+
+Medio: si una sincronización ya estaba en curso, podía quedar un aviso viejo de operación pendiente después de llegar el rechazo definitivo. Además, el borrador sucio conserva sus campos y no se reconstruye automáticamente; sus etiquetas de partida podían mostrar disponibilidad anterior.
+
+La corrección de presentation.js actualiza el aviso cuando ya no hay pendientes reales y refresca solo las etiquetas de lote desde el snapshot autenticado. No cambia lote seleccionado, cantidades, cliente, identificador ni comandos. La descarga base sigue bloqueada mientras haya rechazos sin revisar: es necesario revisarlos y archivarlos con evidencia antes de obtener un snapshot nuevo. Dos pruebas reprodujeron los defectos antes del arreglo; las cuatro nuevas y la regresión completa pasaron después. No se reescribe historial. Worker candidato SHA256 a09881983136afefb2d5a2797f88576a6d0b3181e1dfbb6b7088ccd1536e5add, desplegado como Worker 37306312 con autorización específica. Backend sin cambios.
+
+## Rendimiento medido
+
+Cincuenta ejecuciones reales doPost de Apps Script versión 2, 22/10/2026 entre 00:18:31 y 00:27:45 de Lima: media 2342,92 ms; mediana por rango 2142 ms; p95 descriptivo 4006 ms; máximo 5108 ms. Son ejecuciones mixtas de autenticación, consultas y operaciones; no clasificadas por acción y sin tiempo de navegador/Worker/red. Completada en la consola no significa que una operación comercial haya sido aceptada.
+
+Consultas de snapshot de gerente: 5519, 6200 y 7101 ms de ida y vuelta; vendedor: 6165, 5860 y 6968 ms. Tres muestras por perfil no acreditan percentiles estables. Los 2,36 s de mediana y 17,245 s de p95 anteriores eran observaciones mixtas de otra capa: no existe una comparación remota equivalente que pruebe mejora. La instrumentación por correlación está desplegada, pero falta recopilar el desglose real de autenticación, Worker, bloqueo, Sheets y reconstrucción.
+
+En Node, 30 muestras alternadas por variante con iguales resultados: 100/500/1000 ventas y 300/1500/3000 eventos. Medias de reportes antes→después: 0,635→0,334 ms; 5,556→1,558 ms; 19,365→2,883 ms. Esto solo mide cálculo sintético en memoria. El índice por pedido es efímero y no sustituye el diario.
+
+## Restauración y sus límites
+
+Destino existente CasaVieja_RECUPERACION_TEST_ONLY_5B. Se conservaron Control, DiarioInventarioV3 y MovimientosInventarioV3 con sus IDs originales. Solo se añadieron TEST_ONLY_5E_20261022_ARCHIVE/JOURNAL/EFFECTS/CONTROL.
+
+Copia SHA256 b05b5de02ddddeadd342b5291849ee7796362b8ec40194fa04798567079d79e2: 25 registros de diario, 20 movimientos, siete archivos de código, configuración ficticia y una cola sintética completa. Se escribieron diez de 38 fragmentos, se detuvo el ensayo, se releyeron todas las tablas y se reanudaron exclusivamente los 28 fragmentos ausentes. La copia completa se releyó desde Google, verificó hashes y reconstruyó ocho recursos. La planificación repetida produce cero filas a escribir. Solo después se añadió un evento VERIFIED; el INCOMPLETE anterior se conserva como estado inicial del ensayo.
+
+Se preservó el PREPARED parcial original en la copia; no se ejecutó ese comando contra la hoja restaurada ni se conectó la aplicación a ella. Su recuperación se había probado en Node sin duplicar efectos. La materialización y comprobación Google tomó 116951 ms de pared, incluyendo inspección y tareas intercaladas: no es RTO integral ni tiempo puro de escritura. No se restauraron cuentas, OAuth, HMAC, despliegues ni colas reales de celulares. No usar esta copia ficticia como respaldo comercial.
+
+El hash esperado debe estar bajo custodia independiente del archivo para una operación real; guardarlos juntos no prueba autenticidad. Retención propuesta de 30 diarios y 12 mensuales, respaldo diario y previo a cambios, RPO de 24 horas sujeto a copia exitosa y RTO propuesto de cuatro horas siguen por aprobar, dimensionar y simular. No se creó programador.
+
+## Archivos y evidencias
+
+Fuentes principales: private-projections.mjs, intents.mjs, controlled-response.mjs, recovery-panel.js, integrity.cjs, recovery.cjs, report-index.js, Observability.gs, count-plan.cjs y ads-contract.cjs. Nuevas herramientas de restauración: sheet-recovery.cjs y prepare-sheet-recovery.cjs, sin llamadas de red. Los cambios de integración están en build-web.cjs, api-worker.mjs, entry.mjs y la corrección de presentation.js. El servidor ficticio serve-ui.mjs nunca se publica como backend real.
+
+Pruebas sanitizadas: ack-google-5e.json, concurrencia-fisica-google-5e.json, restauracion-google-5e.json, permisos-google-operations.json, permisos-google-seller.json, integridad-google-5e.json, tiempos-backend-google-5e.json y resultados-red-publica-5e.json. Los JSON completos de Sheets, archivos de copia y capturas quedan privados en evidencia-local, fuera de Git. El manifiesto original conserva los hashes del paquete aprobado inicialmente; el parche tiene registro separado.
+
+## Matriz de cierre y decisiones
+
+| Prioridad | Estado | Condición pendiente |
 |---|---|---|
-| P0: doble envío o pestañas duplicadas producen intents distintos | Índice durable por tipo/pedido/versión, fingerprint semántico y operationId original; prueba de dos clientes simultáneos sobre la misma transacción local y reinicio | Competencia real desde dos dispositivos y ScriptLock de Google |
-| P0: respuesta confirmada no entregada al navegador | Worker candidato retiene ACK solo tras COMMITTED y devuelve 503 temporal para un pedido TEST_ONLY_5E_; consulta status devuelve recibo original sin otro efecto. Pruebas de API y navegador localhost | Repetir con Worker/Apps Script reales e iPhone después de publicar |
-| P0: saldos y movimientos | Verificador independiente detecta IDs duplicados, commits fuera de orden, fingerprints alterados y huérfanos. Se probaron seis puntos de caída, conflicto de edición entre gerentes, cancelación repetida, precio futuro, costos y 11000 g conservados | Pasar lectura acotada del diario Google autorizado por el mismo verificador; no reparar historial |
-| P0: recuperación completa no demostrada | Nuevo archivo por secciones, catálogo esperado, estado/código/configuración sintética/colas, restauración a carpeta separada, interrupción y reanudación, recuperación PREPARED | Restauración 5E en destino Google autorizado y recuperación de accesos/credenciales como procedimiento independiente |
-| P0: permisos del candidato vigente | Pruebas sobre candidato 5E generado y guardado solo local: vendedor/gerente denegados, sin funciones de mantenimiento públicas | Tres sesiones Google reales sobre versión publicada 5E |
-| P1: costos/reportes persistidos en navegador | Gerencia conserva snapshot/reportes solo en memoria. Solo retira cachés reconstruibles, conserva comandos, recibos, evidencia y borradores. Memoria de proyecciones se limpia al cerrar sesión | Validación real por perfil/equipo; pendientes y borradores necesarios pueden contener importes. No se implementó cifrado |
-| P1: demora en reportes | Índice efímero de eventos por pedido evita barridos repetidos; resultados idénticos en Node | Medir mejora real de extremo a extremo en Google |
-| P1: tiempos sin desglose | Correlación aleatoria y medidas en Worker y Apps Script sin datos personales o credenciales | Publicar y capturar muestras reales; tiempos inclusivos no se suman |
+| P0 integridad y reserva de última unidad | Aprobado en este fixture real | No extrapolar a todas las políticas/combinaciones comerciales. |
+| P0 confirmación retenida y recuperación | Aprobado en Worker/Google + reapertura física | Reinicio completo de navegador y otras interrupciones siguen pendientes. |
+| P0 restauración de datos en destino separado | Aprobado con datos ficticios | Recuperación integral de servicio, configuración real y credenciales no demostrada. |
+| P0 permisos | Gerente y vendedor aprobados | Repetir administrador en 5E y verificar el paquete final de interfaz. |
+| P1 interfaz | Arreglo desplegado, 438 pruebas aprobadas | Comprobar aviso/disponibilidad tras reingreso autenticado. |
+| P1 rendimiento | Medidas reales y mejora de algoritmo local | Desglose correlacionado y comparación remota por acción equivalentes. |
+| P1 aislamiento local | Cachés gerenciales minimizados | Verificar en perfiles/equipos; comandos y borradores sensibles no cifrados. |
+| P1 dispositivos | iPhone/Safari físico y computadora probados | Android y reinicio completo no probados; no declararlos aprobados. |
+| P1 respaldos operativos | Diseño y simulacro de datos | Aprobar retención/custodia y recuperar servicio completo; no hay tarea programada. |
 
-## Comprobación Google de integridad, solo lectura
+Conteo físico: comparación propuesta por producto/lote/familia/etapa/molienda/gramaje/unidad, siempre approved=false y canExecuteAdjustments=false. No se realizó inventario real ni apertura. Cuarentena, devoluciones dañadas, bloqueo/estados de lotes, recetas adicionales, ajustes, condiciones de cobro/despacho/cancelación y Fondo requieren decisiones del propietario. Un stock diferenciado de granel ya molido o cuarentena aún no se declara implementado.
 
-El 22 de octubre se leyeron 261 filas de diario y 179 movimientos sintéticos (rangos acotados, sin escrituras). El verificador independiente aprobó unicidad, orden PREPARED/COMMITTED, fingerprints, correspondencia de efectos, balances de cada uno de 50 recursos y conciliación de reservas: revisión 126, 126 operaciones confirmadas, nueve rechazadas y cero PREPARED sin confirmar. Tres unidades envasadas reservadas. No se suman kilos e insumos como si fueran una sola unidad. Evidencia sanitizada en tests/integridad-google-5e.json; el diario completo permanece privado y fuera de Git. Esta lectura no acredita nuevas ventas ni concurrencia física 5E.
-
-## Permisos reales vigentes
-
-Gerente operativo: ocho comprobaciones aprobadas en Worker 5b787b57 y Apps Script 2; denegación de users/setUser/configure y rol falsificado, tres lecturas autorizadas y revisión del diario sin cambio. Lecturas de snapshot: 5519, 6200 y 7101 ms de ida y vuelta del navegador. Tres muestras no permiten afirmar mejora ni percentiles estables. El propietario informó APROBADO del vendedor, pero la pestaña inspeccionada mostró Load failed; queda como resultado comunicado sin corroboración de la versión hasta repetir en una pestaña 5E identificada. No se considera resuelta esa incidencia ni se registran pedidos nuevos mientras se comprueba el acceso.
-
-## Pruebas
-
-429 aprobadas, cero fallos en tests/resultados.txt: 385 de la base más 44 incorporadas en 5E. Identidad, Sheets y servicios de las pruebas automatizadas son simulados. El candidato con el ID del Apps Script autorizado se evaluó en runtime simulado; esto no otorga ni comprueba permisos reales de Google.
-
-Navegador localhost: formulario gerencial correcto; recepción de error temporal con pedido pendiente tras confirmar backend simulado; cierre y reapertura de pestaña recupera reserva sin registrar otra venta. Evidencia visual privada en evidencia-local. No se reinició todo el navegador ni se simula ese resultado como un iPhone físico.
-
-La prueba física heredada de 5D sí confirmó iPhone/Safari offline, reconexión y resincronización con una sola reserva, rechazo antiguo conservado y cola vacía. Sigue vigente como evidencia de ese paquete, no certifica las modificaciones 5E.
-
-## Rendimiento medido en Node
-
-30 muestras por variante y volumen, orden alternado, mismo resultado y estado fuente inalterado. Datos totalmente ficticios; son cálculos de reportes en memoria, no reconstrucción de miles de operaciones Google.
-
-| Ventas / eventos | Media antes ms | Media después ms | p95 descriptivo antes ms | p95 descriptivo después ms |
-|---|---:|---:|---:|---:|
-| 100 / 300 | 0.635 | 0.334 | 0.805 | 0.386 |
-| 500 / 1500 | 5.556 | 1.558 | 6.002 | 1.727 |
-| 1000 / 3000 | 19.365 | 2.883 | 19.820 | 3.084 |
-
-No comparar estos milisegundos con los 2,36 s de mediana y 17,245 s de p95 de las observaciones mixtas 5D. La mejora remota antes/después todavía no existe. La instrumentación distingue verificación Google/HMAC, firma, comunicación backend, bloqueo, lecturas, escrituras y relecturas, reconstrucción y reportes. lockHeld y backend incluyen otras etapas; no son una partición aditiva ni CPU aislada del Worker.
-
-## Restauración ejecutada
-
-Archivo SHA256: 3a0a65e6af1f25f3eb58d0ca15978f9c9dd8dfa2c3aa4fc23343ca2b841cceb4. Origen TEST_ONLY:local-source; destino TEST_ONLY:local-destination. Se restauraron código completo generado del frontend/backend y manifiesto, fuentes del verificador, diario/movimientos, configuración ficticia y una cola sintética con comando original.
-
-Resultado: fuente sin cambios, copia verificada, restauración interrumpida/reanudada, repetición sin efectos adicionales y un PREPARED recuperado. Inventario final: seis unidades físicas, dos reservadas. Materialización/validación local medida: 15.755 ms. No es un RTO integral. No incluye recuperación de cuentas, OAuth, secretos ni colas de equipos físicos. Custodia y retención independientes siguen por aprobar; no hay tarea programada.
-
-## Seguridad y alcance residual
-
-La identidad sigue siendo Google verificado → Worker → HMAC → Apps Script → permisos backend. No hay roles confiados al navegador ni acceso directo a hojas para vendedor. Persisten epoch/schema de las colas existentes; no se cambian comandos previos. El ensayo de fallos no añade RPC de mantenimiento ni relaja permisos; solo afecta la entrega de un recibo sintético después de su confirmación.
-
-Apps Script standalone necesita el alcance Sheets para openById. El manifiesto no se amplió y sigue siendo amplio respecto de las hojas accesibles al propietario. La guarda de Script/Sheet reduce el camino normal de aplicación, pero no reduce el permiso OAuth concedido. Una eventual cuenta propietaria dedicada con acceso mínimo requiere diseño y aprobación; no se creó ni se habilitó ninguna.
-
-Minimizar proyecciones no protege un perfil gerencial abierto ni elimina información imprescindible de comandos/borradores. Mantener equipos o perfiles de sistema operativo protegidos por persona. No limpiar IndexedDB como reparación. Los registros de tiempo se limitan a ID aleatorio, acción enum y números; no registrar Gmail, token, payload ni secretos. No se contrató almacenamiento adicional.
-
-## Conteos y decisiones
-
-count-plan.cjs devuelve comparación por resourceId/lote/familia/etapa/molienda/gramaje/unidad: físico esperado, contado, reservas, disponible y diferencias. approved=false y canExecuteAdjustments=false siempre. Una diferencia menor que reservas bloquea la interpretación de disponibilidad y requiere revisión. No se ejecutó inventario real ni se fijaron costos reales.
-
-Siguen pendientes de decisión: cuarentena y aptitud de devoluciones, bloqueo/estados de lotes, ajustes tras conteo, recetas e insumos adicionales, condiciones de cobro/despacho/cancelación y Fondo. El motor actual distingue pergamino, tostado a granel, bolsas molido/grano de 250/500 g e insumos. Un inventario separado de granel ya molido, cuarentena o bloqueo requiere política/modelo adicional; no se declara implementado por existir este diseño.
-
-## Publicidad
-
-Contrato sintético probado con nuevas observaciones crudas, deduplicación, correcciones retrospectivas y vínculos comerciales; no se crearon tablas remotas ni una sincronización. Cuenta/campaña y zona/moneda comprobadas en Windsor en modo lectura; evidencia de IDs excluida de Git. Plan actual devuelto: TRIAL, is_paid=false. La documentación Free no sustituye comprobar el plan efectivo después del trial. No se activó ni contrató nada. Ver META-ADS-5F.md.
+Windsor/Meta: contrato ficticio con deduplicación, revisiones retrospectivas y atribución verificada separada de estimación. Cuenta/campaña actuales consultadas solo en lectura, IDs privados fuera de Git. Windsor devolvió TRIAL/is_paid=false; no se garantiza automatización gratuita posterior. No se importaron métricas al sistema, ni se crearon tareas, ni se cambiaron anuncios/presupuestos.
 
 ## Dictamen
 
-GO para continuar pruebas y diseño sintéticos. NO-GO para declarar cerrada 5E, automatizar integración real 5F o iniciar Fase 6: faltan pruebas reales autenticadas vigentes, última unidad entre dos equipos, ACK retenido contra Google, restauración 5E en Google, medición remota, aislamiento físico y decisiones operativas. Mantener escritor comercial actual e historial.
-
-La publicación remota limitada a los dos recursos de laboratorio fue autorizada y ejecutada sin ampliar permisos ni crear recursos. Evidencia: tests/publicacion-estado.json y tests/resultados-red-publica-5e.json. La validación autenticada requiere completar el regreso de Google en Safari; no se declara aprobada sin resultado.
+GO para continuar diseño y pruebas sintéticas 5F. NO-GO para automatización real 5F mientras no se confirme la viabilidad S/0 del plan efectivo y se cierre confiabilidad pendiente. NO-GO para Fase 6: faltan validación final, recuperación de servicio completo, reglas comerciales aprobadas, censo autorizado de dispositivos/orígenes productivos y respaldo real autorizado, conteo físico y apertura aprobada, y plan de escritor único. Mantener el sistema comercial actual y su historial inmutable. No se declara cerrada toda la Fase 5E.

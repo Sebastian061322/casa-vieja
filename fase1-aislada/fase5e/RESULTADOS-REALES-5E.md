@@ -20,11 +20,11 @@ Se preservó un PREPARED parcial del fixture, no se ejecutó contra la hoja rest
 
 SHA256 esperado: b05b5de02ddddeadd342b5291849ee7796362b8ec40194fa04798567079d79e2. La custodia independiente real, retención, frecuencia y recuperación completa del servicio siguen pendientes. No hay tarea de respaldo programada.
 
-## Corrección visual pendiente de publicación
+## Corrección visual desplegada en laboratorio
 
 Se observó un aviso antiguo de pendiente después de un rechazo definitivo y etiquetas de disponibilidad anteriores en un borrador sucio. El servidor mantuvo el stock correcto. El arreglo local preserva comandos y campos, corrige el aviso y refresca etiquetas cuando existe un snapshot nuevo. La cola base bloquea descargas mientras haya rechazos por revisar: revisar/archivar con evidencia es un paso previo necesario para obtener el nuevo snapshot; el parche no cambia esa regla ni borra la cola.
 
-Dos pruebas reprodujeron los defectos y las cuatro nuevas pasan con el arreglo. Última regresión local: 438 aprobadas, que incluyen cinco pruebas del transporte de restauración y cuatro del arreglo visual. La publicación de esa corrección de Worker está pendiente de autorización específica; no se presenta como desplegada. El paquete publicado anterior mantiene Worker 5b787b57 y backend 2.
+Dos pruebas reprodujeron los defectos y las cuatro nuevas pasan con el arreglo. Última regresión local: 438 aprobadas, que incluyen cinco pruebas del transporte de restauración y cuatro del arreglo visual. El propietario autorizó esta corrección específica. Fuente de17516f69b0e7ef5ceca3270e13d779bcf7a2e6; Worker activo 37306312, SHA256 a09881983136afefb2d5a2797f88576a6d0b3181e1dfbb6b7088ccd1536e5add. Backend permanece en versión 2. Siete solicitudes públicas inválidas rechazadas y tres activos remotos coinciden por SHA256 con el candidato; sin credenciales reales. La comprobación visual autenticada sigue pendiente: la pestaña del gerente solicita reingreso, sin borrar su almacenamiento. Evidencia: tests/release-queue-display.json y tests/resultados-red-publica-parche-5e.json.
 
 ## Condiciones abiertas
 

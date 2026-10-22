@@ -6,9 +6,10 @@ const start=app.indexOf('const rpc='),end=app.indexOf('\nlet snapshot=',start);
 if(start<0||end<0)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
 app=app.slice(0,start)+`const store=labStore;
 const rpc=async(name,arg)=>{const current=session.current();if(!current||current.subject!==actor.subject||current.profile!==actor.profile)throw Error('ACCOUNT_OR_PROFILE_CHANGED');const action=({initialize:'bootstrap',execute:'execute',status:'status',snapshot:'snapshot',reports:'reports',dashboard:'dashboard',users:'users',setUser:'setUser'})[name];if(!action)throw Error('NOT_EXPOSED');return session.invoke(action,name==='snapshot'?{format:'ui5d'}:arg??null);};
-const transport={execute:c=>operationResult(()=>rpc('execute',c)),status:id=>operationResult(()=>rpc('status',id)),snapshot:()=>rpc('snapshot')};
-const GuardedClient=class extends CVClient.Client{async enqueue(payload){await checkContinuity(store);return super.enqueue(payload);}};
-const client=new GuardedClient(store,transport,'TEST_ONLY_V3',uuid);`+app.slice(end);
+const transport={execute:c=>operationResult(()=>rpc('execute',c)),status:id=>operationResult(()=>rpc('status',id)),snapshot:()=>rpc('snapshot'),armLoss:armNetworkLoss5e};
+const GuardedClient=class extends intentClient(CVClient.Client){async enqueue(payload){await checkContinuity(store);return super.enqueue(payload);}};
+const responseProbe=controlledResponse(transport,store,new URLSearchParams(location.search).get('recovery')==='5e');
+const client=new GuardedClient(store,responseProbe,'TEST_ONLY_V3',uuid);`+app.slice(end);
 const oldPolling="window.addEventListener('online',sync);setInterval(()=>{if(!verifying)sync();},30000);";
 if(app.split(oldPolling).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
 app=app.replace(oldPolling,"startLabPolling({sync:()=>sync(),allowed:()=>!verifying&&session.current()?.subject===actor.subject&&session.current()?.profile===actor.profile});");
@@ -26,7 +27,7 @@ const pendingNotice="notice('Guardada en este equipo. Esperando confirmación de
 if(app.split(pendingNotice).length!==2)throw Error('BASE_CHANGED_REVIEW_REQUIRED');
 app=app.replace(pendingNotice,"notice('Guardada en este equipo. Esperando confirmación del servidor.');$('pending').textContent='Operación pendiente de confirmación';$('queue').innerHTML='<p>Operación guardada localmente. Esperando confirmación del servidor.</p>';await sync();");
 const dashboard=read('../fase5c/web/admin-dashboard.js').replace("cv5cRPC('dashboard',","rpc('dashboard',");
-const appModule="import {prepareCustomer} from './customer.mjs';\nimport {queueStatus} from './queue-status.mjs';\nimport {operationResult} from './api-response.mjs';\nimport {startLabPolling} from './polling.mjs';\nimport {checkContinuity} from './continuity.mjs';\nimport {adminMutation} from './admin-queue.mjs';\nwindow.mount5D=async function(actor,session,labStore){\n"+app+'\n'+read('../fase5a/web/ux.js')+'\n'+dashboard+'\n'+read('web/presentation.js')+'\n};\n';
+const appModule="import {intentClient} from '../../fase5e/web/intents.mjs';\nimport {controlledResponse} from '../../fase5e/web/controlled-response.mjs';\nimport {prepareCustomer} from './customer.mjs';\nimport {queueStatus} from './queue-status.mjs';\nimport {operationResult} from './api-response.mjs';\nimport {startLabPolling} from './polling.mjs';\nimport {checkContinuity} from './continuity.mjs';\nimport {adminMutation} from './admin-queue.mjs';\nwindow.mount5D=async function(actor,session,labStore){\n"+app+'\n'+read('../fase5a/web/ux.js')+'\n'+dashboard+'\n'+read('web/presentation.js')+'\n'+read('../fase5e/web/recovery-panel.js')+'\n};\n';
 // La sintaxis del cuerpo se valida sin ejecutarlo ni abrir un navegador.
 new vm.Script(appModule.replace(/^import .*\n/gm,''));write('web/approved-app.js',appModule);
 let html=read('../fase5a/web/shell.html');
@@ -47,14 +48,14 @@ const assets=Object.fromEntries(files.map(file=>['/'+file,read('web/'+file)]));a
 // Un único módulo de arranque: no descargar código al regresar del popup OAuth.
 // El montaje y cualquier consulta privada siguen requiriendo sesión confirmada.
 const stripImports=source=>source.replace(/^import .*\n/gm,'');
-const entryBundle=[read('web/session.mjs').replace(/^export /gm,''),read('web/login-flow.mjs').replace(/^export /gm,''),read('web/validation.mjs').replace(/^export /gm,''),read('web/api-response.mjs').replace(/^export /gm,''),read('web/queue-status.mjs').replace(/^export /gm,''),read('web/customer.mjs').replace(/^export /gm,''),
+const entryBundle=[read('../fase5e/web/private-projections.mjs').replace(/^export /gm,'').replaceAll('clone','projectionClone'),read('../fase5e/web/intents.mjs').replace(/^export /gm,''),read('../fase5e/web/controlled-response.mjs').replace(/^export /gm,''),read('web/session.mjs').replace(/^export /gm,''),read('web/login-flow.mjs').replace(/^export /gm,''),read('web/validation.mjs').replace(/^export /gm,''),read('web/api-response.mjs').replace(/^export /gm,''),read('web/queue-status.mjs').replace(/^export /gm,''),read('web/customer.mjs').replace(/^export /gm,''),
   read('web/continuity.mjs').replace(/^export /gm,''),read('web/polling.mjs').replace(/^export /gm,''),
   read('web/admin-queue.mjs').replace(/^export /gm,''),stripImports(appModule),
   stripImports(read('web/entry.mjs')).replace("await import('./approved-app.js');",'')].join('\n');
 new vm.Script(entryBundle);
 assets['/entry.mjs']=entryBundle;
 let identity=read('identity.mjs').replace(/^export /gm,'');
-let api=read('api-worker.mjs').replace("import {verifier,proof} from './identity.mjs';",'').replace('export function createWorker','function createWorker').replace('export default createWorker();','const apiWorker=createWorker();');
+let api=read('api-worker.mjs').replace("import {verifier,proof} from './identity.mjs';",'').replace('export function createWorker','function createWorker').replace('export default createWorker();','const apiWorker=createWorker({onMetrics:record=>console.log(JSON.stringify(record))});');
 const bundle=identity+'\n'+api+'\nconst assets='+JSON.stringify(assets)+';\n'+`export default {async fetch(request,env){const url=new URL(request.url);if(url.pathname==='/api')return apiWorker.fetch(request,env);if(!['GET','HEAD'].includes(request.method))return new Response('Método no permitido',{status:405});const body=assets[url.pathname];if(body===undefined)return new Response('No encontrado',{status:404});const type=url.pathname.endsWith('.css')?'text/css':url.pathname.endsWith('.js')||url.pathname.endsWith('.mjs')?'text/javascript':url.pathname.endsWith('.json')?'application/json':'text/html';return new Response(request.method==='HEAD'?null:body,{headers:{'content-type':type+'; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff','referrer-policy':'no-referrer','cross-origin-opener-policy':'same-origin-allow-popups','content-security-policy':"default-src 'self'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; frame-src https://accounts.google.com/gsi/; connect-src 'self' https://accounts.google.com/gsi/; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"}});}};\n`;
 write('worker-bundle.mjs',bundle);
 console.log(JSON.stringify({assets:files.length,realAccountsEnabled:config.realAccountsEnabled===true,deployed:false}));

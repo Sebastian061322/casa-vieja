@@ -1,0 +1,22 @@
+{
+  "environment": "TEST_ONLY",
+  "actualGoogle": false,
+  "sourceId": "TEST_ONLY:local-source",
+  "destinationId": "TEST_ONLY:local-destination",
+  "sha256": "3a0a65e6af1f25f3eb58d0ca15978f9c9dd8dfa2c3aa4fc23343ca2b841cceb4",
+  "sourceUnchanged": true,
+  "archiveVerified": true,
+  "repeatedRestoreNoDuplicate": true,
+  "restoreInterruptedAndResumed": true,
+  "preparedRecoveredOnce": true,
+  "physical": 6,
+  "reserved": 2,
+  "pendingIdsAtBackup": [
+    "v4-test-5"
+  ],
+  "restoreMs": 15.755291999999997,
+  "queueScope": "COMPLETE_SYNTHETIC_STATE only; no physical-device export",
+  "secretsRecovered": false,
+  "accountsRecovered": false,
+  "realRtoMeasured": false
+}

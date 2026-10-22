@@ -2,15 +2,18 @@ import {createSession} from './session.mjs';
 import {createLoginFlow} from './login-flow.mjs';
 import {mountLabValidation} from './validation.mjs';
 import {readLabResponse} from './api-response.mjs';
+import {PrivateProjectionStore} from '../../fase5e/web/private-projections.mjs';
 const $=id=>document.getElementById(id),status=text=>$('auth-status').textContent=text;
-let mounted=null;
+let mounted=null,activeStore=null,loseNextResponse5e=false;
+function armNetworkLoss5e(){if(new URLSearchParams(location.search).get('recovery')!=='5e')throw Error('LAB_FAULT_DISABLED');loseNextResponse5e=true;}
 const session=createSession({send:async(token,action,payload)=>{
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),45000);
-  try{const response=await fetch('/api',{method:'POST',credentials:'omit',cache:'no-store',signal:controller.signal,
-    headers:{'content-type':'application/json',authorization:'Bearer '+token},body:JSON.stringify({action,payload})});
+  try{const fault=action==='execute'&&loseNextResponse5e;if(fault)loseNextResponse5e=false;const response=await fetch('/api',{method:'POST',credentials:'omit',cache:'no-store',signal:controller.signal,
+    headers:{'content-type':'application/json',authorization:'Bearer '+token,...(fault?{'x-cv-lab-fault':'DROP_COMMITTED_ACK_5E'}:{})},body:JSON.stringify({action,payload})});
     return await readLabResponse(response,action);
   }finally{clearTimeout(timer);}
 },clearView:()=>{
+  activeStore?.clearMemory();
   $('app').hidden=true;document.querySelector('.mobile-tabs').hidden=true;$('logout5d').hidden=true;
   for(const dialog of document.querySelectorAll('dialog'))if(dialog.open)dialog.close();
   $('auth-gate').hidden=false;
@@ -19,7 +22,8 @@ $('logout5d').onclick=()=>{loginFlow.invalidate();session.logout();google.accoun
 const loginFlow=createLoginFlow({session,prepare:async(actor,current)=>{
   if(mounted&&(mounted.subject!==actor.subject||mounted.profile!==actor.profile)){loginFlow.invalidate();session.logout();location.reload();return;}
   if(!mounted){
-    const store=new CVClient.IndexedStore('cv-zero-lab-v1-'+actor.subject);
+    const store=await new PrivateProjectionStore(new CVClient.IndexedStore('cv-zero-lab-v1-'+actor.subject),actor.profile).initialize();
+    activeStore=store;
     await store.transact(s=>{
       if(s.queue.length&&s.zeroEngine!==4)throw Error('INCOMPATIBLE_QUEUE_REVIEW_REQUIRED');
       if(s.zeroProfile!==actor.profile||s.snapshot?.uiVersion!=='5D'){s.snapshot=null;delete s.uxHome5a2;}

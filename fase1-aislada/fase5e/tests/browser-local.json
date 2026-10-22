@@ -1,0 +1,21 @@
+{
+  "environment": "TEST_ONLY",
+  "physicalDevice": false,
+  "browser": "Codex In-app Browser",
+  "backend": "localhost Node + Apps Script/Sheets adapters ficticios",
+  "actualGoogle": false,
+  "operationId": "41ebca63-c88b-4095-88db-28eacd9b1e19",
+  "case": "HTTP error instead of commercial ACK after COMMITTED; close tab; reopen same origin/profile; recover by status",
+  "pendingBeforeRestart": true,
+  "noSuccessBeforeStatus": true,
+  "recoveredState": "RECOVERED_COMMITTED_BY_STATUS",
+  "sameOperationIdAfterRestart": true,
+  "pendingAfterRestart": 0,
+  "availableBefore": 6,
+  "availableAfter": 5,
+  "paymentOrDispatchRegistered": false,
+  "screenshots": [
+    "evidencia-local/ack-final-pendiente.png",
+    "evidencia-local/ack-final-recuperado.png"
+  ]
+}

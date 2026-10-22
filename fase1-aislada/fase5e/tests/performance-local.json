@@ -1,0 +1,66 @@
+{
+  "environment": "TEST_ONLY",
+  "measuredAtUTC": "2026-10-22T04:50:03.215Z",
+  "runtime": "v24.20.0",
+  "scope": "Node synthetic report state only; no Google or Worker latency",
+  "remoteBeforeAfterAvailable": false,
+  "volumes": [
+    {
+      "sales": 100,
+      "events": 300,
+      "before": {
+        "samples": 30,
+        "meanMs": 0.6349888666666677,
+        "p50Ms": 0.7148329999999987,
+        "p95DescriptiveMs": 0.8047079999999909,
+        "maxMs": 0.9068749999999994
+      },
+      "after": {
+        "samples": 30,
+        "meanMs": 0.33389456666666745,
+        "p50Ms": 0.33229199999999537,
+        "p95DescriptiveMs": 0.38649999999999807,
+        "maxMs": 0.3890839999999969
+      },
+      "sameResult": true
+    },
+    {
+      "sales": 500,
+      "events": 1500,
+      "before": {
+        "samples": 30,
+        "meanMs": 5.5564790666666655,
+        "p50Ms": 5.50204100000002,
+        "p95DescriptiveMs": 6.002332999999993,
+        "maxMs": 6.430041999999986
+      },
+      "after": {
+        "samples": 30,
+        "meanMs": 1.5578903000000026,
+        "p50Ms": 1.5253749999999968,
+        "p95DescriptiveMs": 1.727125000000001,
+        "maxMs": 1.8330830000000162
+      },
+      "sameResult": true
+    },
+    {
+      "sales": 1000,
+      "events": 3000,
+      "before": {
+        "samples": 30,
+        "meanMs": 19.36495133333333,
+        "p50Ms": 19.306916,
+        "p95DescriptiveMs": 19.819958000000042,
+        "maxMs": 19.86416700000001
+      },
+      "after": {
+        "samples": 30,
+        "meanMs": 2.8832486333333445,
+        "p50Ms": 2.887666999999965,
+        "p95DescriptiveMs": 3.0836249999999836,
+        "maxMs": 3.0849170000000186
+      },
+      "sameResult": true
+    }
+  ]
+}

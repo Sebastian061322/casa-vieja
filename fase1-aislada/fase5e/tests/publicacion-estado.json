@@ -1,0 +1,31 @@
+{
+  "environment": "TEST_ONLY",
+  "observedAtUTC": "2026-10-22T05:02:47.493632+00:00",
+  "authorizedPublication": true,
+  "branch": "dev/fase1-estabilizacion",
+  "commit": "4c2a04c5b43858db32d9e130e2590c25b92d6522",
+  "mainVerifiedUnchanged": "12a5f997845f9d31dc1a5d8ae7dc49770928da3d",
+  "appsScript": {
+    "sourceSaved": true,
+    "candidateSha256": "a0c7222ce06b9bc695e29a6997728115036ec61b000c11f62aacc36ef17b3ce4",
+    "observedDeployedVersion": 2,
+    "newVersionVerified": true,
+    "manualSelectorAssistanceRequested": true,
+    "endpointUnchanged": true
+  },
+  "worker": {
+    "previousVersionPrefix": "4c2cd709",
+    "updated": true,
+    "activeVersionPrefix": "5b787b57",
+    "artifactSha256": "211b3e353f916fa1ca83ed5f470ce90446af5e7c9c4d0e01d8c000d9849679bb"
+  },
+  "testsLocalPassed": 429,
+  "google5EVerified": false,
+  "productionActivated": false,
+  "publicProbe": {
+    "passed": true,
+    "invalidRequestsRejected": 7,
+    "matchingAssets": 3,
+    "observedAtUTC": "2026-10-22T05:04:15.323Z"
+  }
+}

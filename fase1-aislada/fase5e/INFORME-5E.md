@@ -1,6 +1,6 @@
 # Informe de avance 5E — paquete local verificable
 
-Referencia: 4e9c95bd09be526a17fb86173eca1a66126e5566, dev/fase1-estabilizacion. HEAD remoto comprobado antes de editar. Estado: IMPLEMENTACIÓN LOCAL; publicación y validación remota pendientes de autorización específica. Los ensayos de esta fase no escribieron en Google Sheets, Apps Script ni Worker remotos. No hay commit 5E publicado.
+Referencia inicial: 4e9c95bd09be526a17fb86173eca1a66126e5566, dev/fase1-estabilizacion. Publicación autorizada expresamente por el propietario y fuentes guardadas en commit 4c2a04c5b43858db32d9e130e2590c25b92d6522. El 22 de octubre de 2026 se verificó Apps Script sintético versión 2, mismo endpoint, propietario y acceso Cualquiera con HMAC; Worker de laboratorio activo 5b787b57. Siete rechazos públicos correctos y tres activos coincidentes por SHA256 y no-store. Las pruebas autenticadas, de negocio y restauración Google de 5E siguen pendientes; estas comprobaciones públicas no las sustituyen. main conserva 12a5f997845f9d31dc1a5d8ae7dc49770928da3d; no se activó producción.
 
 ## Bloqueos puntuales y cambios
 
@@ -14,6 +14,14 @@ Referencia: 4e9c95bd09be526a17fb86173eca1a66126e5566, dev/fase1-estabilizacion. 
 | P1: costos/reportes persistidos en navegador | Gerencia conserva snapshot/reportes solo en memoria. Solo retira cachés reconstruibles, conserva comandos, recibos, evidencia y borradores. Memoria de proyecciones se limpia al cerrar sesión | Validación real por perfil/equipo; pendientes y borradores necesarios pueden contener importes. No se implementó cifrado |
 | P1: demora en reportes | Índice efímero de eventos por pedido evita barridos repetidos; resultados idénticos en Node | Medir mejora real de extremo a extremo en Google |
 | P1: tiempos sin desglose | Correlación aleatoria y medidas en Worker y Apps Script sin datos personales o credenciales | Publicar y capturar muestras reales; tiempos inclusivos no se suman |
+
+## Comprobación Google de integridad, solo lectura
+
+El 22 de octubre se leyeron 261 filas de diario y 179 movimientos sintéticos (rangos acotados, sin escrituras). El verificador independiente aprobó unicidad, orden PREPARED/COMMITTED, fingerprints, correspondencia de efectos, balances de cada uno de 50 recursos y conciliación de reservas: revisión 126, 126 operaciones confirmadas, nueve rechazadas y cero PREPARED sin confirmar. Tres unidades envasadas reservadas. No se suman kilos e insumos como si fueran una sola unidad. Evidencia sanitizada en tests/integridad-google-5e.json; el diario completo permanece privado y fuera de Git. Esta lectura no acredita nuevas ventas ni concurrencia física 5E.
+
+## Permisos reales vigentes
+
+Gerente operativo: ocho comprobaciones aprobadas en Worker 5b787b57 y Apps Script 2; denegación de users/setUser/configure y rol falsificado, tres lecturas autorizadas y revisión del diario sin cambio. Lecturas de snapshot: 5519, 6200 y 7101 ms de ida y vuelta del navegador. Tres muestras no permiten afirmar mejora ni percentiles estables. El propietario informó APROBADO del vendedor, pero la pestaña inspeccionada mostró Load failed; queda como resultado comunicado sin corroboración de la versión hasta repetir en una pestaña 5E identificada. No se considera resuelta esa incidencia ni se registran pedidos nuevos mientras se comprueba el acceso.
 
 ## Pruebas
 
@@ -61,6 +69,6 @@ Contrato sintético probado con nuevas observaciones crudas, deduplicación, cor
 
 ## Dictamen
 
-GO para continuar pruebas y diseño sintéticos. NO-GO para declarar cerrada 5E, automatizar integración real 5F o iniciar Fase 6: faltan publicación autorizada y pruebas reales vigentes, última unidad entre dos equipos, ACK retenido contra Google, restauración 5E en Google, medición remota, aislamiento físico y decisiones operativas. Mantener escritor comercial actual e historial.
+GO para continuar pruebas y diseño sintéticos. NO-GO para declarar cerrada 5E, automatizar integración real 5F o iniciar Fase 6: faltan pruebas reales autenticadas vigentes, última unidad entre dos equipos, ACK retenido contra Google, restauración 5E en Google, medición remota, aislamiento físico y decisiones operativas. Mantener escritor comercial actual e historial.
 
-La nueva restricción del propietario dice «No publicar cambios remotos, ampliar permisos o crear nuevos recursos sin autorización específica». Por eso el trabajo queda listo para revisión local, con paquete, hashes y plan de publicación restringido; no se interpreta la autorización anterior de 5D como aprobación automática de 5E.
+La publicación remota limitada a los dos recursos de laboratorio fue autorizada y ejecutada sin ampliar permisos ni crear recursos. Evidencia: tests/publicacion-estado.json y tests/resultados-red-publica-5e.json. La validación autenticada requiere completar el regreso de Google en Safari; no se declara aprobada sin resultado.

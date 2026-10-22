@@ -1,0 +1,62 @@
+{
+  "environment": "TEST_ONLY",
+  "workerVersionPrefix": "5b787b57",
+  "appsScriptVersion": 2,
+  "role": "operations",
+  "startedAtUTC": "2026-10-22T05:05:40.541Z",
+  "finishedAtUTC": "2026-10-22T05:06:37.002Z",
+  "passed": true,
+  "evidence": "Owner confirmation plus native accessibility result read after handoff",
+  "writesCreated": false,
+  "checks": [
+    {
+      "name": "deny-users",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 4664
+    },
+    {
+      "name": "deny-setUser",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 5872
+    },
+    {
+      "name": "deny-configure",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 5426
+    },
+    {
+      "name": "reject-forged-role",
+      "passed": true,
+      "error": "IDENTITY_SPOOFING",
+      "elapsedMs": 7448
+    },
+    {
+      "name": "read-snapshot-1",
+      "passed": true,
+      "error": null,
+      "elapsedMs": 5519
+    },
+    {
+      "name": "read-snapshot-2",
+      "passed": true,
+      "error": null,
+      "elapsedMs": 6200
+    },
+    {
+      "name": "read-snapshot-3",
+      "passed": true,
+      "error": null,
+      "elapsedMs": 7101
+    },
+    {
+      "name": "journal-revision-unchanged",
+      "passed": true,
+      "error": null,
+      "elapsedMs": null
+    }
+  ],
+  "performanceScope": "Browser round trip; three snapshot samples, insufficient for stable percentiles or before/after improvement claim"
+}

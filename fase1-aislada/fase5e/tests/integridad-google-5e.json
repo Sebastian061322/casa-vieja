@@ -1,0 +1,16 @@
+{
+  "environment": "TEST_ONLY",
+  "observedAtUTC": "2026-10-22T05:06:17.023Z",
+  "readOnly": true,
+  "passed": true,
+  "journalRows": 261,
+  "effects": 179,
+  "committed": 126,
+  "rejected": 9,
+  "pending": 0,
+  "revision": 126,
+  "sourceSha256": "84ce7b1cfd80645ed0ff67542f763ae081a1c364a5e031806fdd0f2d831a446a",
+  "resourcesChecked": 50,
+  "balanceVerification": "Per-resource physical/reserved/available; quantities with different units are not summed",
+  "reservedPackagedUnits": 3
+}

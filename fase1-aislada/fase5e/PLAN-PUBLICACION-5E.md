@@ -1,6 +1,6 @@
 # Publicación propuesta — solo laboratorio autorizado
 
-Estado: PENDIENTE DE AUTORIZACIÓN ESPECÍFICA. Este archivo no ejecuta acciones.
+Estado: AUTORIZADO Y PUBLICADO EN LABORATORIO. Fuentes: commit 4c2a04c5b43858db32d9e130e2590c25b92d6522; Apps Script versión 2; Worker 5b787b57. Siete rechazos públicos y tres activos verificados. Falta validación autenticada y comercial sintética. Este archivo conserva el plan revisado; los hashes aprobados originales permanecen en release-manifest.json como registro de preparación.
 
 ## Destinos exactos
 
@@ -20,7 +20,7 @@ El modo ?recovery=5e permite armar explícitamente una respuesta retenida por Wo
 
 ## Revisión y comprobación
 
-Antes de escribir, releer HEAD, proyecto/implementación, ID de hoja y condiciones del plan. Revisar hashes de Candidate.gs y worker-bundle.mjs contra release-manifest.json. Conservar identificador de versión anterior antes de actualizar. Las fuentes y pruebas están listas localmente; no hay commit nuevo publicado.
+Antes de escribir, releer HEAD, proyecto/implementación, ID de hoja y condiciones del plan. Revisar hashes de Candidate.gs y worker-bundle.mjs contra release-manifest.json. Conservar identificador de versión anterior antes de actualizar. El paquete aprobado ya fue publicado en la rama y recursos indicados, sin cambios de permisos.
 
 Después, verificar tres activos públicos por hash, rechazos sin identidad, acceso por los tres perfiles, ausencia de RPC de mantenimiento, recuperación del pendiente y una sola reserva. La participación física en iPhone se solicita con pasos concretos. Pruebas Node/locales no reemplazan Google ni un segundo equipo real.
 

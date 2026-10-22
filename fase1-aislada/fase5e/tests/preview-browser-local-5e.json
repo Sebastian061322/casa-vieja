@@ -1,0 +1,31 @@
+{
+  "environment": "TEST_ONLY",
+  "physicalDevice": false,
+  "actualGoogle": false,
+  "runtimeBackend": "Candidate 5E in VM with synthetic Apps Script/Sheets",
+  "browser": "Codex In-app Browser",
+  "candidateWorkerSha256": "5d94dd500066d1917f4628aa85b527dc6860bf2e4f98a468f0c9222f90bbe0ce",
+  "cases": [
+    {
+      "selection": 7,
+      "available": 6,
+      "costAndMarginOmitted": true,
+      "stickyCatalogTotal": "S/ 245.00",
+      "noOperationSubmitted": true
+    },
+    {
+      "selection": 1,
+      "available": 6,
+      "costEstimate": "S/ 17.35",
+      "marginEstimate": "S/ 17.65",
+      "stickyCatalogTotal": "S/ 35.00",
+      "noOperationSubmitted": true
+    }
+  ],
+  "passed": true,
+  "screenshots": [
+    "evidencia-local/preview-insufficient-local.png"
+  ],
+  "testCorrection": "Concurrent intent test now requires exactly one duplicate, independent of which SHA-256 Promise completes first; original operationId/queue assertions preserved.",
+  "recordedAtUTC": "2026-10-22T13:37:10.422421+00:00"
+}

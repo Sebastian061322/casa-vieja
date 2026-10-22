@@ -1,7 +1,14 @@
 // Únicamente localhost: identidades y Sheets simulados. Nunca se empaqueta en Worker.
-import http from 'node:http';import fs from 'node:fs';import {context} from './fixture.mjs';
+import http from 'node:http';import fs from 'node:fs';import vm from 'node:vm';import {context} from './fixture.mjs';
 import worker from '../worker-bundle.mjs';
 const f=context();f.f.properties.ZERO_LAB_ENABLED='YES';
+if(process.argv.includes('--phase5e')){
+ const source=fs.readFileSync(new URL('../../fase5e/apps-script/Candidate.gs',import.meta.url),'utf8');
+ const id=JSON.parse(source.match(/const CV_TEST_SCRIPT_ID_ = ('[^']+'|"[^"]+");/)[1].replaceAll("'",'"'));
+ f.f.properties.ZERO_APPROVED_SCRIPT_ID=id;
+ const c=vm.createContext(Object.fromEntries(['SpreadsheetApp','LockService','Session','PropertiesService','Utilities'].map(k=>[k,f.c[k]])));
+ c.ScriptApp={getScriptId:()=>id};c.console={log(){}};vm.runInContext(source,c);f.c=c;
+}
 const subjects={administrator:'111111',operations:'222222',seller:'333333'};
 const server=http.createServer(async(req,res)=>{try{
   const url=new URL(req.url,'http://127.0.0.1');

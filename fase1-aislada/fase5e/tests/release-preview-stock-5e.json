@@ -1,0 +1,28 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "AUTHORIZED_NOT_DEPLOYED",
+  "baseCommit": "34eca552469ce99f8591d4a4c77d3fd61ebe0c67",
+  "previousWorkerVersion": "37306312",
+  "previousWorkerSha256": "a09881983136afefb2d5a2797f88576a6d0b3181e1dfbb6b7088ccd1536e5add",
+  "candidateSha256": "5d94dd500066d1917f4628aa85b527dc6860bf2e4f98a468f0c9222f90bbe0ce",
+  "backendSha256": "a0c7222ce06b9bc695e29a6997728115036ec61b000c11f62aacc36ef17b3ce4",
+  "backendChanged": false,
+  "permissionsChanged": false,
+  "secretsChanged": false,
+  "queueWritesChanged": false,
+  "dataWritesIntroduced": false,
+  "localTestsPassed": 447,
+  "newPreviewRegressionTests": 4,
+  "confirmedIssue": "Con una partida agotada el borrador gerencial mostraba costo 0 y margen íntegro. No afectó diario ni saldos.",
+  "fix": "Omitir estimación de costo y margen si el pedido requiere más bolsas que las disponibles, agregando líneas y combos de la misma partida. Conservar estimación existente si hay stock suficiente.",
+  "rollback": "Restaurar Worker 37306312 conservando IndexedDB y registros.",
+  "evidence": "evidencia-local/visual-final-rejection.png",
+  "retiredCandidateSha256": [
+    "e49498a10e62a72c4ddb383a4f4381d6ca605288879839f98abe7d746b096878",
+    "9fc2ebc628b3648f462dfbca96fa93286c47ac91c629c262bdfadafd16540852"
+  ],
+  "localFullUiVerified": true,
+  "basePreviewSideEffectsPreserved": true,
+  "confirmedOrderStateNotOverridden": true,
+  "ownerApproval": "Explicit approval of final 5d94dd500066d1917f4628aa85b527dc6860bf2e4f98a468f0c9222f90bbe0ce; intermediate candidates retired"
+}

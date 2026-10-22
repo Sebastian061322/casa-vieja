@@ -1,0 +1,75 @@
+{
+  "environment": "TEST_ONLY",
+  "baseCommit": "34eca552469ce99f8591d4a4c77d3fd61ebe0c67",
+  "status": "AUTHORIZED_NOT_DEPLOYED",
+  "workerCandidateSha256": "5d94dd500066d1917f4628aa85b527dc6860bf2e4f98a468f0c9222f90bbe0ce",
+  "backendChanged": false,
+  "newResources": false,
+  "localTestsPassed": 447,
+  "files": [
+    {
+      "path": "fase1-aislada/fase5d/web/presentation.js",
+      "sha256": "25e91442e48fac997f64e0ed880774d209f89ebed62b399114128aee9a6103f8"
+    },
+    {
+      "path": "fase1-aislada/fase5d/tests/serve-ui.mjs",
+      "sha256": "da0837f72855c037ac4ce3a7f27a26182831613a2202cd691371296112e84f57"
+    },
+    {
+      "path": "fase1-aislada/fase5e/CIERRE-VALIDACION-5E.md",
+      "sha256": "d5842595878fe1e7cc53903643b6b5bcb9b9084a5d0cd7e97e4496836d2b9af0"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/client.test.mjs",
+      "sha256": "4f39fe54988abff9b1c3cfdf1d3e6a06732b51df7e8bbf1f59fd7834d8576c1b"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/service-recovery.test.mjs",
+      "sha256": "07c990c80f43ca3f6276f8469a725aa4ed06f2055922fc98fb52b3f1dd7e0b42"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/preview-availability.test.cjs",
+      "sha256": "d89cf7a164b6e192c9fc1be6cc18376d3852865650bcd3633575c28ff3f16a3a"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/storage-browser.html",
+      "sha256": "e119c2eea238c03bc13e3081aa47dc39f9f44e02eb3c96173a59300ed556cc39"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/serve-storage-browser.mjs",
+      "sha256": "ac30fedc8a6583c10ba3f3fb1beffa463816b594e147eda4951218853fc965ae"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/storage-browser-recovery-5e.json",
+      "sha256": "940ccf8854ff923f420518ebd00cd10699cd1227e6e8370c727c306ffc9f1513"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/integridad-google-final-5e.json",
+      "sha256": "24681bb9d2cbe7fb7740fa0bc79c15bd3d39f61b98a591573980516be176d2d9"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/permisos-google-operations-final-5e.json",
+      "sha256": "5d139a43a4eff7e22f9584b0eceeb586efca52fff32408b9372516f28e0b2b1b"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/preview-browser-local-5e.json",
+      "sha256": "20f21e9d27151161e489b8dc629302799d4a4b098a68ae48bd2681de87bae24f"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/release-preview-stock-5e.json",
+      "sha256": "76042b0c85ebf04a9ae2c059eff784ec2feec71e441ce7207b6449613356b863"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/resultados.txt",
+      "sha256": "0650a9cd75bd61cab83894dae9b8e7b5cef03c20575edf6187e12422e78fe167"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/permisos-google-admin-final-5e.json",
+      "sha256": "929f39918342a86f157039eab173638753c19866b93f94cea9c05c05dc2fc8e1"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/android-owner-access-5e.json",
+      "sha256": "0745df014badbd70807f1494d6b34dba6f44b7b13a060c53aadbbfd3e32b4b2a"
+    }
+  ]
+}

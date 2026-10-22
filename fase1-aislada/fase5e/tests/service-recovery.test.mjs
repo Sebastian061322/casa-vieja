@@ -1,0 +1,35 @@
+// Reinicio de servicio íntegramente local: Apps Script/Sheets/identidades simulados.
+// No demuestra recuperación de OAuth, infraestructura ni credenciales reales.
+import {test} from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';import {createRequire} from 'node:module';
+import {context} from '../../fase5d/tests/fixture.mjs';
+const require=createRequire(import.meta.url),R=require('../recovery.cjs');
+const source=fs.readFileSync(new URL('../apps-script/Candidate.gs',import.meta.url),'utf8');
+const scriptId=JSON.parse(source.match(/const CV_TEST_SCRIPT_ID_ = ('[^']+'|"[^"]+");/)[1].replaceAll("'",'"'));
+function start(code=source){const f=context();f.f.properties.ZERO_APPROVED_SCRIPT_ID=scriptId;f.f.properties.ZERO_LAB_ENABLED='YES';const c=vm.createContext(Object.fromEntries(['SpreadsheetApp','LockService','Session','PropertiesService','Utilities'].map(k=>[k,f.c[k]])));c.ScriptApp={getScriptId:()=>scriptId};c.console={log(){}};vm.runInContext(code,c);return {...f,c};}
+function ledger(f){return {journal:f.f.tabs.DiarioInventarioV3.slice(1).map(r=>JSON.parse(r[2])),effects:f.f.tabs.MovimientosInventarioV3.slice(1).map(r=>JSON.parse(r[2]))};}
+async function fixture(){const f=start(),command=f.mem.sale({saleId:'future:TEST_ONLY_5E_RESTORE_SERVICE',customer:{name:'TEST_ONLY_5E_RESTORE_SERVICE',zone:'Zona ficticia'}});delete command.deliveryCostCents;delete command.deliveryChargedCents;
+ const receipt=f.c.zeroRequest(await f.sign('333333','execute',command));assert.equal(receipt.state,'COMMITTED');
+ const archive=R.create({sourceId:'TEST_ONLY:service-source',createdAt:'2026-10-22T13:00:00Z',ledger:ledger(f),configuration:{environment:'TEST_ONLY',users:[0,1,2].map(i=>JSON.parse(f.f.properties['ZERO_USER_'+i])),policy:JSON.parse(f.f.properties.ZERO_POLICY_0)},release:{commit:'34eca552469ce99f8591d4a4c77d3fd61ebe0c67',files:[{path:'apps-script/Candidate.gs',content:source}]},devices:[{id:'TEST_ONLY:synthetic-device',origin:'https://example.test',engine:'V4',epoch:'TEST_ONLY_V3',coverage:'COMPLETE_SYNTHETIC_STATE',state:{queue:[{command,state:'PENDING'}],receipts:{}}}]});return {f,command,receipt,archive};}
+function restored(archive){const values={},target={environment:'TEST_ONLY',id:'TEST_ONLY:service-destination',keys:()=>Object.keys(values),read:k=>values[k],writeAbsent(k,v){assert.equal(values[k],undefined);values[k]=structuredClone(v);}};
+ R.restore(archive,target,archive.sha256);const r=start(values.release.files[0].content);for(const [name,rows]of [['DiarioInventarioV3',values.ledger.journal],['MovimientosInventarioV3',values.ledger.effects]])r.f.tabs[name]=[['ID','Tipo','JSON'],...rows.map(row=>[row.id,row.kind,JSON.stringify(row)])];
+ values.configuration.users.forEach((u,i)=>r.f.properties['ZERO_USER_'+i]=JSON.stringify(u));r.f.properties.ZERO_POLICY_0=JSON.stringify(values.configuration.policy);return {r,values,target};}
+test('servicio reconstruido desde copia verifica los tres perfiles y rechaza accesos directos',async()=>{const {archive}=await fixture(),{r}=restored(archive),before=JSON.stringify(ledger(r));for(const [subject,role]of [['111111','administrator'],['222222','operations'],['333333','seller']]){const b=r.c.zeroRequest(await r.sign(subject,'bootstrap',null));assert.equal(b.profile,role);}
+ for(const [subject,action]of [['333333','users'],['333333','reports'],['333333','dashboard'],['222222','users'],['222222','configure']])assert.equal(r.c.zeroRequest(await r.sign(subject,action,{})).error,'PERMISSION_DENIED');assert.equal(JSON.stringify(ledger(r)),before);
+});
+test('servicio restaurado recupera recibo perdido sin duplicar reserva ni estado financiero',async()=>{const {archive,receipt,command}=await fixture(),{r,values,target}=restored(archive),before=JSON.stringify(ledger(r));const status=r.c.zeroRequest(await r.sign('333333','status',command.operationId));assert.equal(JSON.stringify(status),JSON.stringify(receipt));const retry=r.c.zeroRequest(await r.sign('333333','execute',values.devices[0].state.queue[0].command));assert.equal(JSON.stringify(retry),JSON.stringify(receipt));assert.equal(JSON.stringify(ledger(r)),before);R.restore(archive,target,archive.sha256);assert.equal(JSON.stringify(ledger(r)),before);
+});
+test('revocación tras restauración impide recuperar o ejecutar como usuario deshabilitado',async()=>{const {archive,command}=await fixture(),{r}=restored(archive),before=JSON.stringify(ledger(r));r.f.properties.ZERO_USER_3=JSON.stringify({target:'google:333333',role:'seller',active:false,revision:4});for(const [action,payload]of [['bootstrap',null],['status',command.operationId],['execute',command]])assert.equal(r.c.zeroRequest(await r.sign('333333',action,payload)).error,'ACCESS_DENIED');assert.equal(JSON.stringify(ledger(r)),before);});
+test('pendiente legado sin identidad autenticada no se transforma ni ejecuta tras restauración',async()=>{const {setup}=require('../../fase4/tests/helpers.cjs'),{Engine}=require('../../fase4/commercial.js'),old=setup(),command=old.sale({saleId:'future:TEST_ONLY_UNSCOPED_RESTORE'});let interrupted=false;
+ const engine=new Engine(old.store,undefined,point=>{if(point==='afterPrepared'&&!interrupted){interrupted=true;throw Error('TEST_ONLY_STOP');}},{role:'owner',now:()=> '2026-10-22T13:00:00Z'});
+ try{engine.execute(command);}catch(e){assert.equal(e.message,'TEST_ONLY_STOP');}
+ assert.ok(old.store.readJournal().some(r=>r.kind==='PREPARED'&&r.id===command.operationId));
+ const r=start();r.f.tabs.DiarioInventarioV3=[['ID','Tipo','JSON'],...old.store.readJournal().map(row=>[row.id,row.kind,JSON.stringify(row)])];r.f.tabs.MovimientosInventarioV3=[['ID','Tipo','JSON'],...old.store.readEffects().map(row=>[row.id,row.kind,JSON.stringify(row)])];
+ const before=JSON.stringify(ledger(r)),result=r.c.zeroRequest(await r.sign('111111','execute',command));assert.equal(result.error,'OPERATION_ACTOR_MISMATCH');assert.equal(JSON.stringify(ledger(r)),before);
+});
+test('dos gerentes sobre la misma versión producen un cobro y un rechazo recuperable, sin movimiento físico',async()=>{const {archive,receipt,command}=await fixture(),{r}=restored(archive),beforeEffects=ledger(r).effects.length;
+ const payment=(operationId,documentRef)=>({...command,operationId,type:'RECORD_PAYMENT',expectedSaleVersion:receipt.saleVersion,amountCents:100,documentRef});
+ const one=payment('TEST_ONLY_5E_MANAGER_A','TEST_ONLY_MANAGER_REF_A'),two=payment('TEST_ONLY_5E_MANAGER_B','TEST_ONLY_MANAGER_REF_B');
+ assert.equal(r.c.zeroRequest(await r.sign('111111','execute',one)).state,'COMMITTED');assert.equal(r.c.zeroRequest(await r.sign('222222','execute',two)).error,'SALE_VERSION_CONFLICT');
+ const status=r.c.zeroRequest(await r.sign('222222','status',two.operationId));assert.equal(status.state,'REJECTED');assert.equal(status.retryable,false);assert.equal(status.error,'SALE_VERSION_CONFLICT');
+ const before=JSON.stringify(ledger(r));r.c.zeroRequest(await r.sign('222222','execute',two));assert.equal(JSON.stringify(ledger(r)),before);assert.equal(ledger(r).effects.length,beforeEffects);
+});

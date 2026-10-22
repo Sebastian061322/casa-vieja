@@ -1,0 +1,19 @@
+{
+  "environment": "TEST_ONLY",
+  "readOnly": true,
+  "observedAtUTC": "2026-10-22T13:14:49.704Z",
+  "passed": true,
+  "journalRows": 266,
+  "effects": 181,
+  "committed": 128,
+  "rejected": 10,
+  "pending": 0,
+  "revision": 128,
+  "resourcesChecked": 50,
+  "sourceSha256": "650625e99b49f4fbd9e8e6952d0ce3eb59e3d5d12f4a08345ed35860a253bef7",
+  "comparisonWithPhysicalTest": {
+    "journalUnchanged": true,
+    "effectsUnchanged": true
+  },
+  "productionAccessed": false
+}

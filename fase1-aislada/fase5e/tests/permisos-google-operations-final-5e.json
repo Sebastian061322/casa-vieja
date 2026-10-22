@@ -1,0 +1,69 @@
+{
+  "environment": "TEST_ONLY",
+  "profile": "operations",
+  "workerVersion": "37306312",
+  "backendVersion": 2,
+  "observedAtUTC": "2026-10-22T13:29:24.782Z",
+  "startedAtUTC": "2026-10-22T13:28:39.975Z",
+  "passed": true,
+  "checks": [
+    {
+      "id": "deny-users",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 4351
+    },
+    {
+      "id": "deny-setUser",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 3602
+    },
+    {
+      "id": "deny-configure",
+      "passed": true,
+      "error": "PERMISSION_DENIED",
+      "elapsedMs": 4088
+    },
+    {
+      "id": "reject-forged-role",
+      "passed": true,
+      "error": "IDENTITY_SPOOFING",
+      "elapsedMs": 4811
+    },
+    {
+      "id": "read-snapshot-1",
+      "passed": true,
+      "error": null,
+      "elapsedMs": 5702
+    },
+    {
+      "id": "read-snapshot-2",
+      "passed": true,
+      "error": null,
+      "elapsedMs": 4653
+    },
+    {
+      "id": "read-snapshot-3",
+      "passed": true,
+      "error": null,
+      "elapsedMs": 5342
+    },
+    {
+      "id": "journal-revision-unchanged",
+      "passed": true
+    }
+  ],
+  "evidence": "Native Safari full AX and screenshot; owner also approved preceding run",
+  "frontendReloadAfterPatchVerified": true,
+  "visual": {
+    "sameRejectedDraft": true,
+    "sameSelectedLot": true,
+    "quantityPreserved": 1,
+    "pending": 0,
+    "archivedRejections": 1,
+    "lotAvailability": 0,
+    "definitiveRejectionVisible": true,
+    "zeroCostPreviewIssue": "Confirmed; local fix prepared, publication pending"
+  }
+}

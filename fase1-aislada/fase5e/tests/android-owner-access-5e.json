@@ -1,0 +1,34 @@
+{
+  "environment": "TEST_ONLY",
+  "physicalDevice": true,
+  "platform": "Android",
+  "browser": "Chrome",
+  "profile": "seller",
+  "workerVersionAtOwnerTest": "37306312",
+  "backendVersion": 2,
+  "reportedBy": "Owner",
+  "recordedAtUTC": "2026-10-22T13:41:07.233724+00:00",
+  "reportedOverallResult": "APROBADO · seller · TEST_ONLY",
+  "passedByOwnerReport": true,
+  "automaticallyObserved": false,
+  "checksReported": [
+    "seller-response-redacted",
+    "deny-users",
+    "deny-reports",
+    "deny-dashboard",
+    "deny-configure",
+    "reject-forged-role",
+    "read-snapshot-1",
+    "read-snapshot-2",
+    "read-snapshot-3",
+    "journal-revision-unchanged"
+  ],
+  "rawTimingAvailable": false,
+  "restrictedNavigationExplicitlyConfirmed": false,
+  "noOrdersRequested": true,
+  "interpretation": "PERMISSION_DENIED en ensayos deny-* es el resultado correcto; un rol falsificado debe ser rechazado. No se usan errores fonéticos como transcripción exacta.",
+  "pending": [
+    "Confirmar navegación y revisión de UX física",
+    "Actualizar tras el parche visual final"
+  ]
+}

@@ -1,0 +1,11 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const source=fs.readFileSync(__dirname+'/../../fase5d/web/presentation.js','utf8');
+const snippet=source.slice(source.indexOf('function insufficientPreviewStock5e'),source.indexOf("if(actor.profile==='seller'){",source.indexOf('function insufficientPreviewStock5e')));
+function context(qty,lines=[{offerId:'one',resourceId:'r',quantity:1}],bags=1,profile='operations'){
+ const node={textContent:''},snapshot={resources:{r:{id:'r',qty,valueCents:2210,reservedValueCents:2210}},commerce:{offers:{one:{bags}}}},original=JSON.stringify({snapshot,lines});let delegated=0;
+ const c=vm.createContext({actor:{profile},preview:()=>{delegated++;node.textContent='Total catálogo actualizado; costo calculado previamente';return 'BASE_PREVIEW_RESULT';},items:()=>lines,snapshot,$:()=>node});vm.runInContext(snippet,c);return {c,node,snapshot,lines,original,delegated:()=>delegated};
+}
+test('partida agotada no muestra costo cero ni margen ficticio y conserva efectos de formulario',()=>{const f=context(0);assert.equal(f.c.preview(),'BASE_PREVIEW_RESULT');assert.equal(f.delegated(),1);assert.match(f.node.textContent,/Stock insuficiente/);assert.doesNotMatch(f.node.textContent,/S\/|35\.00|0\.00|no est[aá] confirmado/);assert.equal(JSON.stringify({snapshot:f.snapshot,lines:f.lines}),f.original);});
+test('disponibilidad se agrega por partida y considera bolsas de cada combo',()=>{const f=context(1,[{offerId:'one',resourceId:'r',quantity:1},{offerId:'one',resourceId:'r',quantity:1}]);f.c.preview();assert.match(f.node.textContent,/Stock insuficiente/);const tripack=context(2,undefined,3);tripack.c.preview();assert.match(tripack.node.textContent,/Stock insuficiente/);});
+test('stock suficiente conserva la estimación existente y no modifica el borrador',()=>{const f=context(3,undefined,3);f.c.preview();assert.equal(f.delegated(),1);assert.equal(JSON.stringify({snapshot:f.snapshot,lines:f.lines}),f.original);});
+test('vendedor y errores de formulario conservan su ruta previa',()=>{const seller=context(0,undefined,1,'seller');seller.c.preview();assert.equal(seller.delegated(),1);const invalid=context(0,[{offerId:'one',resourceId:'missing',quantity:1}]);invalid.c.preview();assert.equal(invalid.delegated(),1);});

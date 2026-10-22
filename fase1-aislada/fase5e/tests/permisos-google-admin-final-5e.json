@@ -1,0 +1,41 @@
+{
+  "environment": "TEST_ONLY",
+  "profile": "administrator",
+  "workerVersion": "37306312",
+  "backendVersion": 2,
+  "startedAtUTC": "2026-10-22T13:38:02.049Z",
+  "completedAtUTC": "2026-10-22T13:38:48.388Z",
+  "passed": true,
+  "checks": [
+    {
+      "id": "reject-forged-role",
+      "passed": true,
+      "error": "IDENTITY_SPOOFING",
+      "elapsedMs": 9752
+    },
+    {
+      "id": "read-snapshot-1",
+      "passed": true,
+      "error": null,
+      "elapsedMs": 6831
+    },
+    {
+      "id": "read-snapshot-2",
+      "passed": true,
+      "error": null,
+      "elapsedMs": 7092
+    },
+    {
+      "id": "read-snapshot-3",
+      "passed": true,
+      "error": null,
+      "elapsedMs": 6717
+    },
+    {
+      "id": "journal-revision-unchanged",
+      "passed": true
+    }
+  ],
+  "evidence": "Owner confirmation plus native Safari AX and private screenshot",
+  "userAdministrationWritesTested": false
+}

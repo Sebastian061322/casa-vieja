@@ -1,0 +1,41 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>TEST_ONLY · continuidad IndexedDB 5E</title>
+<style>body{font:17px system-ui;max-width:850px;margin:32px auto;padding:16px}button{padding:14px;margin:8px}pre{white-space:pre-wrap}</style>
+<h1>Continuidad real de IndexedDB · TEST_ONLY</h1>
+<p>Solo este origen localhost, identidades ficticias y módulos del candidato. No conecta con Google ni Cloudflare. No borra bases de datos.</p>
+<button id="prepare">1. Preparar y comprobar aislamiento</button><button id="recover">2. Verificar después de reabrir</button><pre id="result" role="status">Sin ejecutar.</pre>
+<script src="/client.js"></script><script type="module">
+import {PrivateProjectionStore} from '/private-projections.mjs';
+import {intentClient} from '/intents.mjs';
+const run=new URL(location.href).searchParams.get('run');
+if(!/^TEST_ONLY_[a-zA-Z0-9_-]+$/.test(run||''))throw Error('TEST_RUN_REQUIRED');
+const name=role=>'TEST_ONLY:5E-storage:'+run+':'+role,base=role=>new CVClient.IndexedStore(name(role));
+const payload={type:'REGISTER_SALE',saleId:'future:'+run,customer:{name:'TEST_ONLY_LOCAL',zone:'Zona ficticia'},items:[{offerId:'demo:one',quantity:1}]};
+const Client=intentClient(CVClient.Client),checks=[];
+function check(id,ok){checks.push({id,passed:!!ok});if(!ok)throw Error(id);}
+function show(stage,error){document.querySelector('#result').textContent=JSON.stringify({environment:'TEST_ONLY',physicalDevice:false,actualGoogle:false,storage:'Real browser IndexedDB',run,stage,checks,passed:!error&&checks.every(x=>x.passed),...(error?{error:error.message}:{})},null,2);}
+document.querySelector('#prepare').onclick=async()=>{checks.length=0;try{
+ const a=base('operations');check('fixture-empty-before-prepare',(await a.read()).queue.length===0);
+ await a.transact(s=>{s.snapshot={costCents:123456};s.uxHome5a2={profitCents:123};s.uxDraft5a={customer:'TEST_ONLY_DRAFT'};s.receipts.previous={state:'COMMITTED',revision:1};s.archived=[{command:{operationId:'TEST_ONLY_OLD_REJECT'},serverRejection:{state:'REJECTED'}}];});
+ const p=await new PrivateProjectionStore(a,'operations').initialize();
+ const c=new Client(p,{},'TEST_ONLY_V3',()=>crypto.randomUUID());const queued=await c.enqueue(payload);
+ await p.transact(s=>{s.snapshot={revision:1,costCents:500};s.uxHome5a2={profitCents:50};s.testOperationId=queued.command.operationId;});
+ const durable=await a.read();check('manager-projections-not-durable',!('snapshot' in durable)&&!('uxHome5a2' in durable));
+ check('queue-draft-receipt-rejection-preserved',durable.queue.length===1&&durable.uxDraft5a.customer==='TEST_ONLY_DRAFT'&&durable.receipts.previous.state==='COMMITTED'&&durable.archived.length===1);
+ check('projection-visible-only-in-memory',(await p.read()).snapshot.costCents===500);p.clearMemory();check('logout-clears-only-projection',!(await p.read()).snapshot&&(await p.read()).queue.length===1);
+ const seller=await new PrivateProjectionStore(base('seller'),'seller').initialize();await seller.transact(s=>s.snapshot={revision:1,available:7});
+ check('seller-isolated-from-manager',(await seller.read()).queue.length===0&&!JSON.stringify(await seller.read()).includes('costCents'));
+ show('PREPARED_CLOSE_TAB_AND_REOPEN_SAME_URL');
+}catch(e){show('FAILED',e);}};
+document.querySelector('#recover').onclick=async()=>{checks.length=0;try{
+ const a=base('operations'),original=await a.read();check('original-command-survived',original.queue.length===1&&original.queue[0].command.operationId===original.testOperationId);
+ const p=await new PrivateProjectionStore(a,'operations').initialize();check('no-financial-projection-after-reopen',!(await p.read()).snapshot&&!(await p.read()).uxHome5a2);
+ const receipt={epoch:'TEST_ONLY_V3',operationId:original.testOperationId,saleId:payload.saleId,state:'COMMITTED',revision:2,saleVersion:1};let executions=0,statuses=0;
+ const client=new Client(p,{status:async()=>{statuses++;return receipt;},execute:async()=>{executions++;throw Error('EXECUTION_MUST_NOT_REPEAT');}},'TEST_ONLY_V3',()=>crypto.randomUUID());
+ const duplicate=await client.enqueue(payload);check('same-intent-keeps-operation-id',duplicate.duplicate&&duplicate.command.operationId===original.testOperationId);
+ await client.flush();const after=await a.read();check('original-receipt-recovered-without-execution',statuses===1&&executions===0&&after.queue.length===0&&after.receipts[original.testOperationId].revision===2);
+ await client.flush();check('repeat-sync-no-request',statuses===1&&executions===0);
+ check('draft-old-receipt-rejection-preserved',after.uxDraft5a.customer==='TEST_ONLY_DRAFT'&&after.receipts.previous.state==='COMMITTED'&&after.archived.length===1);
+ check('seller-state-still-isolated',(await base('seller').read()).snapshot.available===7&&(await base('seller').read()).queue.length===0);
+ show('RECOVERED');
+}catch(e){show('FAILED',e);}};
+</script></html>

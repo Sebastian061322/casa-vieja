@@ -1,0 +1,41 @@
+{
+  "environment": "TEST_ONLY",
+  "physicalDevice": false,
+  "actualGoogle": false,
+  "storage": "Real browser IndexedDB",
+  "run": "TEST_ONLY_20261022_CIERRE_01",
+  "stage": "RECOVERED",
+  "checks": [
+    {
+      "id": "original-command-survived",
+      "passed": true
+    },
+    {
+      "id": "no-financial-projection-after-reopen",
+      "passed": true
+    },
+    {
+      "id": "same-intent-keeps-operation-id",
+      "passed": true
+    },
+    {
+      "id": "original-receipt-recovered-without-execution",
+      "passed": true
+    },
+    {
+      "id": "repeat-sync-no-request",
+      "passed": true
+    },
+    {
+      "id": "draft-old-receipt-rejection-preserved",
+      "passed": true
+    },
+    {
+      "id": "seller-state-still-isolated",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "observedAtUTC": "2026-10-22T13:17:43.696Z",
+  "scope": "Cierre y reapertura de pestaña del navegador integrado; backend ficticio, no reinicio completo de Safari ni validación física"
+}

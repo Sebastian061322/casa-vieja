@@ -29,6 +29,25 @@ salesForm=function(){const template=document.createElement('template');template.
   }
   return template.innerHTML;
 };
+function insufficientPreviewStock5e(lines,current){
+ const requested=new Map();
+ for(const line of lines){
+  const offer=current?.commerce?.offers?.[line.offerId],resource=current?.resources?.[line.resourceId];
+  // Other form errors remain the responsibility of the existing preview.
+  if(!offer||!resource||!Number.isSafeInteger(line.quantity)||line.quantity<1||!Number.isSafeInteger(offer.bags)||offer.bags<1)return false;
+  requested.set(resource.id,(requested.get(resource.id)||0)+line.quantity*offer.bags);
+ }
+ return [...requested].some(([id,qty])=>qty>current.resources[id].qty);
+}
+if(actor.profile!=='seller'){
+ const previewWithStock5e=preview;
+ preview=function(){const result=previewWithStock5e();try{
+  if(insufficientPreviewStock5e(items(),snapshot)){
+   $('sale-preview').textContent='Stock insuficiente para una nueva reserva. No se estiman costo ni margen; consulta el estado del pedido y revisa la partida y cantidad.';
+  }
+ }catch{ /* Preserve the existing form validation and error messages. */ }
+ return result;};
+}
 if(actor.profile==='seller'){
   preview=function(){try{let total=0;for(const item of items()){const offer=snapshot.commerce.offers[item.offerId];if(!offer)throw Error('Selecciona un producto vigente.');total+=offer.priceCents*item.quantity;}
     $('sale-preview').innerHTML=cards([['Productos a precio de catálogo',money(total)]]);

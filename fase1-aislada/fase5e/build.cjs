@@ -8,6 +8,8 @@ function once(before,after){if(code.split(before).length!==2)throw Error('BASE_C
 for(const name of ['cvLocked','invRead','invAppend'])once('function '+name+'_(','function '+name+'Base5e_(');
 once('function zeroRequest(','function zeroRequestBase5e_(');
 once('const verified=zeroProof_(envelope);','const verified=CV5EMetrics.measure("proofMs",()=>zeroProof_(envelope));CV5EMetrics.current.authorized=true;');
+once("zeroActor_(current,zeroPropertyLog_('ZERO_USER_'),p);", "const actor5e=zeroActor_(current,zeroPropertyLog_('ZERO_USER_'),p);");
+once('zeroConsumeNonce_(current,p,Date.now());', "zeroConsumeNonce_(current,p,Date.now());if(current.action==='snapshot'&&current.payload?.metricsProbe===true){if(actor5e.role!=='administrator')throw Error('PERMISSION_DENIED');CV5EMetrics.current.adminProbe=true;}");
 once('const cells=sh.getRange(row,1,1,3).getValues();','const cells=CV5EMetrics.measure("sheetReadbackMs",()=>sh.getRange(row,1,1,3).getValues());');
 code+='\n'+read('report-index.js')+'\nCV5EReports.attach(CVZeroAccess.Engine);\n'+read('apps-script/Observability.gs');
 code+='\nconst CV5EStateBase_ = CVZeroAccess.Engine.prototype.state;\nCVZeroAccess.Engine.prototype.state=function(){return CV5EMetrics.measure("reconstructMs",()=>CV5EStateBase_.call(this));};\nconst CV5EReportBase_ = CVZeroAccess.Engine.prototype.reports;\nCVZeroAccess.Engine.prototype.reports=function(...args){return CV5EMetrics.measure("reportsMs",()=>CV5EReportBase_.apply(this,args));};\n';

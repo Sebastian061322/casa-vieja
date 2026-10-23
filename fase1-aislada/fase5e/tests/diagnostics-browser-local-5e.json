@@ -1,0 +1,82 @@
+{
+  "environment": "TEST_ONLY",
+  "scope": "Read-only; browser includes bootstrap, stage durations overlap",
+  "samples": [
+    {
+      "sample": 1,
+      "revision": 11,
+      "browserWithBootstrapMs": 13,
+      "kind": "CV_5E_READ_TIMING",
+      "traceId": "9112da63-3df4-40b1-a791-127e63b792ec",
+      "totalMs": 2,
+      "proofMs": 1,
+      "lockWaitMs": 0,
+      "lockHeldMs": 1,
+      "sheetReadMs": 0,
+      "sheetWriteMs": 0,
+      "sheetReadbackMs": 0,
+      "reconstructMs": 1,
+      "reportsMs": 0,
+      "worker": {
+        "traceId": "9112da63-3df4-40b1-a791-127e63b792ec",
+        "totalMs": 2,
+        "identityMs": 0,
+        "signingMs": 0,
+        "backendMs": 2,
+        "responseParseMs": 0
+      }
+    },
+    {
+      "sample": 2,
+      "revision": 11,
+      "browserWithBootstrapMs": 6,
+      "kind": "CV_5E_READ_TIMING",
+      "traceId": "68f05f40-9dd4-483b-bc36-85e29b01196b",
+      "totalMs": 1,
+      "proofMs": 0,
+      "lockWaitMs": 0,
+      "lockHeldMs": 1,
+      "sheetReadMs": 0,
+      "sheetWriteMs": 0,
+      "sheetReadbackMs": 0,
+      "reconstructMs": 1,
+      "reportsMs": 0,
+      "worker": {
+        "traceId": "68f05f40-9dd4-483b-bc36-85e29b01196b",
+        "totalMs": 1,
+        "identityMs": 0,
+        "signingMs": 0,
+        "backendMs": 1,
+        "responseParseMs": 0
+      }
+    },
+    {
+      "sample": 3,
+      "revision": 11,
+      "browserWithBootstrapMs": 5,
+      "kind": "CV_5E_READ_TIMING",
+      "traceId": "3de2d5c0-96d5-4ef7-bcfd-4536df89cc14",
+      "totalMs": 0,
+      "proofMs": 0,
+      "lockWaitMs": 0,
+      "lockHeldMs": 0,
+      "sheetReadMs": 0,
+      "sheetWriteMs": 0,
+      "sheetReadbackMs": 0,
+      "reconstructMs": 0,
+      "reportsMs": 0,
+      "worker": {
+        "traceId": "3de2d5c0-96d5-4ef7-bcfd-4536df89cc14",
+        "totalMs": 1,
+        "identityMs": 0,
+        "signingMs": 1,
+        "backendMs": 0,
+        "responseParseMs": 0
+      }
+    }
+  ],
+  "actualGoogle": false,
+  "physicalDevice": false,
+  "backend": "Apps Script/Sheets VM; Google identity test keys; real Worker source, all local",
+  "recordedAtUTC": "2026-10-22T14:01:59.264Z"
+}

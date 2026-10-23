@@ -27,5 +27,18 @@ export function mountLabValidation(session){
  const line=text=>{const row=document.createElement('li');row.textContent=text;output.append(row);};
  const describe=r=>r.id+': '+(r.passed?'APROBADO':'FALLÓ')+(r.error?' · '+r.error:'')+(Number.isFinite(r.elapsedMs)?' · '+r.elapsedMs+' ms':'');
  button.onclick=async()=>{button.disabled=true;output.replaceChildren();line('Ensayo en curso…');try{const result=await validateLabAccess(session,{onResult:r=>line(describe(r))});output.replaceChildren();line('Resultado: '+(result.passed?'APROBADO':'FALLÓ')+' · '+result.profile+' · TEST_ONLY');line('Inicio UTC: '+result.startedAt);for(const row of result.checks)line(describe(row));line('Fin UTC: '+result.completedAt);}catch(e){line('Ensayo incompleto: '+e.message);}finally{button.disabled=false;}};
- section.append(title,help,button,output);document.getElementById('main-content').append(section);
+ section.append(title,help,button,output);
+ if(session.current()?.profile==='administrator'&&new URLSearchParams(location.search).get('performance')==='5e'){
+  const measure=document.createElement('button');measure.className='btn secondary';measure.textContent='Medir consulta sintética (3 muestras)';
+  const timing=document.createElement('pre');timing.setAttribute('aria-live','polite');timing.style.whiteSpace='pre-wrap';
+  measure.onclick=async()=>{measure.disabled=true;const samples=[];timing.textContent='Medición de lectura en curso… No registra ventas.';try{
+   for(let i=0;i<3;i++){const started=performance.now(),snapshot=await session.invoke('snapshot',{format:'ui5d',metricsProbe:true});
+    const d=snapshot.diagnostics5e;if(snapshot.profile!=='administrator'||d?.kind!=='CV_5E_READ_TIMING'||d.traceId!==d.worker?.traceId)throw Error('CORRELATED_TIMING_REQUIRED');
+    samples.push({sample:i+1,revision:snapshot.revision,browserWithBootstrapMs:Math.round(performance.now()-started),...d});
+    timing.textContent=JSON.stringify({environment:'TEST_ONLY',scope:'Read-only; browser includes bootstrap, stage durations overlap',samples},null,2);
+   }
+  }catch(e){timing.textContent=JSON.stringify({environment:'TEST_ONLY',samples,error:e.message},null,2);}finally{measure.disabled=false;}};
+  section.append(measure,timing);
+ }
+ document.getElementById('main-content').append(section);
 }

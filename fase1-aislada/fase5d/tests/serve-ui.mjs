@@ -1,6 +1,8 @@
 // Únicamente localhost: identidades y Sheets simulados. Nunca se empaqueta en Worker.
 import http from 'node:http';import fs from 'node:fs';import vm from 'node:vm';import {context} from './fixture.mjs';
 import worker from '../worker-bundle.mjs';
+import {createWorker} from '../api-worker.mjs';
+import {token,testJwk,audience,origin as testOrigin} from '../../fase5c/multiusuario-gratuito/tests/fixture.mjs';
 const f=context();f.f.properties.ZERO_LAB_ENABLED='YES';
 if(process.argv.includes('--phase5e')){
  const source=fs.readFileSync(new URL('../../fase5e/apps-script/Candidate.gs',import.meta.url),'utf8');
@@ -10,11 +12,16 @@ if(process.argv.includes('--phase5e')){
  c.ScriptApp={getScriptId:()=>id};c.console={log(){}};vm.runInContext(source,c);f.c=c;
 }
 const subjects={administrator:'111111',operations:'222222',seller:'333333'};
+const syntheticGateway=createWorker({fetcher:async()=>new Response(JSON.stringify({keys:[testJwk]})),bridge:async signed=>f.c.zeroRequest(signed)});
 const server=http.createServer(async(req,res)=>{try{
   const url=new URL(req.url,'http://127.0.0.1');
   if(url.pathname==='/api'){
     const role=(req.headers.authorization||'').replace('Bearer local-demo-','');if(!subjects[role])throw Error('TEST_IDENTITY_REQUIRED');
     let raw='';for await(const chunk of req){raw+=chunk;if(raw.length>30000)throw Error('TOO_LARGE');}
+    if(process.argv.includes('--phase5e')){
+      const response=await syntheticGateway.fetch(new Request(testOrigin+'/api',{method:'POST',headers:{origin:testOrigin,'content-type':'application/json',authorization:'Bearer '+token(subjects[role]),...(req.headers['x-cv-lab-fault']?{'x-cv-lab-fault':req.headers['x-cv-lab-fault']}:{})},body:raw}),{ZERO_LAB_ENABLED:'YES',FREE_PLAN_ATTESTED:'YES',BILLING_ENABLED:'NO',GOOGLE_CLIENT_ID:audience,FRONTEND_ORIGIN:testOrigin,GATEWAY_SECRET:f.secret});
+      res.writeHead(response.status,{'content-type':'application/json','cache-control':'no-store'});res.end(await response.text());return;
+    }
     const {action,payload}=JSON.parse(raw),result=f.c.zeroRequest(await f.sign(subjects[role],action,payload));
     if(req.headers['x-cv-lab-fault']==='DROP_COMMITTED_ACK_5E'&&action==='execute'&&/^TEST_ONLY_5E_/.test(payload?.customer?.name||'')&&result.state==='COMMITTED'){res.writeHead(503,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify({error:'TEST_ONLY_RESPONSE_LOST',retryable:true}));return;}
     res.writeHead(200,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(result));return;

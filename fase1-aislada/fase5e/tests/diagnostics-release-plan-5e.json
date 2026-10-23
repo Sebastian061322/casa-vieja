@@ -1,0 +1,57 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "AUTHORIZED_NOT_DEPLOYED",
+  "baseCommit": "1a588bc72b32ba5dd4a11663fc47569b3df8cee2",
+  "localTestsPassed": 450,
+  "workerCandidateSha256": "e7abb4227aac185f93ae30d1f6c68dd79b1a727cda56bea92d28fa06b156cd85",
+  "backendCandidateSha256": "d0e635dd759d25e2cdb72e67a624d84b9b977c2a8eb6924c23f2d94b4d149c7c",
+  "currentWorkerVersion": "9a3a6e2b",
+  "currentBackendVersion": 2,
+  "newResources": false,
+  "permissionScopesChanged": false,
+  "secretsChanged": false,
+  "ledgerWritesIntroduced": false,
+  "files": [
+    {
+      "path": "fase1-aislada/fase5e/build.cjs",
+      "sha256": "f85d6a6d8c22b571c0b770c3b6403de5e586557fe111e0e19c4fa248c0825d8f"
+    },
+    {
+      "path": "fase1-aislada/fase5e/apps-script/Observability.gs",
+      "sha256": "dd35b829234b81b16b890b5cccaa621ecf890ece02722290b777f582a3d1bbb5"
+    },
+    {
+      "path": "fase1-aislada/fase5d/api-worker.mjs",
+      "sha256": "023b52aec621be5be6d044ac2542926d7c69ab4c33baa7304eefac87d53cb0e6"
+    },
+    {
+      "path": "fase1-aislada/fase5d/web/validation.mjs",
+      "sha256": "2366168471b0c079f58a8c626b544cd8856883c8c33408848028f36619b68b68"
+    },
+    {
+      "path": "fase1-aislada/fase5d/tests/serve-ui.mjs",
+      "sha256": "e203c13b2015fe81131bba9d699ce7ea8f9ade3e12094d371316708058a19bb7"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/backend.test.mjs",
+      "sha256": "0df76e86264b4e1e9eccc357f5dc09345fc9cd87993e9eca97eb2e4e9dbe80ef"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/telemetry.test.mjs",
+      "sha256": "8786ae385980793408c565b055461e29bf0fdea52f0b1c0d6992c44032dca523"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/diagnostics-browser-local-5e.json",
+      "sha256": "d3286249f2c29c735c0bdeaddcecbc1e963319c97ffaece4a4dbb83c2796d0f8"
+    },
+    {
+      "path": "fase1-aislada/fase5e/tests/resultados.txt",
+      "sha256": "844e53f2d7813ee3e528e23eedf2405a4cc0a4bd54e96a0b64ec1010fd62ce00"
+    },
+    {
+      "path": "fase1-aislada/fase5e/PLAN-DIAGNOSTICO-5E.md",
+      "sha256": "12797dc0108cb4eaddaa52fe89cb542a90ca69b3b8f31f061245c8de6d1934a9"
+    }
+  ],
+  "ownerApproval": "Explicit authorization to update only both existing laboratory resources; iPhone confirmed available with zero pending operations."
+}

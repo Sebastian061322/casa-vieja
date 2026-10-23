@@ -1,0 +1,41 @@
+{
+  "environment": "TEST_ONLY",
+  "observedAtUTC": "2026-10-23T04:42:42.632Z",
+  "workerVersion": "4fdf13da",
+  "backendVersion": 3,
+  "passed": true,
+  "revision": 129,
+  "journalRows": 268,
+  "effects": 182,
+  "committed": 129,
+  "rejected": 10,
+  "pending": 0,
+  "operation": {
+    "operationId": "53dd7eed-0e2a-42a1-8025-4b8970add7c7",
+    "saleId": "future:684e14e4-0be0-462f-9fc1-b924da166cf2",
+    "prepared": 1,
+    "committed": 1,
+    "effects": [
+      {
+        "kind": "SALE_RESERVATION",
+        "qtyDelta": 0,
+        "reservedDelta": 1
+      }
+    ],
+    "saleStatus": "RESERVED"
+  },
+  "resource": {
+    "physical": 5,
+    "reserved": 3,
+    "available": 2
+  },
+  "physicalRestartOwnerConfirmationPending": false,
+  "priorSyntheticJournalAndEffectsUnchanged": true,
+  "newJournalRows": 2,
+  "newEffects": 1,
+  "physicalRestartOwnerConfirmed": true,
+  "repeatSyncVerified": true,
+  "serverUnchangedAfterRepeat": true,
+  "ownerConfirmedNoPending": true,
+  "ownerConfirmedArchivedRejectionPreserved": true
+}

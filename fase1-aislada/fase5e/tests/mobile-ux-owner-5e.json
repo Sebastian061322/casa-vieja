@@ -1,0 +1,30 @@
+{
+  "environment": "TEST_ONLY",
+  "ownerReported": true,
+  "automaticallyObserved": false,
+  "passed": true,
+  "scope": "Basic physical interface smoke check, no additional orders",
+  "devices": [
+    {
+      "browser": "Safari",
+      "platform": "iPhone",
+      "navigation": true,
+      "keyboardReturn": true,
+      "zoomUsable": true,
+      "noBlockingOverlapReported": true
+    },
+    {
+      "browser": "Chrome",
+      "platform": "Android",
+      "navigation": true,
+      "keyboardReturn": true,
+      "zoomUsable": true,
+      "noBlockingOverlapReported": true
+    }
+  ],
+  "limitations": [
+    "Owner reported both devices; exact model and browser versions not captured",
+    "No screen-reader, formal WCAG audit or exhaustive device matrix",
+    "Android offline restart not executed; iPhone restart recorded separately"
+  ]
+}

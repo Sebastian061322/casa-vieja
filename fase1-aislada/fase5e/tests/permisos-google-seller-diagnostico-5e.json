@@ -1,0 +1,70 @@
+{
+  "environment": "TEST_ONLY",
+  "nativeObserved": true,
+  "ownerReportedApproved": true,
+  "workerVersion": "4fdf13da",
+  "backendVersion": 3,
+  "role": "seller",
+  "passed": true,
+  "startUTC": "2026-10-23T04:35:43.764Z",
+  "endUTC": "2026-10-23T04:36:52.416Z",
+  "checks": [
+    {
+      "name": "seller-response-redacted",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "deny-users",
+      "passed": true,
+      "detail": "PERMISSION_DENIED \u00b7 5273 ms"
+    },
+    {
+      "name": "deny-reports",
+      "passed": true,
+      "detail": "PERMISSION_DENIED \u00b7 6315 ms"
+    },
+    {
+      "name": "deny-dashboard",
+      "passed": true,
+      "detail": "PERMISSION_DENIED \u00b7 5506 ms"
+    },
+    {
+      "name": "deny-setUser",
+      "passed": true,
+      "detail": "PERMISSION_DENIED \u00b7 5895 ms"
+    },
+    {
+      "name": "deny-configure",
+      "passed": true,
+      "detail": "PERMISSION_DENIED \u00b7 5720 ms"
+    },
+    {
+      "name": "reject-forged-role",
+      "passed": true,
+      "detail": "IDENTITY_SPOOFING \u00b7 6382 ms"
+    },
+    {
+      "name": "read-snapshot-1",
+      "passed": true,
+      "detail": "7391 ms"
+    },
+    {
+      "name": "read-snapshot-2",
+      "passed": true,
+      "detail": "5509 ms"
+    },
+    {
+      "name": "read-snapshot-3",
+      "passed": true,
+      "detail": "6840 ms"
+    },
+    {
+      "name": "journal-revision-unchanged",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "financialDataHidden": true,
+  "onlySalesOrdersInventory": true
+}

@@ -1,6 +1,6 @@
 {
   "environment": "TEST_ONLY",
-  "status": "DEPLOYED_AWAITING_AUTHENTICATED_MEASUREMENTS",
+  "status": "DEPLOYED_AUTHENTICATED_READ_MEASUREMENTS_VERIFIED",
   "baseCommit": "1a588bc72b32ba5dd4a11663fc47569b3df8cee2",
   "localTestsPassed": 450,
   "workerCandidateSha256": "e7abb4227aac185f93ae30d1f6c68dd79b1a727cda56bea92d28fa06b156cd85",
@@ -56,5 +56,8 @@
   "ownerApproval": "Explicit authorization to update only both existing laboratory resources; iPhone confirmed available with zero pending operations.",
   "sourceCommit": "7fcf3c4c980ecd9b85228a044b7e5111aa26697d",
   "observedAtUTC": "2026-10-23T04:30:27.499475+00:00",
-  "publicProbePassed": true
+  "publicProbePassed": true,
+  "authenticatedSamples": 3,
+  "exactLedgerEqualityAfterProbe": true,
+  "administratorCurrentPermissionChecks": 5
 }

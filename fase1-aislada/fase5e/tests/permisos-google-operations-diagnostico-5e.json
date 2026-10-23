@@ -1,0 +1,53 @@
+{
+  "environment": "TEST_ONLY",
+  "nativeObserved": true,
+  "ownerReportedApproved": true,
+  "workerVersion": "4fdf13da",
+  "backendVersion": 3,
+  "role": "operations",
+  "passed": true,
+  "startUTC": "2026-10-23T04:42:58.322Z",
+  "endUTC": "2026-10-23T04:43:59.916Z",
+  "checks": [
+    {
+      "name": "deny-users",
+      "passed": true,
+      "detail": "PERMISSION_DENIED \u00b7 8983 ms"
+    },
+    {
+      "name": "deny-setUser",
+      "passed": true,
+      "detail": "PERMISSION_DENIED \u00b7 6086 ms"
+    },
+    {
+      "name": "deny-configure",
+      "passed": true,
+      "detail": "PERMISSION_DENIED \u00b7 4892 ms"
+    },
+    {
+      "name": "reject-forged-role",
+      "passed": true,
+      "detail": "IDENTITY_SPOOFING \u00b7 6576 ms"
+    },
+    {
+      "name": "read-snapshot-1",
+      "passed": true,
+      "detail": "7588 ms"
+    },
+    {
+      "name": "read-snapshot-2",
+      "passed": true,
+      "detail": "6817 ms"
+    },
+    {
+      "name": "read-snapshot-3",
+      "passed": true,
+      "detail": "6299 ms"
+    },
+    {
+      "name": "journal-revision-unchanged",
+      "passed": true,
+      "detail": ""
+    }
+  ]
+}

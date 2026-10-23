@@ -1,6 +1,6 @@
 {
   "environment": "TEST_ONLY",
-  "observedAtUTC": "2026-10-23T04:30:27.499475+00:00",
+  "observedAtUTC": "2026-10-23T04:47:59.507602+00:00",
   "authorizedPublication": true,
   "branch": "dev/fase1-estabilizacion",
   "commit": "7fcf3c4c980ecd9b85228a044b7e5111aa26697d",
@@ -32,9 +32,19 @@
     "lostAck": true,
     "physicalLastUnit": true,
     "separateSyntheticRestore": true,
-    "administratorFinal": false,
+    "administratorFinal": true,
     "allPhaseClosed": false,
     "administratorBackendVersion2": true,
-    "androidSellerOwnerReported": true
-  }
+    "androidSellerOwnerReported": true,
+    "administratorBackendVersion3": true,
+    "diagnosticReadSamples": 3,
+    "operationsFinal": true,
+    "sellerFinal": true,
+    "physicalSafariRestart": true,
+    "mobileBasicUXOwnerReported": true,
+    "fullInfrastructureRecoveryVerified": false
+  },
+  "lastEvidenceCommit": "8685d49c6e2a83b85fe19f8cbca8b10c56bcf0f1",
+  "googleFunctionalCycleVerified": true,
+  "closureMeaning": "Functional laboratory checks completed; full infrastructure recovery and operating policy gates remain open, production NO-GO"
 }

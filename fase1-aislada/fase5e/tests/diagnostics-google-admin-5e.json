@@ -1,0 +1,95 @@
+{
+  "environment": "TEST_ONLY",
+  "observedAtUTC": "2026-10-23T04:31:23.397831+00:00",
+  "actualGoogle": true,
+  "nativeObserved": true,
+  "workerVersion": "4fdf13da",
+  "backendVersion": 3,
+  "role": "administrator",
+  "sampleCount": 3,
+  "passed": true,
+  "traceCorrelationVerified": true,
+  "revisionUnchanged": true,
+  "samples": [
+    {
+      "sample": 1,
+      "revision": 128,
+      "browserWithBootstrapMs": 6690,
+      "kind": "CV_5E_READ_TIMING",
+      "traceId": "1393b22f-be1a-431a-92fe-785c63929c94",
+      "totalMs": 1688,
+      "proofMs": 84,
+      "lockWaitMs": 58,
+      "lockHeldMs": 1492,
+      "sheetReadMs": 298,
+      "sheetWriteMs": 0,
+      "sheetReadbackMs": 0,
+      "reconstructMs": 33,
+      "reportsMs": 4,
+      "worker": {
+        "traceId": "1393b22f-be1a-431a-92fe-785c63929c94",
+        "totalMs": 3562,
+        "identityMs": 0,
+        "signingMs": 0,
+        "backendMs": 3562,
+        "responseParseMs": 0
+      }
+    },
+    {
+      "sample": 2,
+      "revision": 128,
+      "browserWithBootstrapMs": 6416,
+      "kind": "CV_5E_READ_TIMING",
+      "traceId": "88c0995a-0443-4afb-90b8-5d3299e90b4d",
+      "totalMs": 2230,
+      "proofMs": 63,
+      "lockWaitMs": 391,
+      "lockHeldMs": 1722,
+      "sheetReadMs": 430,
+      "sheetWriteMs": 0,
+      "sheetReadbackMs": 0,
+      "reconstructMs": 30,
+      "reportsMs": 2,
+      "worker": {
+        "traceId": "88c0995a-0443-4afb-90b8-5d3299e90b4d",
+        "totalMs": 4259,
+        "identityMs": 0,
+        "signingMs": 0,
+        "backendMs": 4259,
+        "responseParseMs": 0
+      }
+    },
+    {
+      "sample": 3,
+      "revision": 128,
+      "browserWithBootstrapMs": 7536,
+      "kind": "CV_5E_READ_TIMING",
+      "traceId": "90820087-c6cb-4fb5-8f3c-b5be853c8c9f",
+      "totalMs": 1980,
+      "proofMs": 78,
+      "lockWaitMs": 45,
+      "lockHeldMs": 1791,
+      "sheetReadMs": 670,
+      "sheetWriteMs": 0,
+      "sheetReadbackMs": 0,
+      "reconstructMs": 63,
+      "reportsMs": 3,
+      "worker": {
+        "traceId": "90820087-c6cb-4fb5-8f3c-b5be853c8c9f",
+        "totalMs": 3929,
+        "identityMs": 0,
+        "signingMs": 0,
+        "backendMs": 3929,
+        "responseParseMs": 0
+      }
+    }
+  ],
+  "limitations": [
+    "Stage durations overlap; do not sum",
+    "Browser includes bootstrap and network",
+    "Three samples do not establish stable percentiles",
+    "Zero identity/signing timing is resolution/cache behavior, not absence of verification",
+    "Read-only probe does not measure write/dispatch latency",
+    "No equivalent prior release sample; no remote speedup claim"
+  ]
+}

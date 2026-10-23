@@ -1,0 +1,37 @@
+{
+  "environment": "TEST_ONLY",
+  "nativeObserved": true,
+  "workerVersion": "4fdf13da",
+  "backendVersion": 3,
+  "role": "administrator",
+  "passed": true,
+  "startUTC": "2026-10-23T04:31:26.543Z",
+  "endUTC": "2026-10-23T04:32:05.553Z",
+  "checks": [
+    {
+      "name": "reject-forged-role",
+      "passed": true,
+      "error": "IDENTITY_SPOOFING",
+      "elapsedMs": 6389
+    },
+    {
+      "name": "read-snapshot-1",
+      "passed": true,
+      "elapsedMs": 5952
+    },
+    {
+      "name": "read-snapshot-2",
+      "passed": true,
+      "elapsedMs": 7175
+    },
+    {
+      "name": "read-snapshot-3",
+      "passed": true,
+      "elapsedMs": 5112
+    },
+    {
+      "name": "journal-revision-unchanged",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "environment": "TEST_ONLY",
+  "recordedAtUTC": "2026-10-23T04:32:54.232192+00:00",
+  "readOnly": true,
+  "passed": true,
+  "journalRows": 266,
+  "effects": 181,
+  "committed": 128,
+  "rejected": 10,
+  "pending": 0,
+  "revision": 128,
+  "unchangedFromPreviousRead": true,
+  "sha256": "650625e99b49f4fbd9e8e6952d0ce3eb59e3d5d12f4a08345ed35860a253bef7",
+  "comparison": "Exact parsed journal and effects equality before/after remote diagnostics and administrator permission checks",
+  "workerVersion": "4fdf13da",
+  "backendVersion": 3
+}

@@ -1,5 +1,13 @@
 # Cierre de validación 5E — trabajo en curso, 22/10/2026
 
+## Actualización comprobada — diagnóstico desplegado
+
+Con autorización específica del propietario, fuentes publicadas en `7fcf3c4c980ecd9b85228a044b7e5111aa26697d`, Worker activo `4fdf13da` y Apps Script versión **3**, mismo endpoint, ejecución como propietario y acceso de red Cualquiera protegido por HMAC. Huellas: Worker `e7abb4227aac185f93ae30d1f6c68dd79b1a727cda56bea92d28fa06b156cd85`; backend `d0e635dd759d25e2cdb72e67a624d84b9b977c2a8eb6924c23f2d94b4d149c7c`. Sin cambios de permisos, secretos ni recursos.
+
+Regresión: **450 pruebas locales aprobadas**. Comprobación remota posterior al despliegue: siete solicitudes inválidas rechazadas y tres activos iguales por SHA256, todos `no-store` (`tests/resultados-red-publica-diagnostico-5e.json`). Main conserva `12a5f997845f9d31dc1a5d8ae7dc49770928da3d`. Lectura previa del diario: revisión 128, 266 registros y 181 movimientos, sin pendientes ni cambios (`tests/integridad-before-diagnostics-5e.json`).
+
+El administrador tiene disponible la medición de tres consultas sintéticas correlacionadas. **Todavía no se dispone del resultado autenticado**. El propietario confirmó iPhone disponible y cero pendientes; el ensayo de reinicio completo sigue pendiente. No declarar cerrada toda la fase. Las secciones siguientes conservan la evidencia de versiones anteriores y deben interpretarse con esta actualización de estado.
+
 No constituye autorización comercial ni cierre definitivo de la fase. Referencia remota comprobada: `34eca552469ce99f8591d4a4c77d3fd61ebe0c67`, rama `dev/fase1-estabilizacion`. Worker de laboratorio `9a3a6e2b`; Apps Script sintético versión 2. Fuentes y pruebas publicadas en cdb630e12d66e4d17c017f0e37f5b6c7c9315abc con autorización específica. Candidato definitivo 5d94dd50 desplegado como 9a3a6e2b.
 
 ## Comprobaciones de esta continuación

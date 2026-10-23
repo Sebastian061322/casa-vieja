@@ -1,32 +1,32 @@
 {
   "environment": "TEST_ONLY",
-  "observedAtUTC": "2026-10-22T13:51:32.083Z",
+  "observedAtUTC": "2026-10-23T04:30:27.499475+00:00",
   "authorizedPublication": true,
   "branch": "dev/fase1-estabilizacion",
-  "commit": "cdb630e12d66e4d17c017f0e37f5b6c7c9315abc",
+  "commit": "7fcf3c4c980ecd9b85228a044b7e5111aa26697d",
   "mainVerifiedUnchanged": "12a5f997845f9d31dc1a5d8ae7dc49770928da3d",
   "appsScript": {
     "sourceSaved": true,
-    "candidateSha256": "a0c7222ce06b9bc695e29a6997728115036ec61b000c11f62aacc36ef17b3ce4",
-    "observedDeployedVersion": 2,
+    "candidateSha256": "d0e635dd759d25e2cdb72e67a624d84b9b977c2a8eb6924c23f2d94b4d149c7c",
+    "observedDeployedVersion": 3,
     "newVersionVerified": true,
     "manualSelectorAssistanceRequested": true,
     "endpointUnchanged": true
   },
   "worker": {
-    "previousVersionPrefix": "37306312",
+    "previousVersionPrefix": "9a3a6e2b",
     "updated": true,
-    "activeVersionPrefix": "9a3a6e2b",
-    "artifactSha256": "5d94dd500066d1917f4628aa85b527dc6860bf2e4f98a468f0c9222f90bbe0ce"
+    "activeVersionPrefix": "4fdf13da",
+    "artifactSha256": "e7abb4227aac185f93ae30d1f6c68dd79b1a727cda56bea92d28fa06b156cd85"
   },
-  "testsLocalPassed": 447,
+  "testsLocalPassed": 450,
   "google5EVerified": false,
   "productionActivated": false,
   "publicProbe": {
     "passed": true,
     "invalidRequestsRejected": 7,
     "matchingAssets": 3,
-    "observedAtUTC": "2026-10-22T13:51:32.083Z"
+    "observedAtUTC": "2026-10-23T04:29:03.735Z"
   },
   "google5EPartialEvidence": {
     "lostAck": true,

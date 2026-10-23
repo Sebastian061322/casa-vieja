@@ -1,12 +1,12 @@
 {
   "environment": "TEST_ONLY",
-  "status": "AUTHORIZED_NOT_DEPLOYED",
+  "status": "DEPLOYED_AWAITING_AUTHENTICATED_MEASUREMENTS",
   "baseCommit": "1a588bc72b32ba5dd4a11663fc47569b3df8cee2",
   "localTestsPassed": 450,
   "workerCandidateSha256": "e7abb4227aac185f93ae30d1f6c68dd79b1a727cda56bea92d28fa06b156cd85",
   "backendCandidateSha256": "d0e635dd759d25e2cdb72e67a624d84b9b977c2a8eb6924c23f2d94b4d149c7c",
-  "currentWorkerVersion": "9a3a6e2b",
-  "currentBackendVersion": 2,
+  "currentWorkerVersion": "4fdf13da",
+  "currentBackendVersion": 3,
   "newResources": false,
   "permissionScopesChanged": false,
   "secretsChanged": false,
@@ -53,5 +53,8 @@
       "sha256": "12797dc0108cb4eaddaa52fe89cb542a90ca69b3b8f31f061245c8de6d1934a9"
     }
   ],
-  "ownerApproval": "Explicit authorization to update only both existing laboratory resources; iPhone confirmed available with zero pending operations."
+  "ownerApproval": "Explicit authorization to update only both existing laboratory resources; iPhone confirmed available with zero pending operations.",
+  "sourceCommit": "7fcf3c4c980ecd9b85228a044b7e5111aa26697d",
+  "observedAtUTC": "2026-10-23T04:30:27.499475+00:00",
+  "publicProbePassed": true
 }

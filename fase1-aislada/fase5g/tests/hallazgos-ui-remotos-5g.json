@@ -4,7 +4,7 @@
     {
       "id": "UI-OPENING-LEGACY-METADATA",
       "severity": "medium",
-      "status": "FIX_PREPARED_LOCAL_NOT_DEPLOYED",
+      "status": "FIX_DEPLOYED_AND_VERIFIED_LAB",
       "observed": "Older synthetic opening lot fixtures render undefined grams and NaN acquisition/processing when metadata is absent",
       "scope": "Lot cards; new 5G reception displayed correctly",
       "dataModified": false,
@@ -13,7 +13,7 @@
     {
       "id": "UI-FILTER-POLICY-BUTTON",
       "severity": "medium",
-      "status": "FIX_PREPARED_LOCAL_NOT_DEPLOYED",
+      "status": "FIX_DEPLOYED_AND_VERIFIED_LAB",
       "observed": "Filtering orders re-renders cards and re-enables the cancellation button despite the DRAFT policy",
       "backendProtection": "Still blocked by POLICY_APPROVAL_REQUIRED; no cancellation submitted",
       "requiredFix": "Disable cancellation and return buttons in the generated card HTML, including after filtering"
@@ -22,7 +22,10 @@
   "localPatch": {
     "testsPassed": 5,
     "workerSha256": "b350fe05fadd3cdc72b7b8c17637674bbc53fe84bde462dd19f47941dc5b1676",
-    "published": false,
-    "backendUnchanged": true
+    "published": true,
+    "backendUnchanged": true,
+    "workerVersion": "7c1806c8",
+    "remoteAbsentMetadata": "No registrado; known 10000g and S/110 remain intact",
+    "remoteFilteredReservedOrder": "Cancelar and Recibir devoluci\u00f3n disabled after filter"
   }
 }

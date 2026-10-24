@@ -1,0 +1,15 @@
+{
+  "environment": "TEST_ONLY",
+  "workerVersion": "7c1806c8",
+  "appsScriptVersion": 4,
+  "actualGoogle": true,
+  "passed": true,
+  "checks": [
+    "Older synthetic lots render No registrado for missing receipt metadata",
+    "New 5G lot keeps 10000 g and S/110 acquisition cost",
+    "Filtered reserved Tripack has Cancelar disabled",
+    "Filtered reserved Tripack has Recibir devoluci\u00f3n disabled"
+  ],
+  "businessOperationsCreated": 0,
+  "dataEdited": false
+}

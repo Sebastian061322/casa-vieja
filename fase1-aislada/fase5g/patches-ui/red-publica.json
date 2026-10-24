@@ -1,0 +1,89 @@
+{
+  "assets": [
+    {
+      "path": "/entry.mjs",
+      "status": 200,
+      "sha256": "56d2e5359404dd59ff528b76778a5719c348808c64a236e5db96b9d2322aac8d",
+      "passed": true,
+      "noStore": true
+    },
+    {
+      "path": "/approved.css",
+      "status": 200,
+      "sha256": "ada08eb88007d9f4b3720594107282b36d93fb0581576bd5dcefd999979cde12",
+      "passed": true,
+      "noStore": true
+    },
+    {
+      "path": "/config.json",
+      "status": 200,
+      "sha256": "c3b95bc8e7df542cc2010f01e65a44cab453a42441e34c17d407d1a1985f7cec",
+      "passed": true,
+      "noStore": true
+    }
+  ],
+  "environment": "TEST_ONLY",
+  "observedAtUTC": "2026-10-24T13:38:04.012Z",
+  "realCredentialsUsed": false,
+  "commercialPerformanceMeasured": false,
+  "passed": true,
+  "results": [
+    {
+      "name": "sin origen",
+      "status": 403,
+      "error": "ORIGIN_DENIED",
+      "passed": true,
+      "elapsedMs": 509
+    },
+    {
+      "name": "origen ajeno",
+      "status": 403,
+      "error": "ORIGIN_DENIED",
+      "passed": true,
+      "elapsedMs": 307
+    },
+    {
+      "name": "sin identidad",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 118
+    },
+    {
+      "name": "firma inv\u00e1lida",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 1453
+    },
+    {
+      "name": "rol administrador declarado con firma inv\u00e1lida",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 120
+    },
+    {
+      "name": "credencial demasiado larga",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "elapsedMs": 106
+    },
+    {
+      "name": "GET con origen permitido",
+      "status": 400,
+      "error": "INVALID_REQUEST",
+      "passed": true,
+      "elapsedMs": 105
+    }
+  ],
+  "workerActiveVersion": "7c1806c8",
+  "workerSha256": "b350fe05fadd3cdc72b7b8c17637674bbc53fe84bde462dd19f47941dc5b1676",
+  "authenticationAndApiCodeUnchanged": true,
+  "changedAssets": [
+    "/approved-app.js",
+    "/entry.mjs"
+  ],
+  "backendVersionUnchanged": 4
+}

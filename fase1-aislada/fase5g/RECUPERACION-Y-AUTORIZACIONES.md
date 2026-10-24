@@ -18,9 +18,11 @@ Después: confirmar nueva versión de Script/Worker, activos por hash, rechazos 
 
 Riesgo: errores del paquete y nuevos eventos GREEN/MILL/GRIND. Si falla antes de crear eventos nuevos, las versiones de referencia son Worker 4fdf13da y Apps Script 3. Si ya existen eventos 5G, detener nuevas altas; conservar una versión compatible para recuperar/consultar todos los planes. No volver a escribir con procesamiento antiguo ni restaurar una copia anterior. Una reversión de interfaz no autoriza revertir el diario.
 
-## Paso B propuesto — infraestructura de recuperación aislada (requiere otro permiso)
+## Paso B — recursos vacíos creados; configuración y restauración pendientes
 
-Preparar antes de crear: revisión de cuentas/Free, nombres, IDs obtenidos y guarda de destinos. Recursos propuestos, no creados:
+El propietario autorizó y se verificó la creación de los tres recursos vacíos y gratuitos. La hoja es privada y está vacía; el Script contiene solo la función inicial, sin ejecutar ni desplegar; el Worker rechaza GET/POST/OPTIONS con 403 y no tiene secretos ni backend. Ver tests/recursos-vacios-5g.json.
+
+Los siguientes puntos describen la configuración futura pendiente, no el estado actual:
 
 1. Una hoja nueva CasaVieja_RECUPERACION_TEST_ONLY_5G, privada, sin clientes reales, Control!B3 TEST_ONLY y tablas nuevas de diario/movimientos. No sobrescribir ni reutilizar como servidor la copia 5B/5E ni su PREPARED sin identidad.
 2. Un Apps Script CasaVieja_DR_TEST_ONLY_5G, con guardas exclusivas para su propio ID y esa hoja nueva; API mínima, sin mantenimiento público. Configuración recuperada de usuarios de prueba autorizados y políticas sintéticas, excluyendo credenciales.

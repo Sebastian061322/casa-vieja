@@ -1,5 +1,5 @@
 {
-  "status": "PUBLISHED_LAB_VALIDATION_IN_PROGRESS",
+  "status": "LAB_CHECKS_COMPLETED_CRITICAL_PREOP_BLOCKERS_REMAIN",
   "environment": "TEST_ONLY",
   "baseCommit": "2959eafd2ad1c126422e6444c2fd35c7d6ca08d9",
   "branch": "dev/fase1-estabilizacion",
@@ -38,7 +38,7 @@
     },
     {
       "path": "RECUPERACION-Y-AUTORIZACIONES.md",
-      "sha256": "e8d62ed8633600f24ee550154f9956ea6a9704a22ded5b4635a90badc31db301"
+      "sha256": "79af8a0487b179d8563cf2157996504dcb7f70767fd84cdd17b75b30e1a1f4c8"
     },
     {
       "path": "build-local.cjs",
@@ -178,11 +178,11 @@
     },
     {
       "path": "tests/hallazgos-ui-remotos-5g.json",
-      "sha256": "4eb29ad3e8be944fc608d4452ab03704de939d43bb6f19ada3001255e706b64f"
+      "sha256": "aeeb00c5b3ce5effcca223720cd24d2c28ebdca8bd39cd55fc527c645a05d25c"
     },
     {
       "path": "patches-ui/README.md",
-      "sha256": "e5f91b28e9c6cd57b8ab9b8ff4d251aeda32a174ea8a2816838fcd80d5b3911a"
+      "sha256": "771561bdb2489b174ae206d6f6b7700a644b57221c959492c7bf93106eb3d827"
     },
     {
       "path": "patches-ui/lot-metadata.cjs",
@@ -214,7 +214,7 @@
     },
     {
       "path": "patches-ui/build/manifest.json",
-      "sha256": "2db0467dd9543927d9457402b5b4005f7dd5525c7ce352264d3bae2e761679b9"
+      "sha256": "26bb82f25046ca81aa2eadf2b7ea794ffaa3798bf3bb9c7dbbb2f1ba4bba4b05"
     },
     {
       "path": "tests/permisos-vendedor-google-5g.json",
@@ -226,7 +226,19 @@
     },
     {
       "path": "ESTADO-PUBLICACION-5G.md",
-      "sha256": "3defe89ac830f960812c6deb5ecbb5c182c3993e50f7d2830fc84e89e128022e"
+      "sha256": "f9358f3f1f137a084c357499c89f1e3da08e992141d3c4cc1cd5a59837c73559"
+    },
+    {
+      "path": "patches-ui/red-publica.json",
+      "sha256": "a8a5f24e33add8f38113e2d0deb84922523d15858cf8d99d123be3d124cf5783"
+    },
+    {
+      "path": "patches-ui/interfaz-remota.json",
+      "sha256": "d81f9f162d15416e117b6e7c9b42fc5a53ff91f4b62319f31efcc3a037a43bce"
+    },
+    {
+      "path": "tests/recursos-vacios-5g.json",
+      "sha256": "cb9ead5884f0ac6fffb32ff5381c0e4dabde0cc83373fe6315856b2fbf1a74f2"
     }
   ],
   "excludes": [
@@ -251,7 +263,7 @@
     "android": "NO_PENDING_OWNER_CONFIRMED"
   },
   "sourceCommit": "9c2539ff8c5ee612b4fb9bdc1d27de53900ea76f",
-  "workerActiveVersion": "94e3fbd3",
+  "workerActiveVersion": "7c1806c8",
   "backendDeployment": {
     "ownerConfirmed": true,
     "googleSuccessNoticeObserved": true,
@@ -277,8 +289,14 @@
   "uiPatch": {
     "ownerAuthorized": true,
     "workerSha256": "b350fe05fadd3cdc72b7b8c17637674bbc53fe84bde462dd19f47941dc5b1676",
-    "status": "PUBLICATION_IN_PROGRESS",
+    "status": "DEPLOYED_LAB_UI_VERIFIED",
     "localRegressionPassed": 482,
-    "backendChanged": false
-  }
+    "backendChanged": false,
+    "workerVersion": "7c1806c8",
+    "publicRejectionsPassed": 7,
+    "publicAssetsMatched": 3,
+    "authenticationAndApiCodeUnchanged": true,
+    "authenticatedVisualChecks": "PASSED"
+  },
+  "recoveryResources": "EMPTY_RESOURCES_CREATED_ONLY_RESTORE_PENDING"
 }

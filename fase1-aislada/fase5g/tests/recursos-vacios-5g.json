@@ -1,0 +1,76 @@
+{
+  "environment": "TEST_ONLY",
+  "authorization": "Create only three empty free resources",
+  "sheet": {
+    "name": "CasaVieja_RECUPERACION_TEST_ONLY_5G",
+    "privateVerified": true,
+    "businessRows": 0,
+    "configured": false
+  },
+  "appsScript": {
+    "name": "CasaVieja_DR_TEST_ONLY_5G",
+    "deployed": false,
+    "executed": false,
+    "code": "Default empty stub"
+  },
+  "worker": {
+    "name": "casa-vieja-dr-test-only-5g",
+    "status": "CREATED_DATA_ACCESS_BLOCKED",
+    "url": "https://casa-vieja-dr-test-only-5g.portopelaez1009.workers.dev",
+    "version": "47610702-3eca-4778-8604-51a43d518a13",
+    "plan": "Workers Free",
+    "secretConfigured": false,
+    "backendConnected": false,
+    "bindings": [],
+    "publicRejectionsPassed": 3
+  },
+  "publicProbe": {
+    "environment": "TEST_ONLY",
+    "origin": "https://casa-vieja-dr-test-only-5g.portopelaez1009.workers.dev",
+    "version": "47610702-3eca-4778-8604-51a43d518a13",
+    "businessDataPresent": false,
+    "secretsConfigured": false,
+    "backendConnected": false,
+    "passed": true,
+    "results": [
+      {
+        "method": "GET",
+        "status": 403,
+        "body": {
+          "environment": "TEST_ONLY",
+          "status": "RECOVERY_NOT_CONFIGURED",
+          "dataAccess": false
+        },
+        "noStore": true,
+        "passed": true
+      },
+      {
+        "method": "POST",
+        "status": 403,
+        "body": {
+          "environment": "TEST_ONLY",
+          "status": "RECOVERY_NOT_CONFIGURED",
+          "dataAccess": false
+        },
+        "noStore": true,
+        "passed": true
+      },
+      {
+        "method": "OPTIONS",
+        "status": 403,
+        "body": {
+          "environment": "TEST_ONLY",
+          "status": "RECOVERY_NOT_CONFIGURED",
+          "dataAccess": false
+        },
+        "noStore": true,
+        "passed": true
+      }
+    ]
+  },
+  "restorationExecuted": false,
+  "oauthChanged": false,
+  "credentialsConfigured": false,
+  "productionChanged": false,
+  "billingEnabled": false
+}

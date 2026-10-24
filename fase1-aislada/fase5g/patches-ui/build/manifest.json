@@ -1,11 +1,17 @@
 {
   "environment": "TEST_ONLY",
-  "status": "LOCAL_NOT_AUTHORIZED_FOR_PUBLICATION",
+  "status": "DEPLOYED_LAB_UI_VERIFIED",
   "baseWorkerVersion": "94e3fbd3",
   "baseSha256": "966dc1577447a4b95b07975fd57ae9693743b2473ba61f527c999a584116ba8a",
   "workerSha256": "b350fe05fadd3cdc72b7b8c17637674bbc53fe84bde462dd19f47941dc5b1676",
   "backendUnchanged": true,
   "permissionsUnchanged": true,
   "recordsUnchanged": true,
-  "productionReady": false
+  "productionReady": false,
+  "ownerAuthorized": true,
+  "workerVersion": "7c1806c8",
+  "appsScriptVersion": 4,
+  "published": true,
+  "regressionPassed": 482,
+  "sourceCommit": "aa58d7e2d28498770b2cc2cbafb07c8926d830d7"
 }

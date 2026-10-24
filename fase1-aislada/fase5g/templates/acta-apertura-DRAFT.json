@@ -1,0 +1,29 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "DRAFT",
+  "productionApproved": false,
+  "id": "TEST_ONLY:OPENING_DRAFT",
+  "effectiveAt": "2026-11-01T00:00:00-05:00",
+  "responsible": null,
+  "secondReviewer": null,
+  "ownerApprovalEvidence": null,
+  "rows": [
+    {
+      "resourceId": null,
+      "lot": null,
+      "family": null,
+      "stage": null,
+      "grind": null,
+      "grams": null,
+      "physical": null,
+      "reserved": null,
+      "unit": null,
+      "historicalValueCents": null,
+      "costEvidence": null,
+      "availability": null,
+      "pendingOrders": []
+    }
+  ],
+  "sha256": null,
+  "executable": false
+}

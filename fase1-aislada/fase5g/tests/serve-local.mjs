@@ -1,0 +1,12 @@
+// Solo loopback, identidades y Google simulados. Nunca incluido en paquete remoto.
+import http from 'node:http';import {statSync} from 'node:fs';
+const workerFile=new URL('../build/worker-bundle.mjs',import.meta.url);let workerStamp=-1,workerCached;
+async function liveWorker(){const stamp=statSync(workerFile).mtimeMs;if(stamp!==workerStamp){workerCached=(await import(workerFile.href+'?build='+stamp)).default;workerStamp=stamp;}return workerCached;}
+import {createWorker} from '../../fase5d/api-worker.mjs';import {setup,receive} from './harness.mjs';import {token,testJwk,audience,origin} from '../../fase5c/multiusuario-gratuito/tests/fixture.mjs';
+const f=setup();await receive(f);const subjects={administrator:'111111',operations:'222222',seller:'333333'},gateway=createWorker({fetcher:async()=>new Response(JSON.stringify({keys:[testJwk]})),bridge:signed=>f.c.zeroRequest(signed)});
+const server=http.createServer(async(req,res)=>{try{const url=new URL(req.url,'http://127.0.0.1');if(url.pathname==='/api'){
+ const role=(req.headers.authorization||'').replace('Bearer local-demo-','');if(!subjects[role])throw Error('TEST_IDENTITY_REQUIRED');let raw='';for await(const part of req){raw+=part;if(raw.length>30000)throw Error('TOO_LARGE');}
+ const response=await gateway.fetch(new Request(origin+'/api',{method:'POST',headers:{origin,'content-type':'application/json',authorization:'Bearer '+token(subjects[role])},body:raw}),{ZERO_LAB_ENABLED:'YES',FREE_PLAN_ATTESTED:'YES',BILLING_ENABLED:'NO',GOOGLE_CLIENT_ID:audience,FRONTEND_ORIGIN:origin,GATEWAY_SECRET:f.secret});res.writeHead(response.status,{'content-type':'application/json','cache-control':'no-store'});res.end(await response.text());return;
+ }
+ const response=await (await liveWorker()).fetch(new Request('http://127.0.0.1'+url.pathname),{});let body=await response.text();if(url.pathname==='/entry.mjs')body=body.replace("start().catch(()=>status('No se pudo abrir el acceso. No se confirmó ninguna operación.'));","window.google={accounts:{id:{disableAutoSelect(){}}}};status('TEST_ONLY · FASE 5G LOCAL');login({credential:'local-demo-'+(new URLSearchParams(location.search).get('role')||'administrator')});");res.writeHead(response.status,{'content-type':response.headers.get('content-type')||'text/plain','cache-control':'no-store'});res.end(body);
+ }catch(e){res.writeHead(500,{'content-type':'application/json'});res.end(JSON.stringify({error:e.message}));}});server.listen(0,'127.0.0.1',()=>console.log('TEST_ONLY LOCAL http://127.0.0.1:'+server.address().port));

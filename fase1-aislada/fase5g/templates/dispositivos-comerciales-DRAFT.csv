@@ -1,0 +1,4 @@
+deviceAlias,operatorRole,realEquipmentConfirmed,browserProfile,origin,inspectionApprovalEvidence,inspectionStatus,databaseNamesVersions,engineEpoch,pendingOperationIds,confirmedReceiptIds,rejections,lastSync,exportAuthorized
+TO_BE_IDENTIFIED,administrator,NO,,,,NOT_INSPECTED,,,,,,,NO
+TO_BE_IDENTIFIED,operations,NO,,,,NOT_INSPECTED,,,,,,,NO
+TO_BE_IDENTIFIED,seller,NO,,,,NOT_INSPECTED,,,,,,,NO

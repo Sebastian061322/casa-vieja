@@ -1,0 +1,21 @@
+{
+  "environment": "LOCAL_SYNTHETIC_NO_NETWORK",
+  "actualGoogle": false,
+  "physicalDevice": false,
+  "browser": "in-app browser",
+  "workerSha256": "966dc1577447a4b95b07975fd57ae9693743b2473ba61f527c999a584116ba8a",
+  "backendSha256": "0a64a97eabf93224e407de9f491c4b8c757d5742edb7ad1db5f42d0e8b8df604",
+  "passed": true,
+  "checks": [
+    "Unimplemented advertising demo absent after async dashboard render",
+    "Reception weight/cost/classification blank and supplier required",
+    "MILL submitted once with fictitious input 10000g output 8000g waste 2000g and explicit fictitious cost",
+    "MILL server-simulated receipt confirmed and local queue empty",
+    "ROAST source selector contains only GREEN 8000g from same synthetic lot",
+    "Form preserves existing visual design and uses empty measured weights"
+  ],
+  "limitations": [
+    "No new iPhone or Android test on 5G",
+    "Real Google/Cloudflare validation requires publication authorization"
+  ]
+}

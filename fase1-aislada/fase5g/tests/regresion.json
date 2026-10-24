@@ -1,0 +1,13 @@
+{
+  "environment": "LOCAL_SYNTHETIC_NO_NETWORK",
+  "executedAtUTC": "2026-10-24T04:04:27.234Z",
+  "files": 55,
+  "tests": 477,
+  "passed": 477,
+  "failed": 0,
+  "exitCode": 0,
+  "actualGoogle": false,
+  "physicalDevices": false,
+  "isolatedSourceCopy": true,
+  "baselineFilesModified": false
+}

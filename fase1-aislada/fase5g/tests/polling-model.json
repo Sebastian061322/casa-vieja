@@ -1,0 +1,17 @@
+{
+  "environment": "LOCAL_SYNTHETIC_NO_NETWORK",
+  "actualGoogle": false,
+  "cycleIncludesBootstrapAndSnapshot": true,
+  "baselineReadsPerCycle": 32,
+  "candidateReadsPerCycle": 20,
+  "baselineIntervalMs": 30000,
+  "candidateIntervalMs": 120000,
+  "hypothesis": {
+    "devices": 3,
+    "hoursPerDay": 8,
+    "baselinePropertyReads": 92160,
+    "candidatePropertyReads": 14400
+  },
+  "quotaBillingMeasured": false,
+  "productionCapacityProven": false
+}

@@ -1,0 +1,11 @@
+// Pruebas locales únicamente; no construye ni publica fases anteriores.
+import os from 'node:os';import fs from 'node:fs';import path from 'node:path';import {spawnSync} from 'node:child_process';import {fileURLToPath} from 'node:url';
+const root=path.dirname(fileURLToPath(import.meta.url)),lab=path.resolve(root,'..');
+const build=spawnSync(process.execPath,[path.join(root,'build-local.cjs')],{encoding:'utf8'});if(build.status!==0)throw Error(build.stderr||build.stdout);
+// Las pruebas 5D esperan el guard sin ID autorizado; compilar solo su copia temporal.
+const shadow=fs.mkdtempSync(path.join(os.tmpdir(),'cv5g-regression-'));
+fs.cpSync(lab,shadow,{recursive:true,filter:source=>!source.split(path.sep).includes('evidencia-local')});
+const fixtureBuild=spawnSync(process.execPath,[path.join(shadow,'fase5d/build.cjs')],{encoding:'utf8'});if(fixtureBuild.status!==0)throw Error(fixtureBuild.stderr||fixtureBuild.stdout);
+const tests=fs.readdirSync(shadow,{recursive:true}).filter(n=>/\.test\.(cjs|mjs)$/.test(n)||/(^|\/)acceptance\.cjs$/.test(n)).sort().map(n=>path.join(shadow,n));
+const result=spawnSync(process.execPath,['--test',...tests],{cwd:path.resolve(lab,'..'),encoding:'utf8',maxBuffer:24*1024*1024});const output=(result.stdout||'')+(result.stderr||'');fs.writeFileSync(path.join(root,'tests/resultados.txt'),output);const value=name=>Number(new RegExp('(?:#|ℹ) '+name+' (\\d+)').exec(output)?.[1]||0);const report={environment:'LOCAL_SYNTHETIC_NO_NETWORK',executedAtUTC:new Date().toISOString(),files:tests.length,tests:value('tests'),passed:value('pass'),failed:value('fail'),exitCode:result.status,actualGoogle:false,physicalDevices:false,isolatedSourceCopy:true,baselineFilesModified:false};fs.writeFileSync(path.join(root,'tests/regresion.json'),JSON.stringify(report,null,2)+'\n');for(const name of ['property-reads.json','polling-model.json']){const file=path.join(shadow,'fase5g/tests',name);if(fs.existsSync(file))fs.copyFileSync(file,path.join(root,'tests',name));}
+console.log(JSON.stringify(report));if(result.status!==0)console.log(output.split('\n').filter(x=>/not ok|✖|Error|expected|actual|location/.test(x)).slice(-30).join('\n'));process.exitCode=result.status??1;

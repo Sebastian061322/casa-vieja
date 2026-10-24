@@ -1,0 +1,9 @@
+{
+  "environment": "LOCAL_SYNTHETIC_NO_NETWORK",
+  "actualGoogle": false,
+  "action": "single administrator snapshot",
+  "baselinePropertiesReads": 17,
+  "candidatePropertiesReads": 11,
+  "valuesReadAgainAcrossRequests": true,
+  "notQuotaBillingMeasurement": true
+}

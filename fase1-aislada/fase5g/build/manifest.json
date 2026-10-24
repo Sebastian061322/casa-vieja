@@ -1,0 +1,77 @@
+{
+  "format": "CV_PRE_RC_5G",
+  "environment": "TEST_ONLY",
+  "sourceCommit": "2959eafd2ad1c126422e6444c2fd35c7d6ca08d9",
+  "remoteModified": false,
+  "published": false,
+  "productionReady": false,
+  "policyStatus": "DRAFT",
+  "pollingMs": 120000,
+  "propertyCacheScope": "SINGLE_REQUEST_READS_ONLY",
+  "baseRemote": {
+    "worker": "4fdf13da",
+    "appsScript": 3
+  },
+  "candidateRemote": {
+    "worker": null,
+    "appsScript": null
+  },
+  "excludedFeatures": [
+    "5F_CSV_ADS",
+    "5F_CRM_WHATSAPP_ATTRIBUTION"
+  ],
+  "schema": {
+    "existing": [
+      "DiarioInventarioV3",
+      "MovimientosInventarioV3"
+    ],
+    "newStage": "GREEN",
+    "newCommands": [
+      "MILL",
+      "GRIND"
+    ],
+    "noMigration": true
+  },
+  "files": [
+    {
+      "path": "process.js",
+      "sha256": "2b22ef6d8e7b7fdc2416262d7d37a320636aafb71a34bd791f3a42936fa79c52"
+    },
+    {
+      "path": "property-scope.gs",
+      "sha256": "caf544e7fd4eaf05233f3524756ad0df9407477af60578aa001477ac8d128dab"
+    },
+    {
+      "path": "writer-fence.cjs",
+      "sha256": "886689e9c62b3a11444b1ef741e6b16481f0cd2c15777cab339c348f52ee9338"
+    },
+    {
+      "path": "opening-act.cjs",
+      "sha256": "78ac91e8d2bc5c4cca5b0604b2b16b67c654689c5eec64f5521703be75bdcbe4"
+    },
+    {
+      "path": "ui.js",
+      "sha256": "dd1c1a56f7b8446ad536b78fbaeb85db1322c88a4ee13b87e6d1f5f0f47ebf4f"
+    },
+    {
+      "path": "build-local.cjs",
+      "sha256": "355fff374750f010ad9b00cc67bd2efa9b5c64df1834950d54a11e20b0923b3e"
+    },
+    {
+      "path": "build/Candidate.gs",
+      "sha256": "0a64a97eabf93224e407de9f491c4b8c757d5742edb7ad1db5f42d0e8b8df604"
+    },
+    {
+      "path": "build/worker-bundle.mjs",
+      "sha256": "966dc1577447a4b95b07975fd57ae9693743b2473ba61f527c999a584116ba8a"
+    }
+  ],
+  "blockers": [
+    "Full remote infrastructure recovery not executed",
+    "Legacy writers not inspected or fenced",
+    "Commercial device queues not authorized for inspection",
+    "Opening executor/carryover and policies not approved",
+    "November commercial catalog/shipping and production namespace not approved",
+    "New stage forms not yet physically tested; candidate not deployed"
+  ]
+}

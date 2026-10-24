@@ -1,0 +1,181 @@
+{
+  "status": "AUTHORIZED_PENDING_PUBLICATION",
+  "environment": "TEST_ONLY",
+  "baseCommit": "2959eafd2ad1c126422e6444c2fd35c7d6ca08d9",
+  "branch": "dev/fase1-estabilizacion",
+  "remoteActionsPerformed": false,
+  "productionReady": false,
+  "workerSha256": "966dc1577447a4b95b07975fd57ae9693743b2473ba61f527c999a584116ba8a",
+  "backendSha256": "0a64a97eabf93224e407de9f491c4b8c757d5742edb7ad1db5f42d0e8b8df604",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "9e9028c33f5c4745d732a13406f9afd6e6b9edfa2be309a63e80aab44553d8ac"
+    },
+    {
+      "path": "AUDITORIA-5F-Y-DEFECTOS.md",
+      "sha256": "6e58044259d42cbde3f2325af85cd0f81d13c40d4b40ee8158ad55800bb644ce"
+    },
+    {
+      "path": "CRONOGRAMA-Y-GO.md",
+      "sha256": "47cab35724caea0447ac8285b1ccaf880fca2916c0effacef26cc51a92e8979d"
+    },
+    {
+      "path": "CUOTAS-Y-PRESUPUESTO.md",
+      "sha256": "9fdbc5469f6b0bfd5d2e2024f205b3fa478ddd5eeb55cd371899b41e21159e56"
+    },
+    {
+      "path": "DECISIONES-DRAFT.md",
+      "sha256": "f9fcda8b90c416414646bd4ac0a239dbaf9b05fef215372fc9ee958ed7376d32"
+    },
+    {
+      "path": "OPERACION-APERTURA-Y-CORTE.md",
+      "sha256": "0928afc233783c1427fe26d44f902903c3a6f7beda0d681824542e0f0394416e"
+    },
+    {
+      "path": "README.md",
+      "sha256": "e30a477888cfbbe77a8c7cad8ff153d568fa7d8762a6ed1d5b4daf4e3ad8c665"
+    },
+    {
+      "path": "RECUPERACION-Y-AUTORIZACIONES.md",
+      "sha256": "e8d62ed8633600f24ee550154f9956ea6a9704a22ded5b4635a90badc31db301"
+    },
+    {
+      "path": "build-local.cjs",
+      "sha256": "355fff374750f010ad9b00cc67bd2efa9b5c64df1834950d54a11e20b0923b3e"
+    },
+    {
+      "path": "opening-act.cjs",
+      "sha256": "78ac91e8d2bc5c4cca5b0604b2b16b67c654689c5eec64f5521703be75bdcbe4"
+    },
+    {
+      "path": "process.js",
+      "sha256": "2b22ef6d8e7b7fdc2416262d7d37a320636aafb71a34bd791f3a42936fa79c52"
+    },
+    {
+      "path": "property-scope.gs",
+      "sha256": "caf544e7fd4eaf05233f3524756ad0df9407477af60578aa001477ac8d128dab"
+    },
+    {
+      "path": "run-recovery.mjs",
+      "sha256": "107e1ec568b3d0874725b676b8d2926bbaa0cd228d7ae1d726c6877c8aaa3e28"
+    },
+    {
+      "path": "run-tests.mjs",
+      "sha256": "057f32e8b6e4ed9fc8224a265e282df86c3934977a5f742343aae9441ff3ad8a"
+    },
+    {
+      "path": "ui.js",
+      "sha256": "dd1c1a56f7b8446ad536b78fbaeb85db1322c88a4ee13b87e6d1f5f0f47ebf4f"
+    },
+    {
+      "path": "writer-fence.cjs",
+      "sha256": "886689e9c62b3a11444b1ef741e6b16481f0cd2c15777cab339c348f52ee9338"
+    },
+    {
+      "path": "build/Candidate.gs",
+      "sha256": "0a64a97eabf93224e407de9f491c4b8c757d5742edb7ad1db5f42d0e8b8df604"
+    },
+    {
+      "path": "build/manifest.json",
+      "sha256": "1b4e1d09c7853f27fad9215b6864a06bc4a74d8cd40a5d8003144437933cc39f"
+    },
+    {
+      "path": "build/worker-bundle.mjs",
+      "sha256": "966dc1577447a4b95b07975fd57ae9693743b2473ba61f527c999a584116ba8a"
+    },
+    {
+      "path": "templates/acta-apertura-DRAFT.json",
+      "sha256": "57bff7a9a2886cac4795f5e54ed08e25021c479de2de2f56fb982bbd23619395"
+    },
+    {
+      "path": "templates/catalogo-noviembre-DRAFT.csv",
+      "sha256": "6577032dd2fcafe97e807968cc202b3fa040122d21139bf035f223456c23a620"
+    },
+    {
+      "path": "templates/conteo-apertura.csv",
+      "sha256": "ca713b7ba9d5597ed5ec5fa30b12af824267769bea902a95dd367220ea0f90f0"
+    },
+    {
+      "path": "templates/dispositivos-comerciales-DRAFT.csv",
+      "sha256": "479045174424394382663dd8ee77502c4435232946ecf622820704c2c2c56795"
+    },
+    {
+      "path": "templates/lote-300kg-DRAFT.json",
+      "sha256": "b586ee939f43e6b08218b38e323f92dfc2ca1168dbfe49bfb138c0c69812ebaf"
+    },
+    {
+      "path": "tests/browser-local.json",
+      "sha256": "9f10faa4884128dfd081c91b9ad5a189bddf091a7d0a3c415150d90f7c8fc190"
+    },
+    {
+      "path": "tests/commercial.test.mjs",
+      "sha256": "78c5ba9d10bf43a28af66ff9bd373c6d70081ab38c3f9e8ac775f79c5a9c4cac"
+    },
+    {
+      "path": "tests/controls.test.cjs",
+      "sha256": "b128d58cfe71bd7851d361118afa7a49736552d5a73029e24a5c5c62d5bc9bfe"
+    },
+    {
+      "path": "tests/flow.mjs",
+      "sha256": "cfa24f1b3811c9b356ca3db43f4f4d6cca90182d8e1004e271403377fa1cc698"
+    },
+    {
+      "path": "tests/harness.mjs",
+      "sha256": "4ea5d2de2aca3eb28f94e1caea7915e237941faa750c449122e45661262725de"
+    },
+    {
+      "path": "tests/polling-model.json",
+      "sha256": "db7591e576acaed2d3033cb879827a22795dff71a2842cca26b8eefec7d15a57"
+    },
+    {
+      "path": "tests/process.test.mjs",
+      "sha256": "12d301749bfd1c259872ab04242b80d096cdff49b2dbf1e835b15b5711aefd58"
+    },
+    {
+      "path": "tests/property-reads.json",
+      "sha256": "a84f41280a2a3a7693ed6606873bfef5392e156bc11efe4659fa212dec409504"
+    },
+    {
+      "path": "tests/quotas.test.mjs",
+      "sha256": "faef0cfb0334bed70ef606195fa8c257e9796bd7790ab0eeffed21c31cf1f421"
+    },
+    {
+      "path": "tests/recovery-local.json",
+      "sha256": "c47f47c141183dc72e5c9bfd936d3d3a2323fef8c8062bb0a2748e8fe378bbd1"
+    },
+    {
+      "path": "tests/regresion.json",
+      "sha256": "2ab1a15ac376155aae4e2961cabcbdaf4b1782d4b44109eabcb702136c17f3a3"
+    },
+    {
+      "path": "tests/resultados.txt",
+      "sha256": "d9dd844f90b548793d7f619b0173a2a6ad9807a013b959a3de4951a34a3ec598"
+    },
+    {
+      "path": "tests/serve-local.mjs",
+      "sha256": "ef4e5ce17c2f3b0a12b2f1645d608c81a6af935829ea2fad13c8a54e23705f7b"
+    }
+  ],
+  "excludes": [
+    "evidencia-local/**",
+    "all files outside fase5g"
+  ],
+  "requestedRemoteTargets": [
+    "GitHub dev/fase1-estabilizacion",
+    "Worker casa-vieja-lab-auth",
+    "Apps Script CasaVieja_AUTH_TEST_ONLY_5D"
+  ],
+  "createResources": false,
+  "changeOAuthScopes": false,
+  "changeSecrets": false,
+  "changeAccounts": false,
+  "launchAuthorized": false,
+  "testsLocalPassed": 477,
+  "ownerApproval": "Existing lab Worker and Apps Script plus development branch only",
+  "queueCensus": {
+    "computer": "NO_PENDING_OWNER_CONFIRMED",
+    "iphone": "NO_PENDING_OWNER_CONFIRMED",
+    "android": "NO_PENDING_OWNER_CONFIRMED"
+  }
+}

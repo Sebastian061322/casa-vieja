@@ -1,0 +1,21 @@
+{
+  "status": "PLANNED_NOT_RECEIVED",
+  "environment": "DRAFT_NOT_EXECUTABLE",
+  "plannedParchmentKgApprox": 300,
+  "actualReceiptGrams": null,
+  "lotId": null,
+  "supplier": null,
+  "receivedAt": null,
+  "evidence": null,
+  "acquisitionCents": null,
+  "freightCents": null,
+  "processingStages": [
+    "PARCHMENT",
+    "GREEN",
+    "BULK_GRANO",
+    "BULK_MOLIDO_OPTIONAL",
+    "PACKAGED"
+  ],
+  "commercialAvailable": null,
+  "assumedYield": null
+}

@@ -1,0 +1,30 @@
+{
+  "environment": "LOCAL_SYNTHETIC_NO_NETWORK",
+  "actualGoogle": false,
+  "actualInfrastructure": false,
+  "actualAccounts": false,
+  "createdAt": "2026-10-24T04:04:27.295Z",
+  "sha256": "439e3a5e3565f915d6c6a41e77344fa244a5a301b6740aabc180e8f4fef6fd94",
+  "codeFiles": 6,
+  "configuredSyntheticUsers": 3,
+  "completeSyntheticDeviceStates": 2,
+  "compatiblePreparedRecovered": true,
+  "partialEffectsAtBackup": 1,
+  "partialEffectsAfterRecovery": 3,
+  "lostAckOriginalReceiptRecovered": true,
+  "repeatedExecutionNoDuplicate": true,
+  "restoreInterruptedAndResumed": true,
+  "sourceUnchanged": true,
+  "backupVerified": true,
+  "revocationVerified": true,
+  "passed": true,
+  "revisionAfterRecovery": 19,
+  "wallMs": 89,
+  "fullServiceRtoMeasured": false,
+  "secretsInArchive": false,
+  "limitations": [
+    "Same local computer; not independently controlled cloud storage",
+    "Real OAuth, operator accounts, secrets and deployment recovery not executed",
+    "These are compatible synthetic device queues; no export from a commercial device"
+  ]
+}

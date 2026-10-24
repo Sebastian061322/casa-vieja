@@ -1,0 +1,25 @@
+{
+  "environment": "TEST_ONLY",
+  "profile": "seller",
+  "workerVersion": "94e3fbd3",
+  "appsScriptVersion": 4,
+  "ownerConfirmed": true,
+  "observedInBrowser": true,
+  "passed": true,
+  "checks": [
+    "Resultado: APROBADO · seller · TEST_ONLY",
+    "Inicio UTC: 2026-10-24T13:29:39.939Z",
+    "seller-response-redacted: APROBADO",
+    "deny-users: APROBADO · PERMISSION_DENIED · 4624 ms",
+    "deny-reports: APROBADO · PERMISSION_DENIED · 5921 ms",
+    "deny-dashboard: APROBADO · PERMISSION_DENIED · 5843 ms",
+    "deny-setUser: APROBADO · PERMISSION_DENIED · 4301 ms",
+    "deny-configure: APROBADO · PERMISSION_DENIED · 4298 ms",
+    "reject-forged-role: APROBADO · IDENTITY_SPOOFING · 5358 ms",
+    "read-snapshot-1: APROBADO · 6714 ms",
+    "read-snapshot-2: APROBADO · 6862 ms",
+    "read-snapshot-3: APROBADO · 5643 ms",
+    "journal-revision-unchanged: APROBADO",
+    "Fin UTC: 2026-10-24T13:30:41.708Z"
+  ]
+}

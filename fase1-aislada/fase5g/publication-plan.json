@@ -165,10 +165,6 @@
       "sha256": "5b699986698abea18d8c6076dfb594601aa7026cb690e4067ce04ff0d072d762"
     },
     {
-      "path": "ESTADO-PUBLICACION-5G.md",
-      "sha256": "02c3c2b70bfd877be64c285696ae4a561726200ba927fac67be6d48c877925da"
-    },
-    {
       "path": "tests/recepcion-remota-5g.json",
       "sha256": "25f4fdbd9fcb3a7427235f75f186892a61daf1ff164efd5db58c210f18b35fa3"
     },
@@ -183,12 +179,59 @@
     {
       "path": "tests/hallazgos-ui-remotos-5g.json",
       "sha256": "4eb29ad3e8be944fc608d4452ab03704de939d43bb6f19ada3001255e706b64f"
+    },
+    {
+      "path": "patches-ui/README.md",
+      "sha256": "e5f91b28e9c6cd57b8ab9b8ff4d251aeda32a174ea8a2816838fcd80d5b3911a"
+    },
+    {
+      "path": "patches-ui/lot-metadata.cjs",
+      "sha256": "db8941a417c514dc2872b1cf6789ee8a670be7446e83815c44aa87e5cf08a124"
+    },
+    {
+      "path": "patches-ui/build.cjs",
+      "sha256": "60a07beda72e76f45351deb293208c361f747c668c148b10791cfb0c6b9f8af7"
+    },
+    {
+      "path": "patches-ui/metadata.test.cjs",
+      "sha256": "dbe5fbf99413c53a68706b8d976daf04b524f4d67cd79225f05748d6a078910b"
+    },
+    {
+      "path": "patches-ui/run-regression.mjs",
+      "sha256": "180b081efbe6377f1f8f8e2963d1a380705e917dcd6e16f90f2be7bb51e8d3cf"
+    },
+    {
+      "path": "patches-ui/regresion.json",
+      "sha256": "1408f6ed6183277eb8a5e3e8f1daa2a6dac940d2bf0103fb0a7e78b87fd34bfe"
+    },
+    {
+      "path": "patches-ui/resultados.txt",
+      "sha256": "bde4a570b489df1e0bec9ea854e6516933b018690327e96afc55300f764f0bae"
+    },
+    {
+      "path": "patches-ui/build/worker-bundle.mjs",
+      "sha256": "b350fe05fadd3cdc72b7b8c17637674bbc53fe84bde462dd19f47941dc5b1676"
+    },
+    {
+      "path": "patches-ui/build/manifest.json",
+      "sha256": "2db0467dd9543927d9457402b5b4005f7dd5525c7ce352264d3bae2e761679b9"
+    },
+    {
+      "path": "tests/permisos-vendedor-google-5g.json",
+      "sha256": "544284999303bb97cfc6051f7fe8015c6868b1a413e337de165d21d9f7e9bc8b"
+    },
+    {
+      "path": "tests/permisos-administrador-google-5g.json",
+      "sha256": "234c3673a8dfd6162fa4f9bf02d153a7a3da8737db23f3bcc454fc12eab5a643"
+    },
+    {
+      "path": "ESTADO-PUBLICACION-5G.md",
+      "sha256": "3defe89ac830f960812c6deb5ecbb5c182c3993e50f7d2830fc84e89e128022e"
     }
   ],
   "excludes": [
     "evidencia-local/**",
-    "all files outside fase5g",
-    "patches-ui/** (new patch not approved for publication)"
+    "all files outside fase5g"
   ],
   "requestedRemoteTargets": [
     "GitHub dev/fase1-estabilizacion",
@@ -221,8 +264,8 @@
     "publicRejections": 7,
     "assetHashes": 3,
     "operationsProfile": "PASSED",
-    "administratorProfile": "NOT_YET_RETESTED",
-    "sellerProfile": "NOT_YET_RETESTED",
+    "administratorProfile": "PASSED_CURRENT_5G",
+    "sellerProfile": "PASSED_CURRENT_5G",
     "processChain": "PASSED",
     "simpleTripackCombined": "PASSED",
     "partialAndFullPayment": "PASSED",
@@ -230,5 +273,12 @@
     "metadataEditPreservesCost": "PASSED",
     "previousSyntheticHistory": "268 journal rows and 182 effects unchanged; 13 new committed operations and 25 unique new effects",
     "pendingQueueAtEnd": 0
+  },
+  "uiPatch": {
+    "ownerAuthorized": true,
+    "workerSha256": "b350fe05fadd3cdc72b7b8c17637674bbc53fe84bde462dd19f47941dc5b1676",
+    "status": "PUBLICATION_IN_PROGRESS",
+    "localRegressionPassed": 482,
+    "backendChanged": false
   }
 }

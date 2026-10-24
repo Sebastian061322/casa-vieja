@@ -1,0 +1,13 @@
+{
+  "environment": "LOCAL_SYNTHETIC_NO_NETWORK",
+  "workerSha256": "b350fe05fadd3cdc72b7b8c17637674bbc53fe84bde462dd19f47941dc5b1676",
+  "tests": 482,
+  "passed": 482,
+  "failed": 0,
+  "files": 56,
+  "exitCode": 0,
+  "sourceCopyIsolated": true,
+  "actualGoogle": false,
+  "physicalDevices": false,
+  "published": false
+}

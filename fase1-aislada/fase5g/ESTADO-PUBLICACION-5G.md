@@ -21,8 +21,8 @@ Fecha: 24 de octubre de 2026, Lima. Dictamen comercial: **NO-GO**. No se autoriz
 
 ## Pendientes y límites
 
-Administrador y vendedor: repetición sobre 5G en curso. Google solicitó Touch ID al vendedor; esa verificación requiere intervención del propietario. Las pruebas previas de 5E no se cuentan como nuevas aprobaciones.
+Administrador y vendedor: repetición sobre 5G aprobada por el propietario y observada en navegador. El vendedor completó personalmente Touch ID. Evidencias en tests/permisos-vendedor-google-5g.json y tests/permisos-administrador-google-5g.json; ambas sobre Worker 94e3fbd3 y Apps Script 4. Las pruebas previas de 5E no se cuentan como nuevas aprobaciones.
 
-Dos defectos visuales medios encontrados: tarjetas de lotes sintéticos antiguos sin metadatos muestran undefined/NaN; el filtro de pedidos puede reactivar visualmente Cancelar pese a que el servidor lo bloquea. Corrección local preparada con cinco pruebas aprobadas, sin publicar. Una versión nueva requiere autorización y revisión de interfaz antes de desplegar.
+Dos defectos visuales medios encontrados: tarjetas de lotes sintéticos antiguos sin metadatos muestran undefined/NaN; el filtro de pedidos puede reactivar visualmente Cancelar pese a que el servidor lo bloquea. Corrección preparada con 482 pruebas completas y revisión local de interfaz; propietario autorizó publicar únicamente desarrollo y Worker de laboratorio. Paquete b350fe05fadd3cdc72b7b8c17637674bbc53fe84bde462dd19f47941dc5b1676. Actualización y comprobación en curso; backend y registros sin cambios.
 
 Pendientes críticos: recuperación integral independiente en proveedores, cierre comprobado de todos los escritores antiguos, censo autorizado de dispositivos comerciales, inventario de apertura y continuidad de pedidos/cobros existentes, políticas y catálogo/tarifas aprobados. También falta repetir móviles y escenarios de concurrencia/reconexión sobre el candidato final. No se han utilizado inventarios físicos ni clientes reales. Los 300 kg previstos no se han registrado.

@@ -1,0 +1,19 @@
+{
+  "environment": "TEST_ONLY",
+  "profile": "administrator",
+  "workerVersion": "94e3fbd3",
+  "appsScriptVersion": 4,
+  "ownerConfirmed": true,
+  "observedInBrowser": true,
+  "passed": true,
+  "checks": [
+    "Resultado: APROBADO · administrator · TEST_ONLY",
+    "Inicio UTC: 2026-10-24T13:33:37.711Z",
+    "reject-forged-role: APROBADO · IDENTITY_SPOOFING · 4986 ms",
+    "read-snapshot-1: APROBADO · 6511 ms",
+    "read-snapshot-2: APROBADO · 6625 ms",
+    "read-snapshot-3: APROBADO · 6038 ms",
+    "journal-revision-unchanged: APROBADO",
+    "Fin UTC: 2026-10-24T13:34:14.162Z"
+  ]
+}

@@ -1,0 +1,12 @@
+import fs from 'node:fs';import path from 'node:path';import os from 'node:os';import {spawnSync} from 'node:child_process';import {fileURLToPath} from 'node:url';import {createHash} from 'node:crypto';
+const root=path.dirname(fileURLToPath(import.meta.url)),lab=path.resolve(root,'../..');
+const shadow=fs.mkdtempSync(path.join(os.tmpdir(),'cv5g-ui-regression-'));
+fs.cpSync(lab,shadow,{recursive:true,filter:p=>!p.split(path.sep).includes('evidencia-local')});
+const fixture=spawnSync(process.execPath,[path.join(shadow,'fase5d/build.cjs')],{encoding:'utf8'});if(fixture.status!==0)throw Error(fixture.stderr||fixture.stdout);
+const candidate=fs.readFileSync(path.join(root,'build/worker-bundle.mjs'));
+fs.writeFileSync(path.join(shadow,'fase5g/build/worker-bundle.mjs'),candidate);
+const tests=fs.readdirSync(shadow,{recursive:true}).filter(p=>/\.test\.(cjs|mjs)$/.test(p)||/(^|\/)acceptance\.cjs$/.test(p)).sort().map(p=>path.join(shadow,p));
+const result=spawnSync(process.execPath,['--test',...tests],{encoding:'utf8',maxBuffer:24*1024*1024});const output=(result.stdout||'')+(result.stderr||'');
+const count=n=>Number(new RegExp('(?:#|ℹ) '+n+' (\\d+)').exec(output)?.[1]||0);
+const report={environment:'LOCAL_SYNTHETIC_NO_NETWORK',workerSha256:createHash('sha256').update(candidate).digest('hex'),tests:count('tests'),passed:count('pass'),failed:count('fail'),files:tests.length,exitCode:result.status,sourceCopyIsolated:true,actualGoogle:false,physicalDevices:false,published:false};
+fs.writeFileSync(path.join(root,'regresion.json'),JSON.stringify(report,null,2)+'\n');fs.writeFileSync(path.join(root,'resultados.txt'),output);console.log(JSON.stringify(report));if(result.status!==0)console.log(output.split('\n').filter(x=>/not ok|✖|Error|expected|actual/.test(x)).slice(-25).join('\n'));process.exitCode=result.status??1;

@@ -1,0 +1,72 @@
+{
+  "environment": "TEST_ONLY",
+  "historicalSyntheticJournalUnchanged": true,
+  "historicalSyntheticEffectsUnchanged": true,
+  "journalBefore": 268,
+  "journalAfter": 270,
+  "effectsBefore": 182,
+  "effectsAfter": 183,
+  "operationId": "d7e5a27d-0091-4228-8fc8-cf0981e2a00b",
+  "command": "RECEIVE_LOT",
+  "quantityGrams": 10000,
+  "lotId": "demo:lot-0b33fd06-d55a-495c-882c-298984b72876",
+  "resourceId": "demo:parchment-0b33fd06-d55a-495c-882c-298984b72876",
+  "policy": {
+    "version": "DRAFT_5G_1",
+    "status": "DRAFT",
+    "approvedForProduction": false,
+    "environment": "TEST_ONLY"
+  },
+  "preparedCount": 1,
+  "committedCount": 1,
+  "result": {
+    "epoch": "TEST_ONLY_V3",
+    "operationId": "d7e5a27d-0091-4228-8fc8-cf0981e2a00b",
+    "state": "COMMITTED",
+    "revision": 130,
+    "saleId": "future:0b33fd06-d55a-495c-882c-298984b72876",
+    "saleVersion": 1
+  },
+  "frontendReceiptRecovery": "CONFIRMED_BROWSER_NO_PENDING",
+  "projection": [
+    {
+      "id": "demo:parchment-0b33fd06-d55a-495c-882c-298984b72876",
+      "physical": 0,
+      "reserved": 0,
+      "valueCents": 0,
+      "reservedValueCents": 0,
+      "qty": 0,
+      "lot": "demo:lot-0b33fd06-d55a-495c-882c-298984b72876",
+      "product": "pergamino",
+      "stage": "PARCHMENT",
+      "family": "Gourmet",
+      "unit": "g"
+    }
+  ],
+  "effectKeys": [
+    [
+      "id",
+      "operationId",
+      "saleId",
+      "date",
+      "responsible",
+      "lot",
+      "product",
+      "unit",
+      "resourceId",
+      "kind",
+      "qtyDelta",
+      "reservedDelta",
+      "valueDelta",
+      "reservedValueDelta"
+    ]
+  ],
+  "auditRole": "operations",
+  "frontendOwnerConfirmed": true,
+  "previousArchivedRejectionPreserved": true,
+  "receiptReadback": {
+    "qtyDeltaGrams": 10000,
+    "valueDeltaCents": 11000,
+    "reservedDelta": 0
+  }
+}

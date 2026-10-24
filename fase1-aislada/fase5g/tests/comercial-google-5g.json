@@ -1,0 +1,101 @@
+{
+  "environment": "TEST_ONLY",
+  "actualGoogle": true,
+  "workerVersion": "94e3fbd3",
+  "newOrders": [
+    {
+      "operationId": "edbd4896-c036-45a4-98cb-b6ded264452f",
+      "saleId": "future:65008074-17b2-41f4-97b2-a886a6d3499b",
+      "customer": "TEST_ONLY_5G_SIMPLE_20261024_01",
+      "revision": 136,
+      "totalCents": 3500,
+      "costCents": 1172,
+      "profitCents": 2328,
+      "lines": [
+        {
+          "qty": 1,
+          "grams": 500,
+          "grind": "molido",
+          "totalCostCents": 1172
+        }
+      ],
+      "state": "COMMITTED"
+    },
+    {
+      "operationId": "ac0f1781-f325-4029-9dd1-59c80d64a352",
+      "saleId": "future:1f5c6010-cbb9-4ddf-a6e7-866e2201fbee",
+      "customer": "TEST_ONLY_5G_TRIPACK_20261024_01",
+      "revision": 137,
+      "totalCents": 9900,
+      "costCents": 3517,
+      "profitCents": 6383,
+      "lines": [
+        {
+          "qty": 3,
+          "grams": 500,
+          "grind": "molido",
+          "totalCostCents": 3517
+        }
+      ],
+      "state": "COMMITTED"
+    },
+    {
+      "operationId": "2687fc5a-4639-4fec-a96c-d260fcf5c566",
+      "saleId": "future:7d58d0fe-3a34-435f-9613-753c46dbcfe5",
+      "customer": "TEST_ONLY_5G_COMBO_20261024_01",
+      "revision": 138,
+      "totalCents": 6000,
+      "costCents": 1782,
+      "profitCents": 4218,
+      "lines": [
+        {
+          "qty": 1,
+          "grams": 500,
+          "grind": "molido",
+          "totalCostCents": 1172
+        },
+        {
+          "qty": 1,
+          "grams": 250,
+          "grind": "grano",
+          "totalCostCents": 610
+        }
+      ],
+      "state": "COMMITTED"
+    }
+  ],
+  "simpleSale": {
+    "id": "future:65008074-17b2-41f4-97b2-a886a6d3499b",
+    "paymentsCents": [
+      1000,
+      2500
+    ],
+    "paymentInventoryEffects": 0,
+    "dispatchOperations": 1,
+    "dispatchEffects": 1,
+    "editInventoryEffects": 0,
+    "costCentsUnchanged": 1172,
+    "profitCentsUnchanged": 2328,
+    "browserConfirmedPaidCents": 3500,
+    "browserConfirmedDueCents": 0,
+    "browserConfirmedState": "DISPATCHED",
+    "dispatchButtonDisabled": true
+  },
+  "integrity": {
+    "journalRows": 294,
+    "effectRows": 207,
+    "journalBeforeUnchanged": true,
+    "effectsBeforeUnchanged": true,
+    "newPrepared": 13,
+    "newCommitted": 13,
+    "newRejected": 0,
+    "uniqueNewEffects": 25,
+    "newEffectCount": 25
+  },
+  "passed": true,
+  "limitations": [
+    "Not a repeat of the 5E two-device last-unit test on 5G",
+    "Administrator and seller current candidate checks still pending",
+    "Independent provider recovery not yet executed"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "environment": "TEST_ONLY",
+  "actualGoogle": true,
+  "workerVersion": "94e3fbd3",
+  "backendSha256": "0a64a97eabf93224e407de9f491c4b8c757d5742edb7ad1db5f42d0e8b8df604",
+  "operations": [
+    {
+      "type": "RECEIVE_LOT",
+      "operationId": "d7e5a27d-0091-4228-8fc8-cf0981e2a00b",
+      "state": "COMMITTED",
+      "revision": 130,
+      "actorRole": "operations"
+    },
+    {
+      "type": "MILL",
+      "operationId": "1352cf34-366c-4b97-b9dd-05d20bc75613",
+      "state": "COMMITTED",
+      "revision": 131,
+      "actorRole": "operations"
+    },
+    {
+      "type": "ROAST",
+      "operationId": "20e27d65-7478-490d-a58f-10c1b3f9a66a",
+      "state": "COMMITTED",
+      "revision": 132,
+      "actorRole": "operations"
+    },
+    {
+      "type": "GRIND",
+      "operationId": "ab5e4320-9060-4ef5-8595-98334de3f487",
+      "state": "COMMITTED",
+      "revision": 133,
+      "actorRole": "operations"
+    },
+    {
+      "type": "PREPARE_BAGS",
+      "operationId": "8b938e38-f918-4113-9a5f-c6624271aa52",
+      "state": "COMMITTED",
+      "revision": 134,
+      "actorRole": "operations"
+    },
+    {
+      "type": "PREPARE_BAGS",
+      "operationId": "9d676896-20ce-42a9-94b1-01a7bdb0a9f3",
+      "state": "COMMITTED",
+      "revision": 135,
+      "actorRole": "operations"
+    }
+  ],
+  "quantities": {
+    "receivedGrams": 10000,
+    "remainingCoffeeGrams": 7000,
+    "wasteGrams": 3000,
+    "pack500Units": 8,
+    "pack250Units": 8,
+    "bulkGranoGrams": 1000
+  },
+  "costsCents": {
+    "coffeeAndProcesses": 14500,
+    "materialsTransferred": 1760,
+    "totalInventory": 16260
+  },
+  "integrity": {
+    "journalRows": 280,
+    "effectRows": 202,
+    "journalBeforeUnchanged": true,
+    "effectsBeforeUnchanged": true
+  },
+  "frontendConfirmedEachOperation": true,
+  "pendingQueueAtChainEnd": 0,
+  "archivedRejectionsPreserved": 1,
+  "physicalCoffeeUsed": false,
+  "passed": true
+}

@@ -166,12 +166,29 @@
     },
     {
       "path": "ESTADO-PUBLICACION-5G.md",
-      "sha256": "1391c5ef4d36091ac0eecf9b4fc5a1b0ce9581deb13e30b77d5adb1bc089beb9"
+      "sha256": "02c3c2b70bfd877be64c285696ae4a561726200ba927fac67be6d48c877925da"
+    },
+    {
+      "path": "tests/recepcion-remota-5g.json",
+      "sha256": "25f4fdbd9fcb3a7427235f75f186892a61daf1ff164efd5db58c210f18b35fa3"
+    },
+    {
+      "path": "tests/cadena-google-5g.json",
+      "sha256": "5b7571217576793c7ebf08acb7e079dc720093ea148de4879055e2f2282d313d"
+    },
+    {
+      "path": "tests/comercial-google-5g.json",
+      "sha256": "afa717e218860f11e5db6cf1304aa50cacc4cf25cdb5c9e1d54cdc5c46957655"
+    },
+    {
+      "path": "tests/hallazgos-ui-remotos-5g.json",
+      "sha256": "4eb29ad3e8be944fc608d4452ab03704de939d43bb6f19ada3001255e706b64f"
     }
   ],
   "excludes": [
     "evidencia-local/**",
-    "all files outside fase5g"
+    "all files outside fase5g",
+    "patches-ui/** (new patch not approved for publication)"
   ],
   "requestedRemoteTargets": [
     "GitHub dev/fase1-estabilizacion",
@@ -195,7 +212,10 @@
   "backendDeployment": {
     "ownerConfirmed": true,
     "googleSuccessNoticeObserved": true,
-    "versionNumber": "NOT_YET_READ_BACK"
+    "versionNumber": 4,
+    "existingEndpointUnchanged": true,
+    "executionAsOwnerUnchanged": true,
+    "networkAccessUnchanged": "Cualquiera"
   },
   "currentRemoteChecks": {
     "publicRejections": 7,
@@ -203,6 +223,12 @@
     "operationsProfile": "PASSED",
     "administratorProfile": "NOT_YET_RETESTED",
     "sellerProfile": "NOT_YET_RETESTED",
-    "processChain": "NOT_YET_CONFIRMED"
+    "processChain": "PASSED",
+    "simpleTripackCombined": "PASSED",
+    "partialAndFullPayment": "PASSED",
+    "dispatch": "PASSED",
+    "metadataEditPreservesCost": "PASSED",
+    "previousSyntheticHistory": "268 journal rows and 182 effects unchanged; 13 new committed operations and 25 unique new effects",
+    "pendingQueueAtEnd": 0
   }
 }

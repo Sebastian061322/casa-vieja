@@ -1,0 +1,23 @@
+{
+  "environment": "TEST_ONLY",
+  "workerVersion": "94e3fbd3",
+  "profile": "operations",
+  "observedInBrowser": true,
+  "ownerConfirmed": true,
+  "startedUTC": "2026-10-24T04:21:06.943Z",
+  "endedUTC": "2026-10-24T04:21:58.997Z",
+  "passed": true,
+  "denials": [
+    "users:PERMISSION_DENIED",
+    "setUser:PERMISSION_DENIED",
+    "configure:PERMISSION_DENIED",
+    "forged-role:IDENTITY_SPOOFING"
+  ],
+  "snapshotMs": [
+    7403,
+    6845,
+    5849
+  ],
+  "journalRevisionUnchanged": true,
+  "otherProfilesCurrentVersion": "NOT_YET_RETESTED"
+}

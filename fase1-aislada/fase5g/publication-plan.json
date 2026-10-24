@@ -1,9 +1,9 @@
 {
-  "status": "AUTHORIZED_PENDING_PUBLICATION",
+  "status": "PUBLISHED_LAB_VALIDATION_IN_PROGRESS",
   "environment": "TEST_ONLY",
   "baseCommit": "2959eafd2ad1c126422e6444c2fd35c7d6ca08d9",
   "branch": "dev/fase1-estabilizacion",
-  "remoteActionsPerformed": false,
+  "remoteActionsPerformed": true,
   "productionReady": false,
   "workerSha256": "966dc1577447a4b95b07975fd57ae9693743b2473ba61f527c999a584116ba8a",
   "backendSha256": "0a64a97eabf93224e407de9f491c4b8c757d5742edb7ad1db5f42d0e8b8df604",
@@ -155,6 +155,18 @@
     {
       "path": "tests/serve-local.mjs",
       "sha256": "ef4e5ce17c2f3b0a12b2f1645d608c81a6af935829ea2fad13c8a54e23705f7b"
+    },
+    {
+      "path": "tests/red-publica-5g.json",
+      "sha256": "2a2e944d8669d607cab33360fdeba3e42dfe7492c3d6497bfe8a311239bc4ff0"
+    },
+    {
+      "path": "tests/permisos-remotos-5g.json",
+      "sha256": "5b699986698abea18d8c6076dfb594601aa7026cb690e4067ce04ff0d072d762"
+    },
+    {
+      "path": "ESTADO-PUBLICACION-5G.md",
+      "sha256": "1391c5ef4d36091ac0eecf9b4fc5a1b0ce9581deb13e30b77d5adb1bc089beb9"
     }
   ],
   "excludes": [
@@ -177,5 +189,20 @@
     "computer": "NO_PENDING_OWNER_CONFIRMED",
     "iphone": "NO_PENDING_OWNER_CONFIRMED",
     "android": "NO_PENDING_OWNER_CONFIRMED"
+  },
+  "sourceCommit": "9c2539ff8c5ee612b4fb9bdc1d27de53900ea76f",
+  "workerActiveVersion": "94e3fbd3",
+  "backendDeployment": {
+    "ownerConfirmed": true,
+    "googleSuccessNoticeObserved": true,
+    "versionNumber": "NOT_YET_READ_BACK"
+  },
+  "currentRemoteChecks": {
+    "publicRejections": 7,
+    "assetHashes": 3,
+    "operationsProfile": "PASSED",
+    "administratorProfile": "NOT_YET_RETESTED",
+    "sellerProfile": "NOT_YET_RETESTED",
+    "processChain": "NOT_YET_CONFIRMED"
   }
 }

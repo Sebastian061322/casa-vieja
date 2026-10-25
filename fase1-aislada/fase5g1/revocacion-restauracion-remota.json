@@ -1,0 +1,23 @@
+{
+  "environment": "TEST_ONLY_DR_5G1",
+  "scope": "same existing seller, temporary disable then restore same role",
+  "state": "PASSED",
+  "originalLabChanged": false,
+  "disableServerConfirmed": true,
+  "existingSessionInvalidatedObserved": true,
+  "restorePending": false,
+  "reloginDeniedOwnerReported": true,
+  "reloginMessage": "ACCESS_DENIED",
+  "localOperationsPreservedMessage": true,
+  "reloginDeniedNativeAccessibilityObserved": true,
+  "restoreServerConfirmed": true,
+  "restoreReadbackActive": true,
+  "restoredRole": "seller",
+  "administratorAndOperationsStillActive": true,
+  "reloginAfterRestoreConfirmed": true,
+  "reloginAfterRestoreOwnerReported": true,
+  "reloginAfterRestoreNativeObserved": true,
+  "receiptQueryAfterRestoreCommitted": true,
+  "journalUnchanged": true,
+  "effectsUnchanged": true
+}

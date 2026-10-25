@@ -1,0 +1,163 @@
+{
+  "environment": "TEST_ONLY",
+  "source": "Google Sheets DR ledger readback, independently summed; compared with live manager inventory UI",
+  "resources": 15,
+  "summary": {
+    "PARCHMENT": {
+      "physical": 1000,
+      "reserved": 0,
+      "valueCents": 4000
+    },
+    "SUPPLY": {
+      "physical": 60,
+      "reserved": 0,
+      "valueCents": 3300
+    },
+    "BULK": {
+      "physical": 3875,
+      "reserved": 0,
+      "valueCents": 138828
+    },
+    "PACKAGED": {
+      "physical": 30,
+      "reserved": 1,
+      "valueCents": 799882
+    },
+    "GREEN": {
+      "physical": 0,
+      "reserved": 0,
+      "valueCents": 0
+    }
+  },
+  "liveUi": {
+    "physicalBags": 30,
+    "reservedBags": 1,
+    "availableBulkGrams": 3875,
+    "recoveredGroundGrams": 950,
+    "recoveredGroundValueCents": 130053
+  },
+  "rows": [
+    {
+      "id": "demo:commercial-parchment",
+      "stage": "PARCHMENT",
+      "unit": "g",
+      "physical": 0,
+      "reserved": 0,
+      "valueCents": 0
+    },
+    {
+      "id": "demo:commercial-special-parchment",
+      "stage": "PARCHMENT",
+      "unit": "g",
+      "physical": 1000,
+      "reserved": 0,
+      "valueCents": 4000
+    },
+    {
+      "id": "demo:commercial-bag250",
+      "stage": "SUPPLY",
+      "unit": "unit",
+      "physical": 14,
+      "reserved": 0,
+      "valueCents": 1400
+    },
+    {
+      "id": "demo:commercial-bag500",
+      "stage": "SUPPLY",
+      "unit": "unit",
+      "physical": 16,
+      "reserved": 0,
+      "valueCents": 1600
+    },
+    {
+      "id": "demo:commercial-label",
+      "stage": "SUPPLY",
+      "unit": "unit",
+      "physical": 30,
+      "reserved": 0,
+      "valueCents": 300
+    },
+    {
+      "id": "demo:commercial-bulk",
+      "stage": "BULK",
+      "unit": "g",
+      "physical": 2925,
+      "reserved": 0,
+      "valueCents": 8775
+    },
+    {
+      "id": "demo:commercial-molido500",
+      "stage": "PACKAGED",
+      "unit": "unit",
+      "physical": 6,
+      "reserved": 0,
+      "valueCents": 10410
+    },
+    {
+      "id": "demo:commercial-grano250",
+      "stage": "PACKAGED",
+      "unit": "unit",
+      "physical": 8,
+      "reserved": 0,
+      "valueCents": 7355
+    },
+    {
+      "id": "demo:5g-pergamino",
+      "stage": "PARCHMENT",
+      "unit": "g",
+      "physical": 0,
+      "reserved": 0,
+      "valueCents": 0
+    },
+    {
+      "id": "demo:5g-verde",
+      "stage": "GREEN",
+      "unit": "g",
+      "physical": 0,
+      "reserved": 0,
+      "valueCents": 0
+    },
+    {
+      "id": "demo:5g-tostado",
+      "stage": "BULK",
+      "unit": "g",
+      "physical": 0,
+      "reserved": 0,
+      "valueCents": 0
+    },
+    {
+      "id": "demo:5g-molido",
+      "stage": "BULK",
+      "unit": "g",
+      "physical": 0,
+      "reserved": 0,
+      "valueCents": 0
+    },
+    {
+      "id": "demo:5g-pack500",
+      "stage": "PACKAGED",
+      "unit": "unit",
+      "physical": 8,
+      "reserved": 1,
+      "valueCents": 521151
+    },
+    {
+      "id": "demo:5g-pack250",
+      "stage": "PACKAGED",
+      "unit": "unit",
+      "physical": 8,
+      "reserved": 0,
+      "valueCents": 260966
+    },
+    {
+      "id": "demo:dr-recovery-molido",
+      "stage": "BULK",
+      "unit": "g",
+      "physical": 950,
+      "reserved": 0,
+      "valueCents": 130053
+    }
+  ],
+  "googleDataUsed": true,
+  "syntheticOnly": true
+}

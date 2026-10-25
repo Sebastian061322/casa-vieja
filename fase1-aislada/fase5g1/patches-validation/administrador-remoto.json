@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "ownerReported": true,
+  "nativeAccessibilityObserved": true,
+  "startUtc": "2026-10-25T13:48:49.138Z",
+  "endUtc": "2026-10-25T13:49:13.929Z",
+  "forgedRole": "IDENTITY_SPOOFING",
+  "sourceCommand": "SOURCE_COMMAND_FORBIDDEN",
+  "snapshotMs": [
+    3503,
+    4630,
+    3218
+  ],
+  "journalRevisionUnchanged": true
+}

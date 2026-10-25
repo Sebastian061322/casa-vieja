@@ -9,11 +9,11 @@
     "journalRowsRestored": 38,
     "effectsRestored": 40,
     "ledgerReadbackExact": true,
-    "state": "DATA_RESTORED_SERVICE_BLOCKED"
+    "state": "DATA_RESTORED_SERVICE_ENABLED_FULL_VALIDATION_PENDING"
   },
   "worker": {
-    "version": "412e54bf-4803-4017-93b2-316dbdc6e8d5",
-    "sha256": "9ac92655e66705f83b0f9267e62dd0663b9171e397902f85464c0167fe756561",
+    "version": "cebc33f5-c85e-461a-947c-358fbaeceebd",
+    "sha256": "86c04fff1b690fdd08ae8caf83dd0576ee9324454f2dd84ab7d0953432471287",
     "deployed": true,
     "DR_RELEASE_ENABLED": "YES",
     "DR_BACKEND_APPROVED": "YES",
@@ -23,7 +23,7 @@
     "secretValueReadByAgent": false,
     "accessStillBlocked": false,
     "accessRequiresGoogleAndBackendRole": true,
-    "publicAssetsVerified": 5,
+    "publicAssetsVerified": 6,
     "publicRejectionsVerified": 4
   },
   "appsScript": {
@@ -78,12 +78,26 @@
   },
   "dataRestorationVerified": true,
   "pending": [
-    "Administrator Google login result and permission test pending visual confirmation",
     "Three live identities and roles on restored service",
     "Lost acknowledgment and PREPARED via authenticated browser",
     "Revocation and repeated execution",
     "Independent custody decision"
   ],
   "oauthClientSavedObserved": true,
-  "originalOAuthOriginPreserved": true
+  "originalOAuthOriginPreserved": true,
+  "administratorPermissionTest": {
+    "passed": true,
+    "ownerReported": true,
+    "nativeAccessibilityObserved": true,
+    "startUtc": "2026-10-25T13:48:49.138Z",
+    "endUtc": "2026-10-25T13:49:13.929Z",
+    "forgedRole": "IDENTITY_SPOOFING",
+    "sourceCommand": "SOURCE_COMMAND_FORBIDDEN",
+    "snapshotMs": [
+      3503,
+      4630,
+      3218
+    ],
+    "journalRevisionUnchanged": true
+  }
 }

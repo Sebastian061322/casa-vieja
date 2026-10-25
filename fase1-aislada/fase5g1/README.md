@@ -1,6 +1,6 @@
-# Fase 5G.1 — avance local, NO-GO
+# Fase 5G.1 — recuperación DR en validación, NO-GO
 
-Base GitHub comprobada 4731cabf36eb8471b0c25354a75f47f879f9d583. No hubo avances posteriores al iniciar. El propietario autorizó el paquete exacto. La hoja DR ya contiene 38 registros y 40 movimientos restaurados y releídos exactamente. La recuperación del servicio completo e identidades DR todavía no está validada.
+Base GitHub comprobada 4731cabf36eb8471b0c25354a75f47f879f9d583. No hubo avances posteriores al iniciar. El propietario autorizó el paquete exacto. La hoja DR ya contiene 38 registros y 40 movimientos restaurados y releídos exactamente. El servicio DR está conectado. Los tres perfiles pasaron sus pruebas autenticadas en Google; la operación PREPARED parcial y los recibos originales fueron recuperados sin duplicaciones. Continúan pendientes la finalización del ensayo de revocación/restauración y las condiciones de salida comerciales.
 
 - build.mjs compila derivados DR del backend 5G y el Worker visual aprobado, verificando antes sus hashes. Conserva el epoch del motor y los fingerprints originales; cambia el destino del sobre firmado y exige recoveryScope para comandos nuevos. El origen web DR y su IndexedDB son distintos. Los comandos originales no se ejecutan mediante execute; un PREPARED respaldado se recupera por operationId con su actor original, sin cambiar su identidad ni fingerprint.
 - restore.gs proporciona restauración privada por editor, hash independiente, preflight de todos los prefijos/configuración, readback, INCOMPLETE/COMPLETE y bloqueo previo de escrituras. No expone mantenimiento a través de API. Jamás trunca una tabla divergente ni restaura encima de operaciones posteriores.
@@ -23,12 +23,20 @@ Autorización concreta: AUTORIZACION-RECUPERACION.md. Inspección productiva pro
 | Hash por implementación independiente | Aprobado local |
 | Apertura y continuidad | Validadores/planificador probados; ejecución comercial pendiente |
 | Restauración de datos en Google | Aprobada: interrupción y reanudación, 38 registros/40 movimientos exactos |
-| Recuperación del servicio e identidades DR | Autorizada, configuración y ensayo autenticado pendientes |
-| Tres usuarios en destino DR | Configuración preparada; no habilitados allí |
+| Recuperación del servicio e identidades DR | Servicio conectado; tres perfiles aprobados; validación integral y custodia pendientes |
+| Tres usuarios en destino DR | Ingreso y permisos aprobados para los tres; vendedor temporalmente desactivado durante el ensayo de revocación autorizado, restauración pendiente |
 | Custodia independiente de respaldo y clave | Pendiente de decisión/acción del propietario |
-| Inspección/cierre de escritores antiguos | Pendiente de autorización específica; nada inspeccionado ni cerrado |
+| Inspección/cierre de escritores antiguos | Frontend main inspeccionado estáticamente con autorización; Apps Script, dispositivos e integraciones pendientes; ninguna ruta cerrada |
 | Políticas, conteo físico, obligaciones y candidato final | Pendientes; sin RC congelada ni GO |
 
 No se ha activado producción, no se creó infraestructura adicional ni se habilitó facturación. No se ejecutó corte, no se registraron 300 kg reales y no se accedió a datos comerciales. Etapa de datos medida en Google: 8 s hasta interrupción y 36 s de reanudación; 58 s de intervalo con pausa. RTO del servicio completo y RPO comercial todavía no medidos.
 
 Inspección estática autorizada de index.html en main: ver ESCRITORES-LEGADO.md. Detectadas colas localStorage outbox/failedOps; no se leyeron equipos ni datos comerciales.
+
+## Evidencia real adicional del 25 de octubre
+
+- Worker DR `cebc33f5-c85e-461a-947c-358fbaeceebd`; hash `86c04fff1b690fdd08ae8caf83dd0576ee9324454f2dd84ab7d0953432471287`. Ajuste del ensayo autorizado y publicado sin cambios de backend. Diez verificaciones públicas y 27 pruebas locales dirigidas aprobadas; estas últimas incluyen 22 ya contadas en la regresión de 504, por lo que no deben sumarse como pruebas independientes.
+- Administrador, gerente operativo y vendedor: resultados reales observados mediante accesibilidad de Safari. Ver `patches-validation/*-remoto.json`.
+- PREPARED `TEST_ONLY_5G_9`: diario de 38 a 39 filas y movimientos de 40 a 42. Prefijos exactos; efectos iguales al plan original y repetición sin cambios. Ver `recuperacion-operacion-remota.json`.
+- Vendedor: recibo COMMITTED original `TEST_ONLY_5G_7` y rechazo `TEST_ONLY_5G_8` consultados sin reenviar ventas ni añadir filas. Ver `recibos-vendedor-remotos.json`.
+- Revocación: servidor confirmó desactivación y la sesión abierta dejó de mostrar la aplicación. No se da por cerrado el ensayo ni la restauración hasta verificar el rechazo de reingreso y devolver el mismo acceso.

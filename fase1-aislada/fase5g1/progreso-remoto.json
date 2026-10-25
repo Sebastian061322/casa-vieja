@@ -80,8 +80,6 @@
   },
   "dataRestorationVerified": true,
   "pending": [
-    "Seller live identity and role on restored service",
-    "Lost acknowledgment and rejected receipt via authenticated seller browser",
     "DR seller revocation and restoration",
     "Independent custody decision",
     "Full service recovery evidence and business transition conditions"
@@ -174,5 +172,63 @@
       }
     ],
     "remoteGoogleReadback": true
+  },
+  "sellerPermissionTest": {
+    "environment": "TEST_ONLY",
+    "profile": "seller",
+    "passed": true,
+    "ownerReported": true,
+    "nativeAccessibilityObserved": true,
+    "startUtc": "2026-10-25T13:57:13.701Z",
+    "endUtc": "2026-10-25T13:57:56.161Z",
+    "responseRedacted": true,
+    "denied": [
+      "users",
+      "reports",
+      "dashboard",
+      "setUser",
+      "configure"
+    ],
+    "forgedRole": "IDENTITY_SPOOFING",
+    "sourceCommand": "SOURCE_COMMAND_FORBIDDEN",
+    "snapshotMs": [
+      3432,
+      3736,
+      3080
+    ],
+    "journalRevisionUnchanged": true
+  },
+  "threeRolesPermissionTestsPassed": true,
+  "sellerReceiptRecoveryTest": {
+    "environment": "TEST_ONLY",
+    "profile": "seller",
+    "nativeUiObserved": true,
+    "lostAcknowledgment": {
+      "operationId": "TEST_ONLY_5G_7",
+      "state": "COMMITTED",
+      "revision": 18,
+      "saleId": "future:TEST_ONLY_5G_7",
+      "saleVersion": 1,
+      "method": "status"
+    },
+    "rejected": {
+      "operationId": "TEST_ONLY_5G_8",
+      "state": "REJECTED",
+      "browserMessage": "INSUFFICIENT_STOCK",
+      "journalRecordVerified": true
+    },
+    "journalRows": 39,
+    "effectRows": 42,
+    "recordsUnchangedFromCompletedRecovery": true,
+    "noSaleResubmitted": true
+  },
+  "revocationTest": {
+    "environment": "TEST_ONLY_DR_5G1",
+    "scope": "same existing seller, temporary disable then restore same role",
+    "state": "DISABLED_CONFIRMED_SESSION_INVALIDATED_RELOGIN_RESULT_PENDING_OWNER",
+    "originalLabChanged": false,
+    "disableServerConfirmed": true,
+    "existingSessionInvalidatedObserved": true,
+    "restorePending": true
   }
 }

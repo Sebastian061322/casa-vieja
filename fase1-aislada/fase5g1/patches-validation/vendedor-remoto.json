@@ -1,0 +1,25 @@
+{
+  "environment": "TEST_ONLY",
+  "profile": "seller",
+  "passed": true,
+  "ownerReported": true,
+  "nativeAccessibilityObserved": true,
+  "startUtc": "2026-10-25T13:57:13.701Z",
+  "endUtc": "2026-10-25T13:57:56.161Z",
+  "responseRedacted": true,
+  "denied": [
+    "users",
+    "reports",
+    "dashboard",
+    "setUser",
+    "configure"
+  ],
+  "forgedRole": "IDENTITY_SPOOFING",
+  "sourceCommand": "SOURCE_COMMAND_FORBIDDEN",
+  "snapshotMs": [
+    3432,
+    3736,
+    3080
+  ],
+  "journalRevisionUnchanged": true
+}

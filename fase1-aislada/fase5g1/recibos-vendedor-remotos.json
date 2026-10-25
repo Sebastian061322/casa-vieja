@@ -1,0 +1,23 @@
+{
+  "environment": "TEST_ONLY",
+  "profile": "seller",
+  "nativeUiObserved": true,
+  "lostAcknowledgment": {
+    "operationId": "TEST_ONLY_5G_7",
+    "state": "COMMITTED",
+    "revision": 18,
+    "saleId": "future:TEST_ONLY_5G_7",
+    "saleVersion": 1,
+    "method": "status"
+  },
+  "rejected": {
+    "operationId": "TEST_ONLY_5G_8",
+    "state": "REJECTED",
+    "browserMessage": "INSUFFICIENT_STOCK",
+    "journalRecordVerified": true
+  },
+  "journalRows": 39,
+  "effectRows": 42,
+  "recordsUnchangedFromCompletedRecovery": true,
+  "noSaleResubmitted": true
+}

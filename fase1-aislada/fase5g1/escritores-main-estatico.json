@@ -1,0 +1,157 @@
+{
+  "environment": "STATIC_PRODUCTION_CODE_READ_ONLY",
+  "branch": "main",
+  "commit": "12a5f997845f9d31dc1a5d8ae7dc49770928da3d",
+  "path": "index.html",
+  "sha256": "dd0f84bfea29087ab70251f43ac8e4d77d40f56714c6827e4d2d234d313aa522",
+  "executed": false,
+  "endpointsCalled": false,
+  "deviceStorageRead": false,
+  "appsScriptInspected": false,
+  "sheetsRead": false,
+  "frontendWriteActions": {
+    "saveDB": [
+      392
+    ],
+    "ping": [
+      582
+    ],
+    "setSetting": [
+      748
+    ],
+    "addSale": [
+      1490,
+      1566
+    ],
+    "updateBaseProduct": [
+      1492,
+      1570,
+      1602,
+      1805,
+      3315
+    ],
+    "updateProduct": [
+      1493,
+      1603,
+      1815,
+      2470,
+      3372
+    ],
+    "addMovement": [
+      1494,
+      1573,
+      1604,
+      1804,
+      1814
+    ],
+    "deleteSale": [
+      1600
+    ],
+    "updateSale": [
+      1613,
+      1703,
+      2061
+    ],
+    "addAd": [
+      1870
+    ],
+    "deleteAd": [
+      1878
+    ],
+    "addExpense": [
+      1978
+    ],
+    "deleteExpense": [
+      1986
+    ],
+    "upsertItem": [
+      2258,
+      2385
+    ],
+    "deleteItem": [
+      2266,
+      2390
+    ],
+    "upsertItems": [
+      2384
+    ],
+    "deleteItems": [
+      2389
+    ],
+    "addLote": [
+      3177
+    ],
+    "updateLote": [
+      3202,
+      3283
+    ],
+    "deleteLote": [
+      3210
+    ],
+    "addBaseProduct": [
+      3301
+    ],
+    "deleteBaseProduct": [
+      3328
+    ],
+    "addProduct": [
+      3353
+    ],
+    "deleteProduct": [
+      3380
+    ]
+  },
+  "storageDeclarations": {
+    "312": "const STORE_KEY = 'casa_vieja_db';",
+    "313": "const CONN_KEY = 'casa_vieja_conn_config';",
+    "469": "const OUTBOX_KEY = 'casa_vieja_outbox', FAILED_KEY = 'casa_vieja_failed_ops';"
+  },
+  "endpointResolution": "Per-browser connection configuration; no hardcoded Apps Script URL found",
+  "criticalUnknowns": [
+    "Effective published frontend may differ from Git main",
+    "Per-device connection URLs, pending and failed queues",
+    "Backend project, versions, active deployments, triggers and direct Sheets editors",
+    "External integrations and in-flight requests"
+  ],
+  "findings": [
+    {
+      "id": "WRITER-01",
+      "severity": "high",
+      "status": "confirmed_static",
+      "lines": [
+        392,
+        453,
+        459,
+        607
+      ],
+      "finding": "Writes share apiPost configured from per-browser localStorage; a saveDB route also transmits whole DB. Exact server behavior not inspected."
+    },
+    {
+      "id": "CONTINUITY-01",
+      "severity": "high",
+      "status": "confirmed_static",
+      "lines": [
+        469,
+        475,
+        481,
+        506,
+        525
+      ],
+      "finding": "failedOps can contain records while outbox is empty and the badge says Guardado en Sheets. A zero pending badge is insufficient census evidence."
+    },
+    {
+      "id": "CONTINUITY-02",
+      "severity": "high",
+      "status": "potential_backend_dependent",
+      "lines": [
+        459,
+        609
+      ],
+      "finding": "Queue id is not sent as operationId in the common apiPost envelope. Backend deduplication and lost-response recovery cannot be certified without code inspection."
+    }
+  ],
+  "productionChanged": false,
+  "unclassifiedPostActions": [
+    "ping"
+  ]
+}

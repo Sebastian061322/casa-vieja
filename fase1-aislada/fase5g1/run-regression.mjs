@@ -1,0 +1,10 @@
+import fs from 'node:fs';import path from 'node:path';import os from 'node:os';import {spawnSync} from 'node:child_process';import {fileURLToPath} from 'node:url';import crypto from 'node:crypto';
+const root=path.dirname(fileURLToPath(import.meta.url)),lab=path.resolve(root,'..'),shadow=fs.mkdtempSync(path.join(os.tmpdir(),'cv5g1-regression-'));
+fs.cpSync(lab,shadow,{recursive:true,filter:p=>!p.split(path.sep).some(x=>['evidencia-local','private'].includes(x))});
+const seed=spawnSync(process.execPath,[path.join(shadow,'fase5d/build.cjs')],{encoding:'utf8'});if(seed.status!==0)throw Error(seed.stderr||seed.stdout);
+fs.copyFileSync(path.join(shadow,'fase5g/patches-ui/build/worker-bundle.mjs'),path.join(shadow,'fase5g/build/worker-bundle.mjs'));
+const old=fs.readdirSync(shadow,{recursive:true}).filter(p=>/\.test\.(cjs|mjs)$/.test(p)||/(^|\/)acceptance\.cjs$/.test(p)).sort().map(p=>path.join(shadow,p));
+const all=[...old,path.join(shadow,'fase5g1/tests.mjs')],r=spawnSync(process.execPath,['--test',...all],{encoding:'utf8',maxBuffer:32*1024*1024});
+const output=(r.stdout||'')+(r.stderr||''),count=k=>Number(new RegExp('(?:#|ℹ) '+k+' (\\d+)').exec(output)?.[1]||0);
+const report={environment:'LOCAL_SYNTHETIC_NO_NETWORK',tests:count('tests'),passed:count('pass'),failed:count('fail'),files:all.length,exitCode:r.status,privateFilesExcluded:true,scope:'482 baseline shared regression tests plus 22 targeted tests of scoped DR candidate; baseline tests do not independently certify every DR UI route',drWorkerSha256:crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'build/worker-bundle.mjs'))).digest('hex'),drBackendSha256:crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'build/Candidate.gs'))).digest('hex'),actualGoogle:false,physicalDevices:false};
+fs.writeFileSync(path.join(root,'regresion.json'),JSON.stringify(report,null,2)+'\n');fs.writeFileSync(path.join(root,'regresion-resultados.txt'),output);console.log(JSON.stringify(report));if(r.status!==0)console.log(output.split('\n').filter(l=>/not ok|✖|Error|expected|actual/.test(l)).slice(-30).join('\n'));process.exitCode=r.status??1;

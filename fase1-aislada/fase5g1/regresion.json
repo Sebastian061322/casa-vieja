@@ -1,0 +1,14 @@
+{
+  "environment": "LOCAL_SYNTHETIC_NO_NETWORK",
+  "tests": 504,
+  "passed": 504,
+  "failed": 0,
+  "files": 57,
+  "exitCode": 0,
+  "privateFilesExcluded": true,
+  "scope": "482 baseline shared regression tests plus 22 targeted tests of scoped DR candidate; baseline tests do not independently certify every DR UI route",
+  "drWorkerSha256": "9ac92655e66705f83b0f9267e62dd0663b9171e397902f85464c0167fe756561",
+  "drBackendSha256": "f5a9b7ada394cb2a138701bf921903072efb823a8e7f058241955d580ea17b60",
+  "actualGoogle": false,
+  "physicalDevices": false
+}

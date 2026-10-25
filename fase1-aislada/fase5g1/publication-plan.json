@@ -3,7 +3,7 @@
   "ownerAuthorized": true,
   "productionReady": false,
   "privateArchiveExcluded": true,
-  "remoteState": "CONFIGURATION_IN_PROGRESS_ACCESS_BLOCKED",
+  "remoteState": "DATA_RESTORED_SERVICE_BLOCKED",
   "files": [
     {
       "path": ".gitignore",
@@ -18,12 +18,16 @@
       "sha256": "a70c4a6e96e3cf25adc46fe11616da470f4beecec30c059d1c96fadeeff29972"
     },
     {
+      "path": "ESCRITORES-LEGADO.md",
+      "sha256": "184e51444694995acd74949d9ca669fd36c116d328ef2a1f7343f5df18a84796"
+    },
+    {
       "path": "INSPECCION-ESCRITORES.md",
       "sha256": "08b07d7d53aa2ee6b26081530e83a81a9a18dd029ba0855fd5f4745d39545478"
     },
     {
       "path": "README.md",
-      "sha256": "92bc2ff7d28578ad773b3208ebc89702abf54288d2dd572426c45e1e5dca380e"
+      "sha256": "2f29f8117403370c476c4023b2df8ce745053a397e51a37f52ed3e94edec0bd4"
     },
     {
       "path": "build/Candidate.gs",
@@ -50,6 +54,10 @@
       "sha256": "9b28046d94989b8a0a1dceda1c262497fec687974a962c711f4c9718661ae8c4"
     },
     {
+      "path": "escritores-main-estatico.json",
+      "sha256": "8139cd24ae0bac4679b5b8fcfc0e417da909ac975d6ca19aad0dee9b197082e9"
+    },
+    {
       "path": "fixture.mjs",
       "sha256": "c9c10a72ab9619f0e9b4d12a2ff16650eadb9369c8c94572b0ce1b00880d33f7"
     },
@@ -63,11 +71,23 @@
     },
     {
       "path": "progreso-remoto.json",
-      "sha256": "7df71444de257e5e35e33f6ce88da1a904d0965bdeff9d23652f9de2ad359e13"
+      "sha256": "1764ec73328417f8760f089d38645ac324ac3d8452278308eaa7a8010b4f74d6"
+    },
+    {
+      "path": "regresion-resultados.txt",
+      "sha256": "31ebea62c823d011fa25709906fe96b42c14da14896cc6a0c67a077a077692ed"
+    },
+    {
+      "path": "regresion.json",
+      "sha256": "5c549780e6cf2c4ada42e9fa6ac02d6abc9afd136a010fb37614274a99c24cc3"
     },
     {
       "path": "restore.gs",
       "sha256": "ea313bcc193ec775cf10d2be4ceb25ad96a5d00ce2ed17d55266f15d53bb09db"
+    },
+    {
+      "path": "run-regression.mjs",
+      "sha256": "7a2db808e0014b13709674a764751801a725b8df71fdf75ef218dcdf9012d899"
     },
     {
       "path": "tests-resultados.txt",

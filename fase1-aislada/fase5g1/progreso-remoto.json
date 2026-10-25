@@ -6,8 +6,10 @@
     "schemaCreated": true,
     "archiveChunks": 3,
     "archiveReadbackExact": true,
-    "journalRowsRestored": 0,
-    "effectsRestored": 0
+    "journalRowsRestored": 38,
+    "effectsRestored": 40,
+    "ledgerReadbackExact": true,
+    "state": "DATA_RESTORED_SERVICE_BLOCKED"
   },
   "worker": {
     "version": "79321998-5928-40c6-9e68-f4fa2f24fea4",
@@ -21,10 +23,45 @@
   "appsScript": {
     "codeSavedThroughEditor": true,
     "deploymentCreated": false,
-    "restoreExecutionPendingOwnerUI": true
+    "restoreExecutionPendingOwnerUI": true,
+    "restoreDataExecuted": true,
+    "temporaryLauncherFunctionRemoved": true,
+    "temporaryFileHasOnlyComment": true,
+    "publicEndpointCreated": false
   },
   "oauthOriginAdded": false,
   "productionChanged": false,
   "rtoMeasured": false,
-  "rpoCommercialMeasured": false
+  "rpoCommercialMeasured": false,
+  "ownerReportedInterruption": true,
+  "interruptionVerified": true,
+  "verificationDiscrepancy": "Native execution log shows doPost completed; connector shows header-only journals. Await exact private function selection before declaring restoration started.",
+  "regression": {
+    "passed": 504,
+    "failed": 0,
+    "baseline": 482,
+    "scopedDr": 22,
+    "remoteExecuted": false
+  },
+  "verificationDiscrepancyResolved": "Executed temporary editor launcher; native Google log and connector confirmed one journal row and zero effects, followed by exact resume.",
+  "remoteStages": {
+    "firstRunStartedLocal": "2026-10-24T21:13:47-05:00",
+    "firstRunInterruptedLocal": "2026-10-24T21:13:55-05:00",
+    "resumeStartedLocal": "2026-10-24T21:14:09-05:00",
+    "resumeCompleteLocal": "2026-10-24T21:14:45-05:00",
+    "firstRunSecondsFromGoogleLog": 8,
+    "resumeSecondsFromGoogleLog": 36,
+    "completeServiceRtoMeasured": false,
+    "dataRestoreWallSecondsIncludingPause": 58
+  },
+  "dataRestorationVerified": true,
+  "pending": [
+    "Owner enters new DR credential directly",
+    "OAuth exact DR origin",
+    "DR-only endpoint deployment",
+    "Three live identities and roles on restored service",
+    "Lost acknowledgment and PREPARED via authenticated browser",
+    "Revocation and repeated execution",
+    "Independent custody decision"
+  ]
 }

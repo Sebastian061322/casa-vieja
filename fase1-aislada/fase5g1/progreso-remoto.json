@@ -9,7 +9,9 @@
     "journalRowsRestored": 38,
     "effectsRestored": 40,
     "ledgerReadbackExact": true,
-    "state": "DATA_RESTORED_SERVICE_ENABLED_FULL_VALIDATION_PENDING"
+    "state": "DATA_RESTORED_SERVICE_ENABLED_FULL_VALIDATION_PENDING",
+    "currentJournalRows": 39,
+    "currentEffects": 42
   },
   "worker": {
     "version": "cebc33f5-c85e-461a-947c-358fbaeceebd",
@@ -78,10 +80,11 @@
   },
   "dataRestorationVerified": true,
   "pending": [
-    "Three live identities and roles on restored service",
-    "Lost acknowledgment and PREPARED via authenticated browser",
-    "Revocation and repeated execution",
-    "Independent custody decision"
+    "Seller live identity and role on restored service",
+    "Lost acknowledgment and rejected receipt via authenticated seller browser",
+    "DR seller revocation and restoration",
+    "Independent custody decision",
+    "Full service recovery evidence and business transition conditions"
   ],
   "oauthClientSavedObserved": true,
   "originalOAuthOriginPreserved": true,
@@ -99,5 +102,77 @@
       3218
     ],
     "journalRevisionUnchanged": true
+  },
+  "operationsPermissionTest": {
+    "environment": "TEST_ONLY",
+    "profile": "operations",
+    "passed": true,
+    "ownerReported": true,
+    "nativeAccessibilityObserved": true,
+    "startUtc": "2026-10-25T13:51:25.557Z",
+    "endUtc": "2026-10-25T13:52:02.088Z",
+    "denied": [
+      "users",
+      "setUser",
+      "configure"
+    ],
+    "forgedRole": "IDENTITY_SPOOFING",
+    "sourceCommand": "SOURCE_COMMAND_FORBIDDEN",
+    "snapshotMs": [
+      4071,
+      3946,
+      4521
+    ],
+    "journalRevisionUnchanged": true
+  },
+  "preparedRecoveryTest": {
+    "environment": "TEST_ONLY",
+    "operationId": "TEST_ONLY_5G_9",
+    "type": "GRIND",
+    "before": {
+      "journal": 38,
+      "effects": 40,
+      "operationState": "PREPARED",
+      "operationEffects": 1
+    },
+    "after": {
+      "journal": 39,
+      "effects": 42,
+      "operationState": "COMMITTED",
+      "operationEffects": 3
+    },
+    "repeatedRecoveryUnchanged": true,
+    "immutablePrefixesExact": true,
+    "effectsExactlyMatchOriginalPlan": true,
+    "effectSummary": [
+      {
+        "id": "TEST_ONLY_5G_9:GRIND_INPUT",
+        "kind": "GRIND_INPUT",
+        "unit": "g",
+        "qtyDelta": -1000,
+        "valueDelta": -130043,
+        "wasteGrams": 0,
+        "processingCents": 0
+      },
+      {
+        "id": "TEST_ONLY_5G_9:GRIND_OUTPUT",
+        "kind": "GRIND_OUTPUT",
+        "unit": "g",
+        "qtyDelta": 950,
+        "valueDelta": 130053,
+        "wasteGrams": 0,
+        "processingCents": 10
+      },
+      {
+        "id": "TEST_ONLY_5G_9:PROCESS_WASTE",
+        "kind": "PROCESS_WASTE",
+        "unit": "g",
+        "qtyDelta": 0,
+        "valueDelta": 0,
+        "wasteGrams": 50,
+        "processingCents": 0
+      }
+    ],
+    "remoteGoogleReadback": true
   }
 }

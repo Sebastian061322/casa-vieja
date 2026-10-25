@@ -1,0 +1,50 @@
+{
+  "environment": "TEST_ONLY",
+  "operationId": "TEST_ONLY_5G_9",
+  "type": "GRIND",
+  "before": {
+    "journal": 38,
+    "effects": 40,
+    "operationState": "PREPARED",
+    "operationEffects": 1
+  },
+  "after": {
+    "journal": 39,
+    "effects": 42,
+    "operationState": "COMMITTED",
+    "operationEffects": 3
+  },
+  "repeatedRecoveryUnchanged": true,
+  "immutablePrefixesExact": true,
+  "effectsExactlyMatchOriginalPlan": true,
+  "effectSummary": [
+    {
+      "id": "TEST_ONLY_5G_9:GRIND_INPUT",
+      "kind": "GRIND_INPUT",
+      "unit": "g",
+      "qtyDelta": -1000,
+      "valueDelta": -130043,
+      "wasteGrams": 0,
+      "processingCents": 0
+    },
+    {
+      "id": "TEST_ONLY_5G_9:GRIND_OUTPUT",
+      "kind": "GRIND_OUTPUT",
+      "unit": "g",
+      "qtyDelta": 950,
+      "valueDelta": 130053,
+      "wasteGrams": 0,
+      "processingCents": 10
+    },
+    {
+      "id": "TEST_ONLY_5G_9:PROCESS_WASTE",
+      "kind": "PROCESS_WASTE",
+      "unit": "g",
+      "qtyDelta": 0,
+      "valueDelta": 0,
+      "wasteGrams": 50,
+      "processingCents": 0
+    }
+  ],
+  "remoteGoogleReadback": true
+}

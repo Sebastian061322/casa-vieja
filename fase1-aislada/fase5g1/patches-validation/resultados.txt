@@ -1,0 +1,35 @@
+✔ Restauración exacta, interrupción y reanudación sin truncar (30.137ms)
+✔ Catálogo de hash independiente obligatorio (9.42225ms)
+✔ Prefix divergente no se sobrescribe (17.404333ms)
+✔ No restaurar con escritor habilitado (10.404459ms)
+✔ Identidades ficticias recuperadas y permisos backend (36.146083ms)
+✔ Comando y sobre del origen son rechazados (20.120959ms)
+✔ Recibo perdido COMMITTED conserva operationId y no duplica (21.059584ms)
+✔ PREPARED parcial recuperado por actor original y reintento estable (15.03575ms)
+✔ Revocación y acceso de terceros bloqueados (10.273375ms)
+✔ REJECTED se conserva con evidencia y sin efectos (11.267667ms)
+✔ Apertura y obligación parcial sin recrear ingreso/costo/cobro (0.45525ms)
+✔ No convierte pergamino en bolsas ni supone rendimiento (0.072125ms)
+✔ Retenido no es disponible y no admite reserva (0.081375ms)
+✔ Conteo sin evidencia, desborde y valor sin stock bloqueados (0.087167ms)
+✔ Obligaciones duplicadas, UNKNOWN y reservas inconsistentes bloquean (0.112708ms)
+✔ Despachado con saldo pendiente no genera reserva ni consumo (0.055375ms)
+✔ Worker compilado usa origen exclusivo, destino nuevo y guardas apagadas (0.592667ms)
+✔ Archivo previo no se restaura encima de operaciones posteriores (14.626084ms)
+✔ Configuración divergente impide toda escritura de restauración (6.719042ms)
+✔ Sección cambiada aunque se rehaga el hash exterior es rechazada (8.246042ms)
+✔ Worker exacto permanece cerrado sin activación y rechaza otro origen (8.065791ms)
+✔ Mismo intento de frontend conserva operationId y ámbito DR en la cola (3.94125ms)
+✔ Harness DR real compilado: administrator (19.238ms)
+✔ Harness DR real compilado: operations (17.480875ms)
+✔ Harness DR real compilado: seller (17.898083ms)
+✔ Solo cambian dos módulos de ensayo, no API/autenticación ni interfaz comercial (0.15225ms)
+✔ Modo de verificación sigue siendo explícito y no cambia los permisos (0.025084ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 357.369209

@@ -2,7 +2,7 @@ import test from 'node:test';import assert from 'node:assert/strict';import vm f
 import {context} from '../fase5d/tests/fixture.mjs';import {archiveFixture,hash} from './fixture.mjs';
 const require=createRequire(import.meta.url),O=require('./opening.cjs'),C=require('./continuity.cjs'),{canonical}=require('../fase3/journal.js');
 const fixture=await archiveFixture(),code=fs.readFileSync(new URL('build/Candidate.gs',import.meta.url),'utf8');
-function target(archive=fixture.archive){
+export function target(archive=fixture.archive){
  const f=context(),old=f.c.SpreadsheetApp,props=f.f.properties;
  f.f.tabs.RestoreInput=[['archiveChunk'],[JSON.stringify(archive)]];f.f.tabs.DiarioInventarioV3=[['ID','Tipo','JSON']];f.f.tabs.MovimientosInventarioV3=[['ID','Tipo','JSON']];
  Object.keys(props).filter(k=>/^ZERO_USER_|^ZERO_POLICY_/.test(k)).forEach(k=>delete props[k]);

@@ -12,24 +12,46 @@
     "state": "DATA_RESTORED_SERVICE_BLOCKED"
   },
   "worker": {
-    "version": "79321998-5928-40c6-9e68-f4fa2f24fea4",
+    "version": "412e54bf-4803-4017-93b2-316dbdc6e8d5",
     "sha256": "9ac92655e66705f83b0f9267e62dd0663b9171e397902f85464c0167fe756561",
     "deployed": true,
-    "DR_RELEASE_ENABLED": "NO",
-    "DR_BACKEND_APPROVED": "NO",
-    "ZERO_LAB_ENABLED": "NO",
-    "secretConfigured": false
+    "DR_RELEASE_ENABLED": "YES",
+    "DR_BACKEND_APPROVED": "YES",
+    "ZERO_LAB_ENABLED": "YES",
+    "secretConfigured": true,
+    "secretMetadataObserved": true,
+    "secretValueReadByAgent": false,
+    "accessStillBlocked": false,
+    "accessRequiresGoogleAndBackendRole": true,
+    "publicAssetsVerified": 5,
+    "publicRejectionsVerified": 4
   },
   "appsScript": {
     "codeSavedThroughEditor": true,
-    "deploymentCreated": false,
-    "restoreExecutionPendingOwnerUI": true,
+    "deploymentCreated": true,
+    "restoreExecutionPendingOwnerUI": false,
     "restoreDataExecuted": true,
     "temporaryLauncherFunctionRemoved": true,
-    "temporaryFileHasOnlyComment": true,
-    "publicEndpointCreated": false
+    "temporaryFileHasOnlyComment": false,
+    "publicEndpointCreated": true,
+    "secretEntryOwnerConfirmed": true,
+    "secretValueReadByAgent": false,
+    "deploymentVersion": 2,
+    "ownerConfirmedNetworkAccess": "Cualquiera",
+    "endpointLinkedToDrProjectObserved": true,
+    "backendEnabledServerVerified": true,
+    "version1PublicProbe": "FAILED_MISSING_DOGET",
+    "deploymentCause": "Candidate file was replaced by retired-launcher comment in wrong editor tab; corrected by restoring exact approved Candidate.gs.",
+    "draftBackendRestoredSha256": "f5a9b7ada394cb2a138701bf921903072efb823a8e7f058241955d580ea17b60",
+    "nextDeploymentPending": false,
+    "version2MetadataObserved": true,
+    "anonymousPublicChecksPassed": true,
+    "helperNotInPublishedCandidate": true,
+    "onlyCodeFileObserved": true,
+    "onlyApprovedCodeFilePublished": true,
+    "version2PublicProbePassed": true
   },
-  "oauthOriginAdded": false,
+  "oauthOriginAdded": true,
   "productionChanged": false,
   "rtoMeasured": false,
   "rpoCommercialMeasured": false,
@@ -56,12 +78,12 @@
   },
   "dataRestorationVerified": true,
   "pending": [
-    "Owner enters new DR credential directly",
-    "OAuth exact DR origin",
-    "DR-only endpoint deployment",
+    "Administrator Google login result and permission test pending visual confirmation",
     "Three live identities and roles on restored service",
     "Lost acknowledgment and PREPARED via authenticated browser",
     "Revocation and repeated execution",
     "Independent custody decision"
-  ]
+  ],
+  "oauthClientSavedObserved": true,
+  "originalOAuthOriginPreserved": true
 }

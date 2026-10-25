@@ -1,0 +1,25 @@
+{
+  "environment": "TEST_ONLY",
+  "anonymous": true,
+  "passed": true,
+  "results": [
+    {
+      "method": "GET",
+      "status": 200,
+      "finalHost": "script.googleusercontent.com",
+      "response": {
+        "environment": "TEST_ONLY",
+        "status": "AUTHENTICATED_POST_REQUIRED"
+      }
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "finalHost": "script.googleusercontent.com",
+      "response": {
+        "error": "IDENTITY_REQUIRED",
+        "retryable": true
+      }
+    }
+  ]
+}

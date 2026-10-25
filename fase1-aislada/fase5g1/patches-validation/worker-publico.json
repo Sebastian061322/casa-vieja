@@ -1,0 +1,90 @@
+{
+  "environment": "TEST_ONLY",
+  "origin": "https://casa-vieja-dr-test-only-5g.portopelaez1009.workers.dev",
+  "privateDataRequested": false,
+  "passed": true,
+  "results": [
+    {
+      "kind": "asset",
+      "path": "/",
+      "status": 200,
+      "noStore": true,
+      "exact": true,
+      "sha256": "1badbe95c3b0def0b3083af56797caa7549d0991461395fc92b76bb3a19f3e32",
+      "passed": true
+    },
+    {
+      "kind": "asset",
+      "path": "/entry.mjs",
+      "status": 200,
+      "noStore": true,
+      "exact": true,
+      "sha256": "7ef1cb08d6e64e6d453cc283f8c65f0a870e8d9169c734e0f39417c57f025e29",
+      "passed": true
+    },
+    {
+      "kind": "asset",
+      "path": "/validation.mjs",
+      "status": 200,
+      "noStore": true,
+      "exact": true,
+      "sha256": "615f7ce029ac51f07843ff97b6922d387fc6a8ad0a25ffe376ae53c100228c90",
+      "passed": true
+    },
+    {
+      "kind": "asset",
+      "path": "/client.js",
+      "status": 200,
+      "noStore": true,
+      "exact": true,
+      "sha256": "f8ada17dd8c44c47f2840de8a82f25ab7f20bae5f851ff9bc194239180b07661",
+      "passed": true
+    },
+    {
+      "kind": "asset",
+      "path": "/approved.css",
+      "status": 200,
+      "noStore": true,
+      "exact": true,
+      "sha256": "ada08eb88007d9f4b3720594107282b36d93fb0581576bd5dcefd999979cde12",
+      "passed": true
+    },
+    {
+      "kind": "asset",
+      "path": "/config.json",
+      "status": 200,
+      "noStore": true,
+      "exact": true,
+      "sha256": "955d0edc6d4e9d204556df673bb6f1d7a4b48c0028543d7b883a74071168e6ea",
+      "passed": true
+    },
+    {
+      "kind": "rejection",
+      "name": "no-origin",
+      "status": 403,
+      "error": "ORIGIN_DENIED",
+      "passed": true
+    },
+    {
+      "kind": "rejection",
+      "name": "other-origin",
+      "status": 403,
+      "error": "ORIGIN_DENIED",
+      "passed": true
+    },
+    {
+      "kind": "rejection",
+      "name": "no-session",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true
+    },
+    {
+      "kind": "rejection",
+      "name": "invalid-session",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true
+    }
+  ]
+}

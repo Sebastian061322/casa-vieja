@@ -1,0 +1,30 @@
+{
+  "environment": "TEST_ONLY",
+  "ownerAuthorized": true,
+  "remoteRestorationVerified": false,
+  "sheet": {
+    "schemaCreated": true,
+    "archiveChunks": 3,
+    "archiveReadbackExact": true,
+    "journalRowsRestored": 0,
+    "effectsRestored": 0
+  },
+  "worker": {
+    "version": "79321998-5928-40c6-9e68-f4fa2f24fea4",
+    "sha256": "9ac92655e66705f83b0f9267e62dd0663b9171e397902f85464c0167fe756561",
+    "deployed": true,
+    "DR_RELEASE_ENABLED": "NO",
+    "DR_BACKEND_APPROVED": "NO",
+    "ZERO_LAB_ENABLED": "NO",
+    "secretConfigured": false
+  },
+  "appsScript": {
+    "codeSavedThroughEditor": true,
+    "deploymentCreated": false,
+    "restoreExecutionPendingOwnerUI": true
+  },
+  "oauthOriginAdded": false,
+  "productionChanged": false,
+  "rtoMeasured": false,
+  "rpoCommercialMeasured": false
+}

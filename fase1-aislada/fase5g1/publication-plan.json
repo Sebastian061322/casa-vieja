@@ -1,0 +1,85 @@
+{
+  "environment": "TEST_ONLY",
+  "ownerAuthorized": true,
+  "productionReady": false,
+  "privateArchiveExcluded": true,
+  "remoteState": "CONFIGURATION_IN_PROGRESS_ACCESS_BLOCKED",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "c0c88c58c645d6c33cd5b110ca3db19fb92ecd86d4f72aa8d6d22ccb067f0d92"
+    },
+    {
+      "path": "AUTORIZACION-RECUPERACION.md",
+      "sha256": "34d46f702c652368a18193cd2e61e97f8b7f40b1b9cdcd0de52d3790038e1b96"
+    },
+    {
+      "path": "DECISIONES.md",
+      "sha256": "a70c4a6e96e3cf25adc46fe11616da470f4beecec30c059d1c96fadeeff29972"
+    },
+    {
+      "path": "INSPECCION-ESCRITORES.md",
+      "sha256": "08b07d7d53aa2ee6b26081530e83a81a9a18dd029ba0855fd5f4745d39545478"
+    },
+    {
+      "path": "README.md",
+      "sha256": "92bc2ff7d28578ad773b3208ebc89702abf54288d2dd572426c45e1e5dca380e"
+    },
+    {
+      "path": "build/Candidate.gs",
+      "sha256": "f5a9b7ada394cb2a138701bf921903072efb823a8e7f058241955d580ea17b60"
+    },
+    {
+      "path": "build/manifest.json",
+      "sha256": "ee517f3b9e6180f6eca1a317917fc7fd042404e1855d3e143b8931e661356603"
+    },
+    {
+      "path": "build/schema.json",
+      "sha256": "ea8ff695c207e216a54d8cf06871c01e1680b0490e2a04a00b252e487f5481ac"
+    },
+    {
+      "path": "build/worker-bundle.mjs",
+      "sha256": "9ac92655e66705f83b0f9267e62dd0663b9171e397902f85464c0167fe756561"
+    },
+    {
+      "path": "build.mjs",
+      "sha256": "cfbc231e2f53ecbc81f738819fa73e34cf147c9f62f5536482e419dc3716c864"
+    },
+    {
+      "path": "continuity.cjs",
+      "sha256": "9b28046d94989b8a0a1dceda1c262497fec687974a962c711f4c9718661ae8c4"
+    },
+    {
+      "path": "fixture.mjs",
+      "sha256": "c9c10a72ab9619f0e9b4d12a2ff16650eadb9369c8c94572b0ce1b00880d33f7"
+    },
+    {
+      "path": "opening.cjs",
+      "sha256": "5a28170e0c8ca11fe12b3af8f909629a4b8c01fc3e6ce07a9e92744f4b213c82"
+    },
+    {
+      "path": "prepare-archive.mjs",
+      "sha256": "b3d566f37b39c069a800b61dbff053427649792487e14290c33cf9d69fd309bc"
+    },
+    {
+      "path": "progreso-remoto.json",
+      "sha256": "7df71444de257e5e35e33f6ce88da1a904d0965bdeff9d23652f9de2ad359e13"
+    },
+    {
+      "path": "restore.gs",
+      "sha256": "ea313bcc193ec775cf10d2be4ceb25ad96a5d00ce2ed17d55266f15d53bb09db"
+    },
+    {
+      "path": "tests-resultados.txt",
+      "sha256": "0b706299ca5a59ddf4958f3c5ad8a2a0a7e7d04a0a17e95ea41b3c1660fd69b3"
+    },
+    {
+      "path": "tests.mjs",
+      "sha256": "4bc83b6752d2e2d8ae56a370ea3ded4f86884a7ecfe02f6e120af2102b9942aa"
+    },
+    {
+      "path": "verify-archive.py",
+      "sha256": "bc2f94d610f997a22ca749ea54a8cc28d0c323f1717c3c2350fd86f93497406c"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+✔ Restauración exacta, interrupción y reanudación sin truncar (21.662416ms)
+✔ Catálogo de hash independiente obligatorio (5.888167ms)
+✔ Prefix divergente no se sobrescribe (7.729ms)
+✔ No restaurar con escritor habilitado (4.8785ms)
+✔ Identidades ficticias recuperadas y permisos backend (12.474625ms)
+✔ Comando y sobre del origen son rechazados (11.276167ms)
+✔ Recibo perdido COMMITTED conserva operationId y no duplica (12.460542ms)
+✔ PREPARED parcial recuperado por actor original y reintento estable (17.362709ms)
+✔ Revocación y acceso de terceros bloqueados (11.8805ms)
+✔ REJECTED se conserva con evidencia y sin efectos (12.285625ms)
+✔ Apertura y obligación parcial sin recrear ingreso/costo/cobro (0.574375ms)
+✔ No convierte pergamino en bolsas ni supone rendimiento (0.073292ms)
+✔ Retenido no es disponible y no admite reserva (0.073292ms)
+✔ Conteo sin evidencia, desborde y valor sin stock bloqueados (0.104458ms)
+✔ Obligaciones duplicadas, UNKNOWN y reservas inconsistentes bloquean (0.115583ms)
+✔ Despachado con saldo pendiente no genera reserva ni consumo (0.056625ms)
+✔ Worker compilado usa origen exclusivo, destino nuevo y guardas apagadas (0.681041ms)
+✔ Archivo previo no se restaura encima de operaciones posteriores (15.843625ms)
+✔ Configuración divergente impide toda escritura de restauración (7.656542ms)
+✔ Sección cambiada aunque se rehaga el hash exterior es rechazada (7.782ms)
+✔ Worker exacto permanece cerrado sin activación y rechaza otro origen (9.838917ms)
+✔ Mismo intento de frontend conserva operationId y ámbito DR en la cola (4.883458ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 253.560125

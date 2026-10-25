@@ -1,0 +1,32 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "AUTHORIZED_DR_CONFIGURATION_IN_PROGRESS",
+  "sourceCommit": "4731cabf36eb8471b0c25354a75f47f879f9d583",
+  "destination": "TEST_ONLY_DR_5G1",
+  "workerName": "casa-vieja-dr-test-only-5g",
+  "workerOrigin": "https://casa-vieja-dr-test-only-5g.portopelaez1009.workers.dev",
+  "scriptName": "CasaVieja_DR_TEST_ONLY_5G",
+  "sheetName": "CasaVieja_RECUPERACION_TEST_ONLY_5G",
+  "monthlyAdditionalCostPEN": 0,
+  "productionReady": false,
+  "files": {
+    "Candidate.gs": "f5a9b7ada394cb2a138701bf921903072efb823a8e7f058241955d580ea17b60",
+    "worker-bundle.mjs": "9ac92655e66705f83b0f9267e62dd0663b9171e397902f85464c0167fe756561",
+    "schema.json": "ea8ff695c207e216a54d8cf06871c01e1680b0490e2a04a00b252e487f5481ac"
+  },
+  "endpointNotYetCreated": true,
+  "remoteRestorationExecuted": false,
+  "localTests": {
+    "passed": 22,
+    "failed": 0,
+    "remoteExecuted": false
+  },
+  "privateArchive": {
+    "sha256Canonical": "7fd9f9a9a981b8478272cfb7f23ac21d0f28e118386ea9db4b919fc375f552d1",
+    "journalRows": 38,
+    "movements": 40,
+    "independentPythonVerificationPassed": true,
+    "sourceIsLiveLabSnapshot": false
+  },
+  "ownerAuthorized": true
+}

@@ -1,0 +1,79 @@
+{
+  "environment": "TEST_ONLY",
+  "remoteChanged": false,
+  "productionApproved": false,
+  "sheet": {
+    "id": "1CtK6KD995Pu2Fzc_na89Ajc0KQ0QLuGq3UFhj4UdLSA",
+    "title": "CasaVieja_Pruebas_SINTETICA",
+    "createOnly": [
+      {
+        "title": "TEST_ONLY_5G3_Diario",
+        "rows": 1000,
+        "columns": 3,
+        "header": [
+          "ID",
+          "Tipo",
+          "JSON"
+        ]
+      },
+      {
+        "title": "TEST_ONLY_5G3_Movimientos",
+        "rows": 1000,
+        "columns": 3,
+        "header": [
+          "ID",
+          "Tipo",
+          "JSON"
+        ]
+      },
+      {
+        "title": "TEST_ONLY_5G3_Verificaciones",
+        "rows": 1000,
+        "columns": 3,
+        "header": [
+          "ID",
+          "Tipo",
+          "JSON"
+        ]
+      }
+    ],
+    "preserveExistingTabs": true
+  },
+  "properties": {
+    "CV_5G3_SCOPE_ENABLED": "NO",
+    "CV_5G3_CONTINUITY_CONFIG": "{\"environment\":\"TEST_ONLY\",\"approvedBundleHash\":\"ee624c999299b925d83bc531d9dbf011a7e9b654495d62be37474e4732deeeea\",\"policies\":{\"OPEN_CONTINUITY\":{\"kind\":\"SYNTHETIC_TEST_APPROVAL\",\"environment\":\"TEST_ONLY\",\"version\":\"TEST_ONLY:POLICY:1\",\"evidence\":\"TEST_ONLY:POLICY_EVIDENCE\",\"effectiveAt\":\"2026-10-28T00:00:00-05:00\",\"allowUnpaidDispatch\":false,\"approvedBy\":\"google:111111\",\"approvedAt\":\"2026-10-27T23:00:00-05:00\",\"sha256\":\"c8615675b84a6933110f7afc7a2b704e61a82f880436918032a19188ffd0667a\"},\"CONTINUITY_PAYMENT\":{\"kind\":\"SYNTHETIC_TEST_APPROVAL\",\"environment\":\"TEST_ONLY\",\"version\":\"TEST_ONLY:POLICY:1\",\"evidence\":\"TEST_ONLY:POLICY_EVIDENCE\",\"effectiveAt\":\"2026-10-28T00:00:00-05:00\",\"allowUnpaidDispatch\":false,\"approvedBy\":\"google:111111\",\"approvedAt\":\"2026-10-27T23:00:00-05:00\",\"sha256\":\"c8615675b84a6933110f7afc7a2b704e61a82f880436918032a19188ffd0667a\"},\"CONTINUITY_DISPATCH\":{\"kind\":\"SYNTHETIC_TEST_APPROVAL\",\"environment\":\"TEST_ONLY\",\"version\":\"TEST_ONLY:POLICY:1\",\"evidence\":\"TEST_ONLY:POLICY_EVIDENCE\",\"effectiveAt\":\"2026-10-28T00:00:00-05:00\",\"allowUnpaidDispatch\":false,\"approvedBy\":\"google:111111\",\"approvedAt\":\"2026-10-27T23:00:00-05:00\",\"sha256\":\"c8615675b84a6933110f7afc7a2b704e61a82f880436918032a19188ffd0667a\"},\"CONTINUITY_DELIVER\":{\"kind\":\"SYNTHETIC_TEST_APPROVAL\",\"environment\":\"TEST_ONLY\",\"version\":\"TEST_ONLY:POLICY:1\",\"evidence\":\"TEST_ONLY:POLICY_EVIDENCE\",\"effectiveAt\":\"2026-10-28T00:00:00-05:00\",\"allowUnpaidDispatch\":false,\"approvedBy\":\"google:111111\",\"approvedAt\":\"2026-10-27T23:00:00-05:00\",\"sha256\":\"c8615675b84a6933110f7afc7a2b704e61a82f880436918032a19188ffd0667a\"},\"CONTINUITY_CANCEL\":{\"kind\":\"SYNTHETIC_TEST_APPROVAL\",\"environment\":\"TEST_ONLY\",\"version\":\"TEST_ONLY:POLICY:1\",\"evidence\":\"TEST_ONLY:POLICY_EVIDENCE\",\"effectiveAt\":\"2026-10-28T00:00:00-05:00\",\"allowUnpaidDispatch\":false,\"approvedBy\":\"google:111111\",\"approvedAt\":\"2026-10-27T23:00:00-05:00\",\"sha256\":\"c8615675b84a6933110f7afc7a2b704e61a82f880436918032a19188ffd0667a\"}}}",
+    "CV_5G4_OPENING_PROPOSAL": "{\"environment\":\"TEST_ONLY\",\"productionApproved\":false,\"schemaVersion\":1,\"act\":{\"environment\":\"TEST_ONLY\",\"status\":\"DRAFT\",\"productionApproved\":false,\"id\":\"TEST_ONLY:5G4:OPEN\",\"effectiveAt\":\"2026-10-28T00:00:00-05:00\",\"responsible\":\"TEST_ONLY:COUNTER\",\"secondReviewer\":\"TEST_ONLY:REVIEWER\",\"countEvidence\":\"TEST_ONLY:COUNT\",\"rows\":[{\"resourceId\":\"demo:opening-bags\",\"lot\":\"demo:old-lot\",\"product\":\"Gourmet molido 500 g\",\"family\":\"Gourmet\",\"stage\":\"PACKAGED\",\"grind\":\"molido\",\"grams\":500,\"physical\":4,\"reserved\":1,\"unit\":\"unit\",\"historicalValueCents\":4003,\"costEvidence\":\"TEST_ONLY:COST\",\"documentRef\":\"TEST_ONLY:LOT_DOC\",\"availability\":\"AVAILABLE\",\"pendingOrders\":[{\"legacyRef\":\"TEST_ONLY:RESERVED\",\"reserved\":1}],\"countedAt\":\"2026-10-27T22:00:00-05:00\",\"countEvidence\":\"TEST_ONLY:ROW\"},{\"resourceId\":\"demo:held\",\"lot\":\"demo:held-lot\",\"product\":\"Especialidad grano 250 g\",\"family\":\"Especialidad\",\"stage\":\"PACKAGED\",\"grind\":\"grano\",\"grams\":250,\"physical\":2,\"reserved\":0,\"unit\":\"unit\",\"historicalValueCents\":2000,\"costEvidence\":\"TEST_ONLY:HELD_COST\",\"documentRef\":\"TEST_ONLY:HELD_DOC\",\"availability\":\"HELD\",\"pendingOrders\":[],\"countedAt\":\"2026-10-27T22:00:00-05:00\",\"countEvidence\":\"TEST_ONLY:HELD_ROW\"},{\"resourceId\":\"demo:monte-500\",\"lot\":\"demo:monte-500-lot\",\"product\":\"TEST_ONLY Monte Alto 500 g\",\"family\":\"Especialidad\",\"stage\":\"PACKAGED\",\"grind\":\"grano\",\"grams\":500,\"physical\":4,\"reserved\":0,\"unit\":\"unit\",\"historicalValueCents\":8000,\"costEvidence\":\"TEST_ONLY:HELD_COST\",\"documentRef\":\"TEST_ONLY:HELD_DOC\",\"availability\":\"AVAILABLE\",\"pendingOrders\":[],\"countedAt\":\"2026-10-27T22:00:00-05:00\",\"countEvidence\":\"TEST_ONLY:HELD_ROW\"},{\"resourceId\":\"demo:gourmet-250\",\"lot\":\"demo:gourmet-250-lot\",\"product\":\"TEST_ONLY Gourmet 250 g\",\"family\":\"Gourmet\",\"stage\":\"PACKAGED\",\"grind\":\"molido\",\"grams\":250,\"physical\":4,\"reserved\":0,\"unit\":\"unit\",\"historicalValueCents\":2000,\"costEvidence\":\"TEST_ONLY:COST\",\"documentRef\":\"TEST_ONLY:LOT_DOC\",\"availability\":\"AVAILABLE\",\"pendingOrders\":[],\"countedAt\":\"2026-10-27T22:00:00-05:00\",\"countEvidence\":\"TEST_ONLY:ROW\"}]},\"obligations\":[{\"legacyRef\":\"TEST_ONLY:RESERVED\",\"state\":\"RESERVED\",\"totalCents\":3500,\"paidCents\":1000,\"evidence\":\"TEST_ONLY:RECEIPT:RESERVED\",\"responsible\":\"TEST_ONLY:OPERATOR\",\"origin\":{\"system\":\"TEST_ONLY_LEGACY\",\"recordId\":\"TEST_ONLY:RESERVED\",\"revision\":1,\"evidenceHash\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"lines\":[{\"resourceId\":\"demo:opening-bags\",\"qty\":1}],\"outstandingCents\":2500,\"legacyRevenueRecognized\":false,\"legacyCostRecognized\":false,\"legacyPaymentRecognized\":false,\"physicalDelta\":0},{\"legacyRef\":\"TEST_ONLY:DISPATCHED\",\"state\":\"DISPATCHED_UNPAID\",\"totalCents\":3500,\"paidCents\":500,\"evidence\":\"TEST_ONLY:RECEIPT:DISPATCHED\",\"responsible\":\"TEST_ONLY:OPERATOR\",\"origin\":{\"system\":\"TEST_ONLY_LEGACY\",\"recordId\":\"TEST_ONLY:DISPATCHED\",\"revision\":1,\"evidenceHash\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"lines\":[{\"resourceId\":\"demo:opening-bags\",\"qty\":1}],\"outstandingCents\":3000,\"legacyRevenueRecognized\":false,\"legacyCostRecognized\":false,\"legacyPaymentRecognized\":false,\"physicalDelta\":0},{\"legacyRef\":\"TEST_ONLY:DELIVERY\",\"state\":\"DELIVERY_PENDING\",\"totalCents\":3500,\"paidCents\":3500,\"evidence\":\"TEST_ONLY:RECEIPT:DELIVERY\",\"responsible\":\"TEST_ONLY:OPERATOR\",\"origin\":{\"system\":\"TEST_ONLY_LEGACY\",\"recordId\":\"TEST_ONLY:DELIVERY\",\"revision\":1,\"evidenceHash\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"lines\":[{\"resourceId\":\"demo:opening-bags\",\"qty\":1}],\"outstandingCents\":0,\"legacyRevenueRecognized\":false,\"legacyCostRecognized\":false,\"legacyPaymentRecognized\":false,\"physicalDelta\":0}],\"actHash\":\"0fb9d44bb09b0b0eb3cca4d378cbe5073801b16de30885a5ba3173c28b1f64dc\",\"continuityHash\":\"92c4ab68653abd1eb098826e013fbcf4aec4e9e9ccc4fdd3f6e30dccaf43b6d1\",\"bundleHash\":\"ee624c999299b925d83bc531d9dbf011a7e9b654495d62be37474e4732deeeea\",\"totals\":{\"PARCHMENT\":0,\"GREEN\":0,\"BULK\":0,\"PACKAGED\":14,\"SUPPLY\":0,\"coffeeGrams\":5500,\"valueCents\":16003,\"available\":{\"demo:opening-bags\":3,\"demo:held\":0,\"demo:monte-500\":4,\"demo:gourmet-250\":4},\"held\":{\"demo:held\":2}},\"executableInProduction\":false}",
+    "CV_5G3_CATALOGUE_CONFIG": "{\"environment\":\"TEST_ONLY\",\"enabled\":true,\"approvalKind\":\"SYNTHETIC_TEST_APPROVAL\",\"catalogueHash\":\"91412bea403f01d9df3589c6c0fe9ea7a9a261dde0cd46d5bb86108dee1bda42\",\"validFrom\":\"2026-10-28\",\"validUntil\":\"2026-10-31\",\"resourceLines\":{\"demo:opening-bags\":{\"line\":\"Gourmet\",\"lot\":\"demo:old-lot\",\"grams\":500,\"grind\":\"molido\"},\"demo:held\":{\"line\":\"Monte Alto\",\"lot\":\"demo:held-lot\",\"grams\":250,\"grind\":\"grano\"},\"demo:monte-500\":{\"line\":\"Monte Alto\",\"lot\":\"demo:monte-500-lot\",\"grams\":500,\"grind\":\"grano\"},\"demo:gourmet-250\":{\"line\":\"Gourmet\",\"lot\":\"demo:gourmet-250-lot\",\"grams\":250,\"grind\":\"molido\"}}}",
+    "CV_5G4_BACKEND_SHA256": "31ffa448d69ab99c093cd203da2df7d0a5105967a0ba8c0c627d003549be3cfc",
+    "CV_5G4_WORKER_SHA256": "3ca709bb257dabaf0e9edbf4dff40d438a653558ec93995cea6e0071e7c5a128"
+  },
+  "propertyBytes": {
+    "CV_5G3_SCOPE_ENABLED": 2,
+    "CV_5G3_CONTINUITY_CONFIG": 1965,
+    "CV_5G4_OPENING_PROPOSAL": 4134,
+    "CV_5G3_CATALOGUE_CONFIG": 598,
+    "CV_5G4_BACKEND_SHA256": 64,
+    "CV_5G4_WORKER_SHA256": 64
+  },
+  "enableOnlyAfterApprovalAndSchemaCheck": "CV_5G3_SCOPE_ENABLED=YES",
+  "preserve": [
+    "ZERO_*",
+    "HMAC secret",
+    "authorized users",
+    "OAuth client",
+    "existing deployments and journals"
+  ],
+  "opening": {
+    "bundleHash": "ee624c999299b925d83bc531d9dbf011a7e9b654495d62be37474e4732deeeea",
+    "actHash": "0fb9d44bb09b0b0eb3cca4d378cbe5073801b16de30885a5ba3173c28b1f64dc",
+    "resources": 4,
+    "obligations": 3,
+    "requiresTwoAuthenticatedReviews": true,
+    "requiresAdministratorAuthorization": true
+  },
+  "catalogue": {
+    "sha256": "91412bea403f01d9df3589c6c0fe9ea7a9a261dde0cd46d5bb86108dee1bda42",
+    "offers": 14,
+    "validity": "TEST_ONLY 2026-10-28..2026-10-31, not November approval"
+  }
+}

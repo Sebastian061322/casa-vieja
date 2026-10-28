@@ -1,0 +1,141 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "PREPARED_NOT_DEPLOYED",
+  "gitBase": "a6e1fe88323615010383a3c4fd2129f184235b57",
+  "files": [
+    {
+      "path": "backend54.gs",
+      "bytes": 7420,
+      "sha256": "1b90f6882218fbf8eaa1c4111ed10edbc785995ddcdbf7d9ac98d6792f1373dd"
+    },
+    {
+      "path": "backup54.mjs",
+      "bytes": 3158,
+      "sha256": "5b16f7b72e7db375853aed4cbbac61b996331a559b832ede28e4b88a8734950e"
+    },
+    {
+      "path": "build/Candidate.gs",
+      "bytes": 104997,
+      "sha256": "31ffa448d69ab99c093cd203da2df7d0a5105967a0ba8c0c627d003549be3cfc"
+    },
+    {
+      "path": "build/lab-config.json",
+      "bytes": 9609,
+      "sha256": "79cd7460836a56def08508c5d48ccbd566b696e321806e6128c5e946e24df9da"
+    },
+    {
+      "path": "build/manifest.json",
+      "bytes": 545,
+      "sha256": "7f1c9ec075a07be8bc5657f0c3a36c3f42ce6835e8adc1df3cd9afa1b1889014"
+    },
+    {
+      "path": "build/worker-bundle.mjs",
+      "bytes": 413665,
+      "sha256": "3ca709bb257dabaf0e9edbf4dff40d438a653558ec93995cea6e0071e7c5a128"
+    },
+    {
+      "path": "build.cjs",
+      "bytes": 6950,
+      "sha256": "c93238a37aa47886faab75ccfa16ae4b5f39619ef85d5853d4d279e3652e1a3d"
+    },
+    {
+      "path": "catalogue-command54.mjs",
+      "bytes": 636,
+      "sha256": "bf7bff6c8439c4bab9bdcfed494aab2ccae3d8f9b40db5023602922f5a78080a"
+    },
+    {
+      "path": "intent54.mjs",
+      "bytes": 1017,
+      "sha256": "a431229bb75af61fe8137b13f762819fdf1ec0422da96132ee9bb0f6a3480262"
+    },
+    {
+      "path": "prepare-lab.mjs",
+      "bytes": 3416,
+      "sha256": "043f2688592f7e7348361f82cd8580f67716ff07fd434f4d3f0fc3904fcf6da2"
+    },
+    {
+      "path": "preview.mjs",
+      "bytes": 6988,
+      "sha256": "e03e1189093c6db4ee7c5c2cb54aa6ba167876aeaecef2fb51563201d10a1bae"
+    },
+    {
+      "path": "run-regression.mjs",
+      "bytes": 2568,
+      "sha256": "a4ac4275735302bf93a2d27fa4b74ee5044ff4f66c7232b67f1717062627e25e"
+    },
+    {
+      "path": "tests/backup.test.mjs",
+      "bytes": 4138,
+      "sha256": "40d144403e75b624ad7d122afe0f896b10cfa0fa1c04d0fc8a4783c740de5d7a"
+    },
+    {
+      "path": "tests/harness.mjs",
+      "bytes": 2744,
+      "sha256": "773a2ec704c49f45d3657487ac60b4ea4f229f3bbc94626e38eb22cca778d39f"
+    },
+    {
+      "path": "tests/integrated-catalogue.test.mjs",
+      "bytes": 5353,
+      "sha256": "7a5abbb58dcd0a098eb3fcedbd725ad08c53f52828ab80e34a18edcb7d87e8b5"
+    },
+    {
+      "path": "tests/integrated-continuity-flow.test.mjs",
+      "bytes": 4599,
+      "sha256": "ff470c8c4ccd890b49a14e687b29a6d863e8be5b0b19e6f8f07d05224ec3a4d2"
+    },
+    {
+      "path": "tests/integrated-process.test.mjs",
+      "bytes": 7607,
+      "sha256": "13dc0f37e1305702630b4b5488051c4c9fe0077764d56c5def29f9b8cd5cfa86"
+    },
+    {
+      "path": "tests/intent.test.mjs",
+      "bytes": 1486,
+      "sha256": "b9a409f748c45329ba1e5fdeb1fa16a55e099f286621cd8264699ba161fcfbfc"
+    },
+    {
+      "path": "tests/opening-helpers.mjs",
+      "bytes": 679,
+      "sha256": "1a1b57a58044742496a1f2fc5a1aededb00a8881194837f5432770d4df4cf228"
+    },
+    {
+      "path": "tests/opening.test.mjs",
+      "bytes": 3904,
+      "sha256": "bb8588d59518242b75174693c12d663d1753909bb96b5762208f914ed947914f"
+    },
+    {
+      "path": "tests/regression.json",
+      "bytes": 1392,
+      "sha256": "0798e522e7ad9c725ec1e46708c982da9d1083c612153dd4e6d37960c0d6aae8"
+    },
+    {
+      "path": "tests/ui-observation.json",
+      "bytes": 2328,
+      "sha256": "7d5e7fb805227e4e229fadd3576b340800766a568860263f3f26d00aeba65c64"
+    },
+    {
+      "path": "tests/worker.test.mjs",
+      "bytes": 4170,
+      "sha256": "282193021be090ee59615b7ca6cd18f8d9ee393e6c9c1dec41f120f446e864e1"
+    },
+    {
+      "path": "ui54.js",
+      "bytes": 16080,
+      "sha256": "80d632e111751d9b24fb33a6713dd8b2f234e66074cb3b09f85106fc7c5157a7"
+    },
+    {
+      "path": "verify-backup.html",
+      "bytes": 1030,
+      "sha256": "6c73f40497f9da3350c15925bbfb5475176ab40257cdd91b46262d524ea0bc46"
+    },
+    {
+      "path": "verify-backup54.mjs",
+      "bytes": 802,
+      "sha256": "a5d565fc2ee1f49e847714634375fc05bc7ea0e30dcf721b2ab743389ba7d39c"
+    }
+  ],
+  "sourceAndGeneratedFilesIncluded": true,
+  "privateFilesIncluded": false,
+  "remoteServiceChanged": false,
+  "productionReady": false
+}

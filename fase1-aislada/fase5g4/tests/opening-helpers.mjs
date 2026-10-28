@@ -1,0 +1,3 @@
+import assert from 'node:assert/strict';
+export function reviews(s){const payload={bundleHash:s.local.bundle.bundleHash,actHash:s.local.bundle.actHash,evidence:'TEST_ONLY:VERIFIED_REVIEW'};const a=s.scope(s.local.command('REVIEW_OPENING',payload)),b=s.scope(s.local.command('REVIEW_OPENING',payload));assert.equal(s.call('execute',a,'111111').state,'COMMITTED');assert.equal(s.call('execute',b,'222222').state,'COMMITTED');return {payload,a,b};}
+export function authorize(s){const {payload,a,b}=reviews(s),c=s.scope(s.local.command('AUTHORIZE_OPENING',{...payload,reviewOperationIds:[a.operationId,b.operationId]}));assert.equal(s.call('execute',c).state,'COMMITTED');return c;}

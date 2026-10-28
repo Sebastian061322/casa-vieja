@@ -1,0 +1,42 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),vm=require('node:vm');
+const root=__dirname,read=p=>fs.readFileSync(path.join(root,p),'utf8'),sha=s=>crypto.createHash('sha256').update(s).digest('hex');
+const baseBackend=read('../fase5g3/build/Candidate.gs'),baseWorker=read('../fase5g/patches-ui/build/worker-bundle.mjs');
+if(sha(baseBackend)!=='70154ddfd484be2ceaeeaf504324d58657d96537d7bb85dca7ea79dc8cd6955e'||sha(baseWorker)!=='b350fe05fadd3cdc72b7b8c17637674bbc53fe84bde462dd19f47941dc5b1676')throw Error('BASE_CHANGED_REVIEW_REQUIRED');
+const backupSource=read('../fase5g2/backup.cjs');
+const backupWrapper='const CV54Backup=(()=>{const module={exports:{}};const require=n=>{if(n===\'node:crypto\')return CV52Crypto;if(n===\'../fase3/journal.js\')return CVInventoryBase;throw Error(\'LOCAL_DEPENDENCY_FORBIDDEN\')};'+backupSource+'\nreturn module.exports;})();';
+let backend=baseBackend.replace("['execute','status','snapshot','reports'].includes(r.action)","['execute','status','snapshot','reports','dashboard'].includes(r.action)")+ '\n'+backupWrapper+'\n'+read('backend54.gs');
+const typeGate="const newType=r.action==='execute'&&['OPEN_CONTINUITY'";if(backend.split(typeGate).length!==2)throw Error('SCOPE_GATE_BOUNDARY');backend=backend.replace(typeGate,"const newType=r.action==='execute'&&['REVIEW_OPENING','AUTHORIZE_OPENING','OPEN_CONTINUITY'");
+const configGate="return raw?JSON.parse(raw):{environment:'TEST_ONLY',policies:{}};";if(backend.split(configGate).length!==2)throw Error('POLICY_CONFIG_BOUNDARY');backend=backend.replace(configGate,"return cvPolicyConfig54_(raw?JSON.parse(raw):{environment:'TEST_ONLY',policies:{}});");
+const marker='\nconst assets=',start=baseWorker.indexOf(marker),end=baseWorker.indexOf(';\nexport default',start),assets=JSON.parse(baseWorker.slice(start+marker.length,end));
+const replace=(text,from,to)=>{if(text.split(from).length!==2)throw Error('PATCH_BOUNDARY: '+from.slice(0,60));return text.replace(from,to);};
+const strip=s=>s.replace(/^import .*\n/gm,'').replace(/^export /gm,'');
+const adapter='const CV54Scoped=(()=>{'+strip(read('../fase5g3/scoped-client.mjs'))+'\n'+strip(read('intent54.mjs'))+'\nreturn {createScopedClient,enqueueUi54};})();\n';
+const backupAdapter='const CV54Phone=(()=>{'+strip(read('backup54.mjs'))+'\nreturn {encryptArchive54};})();\n';
+const mode="const scopedMode54=new URLSearchParams(location.search).get('engine')==='5g4';\n";
+function patchApp(app){
+ app=replace(app,'window.mount5D=async function(actor,session,labStore){','window.mount5D=async function(actor,session,labStore,scopedAdapter){');
+ app=replace(app,"return session.invoke(action,name==='snapshot'?{format:'ui5d'}:arg??null);","let payload=name==='snapshot'?{format:'ui5d'}:arg??null;if(scopedAdapter&&['snapshot','reports','dashboard'].includes(action))payload={...(payload||{}),continuityScope:scopedAdapter.scope};return session.invoke(action,payload);");
+ app=replace(app,"const client=new GuardedClient(store,responseProbe,'TEST_ONLY_V3',uuid);","const client=scopedAdapter?.client||new GuardedClient(store,responseProbe,'TEST_ONLY_V3',uuid);");
+ app=replace(app,'async function send(payload){','async function send(payload){if(scopedAdapter)return send54(payload);');
+ app=replace(app,'CVVisual.pendingOrders(snapshot.sales)',"(CVVisual.pendingOrders(snapshot.sales)+(scopedAdapter?(snapshot.reports.legacyPendingOrders||0):0))");
+ const close=app.lastIndexOf('\n};');if(close<0)throw Error('MOUNT_BOUNDARY');
+ return app.slice(0,close)+'\n'+strip(read('catalogue-command54.mjs'))+'\n'+read('ui54.js')+app.slice(close);
+}
+const before=assets['/approved-app.js'],after=patchApp(before);let entry=replace(assets['/entry.mjs'],strip(before),strip(after));
+entry=mode+entry;
+entry=replace(entry,"    const store=await new PrivateProjectionStore(new CVClient.IndexedStore('cv-zero-lab-v1-'+actor.subject),actor.profile).initialize();", "    const scopedAdapter=scopedMode54?await CV54Scoped.createScopedClient({Client:CVClient.Client,IndexedStore:CVClient.IndexedStore,session,uuid:()=>crypto.randomUUID()}):null;\n    const store=scopedAdapter?.store||await new PrivateProjectionStore(new CVClient.IndexedStore('cv-zero-lab-v1-'+actor.subject),actor.profile).initialize();");
+entry=replace(entry,'await window.mount5D(actor,session,store);','await window.mount5D(actor,session,store,scopedAdapter);');
+// Ya está definido el parser operationResult y la clase de caché privada.
+entry=replace(entry,'window.mount5D=async function',adapter+backupAdapter+'window.mount5D=async function');
+assets['/entry.mjs']=entry;assets['/approved-app.js']=after;assets['/scoped-client.mjs']=read('../fase5g3/scoped-client.mjs');assets['/intent54.mjs']=read('intent54.mjs');
+const banner='<p class="cv-help" id="mode54-choice">Laboratorio anterior: conserva sus colas. <a href="/?engine=5g4">Abrir ensayo aislado 5G.4</a>. No usar datos reales.</p>';
+assets['/index.html']=replace(assets['/index.html'],'<div id="google-button">',banner+'<div id="google-button">');assets['/']=assets['/index.html'];
+assets['/backup54.mjs']=read('backup54.mjs');assets['/verify-backup.html']=read('verify-backup.html');assets['/verify-backup54.mjs']=read('verify-backup54.mjs');
+new vm.Script(entry);
+const context=vm.createContext({PropertiesService:{getScriptProperties:()=>({getProperty:()=>null})}});vm.runInContext(backend,context);const rpc=Object.keys(context).filter(k=>typeof context[k]==='function'&&!k.endsWith('_')).sort();if(JSON.stringify(rpc)!==JSON.stringify(['doGet','doPost','zeroRequest']))throw Error('RPC_EXPOSURE');
+let worker=baseWorker.slice(0,start)+marker+JSON.stringify(assets)+baseWorker.slice(end);
+const csp='"default-src \'self\'; script-src \'self\' https://accounts.google.com/gsi/client; style-src \'self\' \'unsafe-inline\' https://accounts.google.com/gsi/style; frame-src https://accounts.google.com/gsi/; connect-src \'self\' https://accounts.google.com/gsi/; img-src \'self\' data:; frame-ancestors \'none\'; base-uri \'none\'; form-action \'self\'"';
+worker=replace(worker,csp,"url.pathname==='/verify-backup.html'?\"default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'none'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; form-action 'none'\":"+csp);
+fs.mkdirSync(path.join(root,'build'),{recursive:true});fs.writeFileSync(path.join(root,'build/Candidate.gs'),backend);fs.writeFileSync(path.join(root,'build/worker-bundle.mjs'),worker);
+fs.writeFileSync(path.join(root,'build/manifest.json'),JSON.stringify({environment:'TEST_ONLY',status:'LOCAL_INTEGRATION_NOT_DEPLOYED',backendSha256:sha(backend),workerSha256:sha(worker),baseBackendSha256:sha(baseBackend),baseWorkerSha256:sha(baseWorker),mode:'?engine=5g4',originalModePreserved:true,remoteChanged:false,commercialReady:false},null,2)+'\n');console.log(JSON.stringify({backendSha256:sha(backend),workerSha256:sha(worker),rpc,remoteChanged:false}));

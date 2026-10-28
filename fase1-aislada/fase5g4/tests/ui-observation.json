@@ -1,0 +1,76 @@
+{
+  "environment": "LOCAL_SYNTHETIC_BROWSER",
+  "backendSha256": "31ffa448d69ab99c093cd203da2df7d0a5105967a0ba8c0c627d003549be3cfc",
+  "workerSha256": "3ca709bb257dabaf0e9edbf4dff40d438a653558ec93995cea6e0071e7c5a128",
+  "origin": "http://127.0.0.1:8800",
+  "actualGoogle": false,
+  "actualSheets": false,
+  "physicalDevices": false,
+  "openingPreseededByFixture": true,
+  "uiLogin": "fictitious RSA identities only",
+  "cases": [
+    {
+      "name": "offline queue + reload + same account",
+      "result": "PASS",
+      "client": "TEST_ONLY_5G4_REINICIO_FINAL",
+      "saleId": "future:81d4031d-1520-430a-9034-fb2cff943b14",
+      "state": "RESERVED",
+      "pending": 0,
+      "gourmet250Available": 3
+    },
+    {
+      "name": "Worker controlled lost ACK + reload + status + repeated Sync",
+      "result": "PASS",
+      "client": "TEST_ONLY_5E_5G4_ACK_FINAL",
+      "saleId": "future:d4cb682d-e968-42b1-a8df-472229e5f53d",
+      "state": "RESERVED",
+      "totalCents": 8500,
+      "pending": 0,
+      "gourmet500Available": 2,
+      "monte500Available": 3,
+      "totalNewOrders": 2
+    },
+    {
+      "name": "partial/full payment and single dispatch",
+      "result": "PASS",
+      "receivedCents": [
+        1000,
+        1200
+      ],
+      "outstandingCents": 0,
+      "secondDispatchButtonDisabled": true
+    },
+    {
+      "name": "legacy future collection and dispatch",
+      "result": "PASS",
+      "priorAdvanceCents": 1000,
+      "futureCollectionCents": 2500,
+      "outstandingCents": 0,
+      "state": "DELIVERY_PENDING"
+    },
+    {
+      "name": "reports after both dispatches",
+      "result": "PASS",
+      "newRevenueCents": 2200,
+      "collectionsCents": 4700,
+      "cogsCents": 500,
+      "marginCents": 1700,
+      "outstandingCents": 11500
+    },
+    {
+      "name": "expense form in new namespace",
+      "result": "PASS",
+      "description": "TEST_ONLY_5G4_GASTO",
+      "amountCents": 100,
+      "payment": "not registered"
+    }
+  ],
+  "limitations": [
+    "Local API disconnect checkbox, not physical airplane mode",
+    "Page reload, not physical Safari force close",
+    "No Google/phone performance acceptance",
+    "Opening setup is not UI approval evidence on current fixture",
+    "No production or remote service writes"
+  ],
+  "recordedAtUTC": "2026-10-28T22:01:00.410518+00:00"
+}

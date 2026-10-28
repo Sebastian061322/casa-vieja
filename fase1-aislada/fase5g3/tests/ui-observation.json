@@ -1,0 +1,14 @@
+{
+  "environment": "LOCAL_SYNTHETIC",
+  "dateLocal": "2026-10-28",
+  "browser": "Codex in-app browser",
+  "physicalDevice": false,
+  "scenario": "Load fictitious opening, validate, inspect quantities/costs/obligations and disabled confirmation",
+  "result": "OBSERVED_PASS",
+  "screenshots": [
+    "build/revision-escritorio.png",
+    "build/revision-resultado.png"
+  ],
+  "googleBackendUsed": false,
+  "commercialWrites": false
+}

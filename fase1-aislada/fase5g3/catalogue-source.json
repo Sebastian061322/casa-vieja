@@ -1,0 +1,194 @@
+{
+  "version": "WEB_2026-10-28_1",
+  "source": "https://casa-vieja-web.pages.dev/",
+  "observedDateLocal": "2026-10-28",
+  "ownerConfirmedSourceCurrent": true,
+  "currency": "PEN",
+  "activated": false,
+  "effectiveFrom": null,
+  "effectiveUntil": null,
+  "availability": "CONFIRM_BEFORE_ACCEPTANCE",
+  "grinds": [
+    "grano",
+    "molido"
+  ],
+  "grindSurchargeCents": 0,
+  "offers": [
+    {
+      "id": "gourmet-250",
+      "name": "Gourmet · 250 g",
+      "grams": 250,
+      "priceCents": 2200,
+      "composition": {
+        "Gourmet": 1
+      },
+      "source": "https://casa-vieja-web.pages.dev/cafes/gourmet/#gourmet-250"
+    },
+    {
+      "id": "gourmet-500",
+      "name": "Gourmet · 500 g",
+      "grams": 500,
+      "priceCents": 4000,
+      "composition": {
+        "Gourmet": 1
+      },
+      "source": "https://casa-vieja-web.pages.dev/cafes/gourmet/#gourmet-500"
+    },
+    {
+      "id": "gourmet-duo",
+      "name": "Dúo Gourmet",
+      "grams": 500,
+      "priceCents": 6900,
+      "composition": {
+        "Gourmet": 2
+      },
+      "source": "https://casa-vieja-web.pages.dev/packs/duo/"
+    },
+    {
+      "id": "gourmet-tripack",
+      "name": "Tripack Gourmet",
+      "grams": 500,
+      "priceCents": 9900,
+      "composition": {
+        "Gourmet": 3
+      },
+      "source": "https://casa-vieja-web.pages.dev/packs/tripack/"
+    },
+    {
+      "id": "monte-alto-250",
+      "name": "Monte Alto · 250 g",
+      "grams": 250,
+      "priceCents": 3700,
+      "composition": {
+        "Monte Alto": 1
+      },
+      "source": "https://casa-vieja-web.pages.dev/cafes/monte-alto/#monte-alto-250"
+    },
+    {
+      "id": "monte-alto-500",
+      "name": "Monte Alto · 500 g",
+      "grams": 500,
+      "priceCents": 6500,
+      "composition": {
+        "Monte Alto": 1
+      },
+      "source": "https://casa-vieja-web.pages.dev/cafes/monte-alto/#monte-alto-500"
+    },
+    {
+      "id": "monte-alto-duo",
+      "name": "Dúo Monte Alto",
+      "grams": 500,
+      "priceCents": 9900,
+      "composition": {
+        "Monte Alto": 2
+      },
+      "source": "https://casa-vieja-web.pages.dev/cafes/monte-alto/#monte-alto-duo"
+    },
+    {
+      "id": "monte-alto-tripack",
+      "name": "Tripack Monte Alto",
+      "grams": 500,
+      "priceCents": 14000,
+      "composition": {
+        "Monte Alto": 3
+      },
+      "source": "https://casa-vieja-web.pages.dev/cafes/monte-alto/#monte-alto-tripack"
+    },
+    {
+      "id": "mixto-duo-250",
+      "name": "Dúo Encuentro · 250 g",
+      "grams": 250,
+      "priceCents": 4900,
+      "composition": {
+        "Gourmet": 1,
+        "Monte Alto": 1
+      },
+      "source": "https://casa-vieja-web.pages.dev/packs/mixtos/#mixto-duo-250"
+    },
+    {
+      "id": "mixto-duo-500",
+      "name": "Dúo Encuentro · 500 g",
+      "grams": 500,
+      "priceCents": 8500,
+      "composition": {
+        "Gourmet": 1,
+        "Monte Alto": 1
+      },
+      "source": "https://casa-vieja-web.pages.dev/packs/mixtos/#mixto-duo-500"
+    },
+    {
+      "id": "mixto-trio-250-g2-m1",
+      "name": "Trío · 250 g · 2 Gourmet + 1 Monte Alto",
+      "grams": 250,
+      "priceCents": 5500,
+      "composition": {
+        "Gourmet": 2,
+        "Monte Alto": 1
+      },
+      "source": "https://casa-vieja-web.pages.dev/packs/mixtos/#mixto-trio-250-g2-m1"
+    },
+    {
+      "id": "mixto-trio-250-g1-m2",
+      "name": "Trío · 250 g · 1 Gourmet + 2 Monte Alto",
+      "grams": 250,
+      "priceCents": 6500,
+      "composition": {
+        "Gourmet": 1,
+        "Monte Alto": 2
+      },
+      "source": "https://casa-vieja-web.pages.dev/packs/mixtos/#mixto-trio-250-g1-m2"
+    },
+    {
+      "id": "mixto-trio-500-g2-m1",
+      "name": "Trío · 500 g · 2 Gourmet + 1 Monte Alto",
+      "grams": 500,
+      "priceCents": 11000,
+      "composition": {
+        "Gourmet": 2,
+        "Monte Alto": 1
+      },
+      "source": "https://casa-vieja-web.pages.dev/packs/mixtos/#mixto-trio-500-g2-m1"
+    },
+    {
+      "id": "mixto-trio-500-g1-m2",
+      "name": "Trío · 500 g · 1 Gourmet + 2 Monte Alto",
+      "grams": 500,
+      "priceCents": 12500,
+      "composition": {
+        "Gourmet": 1,
+        "Monte Alto": 2
+      },
+      "source": "https://casa-vieja-web.pages.dev/packs/mixtos/#mixto-trio-500-g1-m2"
+    }
+  ],
+  "shipping": {
+    "Lima Metropolitana": {
+      "chargedCents": 800,
+      "basis": "PER_ORDER",
+      "internalCostCents": null
+    },
+    "otherRegions": {
+      "chargedCents": null,
+      "status": "QUOTE_BEFORE_ACCEPTANCE"
+    },
+    "source": "https://casa-vieja-web.pages.dev/politicas/envios/"
+  },
+  "payment": {
+    "methods": [
+      "Yape",
+      "Plin",
+      "Transferencia bancaria"
+    ],
+    "verification": "COORDINATED_BY_MANAGER_NOT_AUTOMATIC",
+    "source": "https://casa-vieja-web.pages.dev/politicas/pagos/"
+  },
+  "returns": {
+    "preferenceChangeHours": 24,
+    "preferenceRequiresUnopenedBag": true,
+    "preferenceShippingPaidBy": "CUSTOMER",
+    "defectOrWrongDeliveryNoShippingChargeToCustomer": true,
+    "noAutomaticRefund": true,
+    "source": "https://casa-vieja-web.pages.dev/politicas/cambios/"
+  },
+  "internalLotMappingApproved": false
+}

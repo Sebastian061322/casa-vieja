@@ -1,0 +1,302 @@
+{
+  "sourceHead": "6578003bcd02988c1b4a44b9402e5dbc23963d34",
+  "branch": "dev/fase1-estabilizacion",
+  "dependencyComparison": "10 required dependencies identical to checkout",
+  "scope": "Only phase5g2 and phase5g3 additions; no production/main changes",
+  "privateAndLocalEvidenceExcluded": true,
+  "textLogsExcluded": true,
+  "secretPatternScan": "No matches for private keys or common live credential patterns; reviewed public identifiers and synthetic examples remain",
+  "files": [
+    {
+      "path": "fase1-aislada/fase5g2/CENSO-MANUAL-LIMITADO.md",
+      "sha256": "0336e5a2e8ae8d83266e612e65f53439a738f6852e8536596377f1edf47772be",
+      "bytes": 2490
+    },
+    {
+      "path": "fase1-aislada/fase5g2/CONTENCION-Y-CENSO.md",
+      "sha256": "db63fa65afa934a36b90c3d7868493ec7f7225c5cd255116c800199d59d11a7b",
+      "bytes": 7340
+    },
+    {
+      "path": "fase1-aislada/fase5g2/EJECUTOR-Y-APERTURA.md",
+      "sha256": "9a10d2e87c93a47a132c947b7098e76e1f1c666296dcbe2fb7f5e9df11569cba",
+      "bytes": 4016
+    },
+    {
+      "path": "fase1-aislada/fase5g2/MATRIZ-ESCRITORES.csv",
+      "sha256": "a61f4975ed4c1f063c728dc990c87dd69f0c61ea718c1a06e80703adbb61c52e",
+      "bytes": 9299
+    },
+    {
+      "path": "fase1-aislada/fase5g2/POLITICAS-PARA-APROBACION.md",
+      "sha256": "466904e8a275f6762046c00958363b9d830ad7287bbee73f17c83500aefad3ab",
+      "bytes": 3706
+    },
+    {
+      "path": "fase1-aislada/fase5g2/PUBLICACION-Y-CONTINGENCIA.md",
+      "sha256": "94bf7a1d07b6d6ac2e8e289269e5e1cec0748c02724019b3771eb939091bccb1",
+      "bytes": 4048
+    },
+    {
+      "path": "fase1-aislada/fase5g2/README.md",
+      "sha256": "b085a908d84fd6224091c6f889735093d1a08fae3c02923ffb69d7b73f3a786b",
+      "bytes": 6831
+    },
+    {
+      "path": "fase1-aislada/fase5g2/RESPALDO-Y-CUSTODIA.md",
+      "sha256": "63a05b9a9dce5dd761bb8cf12c66df7832f8d2c1a7dad6fb75a4cb59394a5f34",
+      "bytes": 4772
+    },
+    {
+      "path": "fase1-aislada/fase5g2/backup-verify.cjs",
+      "sha256": "64cb3d9e6efab0fe7052898d2d7c8abf75f3d5cb6912121cf83c74d049962414",
+      "bytes": 723
+    },
+    {
+      "path": "fase1-aislada/fase5g2/backup.cjs",
+      "sha256": "263a06c865ae0356e385aa06ac9dae90e2871bd01b72fed819ec06fb734e883e",
+      "bytes": 5020
+    },
+    {
+      "path": "fase1-aislada/fase5g2/build/Candidate.gs",
+      "sha256": "080a6e6e0cb0813cb8741a3d7b63a3cf0c30c943150a11369c0490b46e9dc31c",
+      "bytes": 79781
+    },
+    {
+      "path": "fase1-aislada/fase5g2/build/manifest.json",
+      "sha256": "10b10fa3bd22e124a5fb8a80d21feb3180831c5f000c1c5e9ca002b965fdbf43",
+      "bytes": 466
+    },
+    {
+      "path": "fase1-aislada/fase5g2/build.cjs",
+      "sha256": "aa5914aa594c936d5d455cf17830ae95e66e746fa729dd017567ed4f4432cd71",
+      "bytes": 4100
+    },
+    {
+      "path": "fase1-aislada/fase5g2/census-console.js",
+      "sha256": "38ccbfd75a83279a1eb3849a75136c7ac0dc4d93a07d41397102f4b1b43ab035",
+      "bytes": 1843
+    },
+    {
+      "path": "fase1-aislada/fase5g2/continuity-engine.cjs",
+      "sha256": "e33ecd94267b69cd9e536dfdf8acc80f777c2ebb36ae770c4b7702cdf9758ffb",
+      "bytes": 10083
+    },
+    {
+      "path": "fase1-aislada/fase5g2/cutover.cjs",
+      "sha256": "52db58ee48f0a4e29653fb63799975d15a67821c764c720c9c2f144a7217bb68",
+      "bytes": 4052
+    },
+    {
+      "path": "fase1-aislada/fase5g2/inspect-device.cjs",
+      "sha256": "b9766c74c4d872f43bbb2e1ec66f0992a17542934933bc7570f03d33f5ae79c4",
+      "bytes": 1729
+    },
+    {
+      "path": "fase1-aislada/fase5g2/opening.cjs",
+      "sha256": "093ad8b431e8eed15592eb6c3ee0614246ad34babd3ffa6dc9c84edded059c95",
+      "bytes": 2210
+    },
+    {
+      "path": "fase1-aislada/fase5g2/rehearsal.mjs",
+      "sha256": "d6e0f02eeac1fac8b96b65857838967c11a8d4389d349ca3cb37084634ff5488",
+      "bytes": 4251
+    },
+    {
+      "path": "fase1-aislada/fase5g2/run-tests.mjs",
+      "sha256": "e93471645c817de0d9d95d074e8ebaf6d82a682bc8b601e7d766a345aa5d55ec",
+      "bytes": 1705
+    },
+    {
+      "path": "fase1-aislada/fase5g2/templates/ACTA-APERTURA-NOVIEMBRE-DRAFT.json",
+      "sha256": "75e1e89fe9f49cdbe41c8b16f2b2b2d7b19f38531fc1c1a41677e0b54bdcd253",
+      "bytes": 1325
+    },
+    {
+      "path": "fase1-aislada/fase5g2/templates/CENSO-DISPOSITIVOS.csv",
+      "sha256": "14b91a2f904761e5fe0fa518fc3eb7db4658594b937863e3f845c914e7659e54",
+      "bytes": 1277
+    },
+    {
+      "path": "fase1-aislada/fase5g2/templates/POLITICA-DRAFT.json",
+      "sha256": "8acc36ae2d80731ee56b686fc3462122a53215a128792fa64fb84727048531fc",
+      "bytes": 338
+    },
+    {
+      "path": "fase1-aislada/fase5g2/tests/backup.test.mjs",
+      "sha256": "0d3cb5c09c9929d37a583e19a2cd874cc20dffb110bded6e97f6af469b331b98",
+      "bytes": 5430
+    },
+    {
+      "path": "fase1-aislada/fase5g2/tests/census-console.test.mjs",
+      "sha256": "41ef2eb57eb3562efab2e3063ba6d9a7c5af0d59482f8bb22b441cd695fc8e01",
+      "bytes": 1754
+    },
+    {
+      "path": "fase1-aislada/fase5g2/tests/compiled-backend.test.mjs",
+      "sha256": "bcde128254f0c39ad94d1bb44856f8d42a2fd8ee976da0f80403967659d6a58c",
+      "bytes": 7522
+    },
+    {
+      "path": "fase1-aislada/fase5g2/tests/continuity.test.mjs",
+      "sha256": "e9ad8895a669eba4cc42ed9410a15d196f62ce947fb16e062329a60250d24947",
+      "bytes": 9869
+    },
+    {
+      "path": "fase1-aislada/fase5g2/tests/cutover.test.mjs",
+      "sha256": "1c343855cd66f6c15100f7cf200d240b7b62f81671c2f0b1c803499243f1c872",
+      "bytes": 5165
+    },
+    {
+      "path": "fase1-aislada/fase5g2/tests/device.test.mjs",
+      "sha256": "1c4fd76015fdf990e4b6e1fe16c6e3ee83b24c243b0e6321c17895a68f045fbc",
+      "bytes": 2413
+    },
+    {
+      "path": "fase1-aislada/fase5g2/tests/fixture.mjs",
+      "sha256": "5a75ca94173ad8349a2c63893e7643968c2375677ddf9899c02fdeaf0420b927",
+      "bytes": 3740
+    },
+    {
+      "path": "fase1-aislada/fase5g2/tests/resultados.json",
+      "sha256": "d6894145c2d8027e9e93cf4a910c22293caf850f8bf25fbd796f2b5ec5eb9338",
+      "bytes": 510
+    },
+    {
+      "path": "fase1-aislada/fase5g3/CATALOGO-EXTRAIDO.md",
+      "sha256": "42998e0de95dc78acea3e3a7f93b416e7c361fe3858ba4f30cbcb578636a887a",
+      "bytes": 3444
+    },
+    {
+      "path": "fase1-aislada/fase5g3/ESTADO-ACTUAL.md",
+      "sha256": "a8cbdf10aa9b8d880dec39edba2ee5cb758b28351f6c653d0a0b267f6ac0f2f8",
+      "bytes": 13707
+    },
+    {
+      "path": "fase1-aislada/fase5g3/build/Candidate.gs",
+      "sha256": "70154ddfd484be2ceaeeaf504324d58657d96537d7bb85dca7ea79dc8cd6955e",
+      "bytes": 92258
+    },
+    {
+      "path": "fase1-aislada/fase5g3/build/manifest.json",
+      "sha256": "12112c6ffd393a3f9a4ba52f6e795b229f5729b2d4e1d628fa6afe2db20a3db6",
+      "bytes": 496
+    },
+    {
+      "path": "fase1-aislada/fase5g3/build/revision-escritorio.png",
+      "sha256": "f69e2fc92fee036b6c82cbea4a5c517352353c238693fe39715001447e40a6cd",
+      "bytes": 65664
+    },
+    {
+      "path": "fase1-aislada/fase5g3/build/revision-resultado.png",
+      "sha256": "d30c50676d25ae0d7ed55b9aee392834902203e0867fe577b529eedb131e4a97",
+      "bytes": 91549
+    },
+    {
+      "path": "fase1-aislada/fase5g3/build.cjs",
+      "sha256": "966ddfae0ff077de01e95cdcd4421b449ddeb289302a89ad3e0ed92c92d4c841",
+      "bytes": 5912
+    },
+    {
+      "path": "fase1-aislada/fase5g3/catalogue-sale.cjs",
+      "sha256": "d9bdb6b340183ff11414ce03bb97414ce4bc325265b3cde9c617dd173eb1e483",
+      "bytes": 3663
+    },
+    {
+      "path": "fase1-aislada/fase5g3/catalogue-source.json",
+      "sha256": "9277ad4a818a5cafa3899e653e79ccd40570e53be9899e92c0ad28c90da613fe",
+      "bytes": 5163
+    },
+    {
+      "path": "fase1-aislada/fase5g3/network-guard.cjs",
+      "sha256": "ed961c3a4359b55b5b4826e6c3b5b9934bd8007ca72a13cb62cb87da64205beb",
+      "bytes": 797
+    },
+    {
+      "path": "fase1-aislada/fase5g3/preview.cjs",
+      "sha256": "59b509de67071cdefa5f155db0277ae9d7d5e693857d5b06c9c18d89d3db63fd",
+      "bytes": 2144
+    },
+    {
+      "path": "fase1-aislada/fase5g3/review.cjs",
+      "sha256": "b3fdc3aed6dfb77cede43524abf34571456b3aebf217332352755e3272bfaf45",
+      "bytes": 1153
+    },
+    {
+      "path": "fase1-aislada/fase5g3/run-regression.mjs",
+      "sha256": "6d54627636d0dbfdfce95dda670c507542b65834aae38e8081d1aef4167d7731",
+      "bytes": 2520
+    },
+    {
+      "path": "fase1-aislada/fase5g3/scoped-client.mjs",
+      "sha256": "10bf5dda87e22fb885384ff6b9a1651ef5b7e72efcc22180ece432113e633158",
+      "bytes": 3666
+    },
+    {
+      "path": "fase1-aislada/fase5g3/tests/catalogue.test.mjs",
+      "sha256": "9b10b2ec90cda35378be53b970189b89ff87a777e75c79efd81fb8f17f5b8a0b",
+      "bytes": 5040
+    },
+    {
+      "path": "fase1-aislada/fase5g3/tests/continuity-flow.test.mjs",
+      "sha256": "caf6a0bd61cd7c5f75446687ccd808f89aaa75e51c893f585727b6a83189613c",
+      "bytes": 4308
+    },
+    {
+      "path": "fase1-aislada/fase5g3/tests/harness.mjs",
+      "sha256": "773a2ec704c49f45d3657487ac60b4ea4f229f3bbc94626e38eb22cca778d39f",
+      "bytes": 2744
+    },
+    {
+      "path": "fase1-aislada/fase5g3/tests/isolation.test.mjs",
+      "sha256": "eedc239fa63bd6f1c3ae0a81be919d9f89a3fd6503fe36de292558ce2e8c9d79",
+      "bytes": 3350
+    },
+    {
+      "path": "fase1-aislada/fase5g3/tests/regression.json",
+      "sha256": "3d1b40fbfe683dc6a5ff7f8cdd660bbeaf48527901a355782103682e87188df6",
+      "bytes": 1355
+    },
+    {
+      "path": "fase1-aislada/fase5g3/tests/rehearsal-date.test.mjs",
+      "sha256": "545d6ac58117fe7bb41137e4ea1f5349127881c444e0751cf57f0adb7d29372f",
+      "bytes": 1910
+    },
+    {
+      "path": "fase1-aislada/fase5g3/tests/review.test.mjs",
+      "sha256": "a491f38e85d9f90fb4dc581dd8969d4e5f9c108bbb00acf9c5ff0930764747d3",
+      "bytes": 2450
+    },
+    {
+      "path": "fase1-aislada/fase5g3/tests/scoped-client.test.mjs",
+      "sha256": "73b688970ebf5d7cdb41f665e4c3d9b245b5138613137d0828b1173a25f70fd7",
+      "bytes": 5992
+    },
+    {
+      "path": "fase1-aislada/fase5g3/tests/ui-observation.json",
+      "sha256": "4000014cb16506d92fb088b10e460fa65f2ca9229f7e73b987e71bc6074fd763",
+      "bytes": 431
+    },
+    {
+      "path": "fase1-aislada/fase5g3/ui/index.html",
+      "sha256": "f30da7b70e1a1108dcbf52601a4e479678b78f14c7d49025e11c1eb471dce9cf",
+      "bytes": 1797
+    },
+    {
+      "path": "fase1-aislada/fase5g3/ui/review.css",
+      "sha256": "01c97af9d3b1a066e539ea2bb427353228b871637cddc768c1fa00b2bcde0b02",
+      "bytes": 923
+    },
+    {
+      "path": "fase1-aislada/fase5g3/ui/review.js",
+      "sha256": "7811f8d070a6f43adcae3f2e2c093d12ba0cc439374268a11d34394c76b0fb73",
+      "bytes": 2359
+    },
+    {
+      "path": "fase1-aislada/fase5g3/ui/sample.json",
+      "sha256": "cd8e2a07c13e17e5925616c993ea21e1059a3ae37b11372e4acb26e05c4b0978",
+      "bytes": 3528
+    }
+  ],
+  "consolidationCorrection": "Scoped client test imports the published shared fase2/client.js instead of an unversioned duplicate. Generate fase5d fixture with node fase1-aislada/fase5d/build.cjs before directed tests."
+}

@@ -1,0 +1,6 @@
+contexto,persona,equipo_fisico,navegador,perfil,origen_exacto,implementacion_version,outbox,failedOps,recibos,ultimo_sync,autorizacion_lectura,estado
+Encargado_A_computadora,Encargado A POR_IDENTIFICAR,computadora,Safari según propietario,POR_IDENTIFICAR,https://sebastian061322.github.io/casa-vieja,DESCONOCIDA,,,,,NO_SOLICITADA,Contexto declarado y origen confirmado por propietario; NO inspeccionado
+Encargado_A_celular,Encargado A POR_IDENTIFICAR,celular,Safari según propietario,POR_IDENTIFICAR,https://sebastian061322.github.io/casa-vieja,DESCONOCIDA,,,,,NO_SOLICITADA,Contexto declarado y origen confirmado por propietario; NO inspeccionado
+Encargado_B_computadora,Encargado B POR_IDENTIFICAR,computadora,Safari según propietario,POR_IDENTIFICAR,https://sebastian061322.github.io/casa-vieja,DESCONOCIDA,,,,,NO_SOLICITADA,Contexto declarado y origen confirmado por propietario; NO inspeccionado
+Encargado_B_celular,Encargado B POR_IDENTIFICAR,celular,Safari según propietario,POR_IDENTIFICAR,https://sebastian061322.github.io/casa-vieja,DESCONOCIDA,,,,,NO_SOLICITADA,Contexto declarado y origen confirmado por propietario; NO inspeccionado
+Vendedor_POR_CONFIRMAR,POR_IDENTIFICAR,POR_CONFIRMAR,POR_CONFIRMAR,,,,,,,,NO_SOLICITADA,Contexto comercial no confirmado

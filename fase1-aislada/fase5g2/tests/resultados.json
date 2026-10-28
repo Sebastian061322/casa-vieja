@@ -1,0 +1,15 @@
+{
+  "environment": "LOCAL_SYNTHETIC_NO_NETWORK",
+  "scope": "New continuity/cutover/backup/compiled backend plus related 5G process/commercial/controls; not final commercial RC regression",
+  "executedAtUTC": "2026-10-28T13:05:08.624Z",
+  "tests": 63,
+  "passed": 63,
+  "failed": 0,
+  "files": 8,
+  "exitCode": 0,
+  "backendSha256": "080a6e6e0cb0813cb8741a3d7b63a3cf0c30c943150a11369c0490b46e9dc31c",
+  "actualGoogle": false,
+  "physicalDevices": false,
+  "productionDataUsed": false,
+  "networkUsed": false
+}

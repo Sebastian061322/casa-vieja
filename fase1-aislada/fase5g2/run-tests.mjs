@@ -1,0 +1,8 @@
+// Sin red, instalaciones, reconstrucción de fases anteriores ni copias de private/.
+import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';import {spawnSync} from 'node:child_process';import crypto from 'node:crypto';
+const root=path.dirname(fileURLToPath(import.meta.url));
+const build=spawnSync(process.execPath,[path.join(root,'build.cjs')],{encoding:'utf8'});if(build.status!==0)throw Error(build.stderr||build.stdout);
+const selected=[...fs.readdirSync(path.join(root,'tests')).filter(x=>x.endsWith('.test.mjs')).map(x=>path.join(root,'tests',x)),...['controls.test.cjs','process.test.mjs','commercial.test.mjs'].map(x=>path.join(root,'../fase5g/tests',x))];
+const r=spawnSync(process.execPath,['--test',...selected],{encoding:'utf8',maxBuffer:8*1024*1024}),out=(r.stdout||'')+(r.stderr||'');fs.writeFileSync(path.join(root,'tests/resultados.txt'),out);
+const count=k=>Number(new RegExp('(?:#|ℹ) '+k+' (\\d+)').exec(out)?.[1]||0);
+const report={environment:'LOCAL_SYNTHETIC_NO_NETWORK',scope:'New continuity/cutover/backup/compiled backend plus related 5G process/commercial/controls; not final commercial RC regression',executedAtUTC:new Date().toISOString(),tests:count('tests'),passed:count('pass'),failed:count('fail'),files:selected.length,exitCode:r.status,backendSha256:crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'build/Candidate.gs'))).digest('hex'),actualGoogle:false,physicalDevices:false,productionDataUsed:false,networkUsed:false};fs.writeFileSync(path.join(root,'tests/resultados.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));if(r.status!==0)console.log(out);process.exitCode=r.status??1;

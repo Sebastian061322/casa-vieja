@@ -1,0 +1,123 @@
+{
+  "act": {
+    "environment": "TEST_ONLY",
+    "status": "DRAFT",
+    "productionApproved": false,
+    "id": "TEST_ONLY:OPEN",
+    "effectiveAt": "2026-11-01T00:00:00-05:00",
+    "responsible": "TEST_ONLY:COUNTER",
+    "secondReviewer": "TEST_ONLY:REVIEWER",
+    "countEvidence": "TEST_ONLY:COUNT",
+    "rows": [
+      {
+        "resourceId": "demo:opening-bags",
+        "lot": "demo:old-lot",
+        "product": "Gourmet molido 500 g",
+        "family": "Gourmet",
+        "stage": "PACKAGED",
+        "grind": "molido",
+        "grams": 500,
+        "physical": 4,
+        "reserved": 1,
+        "unit": "unit",
+        "historicalValueCents": 4003,
+        "costEvidence": "TEST_ONLY:COST",
+        "documentRef": "TEST_ONLY:LOT_DOC",
+        "availability": "AVAILABLE",
+        "pendingOrders": [
+          {
+            "legacyRef": "TEST_ONLY:RESERVED",
+            "reserved": 1
+          }
+        ],
+        "countedAt": "2026-10-31T22:00:00-05:00",
+        "countEvidence": "TEST_ONLY:ROW"
+      },
+      {
+        "resourceId": "demo:held",
+        "lot": "demo:held-lot",
+        "product": "Especialidad grano 250 g",
+        "family": "Especialidad",
+        "stage": "PACKAGED",
+        "grind": "grano",
+        "grams": 250,
+        "physical": 2,
+        "reserved": 0,
+        "unit": "unit",
+        "historicalValueCents": 2000,
+        "costEvidence": "TEST_ONLY:HELD_COST",
+        "documentRef": "TEST_ONLY:HELD_DOC",
+        "availability": "HELD",
+        "pendingOrders": [],
+        "countedAt": "2026-10-31T22:00:00-05:00",
+        "countEvidence": "TEST_ONLY:HELD_ROW"
+      }
+    ]
+  },
+  "continuity": {
+    "environment": "TEST_ONLY",
+    "status": "DRAFT",
+    "obligations": [
+      {
+        "legacyRef": "TEST_ONLY:RESERVED",
+        "state": "RESERVED",
+        "totalCents": 3500,
+        "paidCents": 1000,
+        "evidence": "TEST_ONLY:RECEIPT:RESERVED",
+        "responsible": "TEST_ONLY:OPERATOR",
+        "origin": {
+          "system": "TEST_ONLY_LEGACY",
+          "recordId": "TEST_ONLY:RESERVED",
+          "revision": 1,
+          "evidenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "lines": [
+          {
+            "resourceId": "demo:opening-bags",
+            "qty": 1
+          }
+        ]
+      },
+      {
+        "legacyRef": "TEST_ONLY:DISPATCHED",
+        "state": "DISPATCHED_UNPAID",
+        "totalCents": 3500,
+        "paidCents": 500,
+        "evidence": "TEST_ONLY:RECEIPT:DISPATCHED",
+        "responsible": "TEST_ONLY:OPERATOR",
+        "origin": {
+          "system": "TEST_ONLY_LEGACY",
+          "recordId": "TEST_ONLY:DISPATCHED",
+          "revision": 1,
+          "evidenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "lines": [
+          {
+            "resourceId": "demo:opening-bags",
+            "qty": 1
+          }
+        ]
+      },
+      {
+        "legacyRef": "TEST_ONLY:DELIVERY",
+        "state": "DELIVERY_PENDING",
+        "totalCents": 3500,
+        "paidCents": 3500,
+        "evidence": "TEST_ONLY:RECEIPT:DELIVERY",
+        "responsible": "TEST_ONLY:OPERATOR",
+        "origin": {
+          "system": "TEST_ONLY_LEGACY",
+          "recordId": "TEST_ONLY:DELIVERY",
+          "revision": 1,
+          "evidenceHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "lines": [
+          {
+            "resourceId": "demo:opening-bags",
+            "qty": 1
+          }
+        ]
+      }
+    ]
+  }
+}

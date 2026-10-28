@@ -1,0 +1,16 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "LOCAL_PREPARATION_NOT_RC",
+  "baseSha256": "080a6e6e0cb0813cb8741a3d7b63a3cf0c30c943150a11369c0490b46e9dc31c",
+  "backendSha256": "70154ddfd484be2ceaeeaf504324d58657d96537d7bb85dca7ea79dc8cd6955e",
+  "proposedTabs": [
+    "TEST_ONLY_5G3_Diario",
+    "TEST_ONLY_5G3_Movimientos",
+    "TEST_ONLY_5G3_Verificaciones"
+  ],
+  "defaultEnabled": false,
+  "tabsCreated": false,
+  "remoteChanged": false,
+  "workerChanged": false,
+  "commercialReady": false
+}

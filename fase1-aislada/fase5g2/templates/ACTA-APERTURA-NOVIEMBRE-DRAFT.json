@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "status": "DRAFT_UNFILLED",
+  "productionApproved": false,
+  "proposedEffectiveAt": "2026-11-01T00:00:00-05:00",
+  "effectiveAt": null,
+  "actId": null,
+  "responsible": null,
+  "secondReviewer": null,
+  "countEvidence": null,
+  "approvedBy": null,
+  "approvalEvidence": null,
+  "signedAt": null,
+  "sha256": null,
+  "hashIsNotSignature": true,
+  "estimatedParchmentKg_NotConfirmed": 300,
+  "rows": [
+    {
+      "resourceId": null,
+      "lot": null,
+      "family": null,
+      "product": null,
+      "stage": null,
+      "grind": null,
+      "grams": null,
+      "physical": null,
+      "reserved": null,
+      "available": null,
+      "unit": null,
+      "historicalValueCents": null,
+      "availability": null,
+      "supplyKind": null,
+      "countedAt": null,
+      "countEvidence": null,
+      "costEvidence": null,
+      "documentRef": null,
+      "pendingOrders": []
+    }
+  ],
+  "allowedStages": [
+    "PARCHMENT",
+    "GREEN",
+    "BULK",
+    "PACKAGED",
+    "SUPPLY"
+  ],
+  "allowedConditions": [
+    "AVAILABLE",
+    "HELD",
+    "DAMAGED"
+  ],
+  "instructions": "Plantilla para completar y firmar antes del corte. No es entrada ejecutable; no transformar 300 kg previstos en saldo confirmado. Aplicar el validador en un adaptador autorizado solo después del conteo y aprobación."
+}

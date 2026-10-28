@@ -1,0 +1,14 @@
+{
+  "status": "DRAFT_UNAPPROVED",
+  "environment": "NOT_ACTIVATED",
+  "policyId": null,
+  "version": null,
+  "content": null,
+  "contentSha256": null,
+  "approvedByVerifiedIdentity": null,
+  "approvedAtUTC": null,
+  "effectiveAtUTC": null,
+  "approvalEvidenceReference": null,
+  "supersedesVersion": null,
+  "productionApproved": false
+}

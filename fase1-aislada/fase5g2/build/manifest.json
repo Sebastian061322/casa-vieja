@@ -1,0 +1,11 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "LOCAL_NOT_AUTHORIZED_FOR_DEPLOYMENT",
+  "baseSha256": "0a64a97eabf93224e407de9f491c4b8c757d5742edb7ad1db5f42d0e8b8df604",
+  "backendSha256": "080a6e6e0cb0813cb8741a3d7b63a3cf0c30c943150a11369c0490b46e9dc31c",
+  "remoteChanged": false,
+  "workerChanged": false,
+  "newResources": false,
+  "productionReady": false,
+  "configuration": "Absent CV_5G2_CONTINUITY_CONFIG blocks new operations; synthetic configuration only"
+}

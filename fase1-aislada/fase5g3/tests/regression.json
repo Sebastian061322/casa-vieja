@@ -1,0 +1,27 @@
+{
+  "executedAtUTC": "2026-10-28T17:15:25.179Z",
+  "scope": "Shared historical regression plus 5G.2 continuity and new 5G.3 isolated backend/review; not proof of physical or Google acceptance of this package",
+  "environment": "LOCAL_SYNTHETIC",
+  "tests": 595,
+  "passed": 595,
+  "failed": 0,
+  "files": 70,
+  "exitCode": 0,
+  "privateFilesExcluded": true,
+  "originalSourcesUnchanged": true,
+  "outboundFetchHttpLimitedToLoopback": true,
+  "actualGoogle": false,
+  "physicalDevices": false,
+  "remoteChanged": false,
+  "hashes": {
+    "build/Candidate.gs": "70154ddfd484be2ceaeeaf504324d58657d96537d7bb85dca7ea79dc8cd6955e",
+    "scoped-client.mjs": "10bf5dda87e22fb885384ff6b9a1651ef5b7e72efcc22180ece432113e633158",
+    "catalogue-source.json": "9277ad4a818a5cafa3899e653e79ccd40570e53be9899e92c0ad28c90da613fe",
+    "catalogue-sale.cjs": "d9bdb6b340183ff11414ce03bb97414ce4bc325265b3cde9c617dd173eb1e483",
+    "review.cjs": "b3fdc3aed6dfb77cede43524abf34571456b3aebf217332352755e3272bfaf45",
+    "preview.cjs": "59b509de67071cdefa5f155db0277ae9d7d5e693857d5b06c9c18d89d3db63fd",
+    "ui/index.html": "f30da7b70e1a1108dcbf52601a4e479678b78f14c7d49025e11c1eb471dce9cf",
+    "ui/review.js": "7811f8d070a6f43adcae3f2e2c093d12ba0cc439374268a11d34394c76b0fb73",
+    "ui/review.css": "01c97af9d3b1a066e539ea2bb427353228b871637cddc768c1fa00b2bcde0b02"
+  }
+}

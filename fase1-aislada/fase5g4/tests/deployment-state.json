@@ -1,0 +1,25 @@
+{
+  "recordedAtUTC": "2026-10-28T22:14:12.868644+00:00",
+  "environment": "TEST_ONLY",
+  "ownerApprovedExactPackage": true,
+  "ownerConfirmedAllUsedLabContextsWithoutPending": true,
+  "codeCommit": "f10c5ac84d1c1f28bbb3aa73ab15de1e96fe1051",
+  "workerVersion": "65c061b6",
+  "backendVersion": 5,
+  "workerSha256": "3ca709bb257dabaf0e9edbf4dff40d438a653558ec93995cea6e0071e7c5a128",
+  "backendSha256": "31ffa448d69ab99c093cd203da2df7d0a5105967a0ba8c0c627d003549be3cfc",
+  "sheetCreatedTabs": {
+    "TEST_ONLY_5G3_Diario": 154040001,
+    "TEST_ONLY_5G3_Movimientos": 154040002,
+    "TEST_ONLY_5G3_Verificaciones": 154040003
+  },
+  "headersReadBack": true,
+  "oldTabsModified": false,
+  "configPersonalEntryPending": true,
+  "authenticatedRemoteAcceptance": false,
+  "physicalAcceptance": false,
+  "productionModified": false,
+  "privatePropertiesOpened": false,
+  "secretsRead": false,
+  "newResourcesOrBilling": false
+}

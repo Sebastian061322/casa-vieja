@@ -1,0 +1,21 @@
+{
+  "executedAtUTC": "2026-10-29T13:14:59.843Z",
+  "scope": "Historical regression plus scoped UI single-flight synchronization and truthful queue notices; no backend changes; not Google or physical acceptance",
+  "environment": "LOCAL_SYNTHETIC",
+  "tests": 640,
+  "passed": 640,
+  "failed": 0,
+  "files": 80,
+  "exitCode": 0,
+  "privateFilesExcluded": true,
+  "originalSourcesUnchanged": true,
+  "outboundFetchHttpLimitedToLoopback": true,
+  "actualGoogle": false,
+  "physicalDevices": false,
+  "remoteChanged": false,
+  "hashes": {
+    "build/worker-bundle.mjs": "cf780ac29bbe21f45c3a5ebdd7d94de43c62ee9b16cb854e4c2fb1f05019cba3",
+    "status54.mjs": "03646c5fb706a257bcbe5a54b45185660ce5fa101044b10b344013ee09393c91",
+    "build.cjs": "12301a2f2a93c7f5a20eec3b824cc53a893a61b069f03b94b1fc1c984f79f48c"
+  }
+}

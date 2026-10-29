@@ -1,0 +1,13 @@
+{
+  "status54.mjs": "03646c5fb706a257bcbe5a54b45185660ce5fa101044b10b344013ee09393c91",
+  "build.cjs": "12301a2f2a93c7f5a20eec3b824cc53a893a61b069f03b94b1fc1c984f79f48c",
+  "build/worker-bundle.mjs": "cf780ac29bbe21f45c3a5ebdd7d94de43c62ee9b16cb854e4c2fb1f05019cba3",
+  "build/manifest.json": "1d45d70e46d7049fa1a1a646515f05d85ce5438ac5c7dc1f0af2fa3fd4d83303",
+  "preview.mjs": "a5f5a96ee171e3d5c6d8c4f6c13d93a5351bae4ad5f67f0221f326e93de14340",
+  "run-regression.mjs": "2048519625acfdd87d1f2de0de55ab6129b2b84932ff26e1574c4dd446a5ac73",
+  "tests/status.test.mjs": "6df0dab92df838088656c620a1a5bcd7e6fa6ae1403417a3a7368ca776a14742",
+  "tests/bundle.test.mjs": "3de090817e3d8a2a8372a856000272e619fd668a64b481fc011671eb7a211718",
+  "tests/regression.json": "714ef1040044ddae24263324cbd523cb7295b70054c4d25ac9d90eb678455897",
+  "tests/ui-observation.json": "4f781b1991d4e739393a1a61283f50a824f9fd1c7f4f3a2e76d84d1d4bd7e28d",
+  "AUTORIZACION-PAQUETE.md": "7de1b9be1022e1383324795f82d41d69d2ef97c2767f6208c491b14beb421c3e"
+}

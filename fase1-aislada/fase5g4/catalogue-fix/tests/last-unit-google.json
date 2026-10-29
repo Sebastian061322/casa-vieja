@@ -1,0 +1,79 @@
+{
+  "environment": "TEST_ONLY",
+  "observedAtUTC": "2026-10-29T13:05:35.502Z",
+  "workerVersion": "e571872f",
+  "backendVersion": 6,
+  "journalRows": 21,
+  "effects": 9,
+  "uniqueEffects": 9,
+  "last": [
+    {
+      "id": "TEST_ONLY_5G3_f9efce42-1bc2-4d51-9ef8-2a51148cdabc",
+      "state": "PREPARED",
+      "type": "REGISTER_SALE",
+      "revision": 10,
+      "customer": "TEST_ONLY_5G4_LAST_IPHONE_01",
+      "totalCents": 8500,
+      "costCents": 3001,
+      "effectCount": 2
+    },
+    {
+      "id": "TEST_ONLY_5G3_f9efce42-1bc2-4d51-9ef8-2a51148cdabc",
+      "state": "COMMITTED",
+      "revision": 10
+    },
+    {
+      "id": "TEST_ONLY_5G3_99540db0-7e72-471c-b0e7-492845d4369a",
+      "state": "REJECTED",
+      "type": "REGISTER_SALE",
+      "error": "INSUFFICIENT_STOCK",
+      "customer": "TEST_ONLY_5G4_LAST_PC_01"
+    }
+  ],
+  "balances": {
+    "demo:opening-bags": {
+      "physical": 4,
+      "reserved": 2,
+      "valueCents": 4003,
+      "available": 2
+    },
+    "demo:held": {
+      "physical": 2,
+      "reserved": 0,
+      "valueCents": 2000,
+      "available": 0
+    },
+    "demo:monte-500": {
+      "physical": 4,
+      "reserved": 4,
+      "valueCents": 8000,
+      "available": 0
+    },
+    "demo:gourmet-250": {
+      "physical": 3,
+      "reserved": 0,
+      "valueCents": 1500,
+      "available": 3
+    }
+  },
+  "ownerReported": {
+    "pc": "REGISTER_SALE REJECTED INSUFFICIENT_STOCK",
+    "iphone": "Pedido confirmado Reservado; servidor confirmado"
+  },
+  "physicalDevices": [
+    "computer Safari",
+    "iPhone Safari"
+  ],
+  "noProductionWrites": true,
+  "rejectedEffects": 0,
+  "invalidBalancePrefixes": 0,
+  "noDuplicateEffects": true,
+  "pendingPhysicalInventoryReadback": false,
+  "ownerConfirmedIphoneInventory": {
+    "monte500Available": 0,
+    "gourmet500Available": 2
+  },
+  "pcRejectionArchivedWithServerEvidenceObserved": true,
+  "pcZeroPendingObserved": true,
+  "iphoneSameOrderZeroPendingAfterResyncReported": true
+}

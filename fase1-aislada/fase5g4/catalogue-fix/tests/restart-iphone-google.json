@@ -1,0 +1,57 @@
+{
+  "environment": "TEST_ONLY",
+  "observedAtUTC": "2026-10-29T13:21:25.609Z",
+  "workerVersion": "e571872f",
+  "backendVersion": 6,
+  "physicalDevice": "iPhone Safari",
+  "ownerConfirmed": {
+    "onePendingOffline": true,
+    "safariAppForceClosedWhileOffline": true,
+    "sameAccountAndTab": true,
+    "sameOrderRecovered": true,
+    "zeroPendingAfterRepeatSync": true,
+    "gourmet250Available": 2
+  },
+  "restartOperations": [
+    {
+      "operationId": "TEST_ONLY_5G3_e4860b1c-f313-4300-a6d3-e26ce2f0931b",
+      "saleId": "future:93f0af5b-d5a7-4046-8db4-5405239d4609",
+      "revision": 13,
+      "committed": true,
+      "totalCents": 2200,
+      "qty": 1
+    }
+  ],
+  "journalRows": 27,
+  "committedOperations": 13,
+  "rejectedOperations": 1,
+  "effects": 11,
+  "uniqueEffects": 11,
+  "balances": {
+    "demo:opening-bags": {
+      "physical": 3,
+      "reserved": 1,
+      "valueCents": 3003,
+      "available": 2
+    },
+    "demo:held": {
+      "physical": 2,
+      "reserved": 0,
+      "valueCents": 2000,
+      "available": 0
+    },
+    "demo:monte-500": {
+      "physical": 4,
+      "reserved": 4,
+      "valueCents": 8000,
+      "available": 0
+    },
+    "demo:gourmet-250": {
+      "physical": 3,
+      "reserved": 1,
+      "valueCents": 1500,
+      "available": 2
+    }
+  },
+  "productionModified": false
+}

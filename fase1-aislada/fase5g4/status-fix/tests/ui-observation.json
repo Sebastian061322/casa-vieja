@@ -1,0 +1,18 @@
+{
+  "environment": "LOCAL_SYNTHETIC",
+  "actualGoogle": false,
+  "physicalDevices": false,
+  "workerSha256": "cf780ac29bbe21f45c3a5ebdd7d94de43c62ee9b16cb854e4c2fb1f05019cba3",
+  "offlineOnePendingObserved": true,
+  "offlineNoFalseSuccessObserved": true,
+  "reconnectSameSaleConfirmedObserved": true,
+  "reconnectPendingNoticeClearedObserved": true,
+  "reconnectQueueEmptyObserved": true,
+  "rejectedInsufficientStockObserved": true,
+  "rejectedTopNoticeMatchesObserved": true,
+  "rejectionNoPendingTopNoticeObserved": true,
+  "backendModified": false,
+  "remoteChanged": false,
+  "rejectionArchivedWithEvidenceObserved": true,
+  "archivePendingNoticeClearedObserved": true
+}

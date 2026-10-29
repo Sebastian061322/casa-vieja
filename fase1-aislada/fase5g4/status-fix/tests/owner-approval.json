@@ -1,0 +1,10 @@
+{
+  "ownerApproved": true,
+  "approval": "S\u00ed, publicar solo este ajuste en desarrollo y laboratorio",
+  "workerSha256": "cf780ac29bbe21f45c3a5ebdd7d94de43c62ee9b16cb854e4c2fb1f05019cba3",
+  "environment": "TEST_ONLY",
+  "backendCodeOrDeploymentChange": false,
+  "oneNonSecretWorkerHashPropertyUpdate": true,
+  "production": false,
+  "costSoles": 0
+}

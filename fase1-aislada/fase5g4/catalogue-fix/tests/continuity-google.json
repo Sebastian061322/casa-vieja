@@ -1,0 +1,51 @@
+{
+  "environment": "TEST_ONLY",
+  "workerVersion": "e571872f",
+  "backendVersion": 6,
+  "operations": [
+    {
+      "operationId": "TEST_ONLY_5G3_d18ef322-81e7-4a18-8aae-bb78004e347a",
+      "type": "CONTINUITY_PAYMENT",
+      "revision": 11,
+      "committed": true,
+      "stockEffects": [],
+      "commerceEvents": [],
+      "continuityEvents": [
+        {
+          "kind": "LEGACY_CASH_COLLECTION",
+          "amountCents": 2500,
+          "legacyRef": "TEST_ONLY:RESERVED"
+        },
+        {
+          "kind": "OBLIGATION"
+        }
+      ]
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_ad0fcdbe-c076-42fb-9c26-fe757dad3dee",
+      "type": "CONTINUITY_DISPATCH",
+      "revision": 12,
+      "committed": true,
+      "stockEffects": [
+        {
+          "kind": "LEGACY_FUTURE_DISPATCH",
+          "resourceId": "demo:opening-bags",
+          "qtyDelta": -1,
+          "reservedDelta": -1
+        }
+      ],
+      "commerceEvents": [],
+      "continuityEvents": [
+        {
+          "kind": "OBLIGATION"
+        }
+      ]
+    }
+  ],
+  "previousAdvanceCentsUnchanged": 1000,
+  "legacyRemainingCents": 0,
+  "legacyFuturePaymentCents": 2500,
+  "newHistoricalSalesCreated": false,
+  "newHistoricalRevenueOrCogsEvents": 0,
+  "productionModified": false
+}

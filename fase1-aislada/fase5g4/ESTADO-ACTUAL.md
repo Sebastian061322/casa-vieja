@@ -1,6 +1,6 @@
 # Fase 5G.4 — estado verificable al 28/10/2026
 
-**Paquete autorizado publicado en desarrollo, Worker65c061b6 y Apps Script5. Configuración manual pendiente; todavía sin aceptación funcional remota. NO-GO comercial.** Trabajo en checkout separado casa-vieja-checkout-5g4, rama dev/fase1-estabilizacion. Este estado sustituye el checkpoint provisional; conserva informes anteriores como historia.
+**Paquete autorizado publicado en desarrollo, Worker65c061b6 y Apps Script5. Seis propiedades CV guardadas/verificadas, ámbito YES; acceso/snapshot y primera revisión Google comprobados; aceptación integral pendiente. NO-GO comercial.** Trabajo en checkout separado casa-vieja-checkout-5g4, rama dev/fase1-estabilizacion. Este estado sustituye el checkpoint provisional; conserva informes anteriores como historia.
 
 ## A. Código
 
@@ -25,7 +25,7 @@ Defecto detectado/corregido: formulario enviaba name a normalizador que espera c
 | tests/worker.test.mjs | Worker compilado real + JWT RSA ficticio + HMAC + backend VM | Tres perfiles, origen inválido/sin sesión, rol falsificado, lectura financiera denegada, ámbito requerido; verificador CSP sin red |
 | build/lab-config.json | Propuesta exacta de cuatro recursos/tres obligaciones | Revisión/aprobación/apertura aplicada en VM; retenido con cero disponibles, sin escribir Google |
 | Remotas públicas | Worker65c061b6 / Apps Script5 | **7 rechazos sin sesión y 4 archivos públicos comparados aprobados**; tests/remote-public.json. No usan cuentas ni ejecutan comandos comerciales |
-| Google autenticado nuevo | Paquete 5G.4 | **0 pruebas funcionales nuevas**. Configuración personal todavía pendiente |
+| Google autenticado nuevo | Paquete 5G.4 / administrador | Login/snapshot scoped correctos, acta exacta y una revisión COMMITTED, sin efectos de stock. Apertura sigue bloqueada con un solo revisor. Falta gerente/vendedor y batería funcional |
 | iPhone/Android nuevo | Paquete 5G.4 | **No ejecutadas**. Evidencia anterior no certifica paquete nuevo |
 
 El preseed del fixture actual no es prueba de apertura por UI; revisiones/apertura UI se recorrieron en una compilación provisional anterior, y el candidato actual se verifica por pruebas backend. Ensayos locales no acreditan reinicio físico de Safari, latencia/cuotas Google o cierre de escritores reales. La primera corrida de regresión tuvo fallos por fixtures ausentes/servidor loopback no permitido; el ejecutor prepara los fixtures en su copia temporal y la corrida final autorizada pasó. No se ocultan las corridas iniciales como aprobadas.
@@ -34,7 +34,7 @@ El preseed del fixture actual no es prueba de apertura por UI; revisiones/apertu
 
 Identidad/roles provenientes de Google verificado y registro backend existente; sesión/firmas/locks/idempotencia conservados. Vendedor sin costos/utilidades/acta/aprobaciones/cobros/admin; gerente sin usuarios/configuración de precios. No se fía de precio, rol, costo o identidad enviados por navegador. Apertura/políticas fijan sujeto y evidencia desde autorización del diario. Helpers privados: solo doGet/doPost/zeroRequest expuestos.
 
-Escaneo dirigido del paquete sin coincidencias de claves privadas/tokens comunes; hashes de 26 archivos verificados. No equivale a certificación absoluta de seguridad. No se leyeron propiedades secretas. HMAC y cuentas se conservan. Sigue el riesgo de cuotas del endpoint público; autenticación/denegaciones reales se repiten tras autorización. Equipos/perfiles separados es una condición del dueño, no cifrado completo de todas las colas locales.
+Escaneo dirigido del paquete sin coincidencias de claves privadas/tokens comunes; hashes de 26 archivos verificados. No equivale a certificación absoluta de seguridad. En la continuación de configuración la lectura automática de Safari incluyó propiedades privadas existentes; sus valores no se guardan en evidencia. HMAC y cuentas no se modificaron. Sigue el riesgo de cuotas del endpoint público; autenticación/denegaciones reales se repiten tras autorización. Equipos/perfiles separados es una condición del dueño, no cifrado completo de todas las colas locales.
 
 ## E. Censo y escritores antiguos
 
@@ -72,13 +72,13 @@ No hay RC congelada/aceptada remotamente todavía. Artefactos reproducibles prep
 - Worker nuevo: **65c061b6 Active/Latest**, fuente leída del editor SHA exacto antes de Deploy.
 - Apps Script nuevo: **versión5**, confirmación de implementación exitosa28/10 17:07, mismo endpoint; fuente guardada/releída SHA exacto. Sin cambiar permisos ni secretos.
 - Las tres pestañas aprobadas creadas y cabeceras A1:C2 releídas: ID/Tipo/JSON y sin registros todavía. IDs154040001/154040002/154040003; las diez anteriores conservadas.
-- Configuración CV: pendiente de ingreso personal; la automatización no abrió pantalla de propiedades para no leer secretos. Guía local configuracion-para-propietario/LEER.md abierta/verificada en Editor de Texto. El nuevo ámbito todavía no se da por habilitado ni validado.
+- Configuración CV completada a petición expresa posterior del propietario en Safari: cinco valores que estaban incorrectamente en NO fueron corregidos, comparados exactamente, guardados con interruptor NO y releídos; luego interruptor YES guardado y las seis releídas con coincidencia exacta. Se volvió al Editor. Lectura automática nativa incluyó propiedades privadas existentes: ningún valor privado se copia a evidencias ni se modificó. La validación funcional mediante snapshot Google aún está pendiente.
 
-Preflight remoto ANTERIOR al despliegue, leído28/10: Worker **7c1806c8**,100%Ready, fuente **b350fe05fadd3cdc72b7b8c17637674bbc53fe84bde462dd19f47941dc5b1676**; Apps Script **versión4**, fuente **0a64a97eabf93224e407de9f491c4b8c757d5742edb7ad1db5f42d0e8b8df604**. Cloudflare **Free / Current plan**. Hoja CasaVieja_Pruebas_SINTETICA ID1CtK6KD995Pu2Fzc_na89Ajc0KQ0QLuGq3UFhj4UdLSA, diez pestañas, ninguna de las tres propuestas; Control confirma TEST_ONLY. Ese preflight fue solo lectura; después se aplicaron los cambios autorizados descritos arriba. No se abrieron propiedades privadas ni se ejecutaron funciones del editor. Los valores TEST_ONLY de las seis claves CV esperan intervención del propietario.
+Preflight remoto ANTERIOR al despliegue, leído28/10: Worker **7c1806c8**,100%Ready, fuente **b350fe05fadd3cdc72b7b8c17637674bbc53fe84bde462dd19f47941dc5b1676**; Apps Script **versión4**, fuente **0a64a97eabf93224e407de9f491c4b8c757d5742edb7ad1db5f42d0e8b8df604**. Cloudflare **Free / Current plan**. Hoja CasaVieja_Pruebas_SINTETICA ID1CtK6KD995Pu2Fzc_na89Ajc0KQ0QLuGq3UFhj4UdLSA, diez pestañas, ninguna de las tres propuestas; Control confirma TEST_ONLY. Ese preflight fue solo lectura; después se aplicaron los cambios autorizados descritos arriba. Durante ese preflight no se abrieron propiedades privadas ni se ejecutaron funciones del editor; la continuación de configuración posterior se detalla arriba. Los seis valores CV ya se guardaron y verificaron en la continuación posterior; no se cambiaron propiedades ZERO.
 
 ## I. Autorizaciones
 
-**Autorización única recibida28/10**: AUTORIZACION-PAQUETE.md. Código, Worker, Script y tres pestañas ya publicados; configuración/ensayos autenticados pendientes. CostoS/0, sin servicios/cuentas/permisos/secretos nuevos. No incluye producción, DR ni corte.
+**Autorización única recibida28/10**: AUTORIZACION-PAQUETE.md. Código, Worker, Script y tres pestañas ya publicados; configuración guardada; ensayos autenticados pendientes. CostoS/0, sin servicios/cuentas/permisos/secretos nuevos. No incluye producción, DR ni corte.
 
 Se pide por cita expresa de EtapaE: «Antes de realizar cualquier cambio remoto, solicita aprobación específica sobre ese paquete completo». Si aparece divergencia remota, comparar antes de sobrescribir. Si falla tras escribir nuevos registros, detener nuevo ámbito y recuperar con código compatible sin borrar diario/colas ni restaurar versiones de datos antiguas.
 
@@ -86,8 +86,22 @@ Se pide por cita expresa de EtapaE: «Antes de realizar cualquier cambio remoto,
 
 **GO local para solicitar despliegue de laboratorio. NO-GO de aceptación técnica remota/RC congelada. NO-GO comercial.** La fecha1/11 no activa nada.
 
-El propietario confirmó cero pendientes en todos los contextos usados antes del despliegue. Para aceptar el laboratorio faltan configuración CV, pruebas Google autenticadas/dispositivos/custodia con evidencia. Para publicar comercial faltan además censo completo, políticas/catálogo vigentes, conteo/acta física/obligaciones aprobadas, respaldo comercial expresamente autorizado y verificado, cierre efectivo de todos los escritores con intervalo NONE y autorización independiente de apertura/nuevo escritor. El procedimiento existente prohíbe reapertura automática del antiguo después de nuevos movimientos.
+El propietario confirmó cero pendientes en todos los contextos usados antes del despliegue. Para aceptar el laboratorio faltan pruebas Google autenticadas/dispositivos/custodia con evidencia. Para publicar comercial faltan además censo completo, políticas/catálogo vigentes, conteo/acta física/obligaciones aprobadas, respaldo comercial expresamente autorizado y verificado, cierre efectivo de todos los escritores con intervalo NONE y autorización independiente de apertura/nuevo escritor. El procedimiento existente prohíbe reapertura automática del antiguo después de nuevos movimientos.
 
 ## Handoff operativo
 
-Checkout activo casa-vieja-checkout-5g4; código f10c5ac remoto. Documentación/evidencia posterior se publica aparte sin cambiar los artefactos autorizados. Preview local actual8800, exec46265, tab11 vendedor (dos pedidos confirmados) y tab12gerente (gasto confirmado), JWT/hojas ficticios; no desplegar preview.mjs. Provisionales8797/8798/8799 detenidos, sus tabs antiguas no son entregable. Preflight IAB tab7Scriptlectura/tab9Workereditorlectura/tab10Free. Publicación autorizada realizada. Tab7 Editor del Script y tab9 Worker65c061b6; no volver a pegar/desplegar para ingresar las seis propiedades. No leer propiedades privadas hasta que el propietario regrese a Editor. HMAC no se ha leído.
+Checkout activo casa-vieja-checkout-5g4; código f10c5ac remoto. Documentación/evidencia posterior se publica aparte sin cambiar los artefactos autorizados. Preview local actual8800, exec46265, tab11 vendedor (dos pedidos confirmados) y tab12gerente (gasto confirmado), JWT/hojas ficticios; no desplegar preview.mjs. Provisionales8797/8798/8799 detenidos, sus tabs antiguas no son entregable. Preflight IAB tab7Scriptlectura/tab9Workereditorlectura/tab10Free. Publicación autorizada realizada. Tab7 Editor del Script y tab9 Worker65c061b6; no volver a pegar/desplegar para ingresar las seis propiedades. No leer propiedades privadas hasta que el propietario regrese a Editor. HMAC no se modificó; la lectura automática del formulario se documentó sin conservar su valor.
+
+### Continuación — ayuda de configuración solicitada por propietario
+
+Se corrigieron las cinco propiedades que tenían NO en lugar del JSON/hash; seis coincidencias exactas verificadas antes y después de guardar, scopeYES. Safari volvió al Editor y se abrió una pestaña nueva del laboratorio ?engine=5g4, sin ejecutar ventas o apertura. El botón Google devolvió error de accesibilidad; captura nativa quedó en blanco. Se pidió al propietario pulsar Acceder con Google y confirmar Administrador principal o error. No intentar manejar TouchID/contraseñas. Autenticación funcional Google5G.4 aún no aprobada. La pantalla de propiedades devolvió automáticamente campos privados en AX: no repetir/reutilizar valores ni guardarlos en documentos. No afirmar que no se leyeron propiedades privadas en esta continuación; no se modificaron secretos/cuentas.
+
+### Google5G.4 — administrador y bloqueo externo de la segunda cuenta
+
+Acceso administrador confirmado por propietario y observado en Safari. Snapshot scoped devolvió propuesta exacta de cuatro filas (físico4/2/4/4, reservado1/0/0/0, disponible3/0/4/4); retenidoHELD sin disponibilidad. Primera revisión TEST_ONLY_5G3_53593990-422c-4b48-8f41-34fdc0ac052f registrada una vez: PREPARED+COMMITTED, revisión1, auditroleadministrator y sujetoGoogle verificado. HojaMovimientos nueva conserva únicamente cabecera. UI terminó confirmada y sin pendientes; autorización y aplicación bloqueadas hasta segunda cuenta. Evidencia tests/administrator-google-5g4.json sin identidad cruda.
+
+Gerente en esta computadora tiene confirmación de identidad Google pendiente; no se cuenta como error de configuración/app. El titular completará el acceso desde otro equipo donde ya tiene sesión iniciada. Se pidió allí abrir únicamente laboratorio ?engine=5g4, verificar perfil/acta y registrar una revisión. Espera respuesta; no duplicar revisión ni aplicar apertura hasta comprobar ambas identidades en diario. No cambiar cuentas/roles, recuperar contraseña o retirar segundo factor desde automatización.
+
+### Contraste de la segunda revisión
+
+El titular reportó una confirmación en la laptop; dos lecturas acotadas del diario siguieron mostrando una sola revisión COMMITTED. Al comprobar el encabezado, el titular confirmó que esa pantalla decía Administrador principal. No se contó como revisión de operations ni se autorizó/aplicó apertura. Se indicó cerrar solo la sesión de Casa Vieja y seleccionar expresamente la cuenta ya autorizada del gerente; espera confirmación del perfil correcto. Ninguna cuenta o permiso se cambió.

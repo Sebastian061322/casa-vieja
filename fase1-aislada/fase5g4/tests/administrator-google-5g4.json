@@ -1,0 +1,70 @@
+{
+  "environment": "TEST_ONLY",
+  "recordedAtUTC": "2026-10-28T23:02:22.809654+00:00",
+  "workerVersion": "65c061b6",
+  "backendVersion": 5,
+  "codeCommit": "f10c5ac84d1c1f28bbb3aa73ab15de1e96fe1051",
+  "source": "Safari authenticated UI plus bounded read of new laboratory journal and movement tabs",
+  "administratorLogin": {
+    "ownerReported": true,
+    "uiObserved": true,
+    "profile": "administrator",
+    "queuePending": 0
+  },
+  "openingProposal": {
+    "id": "TEST_ONLY:5G4:OPEN",
+    "bundleHash": "ee624c999299b925d83bc531d9dbf011a7e9b654495d62be37474e4732deeeea",
+    "resources": 4,
+    "physicalQuantities": [
+      4,
+      2,
+      4,
+      4
+    ],
+    "reservedQuantities": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "availableQuantities": [
+      3,
+      0,
+      4,
+      4
+    ],
+    "heldRowHasZeroAvailable": true
+  },
+  "review": {
+    "operationId": "TEST_ONLY_5G3_53593990-422c-4b48-8f41-34fdc0ac052f",
+    "preparedRows": 1,
+    "committedRows": 1,
+    "state": "COMMITTED",
+    "revision": 1,
+    "actorRole": "administrator",
+    "serverAt": "2026-10-28T22:53:09.245Z",
+    "authenticatedSubjectVerifiedInJournal": true,
+    "rawSubjectOmitted": true,
+    "stockEffects": 0,
+    "uiReceiptConfirmed": true
+  },
+  "authorizationStillDisabledWithOneReviewer": true,
+  "applyOpeningStillDisabled": true,
+  "managerLoginCurrentComputer": {
+    "state": "EXTERNAL_IDENTITY_CONFIRMATION_PENDING",
+    "alternative": "Account holder completing authentication and review from another accessible device"
+  },
+  "productionChanged": false,
+  "openingExecuted": false,
+  "salesExecuted": false,
+  "managerAndSellerPackageAcceptance": false,
+  "physicalAcceptance": false,
+  "secondReview": {
+    "ownerInitiallyReportedConfirmation": true,
+    "serverRechecksCommittedReviews": 1,
+    "distinctVerifiedReviewers": 1,
+    "ownerConfirmedSecondScreenHeader": "administrator",
+    "requiredNextProfile": "operations",
+    "openingStillBlocked": true
+  }
+}

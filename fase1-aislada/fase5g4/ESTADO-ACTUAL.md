@@ -1,6 +1,6 @@
 # Fase 5G.4 — estado verificable al 28/10/2026
 
-**Actualización 29/10: corrección autorizada publicada en desarrollo (6b3ff7b), Worker e571872f y Apps Script6. Catálogo habilitado en Google; apertura única, venta simple, cobro parcial/final y despacho confirmados. Tripack recuperado, última unidad PC/iPhone y reinicio sin conexión aprobados con evidencia Google. Ajuste visual de avisos autorizado, publicación en curso. NO-GO comercial.** Trabajo en checkout separado casa-vieja-checkout-5g4, rama dev/fase1-estabilizacion. Este estado sustituye el checkpoint provisional; conserva informes anteriores como historia.
+**Actualización 29/10: corrección autorizada publicada en desarrollo (6b3ff7b), Worker e571872f y Apps Script6. Catálogo habilitado en Google; apertura única, venta simple, cobro parcial/final y despacho confirmados. Tripack recuperado, última unidad PC/iPhone y reinicio sin conexión aprobados con evidencia Google. Aviso superior corregido y listado adicional publicado en Worker c82dd835; Apps Script6 intacto; aceptación del nuevo listado en Google pendiente. NO-GO comercial.** Trabajo en checkout separado casa-vieja-checkout-5g4, rama dev/fase1-estabilizacion. Este estado sustituye el checkpoint provisional; conserva informes anteriores como historia.
 
 ## A. Código
 
@@ -138,3 +138,17 @@ iPhone/Safari: dueño registró un PENDING sin internet, cerró completamente Sa
 Aviso superior obsoleto PENDING pese a rechazo/recuperación es incidencia visual media confirmada. Nuevo ajuste status-fix espera la misma sincronización entre llamadas concurrentes y deriva avisos de la cola real sin inventar éxito.640/640 locales80archivos y recorrido local offline→reconexión→rechazo→archivo. Worker candidato cf780ac29bbe21f45c3a5ebdd7d94de43c62ee9b16cb854e4c2fb1f05019cba3 aprobado expresamente para desarrollo/Worker y una propiedad CV de hash, sin backend o despliegue de Apps Script. Su publicación/aceptación remota se registra aparte; no presentar640como pruebas físicas o código ya activo antes de contrastar versión.
 
 Quedan procesamiento/molienda/empaque/gasto y reportes Google del nuevo ámbito, pérdida de ACK5G4, custodia cifrada en teléfono, regresión física Android pertinente, matriz de cuentas según equivalencia/cambios y políticas/censo/conteo comerciales. No declarar fase/RC íntegramente aprobadas. Tope original40 operaciones:13confirmadas+1rechazada hasta este hito; no reiniciar cupo ni abrir otro inventario.
+
+
+### Ajuste visual publicado — comprobación posterior pendiente
+
+Commit b81f4c0fe7d7bac51370c0e3831e15ce1b1531da publicado en desarrollo y referencia GitHub releída. Worker bc323432 Active/Latest y SHA cf780ac29bbe21f45c3a5ebdd7d94de43c62ee9b16cb854e4c2fb1f05019cba3 contrastado antes de Deploy. Únicamente CV_5G4_WORKER_SHA256 actualizado/releído; hash backendbd4e253c permanece igual. Sin nueva implementación o edición de código Apps Script. Siete rechazos públicos y seis archivos públicos correctos en status-fix/tests/remote-public.json.
+
+PC estaba sin pendientes y con rechazo archivado antes de recargar. Se renueva acceso administrador; pendiente observar interfaz cargada. Se pidió al propietario recargar iPhone ?engine=5g4, ingresar mismo Vendedor y sincronizar una vez, comprobando los dos pedidos LAST_IPHONE_01/RESTART_IPHONE_01, cero pendientes y ausencia de aviso obsoleto. No crear nuevos pedidos para comprobar la actualización. Aceptación visual remota todavía no cerrada.
+
+
+### Segundo caso de interfaz — versión exacta posterior
+
+En bc323432 el rechazo controlado TEST_ONLY_5G4_UI_REJECT_01 terminó REJECTED INSUFFICIENT_STOCK, sin efectos; aviso superior correcto. Con un rechazo archivado anterior, el listado inferior era sobrescrito por una vista previa de archivo y faltaba el botón del rechazo nuevo. La segunda sincronización lo mostró y permitió archivarlo con evidencia: PC0pendientes/2archivados. Diario28filas,13COMMITTED/2REJECTED,11movimientos;27filas anteriores idénticas. Ver status-fix/tests/google-rejection-with-archive.json. El iPhone conservó ambos pedidos después de recargar. No se cuenta el paquete anterior como cierre de interfaz íntegro.
+
+queue-view-fix corrige solo el render de cola: lectura actual después de sincronizar, prioridad de los elementos activos sobre archivos previos, escape de metadatos.645/645 locales82archivos. Recorrido local real con primer rechazo/archivo y segundo rechazo: botón visible sin sincronización adicional; luego ambos archivos conservados. No cambia persistencia, backend, identidad o API. SHA766f8682deacc69de92a053462be2b10532aafa5b9ce6deda0c2af081697eecf aprobado por propietario. Worker c82dd835 Active, hash verificado antes de Deploy y única propiedad CV de Worker actualizada/releída. Apps Script sigue versión6/hashbd4e253c sin edición/despliegue. Pendiente contraste remoto de archivos y caso nuevo de rechazo con dos archivos previos; no repetir pedidos anteriores.

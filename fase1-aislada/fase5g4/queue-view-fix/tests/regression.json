@@ -1,0 +1,21 @@
+{
+  "executedAtUTC": "2026-10-29T13:38:00.752Z",
+  "scope": "Historical regression plus scoped UI queue rendering after prior archived rejections; no backend changes; not Google or physical acceptance",
+  "environment": "LOCAL_SYNTHETIC",
+  "tests": 645,
+  "passed": 645,
+  "failed": 0,
+  "files": 82,
+  "exitCode": 0,
+  "privateFilesExcluded": true,
+  "originalSourcesUnchanged": true,
+  "outboundFetchHttpLimitedToLoopback": true,
+  "actualGoogle": false,
+  "physicalDevices": false,
+  "remoteChanged": false,
+  "hashes": {
+    "build/worker-bundle.mjs": "766f8682deacc69de92a053462be2b10532aafa5b9ce6deda0c2af081697eecf",
+    "queue-view54.mjs": "2d6967dce48cf6039a275d204bf9db4836a49b5cbf3668b86da0dc7e216bc07e",
+    "build.cjs": "6e1a84ca9a36e58cee7acc58d07edd27376c9ac942fb0f834625953a94e763ad"
+  }
+}

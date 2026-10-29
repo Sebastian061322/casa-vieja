@@ -1,0 +1,13 @@
+{
+  "queue-view54.mjs": "2d6967dce48cf6039a275d204bf9db4836a49b5cbf3668b86da0dc7e216bc07e",
+  "build.cjs": "6e1a84ca9a36e58cee7acc58d07edd27376c9ac942fb0f834625953a94e763ad",
+  "build/worker-bundle.mjs": "766f8682deacc69de92a053462be2b10532aafa5b9ce6deda0c2af081697eecf",
+  "build/manifest.json": "b15f98c2ac20498edc156a8d26b6e3552b713273a29815b1afa95ebea0e26168",
+  "preview.mjs": "a5f5a96ee171e3d5c6d8c4f6c13d93a5351bae4ad5f67f0221f326e93de14340",
+  "run-regression.mjs": "b340fdc3d0466700291f58bfb04a6d23103f4bb8fe852cf8825d9a0150e4653d",
+  "tests/queue-view.test.mjs": "017206becd6c378f63082a6d676f6aadcf267483661f0759aa7d9f65f19494bf",
+  "tests/bundle.test.mjs": "77eb154ca316ac4c05c2c6e0ddaa446eabd9ec27bccd8f58fd40711b6f7fc66a",
+  "tests/regression.json": "bbe794b8ba2b77ed8f2e0a4700f94bc3a6e98bed7882e62aa2ed57e85fbef516",
+  "tests/ui-observation.json": "21b1abf93ed9e286cc1192e23af8d90f78c2f263af2dfe069267b1f8de569de8",
+  "AUTORIZACION-PAQUETE.md": "11ef833aaa9eff63bb10e6a75b4d19784b2d15edccb2018d90bb4da4ad6ac2c4"
+}

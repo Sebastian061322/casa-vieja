@@ -1,0 +1,9 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "LOCAL_NOT_APPROVED_NOT_DEPLOYED",
+  "baseWorkerSha256": "cf780ac29bbe21f45c3a5ebdd7d94de43c62ee9b16cb854e4c2fb1f05019cba3",
+  "workerSha256": "766f8682deacc69de92a053462be2b10532aafa5b9ce6deda0c2af081697eecf",
+  "backendChanged": false,
+  "queuesChanged": false,
+  "remoteChanged": false
+}

@@ -1,0 +1,16 @@
+{
+  "environment": "LOCAL_SYNTHETIC",
+  "actualGoogle": false,
+  "physicalDevices": false,
+  "workerSha256": "766f8682deacc69de92a053462be2b10532aafa5b9ce6deda0c2af081697eecf",
+  "firstRejectionObserved": true,
+  "firstRejectionArchivedWithEvidence": true,
+  "secondRejectionWithPriorArchiveObserved": true,
+  "secondArchiveButtonVisibleWithoutExtraSync": true,
+  "secondRejectionNoticeCorrect": true,
+  "bothRejectionsArchivedWithoutDataLossObserved": true,
+  "finalPending": 0,
+  "finalArchiveCount": 2,
+  "remoteChanged": false,
+  "backendChanged": false
+}

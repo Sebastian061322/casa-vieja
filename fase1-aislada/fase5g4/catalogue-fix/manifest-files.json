@@ -1,0 +1,14 @@
+{
+  "backend.gs": "0b7d54f095239d4380ebe95bd85adf37298c5e7498ac8049019e580dcd51486b",
+  "build.cjs": "c50872a90a08bf1a754afcdd09f33000cdbe43a6cd556e5f3966e0f92b2bd728",
+  "build/Candidate.gs": "bd4e253c9092654511935b441ff9d513b849e12d5017daf5bf62e9ca86f74f56",
+  "build/worker-bundle.mjs": "029871296ce23a85e36e4b1597719252371e8ae8194c73d750f679ca584de445",
+  "build/manifest.json": "8a0d52838fee1c7453c2357f90009e8a0ac3c8ecf38be21c397a634f9430a582",
+  "tests/contracts.test.mjs": "385838be7407cd65e7b797ccca7841d6d938fc2ae2af98683a373080177480ca",
+  "tests/harness.mjs": "94882592f5c45cd3a5851bace3bd79002786fa782eb0c6c8a9d4373e1db95f81",
+  "tests/regression.json": "c6593d7915725440d9323af6e664ffa4ea216c65dbab2906309de87940ab908e",
+  "tests/ui-observation.json": "bc3ddf400d6b4d57db88cc01543025bc0a463b71bf81a505c8edd2ab84fdfe1f",
+  "preview.mjs": "8ffccbbe6963e8f39bfea2c882672880700e141ebafbd7a3b1c9e9c811009dae",
+  "run-regression.mjs": "a53f6f280a4e415c322da0808e72e820b6e04b5ea7f7ecd6d30dbac95d3acca3",
+  "AUTORIZACION-PAQUETE.md": "c08c1d30e23d819de599eea3d0bd0dd30c77b82610010edabcc451184fd5c54b"
+}

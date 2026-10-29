@@ -1,0 +1,22 @@
+{
+  "executedAtUTC": "2026-10-29T01:34:18.509Z",
+  "scope": "Historical regression plus 5G4 HTTP catalogue contract, explicit UTF8, access, credit gate and immutable prior receipts; not Google or physical acceptance",
+  "environment": "LOCAL_SYNTHETIC",
+  "tests": 633,
+  "passed": 633,
+  "failed": 0,
+  "files": 78,
+  "exitCode": 0,
+  "privateFilesExcluded": true,
+  "originalSourcesUnchanged": true,
+  "outboundFetchHttpLimitedToLoopback": true,
+  "actualGoogle": false,
+  "physicalDevices": false,
+  "remoteChanged": false,
+  "hashes": {
+    "build/Candidate.gs": "bd4e253c9092654511935b441ff9d513b849e12d5017daf5bf62e9ca86f74f56",
+    "build/worker-bundle.mjs": "029871296ce23a85e36e4b1597719252371e8ae8194c73d750f679ca584de445",
+    "backend.gs": "0b7d54f095239d4380ebe95bd85adf37298c5e7498ac8049019e580dcd51486b",
+    "build.cjs": "c50872a90a08bf1a754afcdd09f33000cdbe43a6cd556e5f3966e0f92b2bd728"
+  }
+}

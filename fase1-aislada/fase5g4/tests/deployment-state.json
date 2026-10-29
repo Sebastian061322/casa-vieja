@@ -31,9 +31,12 @@
   "privateValuesWrittenToEvidence": false,
   "secretReadContext": "Native accessibility automatically returned existing settings fields; no credential value recorded in evidence or modified",
   "secretModification": false,
-  "nextStep": "Manager signs in from an accessible device already logged into her Google account, then records second TEST_ONLY review; no opening yet",
+  "nextStep": "Exact local patch pending owner package approval; do not reapply opening or rewrite configuration/records",
   "administratorGoogleLoginConfirmed": true,
   "scopedSnapshotConfigurationConfirmed": true,
   "firstReviewCommitted": true,
-  "openingApplied": false
+  "openingApplied": true,
+  "secondReviewCommitted": true,
+  "openingRevision": 4,
+  "catalogueBlocked": true
 }

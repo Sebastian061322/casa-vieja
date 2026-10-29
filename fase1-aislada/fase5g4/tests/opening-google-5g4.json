@@ -1,0 +1,75 @@
+{
+  "environment": "TEST_ONLY",
+  "observedAtUTC": "2026-10-29T00:52:12.782Z",
+  "workerVersion": "65c061b6",
+  "backendVersion": 5,
+  "openingId": "TEST_ONLY_5G3_6e76f80d-cd48-487a-94ad-ccf8246f12e6",
+  "revision": 4,
+  "rows": 8,
+  "effects": 4,
+  "commands": [
+    {
+      "id": "TEST_ONLY_5G3_53593990-422c-4b48-8f41-34fdc0ac052f",
+      "type": "REVIEW_OPENING",
+      "role": "administrator",
+      "serverAt": "2026-10-28T22:53:09.245Z"
+    },
+    {
+      "id": "TEST_ONLY_5G3_0cfee2ac-9113-4a43-a99f-995147d0dff4",
+      "type": "REVIEW_OPENING",
+      "role": "operations",
+      "serverAt": "2026-10-29T00:48:40.890Z"
+    },
+    {
+      "id": "TEST_ONLY_5G3_7f4ac48d-b8d7-473e-9e09-4f11c5a248ce",
+      "type": "AUTHORIZE_OPENING",
+      "role": "administrator",
+      "serverAt": "2026-10-29T00:50:58.353Z"
+    },
+    {
+      "id": "TEST_ONLY_5G3_6e76f80d-cd48-487a-94ad-ccf8246f12e6",
+      "type": "OPEN_CONTINUITY",
+      "role": "administrator",
+      "serverAt": "2026-10-29T00:52:12.782Z"
+    }
+  ],
+  "distinctAuthenticatedReviewerRoles": [
+    "administrator",
+    "operations"
+  ],
+  "distinctVerifiedSubjects": true,
+  "bundleHash": "ee624c999299b925d83bc531d9dbf011a7e9b654495d62be37474e4732deeeea",
+  "actHash": "0fb9d44bb09b0b0eb3cca4d378cbe5073801b16de30885a5ba3173c28b1f64dc",
+  "resources": [
+    {
+      "id": "demo:opening-bags",
+      "physical": 4,
+      "reserved": 1,
+      "available": 3
+    },
+    {
+      "id": "demo:held",
+      "physical": 2,
+      "reserved": 0,
+      "available": 0,
+      "status": "HELD"
+    },
+    {
+      "id": "demo:monte-500",
+      "physical": 4,
+      "reserved": 0,
+      "available": 4
+    },
+    {
+      "id": "demo:gourmet-250",
+      "physical": 4,
+      "reserved": 0,
+      "available": 4
+    }
+  ],
+  "legacyObligations": 3,
+  "realGoogleSalesExecuted": 0,
+  "catalogueBlockedAfterAdminResync": true,
+  "productionModified": false,
+  "rawSubjectsExcluded": true
+}

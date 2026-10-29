@@ -1,0 +1,9 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "LOCAL_PATCH_NOT_APPROVED_OR_DEPLOYED",
+  "backendSha256": "bd4e253c9092654511935b441ff9d513b849e12d5017daf5bf62e9ca86f74f56",
+  "workerSha256": "029871296ce23a85e36e4b1597719252371e8ae8194c73d750f679ca584de445",
+  "originalJournalUnchanged": true,
+  "originalGatewayChecksPreserved": true,
+  "productionReady": false
+}

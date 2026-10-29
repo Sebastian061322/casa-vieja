@@ -105,3 +105,14 @@ Gerente en esta computadora tiene confirmación de identidad Google pendiente; n
 ### Contraste de la segunda revisión
 
 El titular reportó una confirmación en la laptop; dos lecturas acotadas del diario siguieron mostrando una sola revisión COMMITTED. Al comprobar el encabezado, el titular confirmó que esa pantalla decía Administrador principal. No se contó como revisión de operations ni se autorizó/aplicó apertura. Se indicó cerrar solo la sesión de Casa Vieja y seleccionar expresamente la cuenta ya autorizada del gerente; espera confirmación del perfil correcto. Ninguna cuenta o permiso se cambió.
+
+
+### Continuación 28/10 — apertura confirmada y catálogo bloqueado
+
+Este hito sustituye los pendientes de segunda revisión/apertura de los apartados anteriores. Dos identidades Google distintas verificadas (administrator y operations) revisaron el mismo hash. El administrador autorizó y aplicó la apertura TEST_ONLY una sola vez: revisión4, ocho filas de diario (cuatro PREPARED + cuatro COMMITTED), cuatro movimientos y tres obligaciones anteriores separadas. Evidencia saneada: tests/opening-google-5g4.json. Ninguna venta Google nueva ejecutada. No aplicar otra apertura.
+
+Las seis propiedades CV se releen exactamente correctas; el código guardado de versión5 coincide con SHA31ffa448. Pese a renovar el acceso y sincronizar, el propietario confirma «Catálogo sin habilitar». La composición de la respuesta HTTP y el hash del catálogo requieren comprobación remota adicional; no se atribuye una causa definitiva al charset de Google. Ejecución de diagnóstico doGet en editor finalizada y breakpoint retirado, sin cambios de código ni escrituras comerciales.
+
+Se prepara en catalogue-fix un candidato independiente, todavía NO aprobado, NO publicado y NO desplegado. Incluye contrato HTTP explícito, hash UTF8 solo para catálogo, diagnóstico sin secretos exclusivo de administrador y bloqueo de despacho nuevo sin pago cuando no hay política de crédito aprobada. Este último defecto sí se reprodujo contra la versión anterior local. Regresión final633/633 (78 archivos); primer intento632/633 con un test impedido por el permiso del puerto, repetición autorizada633/633. UI local/IndexedDB muestra14ofertas, una reserva S/22, despacho bloqueado antes de pago, cobro confirmado y despacho único después. No equivale a aceptación Google/física del parche.
+
+Permanece activo Worker65c061b6/Apps Script5. No se modificaron secretos ni configuración ZERO en esta continuación. Aceptación remota integral/RC congelada y producción: NO-GO. Siguiente paso: aprobar paquete exacto catalogue-fix/AUTORIZACION-PAQUETE.md; después verificar catálogo en Google antes de nuevas ventas sintéticas. No incluye corte, cambios productivos, DR, nuevos recursos o pagos.

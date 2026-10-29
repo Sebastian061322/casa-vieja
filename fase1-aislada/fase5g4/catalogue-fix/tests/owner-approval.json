@@ -1,0 +1,16 @@
+{
+  "environment": "TEST_ONLY",
+  "ownerApproved": true,
+  "approval": "S\u00ed, publicar solo en desarrollo y laboratorio",
+  "backendSha256": "bd4e253c9092654511935b441ff9d513b849e12d5017daf5bf62e9ca86f74f56",
+  "workerSha256": "029871296ce23a85e36e4b1597719252371e8ae8194c73d750f679ca584de445",
+  "scope": [
+    "dev/fase1-estabilizacion",
+    "casa-vieja-lab-auth",
+    "CasaVieja_AUTH_TEST_ONLY_5D",
+    "two CV version hash properties"
+  ],
+  "production": false,
+  "newResources": false,
+  "billing": false
+}

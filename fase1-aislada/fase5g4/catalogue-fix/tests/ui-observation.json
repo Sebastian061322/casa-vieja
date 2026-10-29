@@ -1,0 +1,19 @@
+{
+  "environment": "LOCAL_SYNTHETIC",
+  "actualGoogle": false,
+  "physicalDevices": false,
+  "url": "http://127.0.0.1:8801/?engine=5g4",
+  "catalogueOffersVisible": 14,
+  "customer": "TEST_ONLY_CATALOGUE_CREDIT_UI",
+  "saleCents": 2200,
+  "resource": "demo:gourmet-250",
+  "unpaidDispatchDisabled": true,
+  "fullPaymentConfirmed": true,
+  "paidDispatchEnabled": true,
+  "dispatchConfirmed": true,
+  "secondDispatchDisabled": true,
+  "queuePending": 0,
+  "historicalCostCents": 500,
+  "backendSha256": "bd4e253c9092654511935b441ff9d513b849e12d5017daf5bf62e9ca86f74f56",
+  "workerSha256": "029871296ce23a85e36e4b1597719252371e8ae8194c73d750f679ca584de445"
+}

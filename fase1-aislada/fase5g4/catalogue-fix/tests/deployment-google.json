@@ -1,0 +1,183 @@
+{
+  "environment": "TEST_ONLY",
+  "workerVersion": "e571872f",
+  "backendVersion": 6,
+  "backendVersionSourceHashVerified": true,
+  "backendSha256": "bd4e253c9092654511935b441ff9d513b849e12d5017daf5bf62e9ca86f74f56",
+  "workerSourceHashVerifiedBeforeDeploy": true,
+  "workerSha256": "029871296ce23a85e36e4b1597719252371e8ae8194c73d750f679ca584de445",
+  "codeCommit": "6b3ff7b6894432867360b2a537208d93b3f2bd16",
+  "githubRefReadbackVerified": true,
+  "versionHashPropertiesSavedAndReadBack": true,
+  "otherPropertiesModified": false,
+  "catalogueEnabledObservedByOwnerAndNativeUI": true,
+  "localTestsPassed": 633,
+  "publicRejectionsPassed": 7,
+  "publicAssetsMatched": 6,
+  "simpleSaleConfirmed": true,
+  "partialPaymentCents": 1000,
+  "finalPaymentCents": 1200,
+  "unpaidAndPartialDispatchDisabledObserved": true,
+  "paidDispatchConfirmed": true,
+  "repeatDispatchDisabledObserved": true,
+  "queueEmptyObserved": true,
+  "physicalIphone5g4": "Owner reports seller and zero pending; concurrency not executed yet",
+  "productionModified": false,
+  "newResourcesOrBilling": false,
+  "operations": [
+    {
+      "operationId": "TEST_ONLY_5G3_53593990-422c-4b48-8f41-34fdc0ac052f",
+      "type": "REVIEW_OPENING",
+      "revision": 1,
+      "committed": true,
+      "effects": [],
+      "commerceEvents": []
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_0cfee2ac-9113-4a43-a99f-995147d0dff4",
+      "type": "REVIEW_OPENING",
+      "revision": 2,
+      "committed": true,
+      "effects": [],
+      "commerceEvents": []
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_7f4ac48d-b8d7-473e-9e09-4f11c5a248ce",
+      "type": "AUTHORIZE_OPENING",
+      "revision": 3,
+      "committed": true,
+      "effects": [],
+      "commerceEvents": []
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_6e76f80d-cd48-487a-94ad-ccf8246f12e6",
+      "type": "OPEN_CONTINUITY",
+      "revision": 4,
+      "committed": true,
+      "effects": [
+        {
+          "id": "TEST_ONLY_5G3_6e76f80d-cd48-487a-94ad-ccf8246f12e6:effect:0",
+          "resourceId": "demo:opening-bags",
+          "kind": "OPENING_BALANCE",
+          "qtyDelta": 4,
+          "reservedDelta": 1,
+          "valueDelta": 4003
+        },
+        {
+          "id": "TEST_ONLY_5G3_6e76f80d-cd48-487a-94ad-ccf8246f12e6:effect:1",
+          "resourceId": "demo:held",
+          "kind": "OPENING_BALANCE",
+          "qtyDelta": 2,
+          "reservedDelta": 0,
+          "valueDelta": 2000
+        },
+        {
+          "id": "TEST_ONLY_5G3_6e76f80d-cd48-487a-94ad-ccf8246f12e6:effect:2",
+          "resourceId": "demo:monte-500",
+          "kind": "OPENING_BALANCE",
+          "qtyDelta": 4,
+          "reservedDelta": 0,
+          "valueDelta": 8000
+        },
+        {
+          "id": "TEST_ONLY_5G3_6e76f80d-cd48-487a-94ad-ccf8246f12e6:effect:3",
+          "resourceId": "demo:gourmet-250",
+          "kind": "OPENING_BALANCE",
+          "qtyDelta": 4,
+          "reservedDelta": 0,
+          "valueDelta": 2000
+        }
+      ],
+      "commerceEvents": []
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_2841c80a-d46b-47b3-bff4-564d6a183354",
+      "type": "REGISTER_SALE",
+      "revision": 5,
+      "committed": true,
+      "effects": [
+        {
+          "id": "TEST_ONLY_5G3_2841c80a-d46b-47b3-bff4-564d6a183354:0",
+          "resourceId": "demo:gourmet-250",
+          "kind": "SALE_RESERVATION",
+          "qtyDelta": 0,
+          "reservedDelta": 1,
+          "valueDelta": 0
+        }
+      ],
+      "commerceEvents": [
+        {
+          "kind": "ORDER_REGISTERED",
+          "amountCents": 2200
+        }
+      ],
+      "catalogueRef": {
+        "version": "WEB_2026-10-28_1",
+        "sha256": "91412bea403f01d9df3589c6c0fe9ea7a9a261dde0cd46d5bb86108dee1bda42",
+        "offerId": "gourmet-250",
+        "priceCents": 2200,
+        "packs": 1,
+        "totalCents": 2200,
+        "source": "https://casa-vieja-web.pages.dev/cafes/gourmet/#gourmet-250",
+        "approvalKind": "SYNTHETIC_TEST_APPROVAL",
+        "productionApproved": false
+      },
+      "totalCents": 2200,
+      "costCents": 500
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_d9fce7e6-b133-42b1-a1d6-1ddd75a1eafe",
+      "type": "RECORD_PAYMENT",
+      "revision": 6,
+      "committed": true,
+      "effects": [],
+      "commerceEvents": [
+        {
+          "kind": "PAYMENT",
+          "amountCents": 1000
+        }
+      ]
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_81d135b3-f0d9-49ad-bbc5-ea5c40e5daa3",
+      "type": "RECORD_PAYMENT",
+      "revision": 7,
+      "committed": true,
+      "effects": [],
+      "commerceEvents": [
+        {
+          "kind": "PAYMENT",
+          "amountCents": 1200
+        }
+      ]
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_7b430fd0-ccb2-4174-97ac-7cece5dea0b4",
+      "type": "DISPATCH_SALE",
+      "revision": 8,
+      "committed": true,
+      "effects": [
+        {
+          "id": "TEST_ONLY_5G3_7b430fd0-ccb2-4174-97ac-7cece5dea0b4:0",
+          "resourceId": "demo:gourmet-250",
+          "kind": "DISPATCH",
+          "qtyDelta": -1,
+          "reservedDelta": -1,
+          "valueDelta": -500
+        }
+      ],
+      "commerceEvents": [
+        {
+          "kind": "DISPATCH_RECOGNIZED",
+          "amountCents": 2200
+        }
+      ],
+      "creditControl": {
+        "version": "NO_UNAPPROVED_CREDIT_1",
+        "outstandingBeforeCents": 0,
+        "environment": "TEST_ONLY",
+        "productionApproved": false
+      }
+    }
+  ]
+}

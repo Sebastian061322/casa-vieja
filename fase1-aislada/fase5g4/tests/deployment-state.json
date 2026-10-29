@@ -3,11 +3,11 @@
   "environment": "TEST_ONLY",
   "ownerApprovedExactPackage": true,
   "ownerConfirmedAllUsedLabContextsWithoutPending": true,
-  "codeCommit": "f10c5ac84d1c1f28bbb3aa73ab15de1e96fe1051",
-  "workerVersion": "65c061b6",
-  "backendVersion": 5,
-  "workerSha256": "3ca709bb257dabaf0e9edbf4dff40d438a653558ec93995cea6e0071e7c5a128",
-  "backendSha256": "31ffa448d69ab99c093cd203da2df7d0a5105967a0ba8c0c627d003549be3cfc",
+  "codeCommit": "6b3ff7b6894432867360b2a537208d93b3f2bd16",
+  "workerVersion": "e571872f",
+  "backendVersion": 6,
+  "workerSha256": "029871296ce23a85e36e4b1597719252371e8ae8194c73d750f679ca584de445",
+  "backendSha256": "bd4e253c9092654511935b441ff9d513b849e12d5017daf5bf62e9ca86f74f56",
   "sheetCreatedTabs": {
     "TEST_ONLY_5G3_Diario": 154040001,
     "TEST_ONLY_5G3_Movimientos": 154040002,
@@ -31,12 +31,14 @@
   "privateValuesWrittenToEvidence": false,
   "secretReadContext": "Native accessibility automatically returned existing settings fields; no credential value recorded in evidence or modified",
   "secretModification": false,
-  "nextStep": "Exact local patch pending owner package approval; do not reapply opening or rewrite configuration/records",
+  "nextStep": "Recover same Tripack after session renewal; then last-unit test with iPhone. No duplicate opening or replacement sale.",
   "administratorGoogleLoginConfirmed": true,
   "scopedSnapshotConfigurationConfirmed": true,
   "firstReviewCommitted": true,
   "openingApplied": true,
   "secondReviewCommitted": true,
   "openingRevision": 4,
-  "catalogueBlocked": true
+  "catalogueBlocked": false,
+  "catalogueEnabledGoogleVerified": true,
+  "partialAuthenticatedRemoteAcceptance": true
 }

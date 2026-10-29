@@ -1,6 +1,6 @@
 # Fase 5G.4 — estado verificable al 28/10/2026
 
-**Paquete autorizado publicado en desarrollo, Worker65c061b6 y Apps Script5. Seis propiedades CV guardadas/verificadas, ámbito YES; acceso/snapshot y primera revisión Google comprobados; aceptación integral pendiente. NO-GO comercial.** Trabajo en checkout separado casa-vieja-checkout-5g4, rama dev/fase1-estabilizacion. Este estado sustituye el checkpoint provisional; conserva informes anteriores como historia.
+**Actualización 29/10: corrección autorizada publicada en desarrollo (6b3ff7b), Worker e571872f y Apps Script6. Catálogo habilitado en Google; apertura única, venta simple, cobro parcial/final y despacho confirmados. Tripack en recuperación tras vencer sesión; prueba entre equipos todavía no ejecutada. NO-GO comercial.** Trabajo en checkout separado casa-vieja-checkout-5g4, rama dev/fase1-estabilizacion. Este estado sustituye el checkpoint provisional; conserva informes anteriores como historia.
 
 ## A. Código
 
@@ -116,3 +116,12 @@ Las seis propiedades CV se releen exactamente correctas; el código guardado de 
 Se prepara en catalogue-fix un candidato independiente, todavía NO aprobado, NO publicado y NO desplegado. Incluye contrato HTTP explícito, hash UTF8 solo para catálogo, diagnóstico sin secretos exclusivo de administrador y bloqueo de despacho nuevo sin pago cuando no hay política de crédito aprobada. Este último defecto sí se reprodujo contra la versión anterior local. Regresión final633/633 (78 archivos); primer intento632/633 con un test impedido por el permiso del puerto, repetición autorizada633/633. UI local/IndexedDB muestra14ofertas, una reserva S/22, despacho bloqueado antes de pago, cobro confirmado y despacho único después. No equivale a aceptación Google/física del parche.
 
 Permanece activo Worker65c061b6/Apps Script5. No se modificaron secretos ni configuración ZERO en esta continuación. Aceptación remota integral/RC congelada y producción: NO-GO. Siguiente paso: aprobar paquete exacto catalogue-fix/AUTORIZACION-PAQUETE.md; después verificar catálogo en Google antes de nuevas ventas sintéticas. No incluye corte, cambios productivos, DR, nuevos recursos o pagos.
+
+
+### Publicación autorizada de la corrección y primer flujo Google
+
+El propietario aprobó expresamente el nuevo paquete bd4e253c/02987129. Commit6b3ff7b publicado en dev/fase1-estabilizacion y referencia releída mediante conector GitHub. Worker e571872f Active/Latest; fuente comparada antes de Deploy. Apps Script misma implementación, versión6; código de esa versión releído en Historial y hash completo bd4e253c9092654511935b441ff9d513b849e12d5017daf5bf62e9ca86f74f56 contrastado. Se actualizaron/releyeron únicamente los dos hashes CV de versión; no se abrieron valores ZERO. Siete rechazos públicos y seis recursos públicos comparados aprobados (catalogue-fix/tests/remote-public.json).
+
+Catálogo habilitado confirmado por propietario y observado en UI nativa. Venta TEST_ONLY_5G4_SIMPLE_G250_01: S/22, costo histórico S/5, reserva una bolsa G250; cobros S/10 y S/12 sin efectos de inventario; despacho único -1 físico/-1 reservado con control de crédito versionado. UI bloqueada antes y después del pago parcial; habilitada con saldo cero y deshabilitada tras despacho. Sincronizar repetido mantuvo ocho operaciones confirmadas y16filas de diario, sin duplicar venta/cobros/despacho. La apertura anterior y sus tres obligaciones permanecen separadas. Evidencia saneada catalogue-fix/tests/deployment-google.json; no contiene sujetos Google.
+
+La sesión del administrador venció al intentar el Tripack después de la interrupción de la sesión de trabajo. La lectura de Google seguía en revisión8: no crear pedido sustituto. Se renovó Google con la misma cuenta y se pidió al propietario Ventas/Sincronizar una vez para recuperar el intento original. El iPhone informa Vendedor y cero pendientes en ?engine=5g4. No se ha ejecutado aún concurrencia entre equipos ni aprobado física/funcionalmente todo el paquete. Costo S/0; producción y main intactos. Estas evidencias no congelan una RC ni autorizan corte.

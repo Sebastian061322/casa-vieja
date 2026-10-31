@@ -1,0 +1,425 @@
+{
+  "environment": "TEST_ONLY",
+  "verifiedAtUTC": "2026-10-31T11:14:06.822Z",
+  "backendVersion": 6,
+  "workerVersion": "c82dd835",
+  "operations": [
+    {
+      "operationId": "TEST_ONLY_5G3_6dffe262-d39a-45f5-9f00-b9c8ccb43f27",
+      "type": "RECEIVE_LOT",
+      "receipt": {
+        "epoch": "TEST_ONLY_V3",
+        "operationId": "TEST_ONLY_5G3_6dffe262-d39a-45f5-9f00-b9c8ccb43f27",
+        "state": "COMMITTED",
+        "revision": 14,
+        "saleId": "future:9d4abc15-1167-4d37-a36d-9156527438b3",
+        "saleVersion": 1
+      },
+      "effects": [
+        {
+          "id": "TEST_ONLY_5G3_6dffe262-d39a-45f5-9f00-b9c8ccb43f27:0",
+          "operationId": "TEST_ONLY_5G3_6dffe262-d39a-45f5-9f00-b9c8ccb43f27",
+          "saleId": "future:9d4abc15-1167-4d37-a36d-9156527438b3",
+          "date": "2026-10-29T13:53:52.164Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "pergamino",
+          "unit": "g",
+          "resourceId": "demo:parchment-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "kind": "LOT_RECEIPT",
+          "qtyDelta": 10000,
+          "reservedDelta": 0,
+          "valueDelta": 10500,
+          "reservedValueDelta": 0
+        }
+      ]
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_7c70d902-dd28-460b-9d4d-678b709ff7d3",
+      "type": "MILL",
+      "receipt": {
+        "epoch": "TEST_ONLY_V3",
+        "operationId": "TEST_ONLY_5G3_7c70d902-dd28-460b-9d4d-678b709ff7d3",
+        "state": "COMMITTED",
+        "revision": 15,
+        "saleId": "future:d1c96ee4-b572-4977-928b-17255016630a",
+        "saleVersion": 1
+      },
+      "effects": [
+        {
+          "id": "TEST_ONLY_5G3_7c70d902-dd28-460b-9d4d-678b709ff7d3:MILL_INPUT",
+          "operationId": "TEST_ONLY_5G3_7c70d902-dd28-460b-9d4d-678b709ff7d3",
+          "saleId": "future:d1c96ee4-b572-4977-928b-17255016630a",
+          "date": "2026-10-29T13:55:45.582Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "pergamino",
+          "unit": "g",
+          "resourceId": "demo:parchment-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "kind": "MILL_INPUT",
+          "qtyDelta": -10000,
+          "reservedDelta": 0,
+          "valueDelta": -10500,
+          "reservedValueDelta": 0
+        },
+        {
+          "id": "TEST_ONLY_5G3_7c70d902-dd28-460b-9d4d-678b709ff7d3:MILL_OUTPUT",
+          "operationId": "TEST_ONLY_5G3_7c70d902-dd28-460b-9d4d-678b709ff7d3",
+          "saleId": "future:d1c96ee4-b572-4977-928b-17255016630a",
+          "date": "2026-10-29T13:55:45.582Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "verde",
+          "unit": "g",
+          "resourceId": "demo:process-d1c96ee4-b572-4977-928b-17255016630a",
+          "kind": "MILL_OUTPUT",
+          "qtyDelta": 8000,
+          "reservedDelta": 0,
+          "valueDelta": 11500,
+          "reservedValueDelta": 0,
+          "processingCents": 1000,
+          "inputResourceId": "demo:parchment-9d4abc15-1167-4d37-a36d-9156527438b3"
+        },
+        {
+          "id": "TEST_ONLY_5G3_7c70d902-dd28-460b-9d4d-678b709ff7d3:PROCESS_WASTE",
+          "operationId": "TEST_ONLY_5G3_7c70d902-dd28-460b-9d4d-678b709ff7d3",
+          "saleId": "future:d1c96ee4-b572-4977-928b-17255016630a",
+          "date": "2026-10-29T13:55:45.582Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "pergamino",
+          "unit": "g",
+          "resourceId": "demo:parchment-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "kind": "PROCESS_WASTE",
+          "qtyDelta": 0,
+          "reservedDelta": 0,
+          "valueDelta": 0,
+          "reservedValueDelta": 0,
+          "wasteGrams": 2000,
+          "fromStage": "PARCHMENT",
+          "transformation": "MILL"
+        }
+      ]
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_2a4db0b5-bb9f-4cc7-a7b1-2e6af3276f44",
+      "type": "ROAST",
+      "receipt": {
+        "epoch": "TEST_ONLY_V3",
+        "operationId": "TEST_ONLY_5G3_2a4db0b5-bb9f-4cc7-a7b1-2e6af3276f44",
+        "state": "COMMITTED",
+        "revision": 16,
+        "saleId": "future:aced4802-a533-4717-9684-c80ccae823d5",
+        "saleVersion": 1
+      },
+      "effects": [
+        {
+          "id": "TEST_ONLY_5G3_2a4db0b5-bb9f-4cc7-a7b1-2e6af3276f44:ROAST_INPUT",
+          "operationId": "TEST_ONLY_5G3_2a4db0b5-bb9f-4cc7-a7b1-2e6af3276f44",
+          "saleId": "future:aced4802-a533-4717-9684-c80ccae823d5",
+          "date": "2026-10-31T11:09:22.794Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "verde",
+          "unit": "g",
+          "resourceId": "demo:process-d1c96ee4-b572-4977-928b-17255016630a",
+          "kind": "ROAST_INPUT",
+          "qtyDelta": -8000,
+          "reservedDelta": 0,
+          "valueDelta": -11500,
+          "reservedValueDelta": 0
+        },
+        {
+          "id": "TEST_ONLY_5G3_2a4db0b5-bb9f-4cc7-a7b1-2e6af3276f44:ROAST_OUTPUT",
+          "operationId": "TEST_ONLY_5G3_2a4db0b5-bb9f-4cc7-a7b1-2e6af3276f44",
+          "saleId": "future:aced4802-a533-4717-9684-c80ccae823d5",
+          "date": "2026-10-31T11:09:22.794Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "tostado",
+          "unit": "g",
+          "resourceId": "demo:process-aced4802-a533-4717-9684-c80ccae823d5",
+          "kind": "ROAST_OUTPUT",
+          "qtyDelta": 6400,
+          "reservedDelta": 0,
+          "valueDelta": 13500,
+          "reservedValueDelta": 0,
+          "processingCents": 2000,
+          "inputResourceId": "demo:process-d1c96ee4-b572-4977-928b-17255016630a"
+        },
+        {
+          "id": "TEST_ONLY_5G3_2a4db0b5-bb9f-4cc7-a7b1-2e6af3276f44:PROCESS_WASTE",
+          "operationId": "TEST_ONLY_5G3_2a4db0b5-bb9f-4cc7-a7b1-2e6af3276f44",
+          "saleId": "future:aced4802-a533-4717-9684-c80ccae823d5",
+          "date": "2026-10-31T11:09:22.794Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "verde",
+          "unit": "g",
+          "resourceId": "demo:process-d1c96ee4-b572-4977-928b-17255016630a",
+          "kind": "PROCESS_WASTE",
+          "qtyDelta": 0,
+          "reservedDelta": 0,
+          "valueDelta": 0,
+          "reservedValueDelta": 0,
+          "wasteGrams": 1600,
+          "fromStage": "GREEN",
+          "transformation": "ROAST"
+        }
+      ]
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_d89fa734-6f1b-42e6-b9ac-f69500581e1f",
+      "type": "GRIND",
+      "receipt": {
+        "epoch": "TEST_ONLY_V3",
+        "operationId": "TEST_ONLY_5G3_d89fa734-6f1b-42e6-b9ac-f69500581e1f",
+        "state": "COMMITTED",
+        "revision": 17,
+        "saleId": "future:82bcca6f-a97f-4380-93d8-7ccf93d9d6f4",
+        "saleVersion": 1
+      },
+      "effects": [
+        {
+          "id": "TEST_ONLY_5G3_d89fa734-6f1b-42e6-b9ac-f69500581e1f:GRIND_INPUT",
+          "operationId": "TEST_ONLY_5G3_d89fa734-6f1b-42e6-b9ac-f69500581e1f",
+          "saleId": "future:82bcca6f-a97f-4380-93d8-7ccf93d9d6f4",
+          "date": "2026-10-31T11:09:54.115Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "tostado",
+          "unit": "g",
+          "resourceId": "demo:process-aced4802-a533-4717-9684-c80ccae823d5",
+          "kind": "GRIND_INPUT",
+          "qtyDelta": -6400,
+          "reservedDelta": 0,
+          "valueDelta": -13500,
+          "reservedValueDelta": 0
+        },
+        {
+          "id": "TEST_ONLY_5G3_d89fa734-6f1b-42e6-b9ac-f69500581e1f:GRIND_OUTPUT",
+          "operationId": "TEST_ONLY_5G3_d89fa734-6f1b-42e6-b9ac-f69500581e1f",
+          "saleId": "future:82bcca6f-a97f-4380-93d8-7ccf93d9d6f4",
+          "date": "2026-10-31T11:09:54.115Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "tostado molido",
+          "unit": "g",
+          "resourceId": "demo:process-82bcca6f-a97f-4380-93d8-7ccf93d9d6f4",
+          "kind": "GRIND_OUTPUT",
+          "qtyDelta": 6300,
+          "reservedDelta": 0,
+          "valueDelta": 14000,
+          "reservedValueDelta": 0,
+          "processingCents": 500,
+          "inputResourceId": "demo:process-aced4802-a533-4717-9684-c80ccae823d5"
+        },
+        {
+          "id": "TEST_ONLY_5G3_d89fa734-6f1b-42e6-b9ac-f69500581e1f:PROCESS_WASTE",
+          "operationId": "TEST_ONLY_5G3_d89fa734-6f1b-42e6-b9ac-f69500581e1f",
+          "saleId": "future:82bcca6f-a97f-4380-93d8-7ccf93d9d6f4",
+          "date": "2026-10-31T11:09:54.115Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "tostado",
+          "unit": "g",
+          "resourceId": "demo:process-aced4802-a533-4717-9684-c80ccae823d5",
+          "kind": "PROCESS_WASTE",
+          "qtyDelta": 0,
+          "reservedDelta": 0,
+          "valueDelta": 0,
+          "reservedValueDelta": 0,
+          "wasteGrams": 100,
+          "fromStage": "BULK",
+          "transformation": "GRIND"
+        }
+      ]
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_a8518902-6d9c-4260-9ebd-09b094f43a01",
+      "type": "RECEIVE_SUPPLY",
+      "receipt": {
+        "epoch": "TEST_ONLY_V3",
+        "operationId": "TEST_ONLY_5G3_a8518902-6d9c-4260-9ebd-09b094f43a01",
+        "state": "COMMITTED",
+        "revision": 18,
+        "saleId": "future:4b09306c-89c6-41cf-98e7-c439eba1b632",
+        "saleVersion": 1
+      },
+      "effects": [
+        {
+          "id": "TEST_ONLY_5G3_a8518902-6d9c-4260-9ebd-09b094f43a01:0",
+          "operationId": "TEST_ONLY_5G3_a8518902-6d9c-4260-9ebd-09b094f43a01",
+          "saleId": "future:4b09306c-89c6-41cf-98e7-c439eba1b632",
+          "date": "2026-10-31T11:10:56.424Z",
+          "lot": "demo:supply-lot-4b09306c-89c6-41cf-98e7-c439eba1b632",
+          "product": "BAG500",
+          "unit": "unit",
+          "resourceId": "demo:supply-4b09306c-89c6-41cf-98e7-c439eba1b632",
+          "kind": "SUPPLY_RECEIPT",
+          "qtyDelta": 4,
+          "reservedDelta": 0,
+          "valueDelta": 200,
+          "reservedValueDelta": 0
+        }
+      ]
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_7c1c88e3-9094-4d3f-82d2-732b72126ea2",
+      "type": "RECEIVE_SUPPLY",
+      "receipt": {
+        "epoch": "TEST_ONLY_V3",
+        "operationId": "TEST_ONLY_5G3_7c1c88e3-9094-4d3f-82d2-732b72126ea2",
+        "state": "COMMITTED",
+        "revision": 19,
+        "saleId": "future:68e20fb4-49d8-4679-90f1-7a965731ec66",
+        "saleVersion": 1
+      },
+      "effects": [
+        {
+          "id": "TEST_ONLY_5G3_7c1c88e3-9094-4d3f-82d2-732b72126ea2:0",
+          "operationId": "TEST_ONLY_5G3_7c1c88e3-9094-4d3f-82d2-732b72126ea2",
+          "saleId": "future:68e20fb4-49d8-4679-90f1-7a965731ec66",
+          "date": "2026-10-31T11:11:35.012Z",
+          "lot": "demo:supply-lot-68e20fb4-49d8-4679-90f1-7a965731ec66",
+          "product": "LABEL",
+          "unit": "unit",
+          "resourceId": "demo:supply-68e20fb4-49d8-4679-90f1-7a965731ec66",
+          "kind": "SUPPLY_RECEIPT",
+          "qtyDelta": 4,
+          "reservedDelta": 0,
+          "valueDelta": 40,
+          "reservedValueDelta": 0
+        }
+      ]
+    },
+    {
+      "operationId": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980",
+      "type": "PREPARE_BAGS",
+      "receipt": {
+        "epoch": "TEST_ONLY_V3",
+        "operationId": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980",
+        "state": "COMMITTED",
+        "revision": 20,
+        "saleId": "future:69d0fb27-360b-4bf1-832a-0099833e4110",
+        "saleVersion": 1
+      },
+      "effects": [
+        {
+          "id": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980:0",
+          "operationId": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980",
+          "saleId": "future:69d0fb27-360b-4bf1-832a-0099833e4110",
+          "date": "2026-10-31T11:12:34.744Z",
+          "lot": "demo:supply-lot-4b09306c-89c6-41cf-98e7-c439eba1b632",
+          "product": "BAG500",
+          "unit": "unit",
+          "resourceId": "demo:supply-4b09306c-89c6-41cf-98e7-c439eba1b632",
+          "kind": "PREPARATION_SUPPLY",
+          "qtyDelta": -4,
+          "reservedDelta": 0,
+          "valueDelta": -200,
+          "reservedValueDelta": 0
+        },
+        {
+          "id": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980:1",
+          "operationId": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980",
+          "saleId": "future:69d0fb27-360b-4bf1-832a-0099833e4110",
+          "date": "2026-10-31T11:12:34.744Z",
+          "lot": "demo:supply-lot-68e20fb4-49d8-4679-90f1-7a965731ec66",
+          "product": "LABEL",
+          "unit": "unit",
+          "resourceId": "demo:supply-68e20fb4-49d8-4679-90f1-7a965731ec66",
+          "kind": "PREPARATION_SUPPLY",
+          "qtyDelta": -4,
+          "reservedDelta": 0,
+          "valueDelta": -40,
+          "reservedValueDelta": 0
+        },
+        {
+          "id": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980:2",
+          "operationId": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980",
+          "saleId": "future:69d0fb27-360b-4bf1-832a-0099833e4110",
+          "date": "2026-10-31T11:12:34.744Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "tostado molido",
+          "unit": "g",
+          "resourceId": "demo:process-82bcca6f-a97f-4380-93d8-7ccf93d9d6f4",
+          "kind": "PREPARATION_COFFEE",
+          "qtyDelta": -2050,
+          "reservedDelta": 0,
+          "valueDelta": -4555,
+          "reservedValueDelta": 0
+        },
+        {
+          "id": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980:3",
+          "operationId": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980",
+          "saleId": "future:69d0fb27-360b-4bf1-832a-0099833e4110",
+          "date": "2026-10-31T11:12:34.744Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "Gourmet molido 500g",
+          "unit": "unit",
+          "resourceId": "demo:packaged-69d0fb27-360b-4bf1-832a-0099833e4110",
+          "kind": "PREPARATION_OUTPUT",
+          "qtyDelta": 4,
+          "reservedDelta": 0,
+          "valueDelta": 4795,
+          "reservedValueDelta": 0,
+          "processingCents": 0
+        },
+        {
+          "id": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980:4",
+          "operationId": "TEST_ONLY_5G3_c80427ce-7267-4355-848b-aca437e37980",
+          "saleId": "future:69d0fb27-360b-4bf1-832a-0099833e4110",
+          "date": "2026-10-31T11:12:34.744Z",
+          "lot": "demo:lot-9d4abc15-1167-4d37-a36d-9156527438b3",
+          "product": "tostado molido",
+          "unit": "g",
+          "resourceId": "demo:process-82bcca6f-a97f-4380-93d8-7ccf93d9d6f4",
+          "kind": "PROCESS_WASTE",
+          "qtyDelta": 0,
+          "reservedDelta": 0,
+          "valueDelta": 0,
+          "reservedValueDelta": 0,
+          "wasteGrams": 50,
+          "fromStage": "BULK"
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "allSevenOperationsCommittedOnce": true,
+    "all28MovementsUnique": true,
+    "allPlanEffectsMatchStoredMovements": true,
+    "noNegativeOrOverReservedPrefixes": true,
+    "massBalanceGrams": {
+      "received": 10000,
+      "bulkRemaining": 4250,
+      "packaged": 2000,
+      "explicitWaste": 3750,
+      "conserved": true
+    },
+    "costBalanceCents": {
+      "coffeeAndFreight": 10500,
+      "mill": 1000,
+      "roast": 2000,
+      "grind": 500,
+      "materials": 240,
+      "total": 14240,
+      "bulkRemaining": 9445,
+      "fourBags": 4795,
+      "conserved": true
+    },
+    "bagsConsumed": 4,
+    "labelsConsumed": 4
+  },
+  "journalCheckpoint": {
+    "rows": 43,
+    "committed": 20,
+    "rejected": 3,
+    "movementRows": 28,
+    "attemptsUsed": 23,
+    "attemptsAuthorizedMaximum": 40
+  },
+  "uiObserved": {
+    "bulkGrams": 4250,
+    "packagedUnits": 4,
+    "bag500Remaining": 0,
+    "labelsRemaining": 0,
+    "pending": 0,
+    "archivedRejections": 3
+  },
+  "processingPipelineVerified": true,
+  "commercialActivationApproved": false,
+  "productionAccessed": false,
+  "limitation": "Newly prepared resources require explicit catalogue binding before sale."
+}

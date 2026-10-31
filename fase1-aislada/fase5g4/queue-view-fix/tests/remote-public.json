@@ -1,0 +1,104 @@
+{
+  "environment": "TEST_ONLY",
+  "recordedAtUTC": "2026-10-29T13:47:18.931Z",
+  "workerVersion": "c82dd835",
+  "backendVersion": 6,
+  "authenticatedTests": false,
+  "commercialWrites": false,
+  "backendEndpointCalledDirectly": false,
+  "realCredentialsUsed": false,
+  "results": [
+    {
+      "name": "get-api",
+      "status": 403,
+      "error": "ORIGIN_DENIED",
+      "passed": true,
+      "ms": 483
+    },
+    {
+      "name": "missing-origin",
+      "status": 403,
+      "error": "ORIGIN_DENIED",
+      "passed": true,
+      "ms": 320
+    },
+    {
+      "name": "foreign-origin",
+      "status": 403,
+      "error": "ORIGIN_DENIED",
+      "passed": true,
+      "ms": 188
+    },
+    {
+      "name": "missing-token",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "ms": 105
+    },
+    {
+      "name": "forged-role-no-token",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "ms": 111
+    },
+    {
+      "name": "invalid-token",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "ms": 125
+    },
+    {
+      "name": "malformed-json",
+      "status": 401,
+      "error": "IDENTITY_REQUIRED",
+      "passed": true,
+      "ms": 139
+    },
+    {
+      "path": "/entry.mjs",
+      "status": 200,
+      "sha256": "b15bebbc466dbe61d4f3f8884ef838ae584b016b86633ae594115464e8fe3615",
+      "passed": true,
+      "noStore": true
+    },
+    {
+      "path": "/approved-app.js",
+      "status": 200,
+      "sha256": "b80aa13cec459c9515a10db44ff2d7f9de3969dc26dd31b133603f2ac2e42d4e",
+      "passed": true,
+      "noStore": true
+    },
+    {
+      "path": "/config.json",
+      "status": 200,
+      "sha256": "c3b95bc8e7df542cc2010f01e65a44cab453a42441e34c17d407d1a1985f7cec",
+      "passed": true,
+      "noStore": true
+    },
+    {
+      "path": "/verify-backup.html",
+      "status": 200,
+      "sha256": "6c73f40497f9da3350c15925bbfb5475176ab40257cdd91b46262d524ea0bc46",
+      "passed": true,
+      "noStore": true
+    },
+    {
+      "path": "/verify-backup54.mjs",
+      "status": 200,
+      "sha256": "a5d565fc2ee1f49e847714634375fc05bc7ea0e30dcf721b2ab743389ba7d39c",
+      "passed": true,
+      "noStore": true
+    },
+    {
+      "path": "/backup54.mjs",
+      "status": 200,
+      "sha256": "5b16f7b72e7db375853aed4cbbac61b996331a559b832ede28e4b88a8734950e",
+      "passed": true,
+      "noStore": true
+    }
+  ],
+  "passed": true
+}

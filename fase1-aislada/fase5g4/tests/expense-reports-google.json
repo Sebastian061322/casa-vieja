@@ -1,0 +1,27 @@
+{
+  "environment": "TEST_ONLY",
+  "backendVersion": 6,
+  "workerVersion": "c82dd835",
+  "operationId": "TEST_ONLY_5G3_1e86ef6d-47b4-4614-bbd2-87f7f8e69cd9",
+  "state": "COMMITTED",
+  "revision": 21,
+  "expenseCents": 100,
+  "paid": false,
+  "inventoryEffects": 0,
+  "uiReportPeriodLima": {
+    "from": "2026-10-01",
+    "until": "2026-10-31"
+  },
+  "uiObservedCents": {
+    "orderAmount": 26900,
+    "dispatchedRevenue": 2200,
+    "cashCollected": 4700,
+    "receivables": 27700,
+    "costOfGoodsSold": 500,
+    "grossMargin": 1700,
+    "operatingExpense": 100,
+    "estimatedResult": 1600
+  },
+  "purchaseAndProcessingCostsDeductedAgainAsOperatingExpense": false,
+  "productionModified": false
+}

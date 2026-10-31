@@ -1,6 +1,6 @@
 # Fase 5G.4 — estado verificable al 28/10/2026
 
-**Actualización 29/10: corrección autorizada publicada en desarrollo (6b3ff7b), Worker e571872f y Apps Script6. Catálogo habilitado en Google; apertura única, venta simple, cobro parcial/final y despacho confirmados. Tripack recuperado, última unidad PC/iPhone y reinicio sin conexión aprobados con evidencia Google. Aviso superior corregido y listado adicional publicado en Worker c82dd835; Apps Script6 intacto; aceptación del nuevo listado en Google pendiente. NO-GO comercial.** Trabajo en checkout separado casa-vieja-checkout-5g4, rama dev/fase1-estabilizacion. Este estado sustituye el checkpoint provisional; conserva informes anteriores como historia.
+**Actualización 29/10: corrección autorizada publicada en desarrollo (6b3ff7b), Worker e571872f y Apps Script6. Catálogo habilitado en Google; apertura única, venta simple, cobro parcial/final y despacho confirmados. Tripack recuperado, última unidad PC/iPhone y reinicio sin conexión aprobados con evidencia Google. Aviso superior corregido y listado adicional publicado en Worker c82dd835; Apps Script6 intacto; aceptación del nuevo listado en Google confirmada. NO-GO comercial.** Trabajo en checkout separado casa-vieja-checkout-5g4, rama dev/fase1-estabilizacion. Este estado sustituye el checkpoint provisional; conserva informes anteriores como historia.
 
 ## A. Código
 
@@ -152,3 +152,23 @@ PC estaba sin pendientes y con rechazo archivado antes de recargar. Se renueva a
 En bc323432 el rechazo controlado TEST_ONLY_5G4_UI_REJECT_01 terminó REJECTED INSUFFICIENT_STOCK, sin efectos; aviso superior correcto. Con un rechazo archivado anterior, el listado inferior era sobrescrito por una vista previa de archivo y faltaba el botón del rechazo nuevo. La segunda sincronización lo mostró y permitió archivarlo con evidencia: PC0pendientes/2archivados. Diario28filas,13COMMITTED/2REJECTED,11movimientos;27filas anteriores idénticas. Ver status-fix/tests/google-rejection-with-archive.json. El iPhone conservó ambos pedidos después de recargar. No se cuenta el paquete anterior como cierre de interfaz íntegro.
 
 queue-view-fix corrige solo el render de cola: lectura actual después de sincronizar, prioridad de los elementos activos sobre archivos previos, escape de metadatos.645/645 locales82archivos. Recorrido local real con primer rechazo/archivo y segundo rechazo: botón visible sin sincronización adicional; luego ambos archivos conservados. No cambia persistencia, backend, identidad o API. SHA766f8682deacc69de92a053462be2b10532aafa5b9ce6deda0c2af081697eecf aprobado por propietario. Worker c82dd835 Active, hash verificado antes de Deploy y única propiedad CV de Worker actualizada/releída. Apps Script sigue versión6/hashbd4e253c sin edición/despliegue. Pendiente contraste remoto de archivos y caso nuevo de rechazo con dos archivos previos; no repetir pedidos anteriores.
+
+
+### Reanudación verificada — 31/10
+
+El listado c82dd835 se verificó en Google: el rechazo nuevo aparece con su botón de archivo sin una segunda sincronización, pese a dos rechazos previos conservados. Tras archivarlo, PC sin pendientes y tres rechazos conservados. Evidencia queue-view-fix/tests/google-result.json; no cambió el backend6.
+
+Lectura acotada de los diarios sintéticos confirma RECEIVE_LOT (revisión14) y MILL (revisión15), exactamente una confirmación cada uno. No se reenvió el pilado tras la interrupción. Diez kilos ficticios = ocho kilos verdes + dos de merma; costo10500c + proceso1000c =11500c. Los15 movimientos son únicos, coinciden con los planes confirmados y no presentan prefijos físicos/reservados inválidos. Estado33filas:15COMMITTED,3REJECTED,18intentos del máximo40 autorizado. Evidencia tests/processing-google.json. Son cantidades de laboratorio, no rendimientos ni inventario comercial aprobado.
+
+La ventana anterior del laboratorio ya no está disponible en Safari; se solicitó abrir el mismo ámbito como administrador para continuar tostado/molienda/insumos/envasado. No se interactuó con la tarea de Meta visible. Continúan pendientes las demás verificaciones remotas y custodia: fase completa y transición comercial NO-GO.
+
+
+### Procesamiento completo del ensayo y gasto — 31/10
+
+Se reanudó la misma sesión de administrador. ROAST revisión16 y GRIND revisión17 confirmados una sola vez. Recepciones de cuatro BAG500 (200c) y cuatro LABEL (40c), revisiones18/19; PREPARE_BAGS revisión20 consume2050g, cuatro empaques y cuatro etiquetas, produce cuatro bolsas500g y registra50g de merma. Cada etapa conserva lote/familia y sus costos. Resultado del escenario:4250g a granel +2000g en bolsas +3750g de merma =10000g recibidos. Valor9445c a granel +4795c en bolsas =14240c de adquisición/procesamiento/materiales.28movimientos únicos, todos contrastados con planes confirmados; sin prefijos negativos o reservas excesivas. UI confirma cuatro bolsas disponibles,4250g a granel, materiales0 y cero pendientes/tres rechazos archivados. tests/processing-google.json.
+
+RECORD_EXPENSE revisión21:100c PUBLICIDAD ficticia pendiente de pago, cero movimientos. Reporte observado de octubre:pedidos26900c, ingreso por despachos2200c, cobros4700c, cuentas por cobrar27700c, COGS500c, margen1700c, gasto100c, resultado1600c. Las compras y procesos no se restaron de nuevo como gasto. tests/expense-reports-google.json.24intentos del máximo40; no reiniciar el cupo.
+
+Pendiente de integración: las bolsas nuevas existen en inventario, pero ventas filtra las partidas mediante resourceLines54, derivadas de las asignaciones explícitas de catálogo. El ensayo aprobado solo asigna cuatro partidas de apertura. No se autoriza vender una partida nueva por deducir su nombre, ni confundir Especialidad con Monte Alto. Antes de declarar el flujo completo recepción→venta listo debe resolverse la asignación comercial prospectiva, con evidencia y aprobación del paquete remoto correspondiente.
+
+Se dejó Respaldo sintético abierto y se solicitó al titular generar/guardar archivo cifrado y hash en el teléfono, conservando clave separada y privada. No registrar custodia ni recuperación como aprobadas hasta comprobarlas. No hubo nuevos despliegues, cambios de permisos o producción en esta reanudación.

@@ -3,10 +3,10 @@
   "environment": "TEST_ONLY",
   "ownerApprovedExactPackage": true,
   "ownerConfirmedAllUsedLabContextsWithoutPending": true,
-  "codeCommit": "6b3ff7b6894432867360b2a537208d93b3f2bd16",
-  "workerVersion": "e571872f",
+  "codeCommit": "3146f1597dc64ba4c623ed79b21379edb249ec37",
+  "workerVersion": "c82dd835",
   "backendVersion": 6,
-  "workerSha256": "029871296ce23a85e36e4b1597719252371e8ae8194c73d750f679ca584de445",
+  "workerSha256": "766f8682deacc69de92a053462be2b10532aafa5b9ce6deda0c2af081697eecf",
   "backendSha256": "bd4e253c9092654511935b441ff9d513b849e12d5017daf5bf62e9ca86f74f56",
   "sheetCreatedTabs": {
     "TEST_ONLY_5G3_Diario": 154040001,
@@ -31,7 +31,7 @@
   "privateValuesWrittenToEvidence": false,
   "secretReadContext": "Native accessibility automatically returned existing settings fields; no credential value recorded in evidence or modified",
   "secretModification": false,
-  "nextStep": "Recover same Tripack after session renewal; then last-unit test with iPhone. No duplicate opening or replacement sale.",
+  "nextStep": "Complete encrypted phone custody and recovery acceptance; newly prepared bags require explicit catalogue binding. No production activation.",
   "administratorGoogleLoginConfirmed": true,
   "scopedSnapshotConfigurationConfirmed": true,
   "firstReviewCommitted": true,
@@ -40,5 +40,14 @@
   "openingRevision": 4,
   "catalogueBlocked": false,
   "catalogueEnabledGoogleVerified": true,
-  "partialAuthenticatedRemoteAcceptance": true
+  "partialAuthenticatedRemoteAcceptance": true,
+  "postUiUpdateAcceptancePending": false,
+  "queueListingGoogleAccepted": true,
+  "processingGooglePartial": false,
+  "completePhaseAccepted": false,
+  "processingGooglePipelineAccepted": true,
+  "processingRevision": 20,
+  "syntheticExpenseRevision": 21,
+  "syntheticAttemptsUsed": 24,
+  "syntheticAttemptsMaximum": 40
 }

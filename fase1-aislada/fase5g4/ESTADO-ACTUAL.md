@@ -217,3 +217,24 @@ Dos controles dirigidos nuevos aprobados en ux55/worker.test.mjs. El HTML de ent
 En los ocho recorridos, el login de tres identidades y la reserva individual tienen evidencia local nueva, y el selector de lote se revisó en el formulario. Para pedidos combinados, cobro/despacho, margen y recuperación se mantiene la evidencia anterior anotada en la matriz. La aceptación física del candidato y del acceso desde pantalla de inicio queda pendiente. Usar la URL del laboratorio con ?engine=5g4 y una cuenta Google individual autorizada. Etiquetar el acceso directo Casa Vieja · Laboratorio. El acceso directo del sistema comercial anterior es otro destino.
 
 Dictamen: GO para demostración local. NO-GO de aceptación remota de 5G.6 y NO-GO comercial hasta verificar respaldo y custodia, catálogo vigente y partida vinculada, censo y cierre de escritores, inventario físico y obligaciones. La base TEST_ONLY es exclusiva del ensayo.
+
+### Implementación comercial final · 04/11
+
+HEAD local inicial 6eadd73 y remoto 6fbb6e0. Lectura estática de renderVentas, toggleComboMode, renderComboRows, renderAds, addAdSpend, renderDashboard, renderClientes e inventario. El candidato local reutiliza el flujo de pedido del diario y reemplaza la selección visible de oferta por botones Gourmet, Monte Alto y Mixto. Los packs salen de la composición del catálogo. Las presentaciones unitario/dúo/trío sin precio aparecen deshabilitadas. El backend conserva la autoridad sobre catálogo, stock y confirmación.
+
+La vista Ads para perfiles gerenciales registra mediante el formulario RECORD_EXPENSE existente y consulta los eventos PUBLICIDAD del mismo diario. Filtros de fecha y campaña, inversión, mensajes y costo por mensaje. El comprobante enlaza ambos módulos. No hay un segundo asiento de gasto ni atribución automática. Plataforma/cuenta/anuncio estructurados, correcciones con historial y atribución siguen pendientes. Prueba local en navegador: S/25, diez mensajes y S/2,50 por mensaje. Capturas venta-local.jpg y ads-local.jpg conservadas localmente.
+
+Candidato Worker SHA256 31b5741550e62a17575640a0cb9170c3c21b5c60b3ca290671774614cfa63a41. Nueve controles dirigidos aprobados en esta continuación, incluidos seis del respaldo. El candidato conserva las respuestas de seguridad comprobadas y los recursos del verificador. Regresión final pendiente. El paquete no se ha desplegado. Manifiesto en comercial-final/manifest-files.json. Una futura actualización de Worker de laboratorio debe publicar ese artefacto y registrar su hash en CV_5G4_WORKER_SHA256. Reversión al Worker c82dd835 y su hash. Costo adicional S/0.
+
+| Recorrido solicitado | Evidencia |
+|---|---|
+| Reabrir sesión y cerrar voluntariamente | Cierre observado en simulador. Sesión renovable y persistencia en dispositivos físicos pendientes |
+| Gourmet unitario | Reserva S/22 comprobada en el candidato anterior. Pendiente con los botones nuevos |
+| Pack Monte Alto | Selector de tripack, tres bolsas y subtotal S/140 observados localmente. Registro pendiente |
+| Mixto | Dúo, dos líneas y subtotal S/85 observados. El fixture del vendedor no ofreció partida Monte Alto elegible. Registro pendiente |
+| Descuento | Pendiente política aprobada y autorización backend por operación |
+| Ads | Gasto y costo por mensaje confirmados por el simulador local |
+| Stock, lotes y margen | Selector local y evidencia previa de saldo, despacho y costo. Filtros gerenciales por producto/lote pendientes |
+| Recuperación desde teléfono | Evidencia 5G.4 de iPhone. Pendiente con el candidato nuevo |
+
+Quedan pendientes pedidos con varias ofertas en una operación, identidad verificada de cliente y recompra, y sesión renovable revocable. El Worker actual exige token Google vigente. La reautenticación sigue siendo el mecanismo de acceso. Antes de configurar un almacén de sesiones se requiere un recurso y paquete aprobados. No se ha aprobado el despliegue de AUTH de respaldo 203e16fe. NO-GO para aceptación remota del candidato y para producción.

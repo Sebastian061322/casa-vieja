@@ -1,0 +1,15 @@
+{
+  "scope": "TEST_ONLY",
+  "base": "6eadd73a48a167883d53524c9f7106973f6224fb",
+  "files": {
+    "ui.mjs": "340c2d5497c2f2797fb1f8eef1f4fd2c5005cf8c5ab7dcba6b4f47dc641cc9ab",
+    "browser.js": "f1a9145d6f8ca097116ff939d6836f75f84602afacd669e2044a91e0134ae299",
+    "build.cjs": "5a2598cac1051dc7344b11dc7049ca3b33e7af44a70a22e170aefa092916acae",
+    "build/worker-bundle.mjs": "31b5741550e62a17575640a0cb9170c3c21b5c60b3ca290671774614cfa63a41",
+    "ui.test.mjs": "ee2939dd8f768da7e231cd88cddfd92dcfd1a2bb6eb579446b38f4a48d5f84f6",
+    "preview.mjs": "abf006d9028621d306b4e1b9cc138e5b217d449623a74bede83c7eabdd4212a5"
+  },
+  "deployed": false,
+  "rollbackWorker": "c82dd835",
+  "rollbackWorkerSha256": "766f8682deacc69de92a053462be2b10532aafa5b9ce6deda0c2af081697eecf"
+}

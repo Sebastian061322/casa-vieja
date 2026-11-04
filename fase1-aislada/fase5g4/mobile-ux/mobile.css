@@ -1,0 +1,16 @@
+.cv-picker-step60 { margin-block: .75rem; min-width: 0; }
+.cv-picker-step60 > div { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); gap: .5rem; margin-top: .3rem; }
+.cv-picker-step60 button { min-width: 0; min-height: 44px; white-space: normal; overflow-wrap: anywhere; }
+.cv-picker-step60 button[aria-pressed="true"] { border-color: #29583f; background: #e3ecdf; color: #214a35; }
+#catalogue54-form fieldset, #catalogue54-form select, #catalogue54-form input { box-sizing: border-box; min-width: 0; max-width: 100%; }
+@media (max-width: 600px) {
+  #home-filter.home-filters { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .5rem; align-items: end; }
+  #home-filter .period-choice { grid-column: span 2; }
+  #home-filter label, #home-filter > button:not(.period-choice) { grid-column: span 3; }
+  #home-filter > * { min-width: 0; max-width: 100%; }
+  #home-filter input[type="date"] { display: block; width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; font-size: 16px; }
+  #home-filter button { min-height: 44px; padding-inline: .35rem; font-size: .85rem; white-space: normal; }
+  main, .card, .form-grid { min-width: 0; }
+  .mobile-tabs { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  #main-content { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
+}

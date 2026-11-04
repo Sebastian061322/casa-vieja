@@ -1,0 +1,9 @@
+{
+  "environment": "TEST_ONLY",
+  "buildId": "mobile-ux-5e417ee1",
+  "baseVersion": "5758768b",
+  "baseSha256": "31b5741550e62a17575640a0cb9170c3c21b5c60b3ca290671774614cfa63a41",
+  "workerSha256": "7de8966c2eaf12a3695761d211f9320aa34a93c704fe6d927074fc441364406b",
+  "backendVersion": 7,
+  "deployed": false
+}

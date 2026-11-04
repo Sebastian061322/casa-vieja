@@ -238,3 +238,19 @@ Candidato Worker SHA256 31b5741550e62a17575640a0cb9170c3c21b5c60b3ca290671774614
 | Recuperación desde teléfono | Evidencia 5G.4 de iPhone. Pendiente con el candidato nuevo |
 
 Quedan pendientes pedidos con varias ofertas en una operación, identidad verificada de cliente y recompra, y sesión renovable revocable. El Worker actual exige token Google vigente. La reautenticación sigue siendo el mecanismo de acceso. Antes de configurar un almacén de sesiones se requiere un recurso y paquete aprobados. No se ha aprobado el despliegue de AUTH de respaldo 203e16fe. NO-GO para aceptación remota del candidato y para producción.
+
+### Actualización autorizada del laboratorio · 04/11
+
+GitHub apunta a 31105a46cc4350f12a04c739e4162150df48a511 en dev/fase1-estabilizacion. Los nueve controles dirigidos pasaron para los artefactos aprobados. Tras la confirmación del propietario sobre las colas, la implementación existente de CasaVieja_AUTH_TEST_ONLY_5D se actualizó de versión 6 a 7. Huella de la versión 7 releída en Historial: 203e16feb5dffb5360fa2eee96d07d931efd8480ab4416a67dd30be655a306d5. CV_5G4_BACKEND_SHA256 guardada y releída con coincidencia exacta. Aceptación del respaldo pendiente de generar y verificar el archivo cifrado. Cloudflare solicita autenticador al propietario antes de comprobar la base y desplegar el Worker candidato. Interfaz nueva aún pendiente de publicación y aceptación física.
+
+### Worker autorizado publicado · 04/11
+
+Cloudflare verificó c82dd835 como base y mostró 5758768b Ready con 100% del tráfico del laboratorio después de Deploy. Fuente anterior cotejada 766f8682deacc69de92a053462be2b10532aafa5b9ce6deda0c2af081697eecf; candidato y fuente recargada exactos 31b5741550e62a17575640a0cb9170c3c21b5c60b3ca290671774614cfa63a41. CV_5G4_WORKER_SHA256 guardada y releída. Seis recursos públicos coinciden byte a byte y se sirven no-store; la API sin sesión respondió 401 IDENTITY_REQUIRED. GitHub 31105a46cc4350f12a04c739e4162150df48a511. Apps Script de laboratorio versión 7, SHA 203e16feb5dffb5360fa2eee96d07d931efd8480ab4416a67dd30be655a306d5. Acceso autenticado y aceptación física pendientes de respuesta del propietario; respaldo real pendiente de generar y verificar. No se registraron operaciones comerciales durante el despliegue.
+
+### Corrección móvil · 04/11
+
+Las capturas del propietario confirman que el Worker 5758768b abrió en el iPhone con las tres líneas visibles. Se reproducen los controles de fecha apretados y el listado largo de Mixto. Candidato local mobile-ux-5e417ee1, SHA256 7de8966c2eaf12a3695761d211f9320aa34a93c704fe6d927074fc441364406b. Cambia la cuadrícula móvil de filtros, safe area y selección progresiva por línea, presentación y gramaje. «Cliente» se muestra con aviso TEST_ONLY separado. La vista Versión de Casa Vieja identifica el build. Se mantienen Ads, el contrato de pedidos y el verificador del respaldo.
+
+Doce controles dirigidos aprobados. En navegador local los controles y campos de fecha quedaron dentro del panel a 320, 375, 390 y 430 px. Se seleccionaron tres bolsas Gourmet 500 g en grano en una partida ficticia elegible por S/99. Monte Alto dúo 250 g mostró Pendiente de configurar sin acción de reserva. Mixto tripack 500 g mostró solo las dos composiciones de ese tamaño. No hubo registro remoto de pedidos. Capturas locales en mobile-ux. Pendientes: aceptación física de este candidato, sesión renovable revocable, cliente existente verificado, precios y delivery editables autorizados y respaldo real. Los recorridos de esas funciones quedan sin aprobar.
+
+Paquete remoto propuesto: actualizar exclusivamente Worker casa-vieja-lab-auth desde 5758768b al artefacto indicado y registrar su SHA en CV_5G4_WORKER_SHA256. Reversión a 5758768b y hash 31b57415…63a41. Costo adicional S/0. Requiere aprobación exacta y contraste de colas antes de publicar. No se ha actualizado el laboratorio con este candidato. Apps Script de laboratorio sigue en versión 7.

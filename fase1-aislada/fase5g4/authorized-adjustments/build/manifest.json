@@ -1,0 +1,8 @@
+{
+  "environment": "TEST_ONLY",
+  "baseBackend": 7,
+  "baseWorker": "52a8512a",
+  "backendSha256": "60976701d0d3c34a019b48a8b54ee850ee0b56f039c6acf035c66e617cae3976",
+  "workerSha256": "22036ac43f91a1653804cc3e2c95629adc0242dac6f859cddfe8dd7b0ce0565f",
+  "deployed": false
+}

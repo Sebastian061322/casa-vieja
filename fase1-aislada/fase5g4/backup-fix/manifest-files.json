@@ -1,0 +1,10 @@
+{
+  "build.cjs": "6dcff8e413ea19c8b126037d9fc60d05e884b7dede0b3204a36ce4d90d1fb8f8",
+  "build/Candidate.gs": "203e16feb5dffb5360fa2eee96d07d931efd8480ab4416a67dd30be655a306d5",
+  "build/manifest.json": "904bfcfa8eb9fc263ad2c054a43ee77530fbab5b1679f264d08311378d53b8cf",
+  "tests/harness.mjs": "94882592f5c45cd3a5851bace3bd79002786fa782eb0c6c8a9d4373e1db95f81",
+  "tests/backup.test.mjs": "6c88315b6486e3931fcd99554fd92984a3b2120f36b39299ac5fa14be91df939",
+  "tests/regression.json": "04471dd3539a6f368096581d92f3d54f9107e3c5bb1ced77b48c9ec1da9de123",
+  "run-regression.mjs": "37a597a8bf047d6d09cc08379deb9af41b0cc1c342228f3c7639362a5c07fbe0",
+  "AUTORIZACION-PAQUETE.md": "444952524acba93fedaaec9eddcd2ccf9901676163e9a13f12bbbdf4b38fb39a"
+}

@@ -1,0 +1,20 @@
+{
+  "executedAtUTC": "2026-10-31T11:34:07.303Z",
+  "scope": "Historical regression plus scoped backup UTF8 adapter, integrity, authorization and restoration; not Google or physical acceptance",
+  "environment": "LOCAL_SYNTHETIC",
+  "tests": 651,
+  "passed": 651,
+  "failed": 0,
+  "files": 83,
+  "exitCode": 0,
+  "privateFilesExcluded": true,
+  "originalSourcesUnchanged": true,
+  "outboundFetchHttpLimitedToLoopback": true,
+  "actualGoogle": false,
+  "physicalDevices": false,
+  "remoteChanged": false,
+  "hashes": {
+    "build/Candidate.gs": "203e16feb5dffb5360fa2eee96d07d931efd8480ab4416a67dd30be655a306d5",
+    "build.cjs": "6dcff8e413ea19c8b126037d9fc60d05e884b7dede0b3204a36ce4d90d1fb8f8"
+  }
+}

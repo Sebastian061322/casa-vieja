@@ -1,0 +1,14 @@
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),vm=require('node:vm');
+const root=__dirname,sha=x=>crypto.createHash('sha256').update(x).digest('hex');
+const base=fs.readFileSync(path.join(root,'../catalogue-fix/build/Candidate.gs'),'utf8');
+if(sha(base)!=='bd4e253c9092654511935b441ff9d513b849e12d5017daf5bf62e9ca86f74f56')throw Error('BASE_CHANGED');
+const before="const CV54Backup=(()=>{const module={exports:{}};const require=n=>{if(n==='node:crypto')return CV52Crypto;";
+if(base.split(before).length!==2)throw Error('PATCH_BOUNDARY');
+const adapter="const CV54BackupUtf8Crypto_={createHash:()=>{let input='';return {update(x){input+=x;return this},digest(){return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,input,Utilities.Charset.UTF_8).map(x=>('0'+((x+256)%256).toString(16)).slice(-2)).join('')}}}};\n";
+const code=base.replace(before,adapter+before.replace('return CV52Crypto;','return CV54BackupUtf8Crypto_;'));
+const ctx=vm.createContext({PropertiesService:{getScriptProperties:()=>({getProperty:()=>null})}});vm.runInContext(code,ctx);
+const exposed=Object.keys(ctx).filter(k=>typeof ctx[k]==='function'&&!k.endsWith('_')).sort();
+if(JSON.stringify(exposed)!==JSON.stringify(['doGet','doPost','zeroRequest']))throw Error('RPC_EXPOSURE');
+fs.mkdirSync(path.join(root,'build'),{recursive:true});fs.writeFileSync(path.join(root,'build/Candidate.gs'),code);
+const manifest={environment:'TEST_ONLY',status:'LOCAL_NOT_APPROVED_NOT_DEPLOYED',baseBackendSha256:sha(base),backendSha256:sha(code),workerChanged:false,journalHashesChanged:false,backupSchemaChanged:false,remoteChanged:false,exposed};
+fs.writeFileSync(path.join(root,'build/manifest.json'),JSON.stringify(manifest,null,2)+'\n');console.log(JSON.stringify(manifest));

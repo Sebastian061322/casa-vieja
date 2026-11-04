@@ -1,0 +1,15 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "LOCAL_NOT_APPROVED_NOT_DEPLOYED",
+  "baseBackendSha256": "bd4e253c9092654511935b441ff9d513b849e12d5017daf5bf62e9ca86f74f56",
+  "backendSha256": "203e16feb5dffb5360fa2eee96d07d931efd8480ab4416a67dd30be655a306d5",
+  "workerChanged": false,
+  "journalHashesChanged": false,
+  "backupSchemaChanged": false,
+  "remoteChanged": false,
+  "exposed": [
+    "doGet",
+    "doPost",
+    "zeroRequest"
+  ]
+}

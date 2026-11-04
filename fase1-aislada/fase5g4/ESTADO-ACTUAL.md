@@ -172,3 +172,48 @@ RECORD_EXPENSE revisión21:100c PUBLICIDAD ficticia pendiente de pago, cero movi
 Pendiente de integración: las bolsas nuevas existen en inventario, pero ventas filtra las partidas mediante resourceLines54, derivadas de las asignaciones explícitas de catálogo. El ensayo aprobado solo asigna cuatro partidas de apertura. No se autoriza vender una partida nueva por deducir su nombre, ni confundir Especialidad con Monte Alto. Antes de declarar el flujo completo recepción→venta listo debe resolverse la asignación comercial prospectiva, con evidencia y aprobación del paquete remoto correspondiente.
 
 Se dejó Respaldo sintético abierto y se solicitó al titular generar/guardar archivo cifrado y hash en el teléfono, conservando clave separada y privada. No registrar custodia ni recuperación como aprobadas hasta comprobarlas. No hubo nuevos despliegues, cambios de permisos o producción en esta reanudación.
+
+
+### Respaldo bloqueado observado — 31/10
+
+Al ayudar con las descargas se observa BACKUP_HASH_MISMATCH en el laboratorio; no hay enlaces de archivo válido. Custodia y recuperación física siguen sin aprobar. Candidato local backup-fix: adaptador UTF8 exclusivo del empaquetador, conservando huellas históricas y verificación del navegador. La causa remota no está aislada; un modelo de distinta codificación reproduce el rechazo, pero no prueba el charset real de Google. SHA candidato203e16feb5dffb5360fa2eee96d07d931efd8480ab4416a67dd30be655a306d5. No publicado/desplegado: necesita autorización específica EtapaE, detallada en backup-fix/AUTORIZACION-PAQUETE.md. Worker y backend activos permanecen c82dd835/versión6. No intentar forzar ni omitir integridad, ni declarar descargado un respaldo inexistente.
+
+### Fase 5G.5 · 03/11
+
+HEAD inicial de desarrollo contrastado en GitHub: 10b4cd6ec37fa84f3480c3530c7b969879b510d6. Candidato de respaldo publicado en desarrollo en 6fbb6e0985a4ee878e1a19c33849d43c192b4348. Manifiesto cotejado y seis pruebas dirigidas repetidas con éxito. Regresión previa del mismo paquete: 651/651. Backend activo al último contraste: versión 6, bd4e253c. Worker activo c82dd835, 766f8682. La implementación de AUTH está pendiente de aprobación específica y prueba en Google. Descarga, descifrado del archivo real de laboratorio y custodia física pendientes.
+
+| Función antigua (lectura estática de main/index.html) | Función 5G.4 | Problema | Mejora 5G.5 |
+|---|---|---|---|
+| Dashboard, Ventas, Egresos, Entregas, Clientes, Inventario | Menú por perfil, pedidos y operaciones | Falta confirmar recorrido completo en los tres perfiles de la misma versión | Conservar navegación y permisos existentes |
+| Venta individual y combo con molienda y lote | Catálogo fijo, cantidad y asignación por bolsa | El formulario empezaba por el pack y pedía la zona antes de seleccionar partidas | Cliente primero, zona después de las partidas y subtotal destacado |
+| Selector de lotes en combos | Etiqueta con molienda, lote y saldo | Seleccionar la misma partida varias veces podía superar el saldo visible antes de enviar | Advertencia y botón bloqueado por demanda acumulada |
+| Clientes agrupados por teléfono e historial | Nombre en pedido y vista Clientes | Recompra y selección por identidad pendientes | No inferir identidad por nombre |
+| Inventario y preparación por lote | Inventario por etapa y diario por lote | La partida nueva preparada requiere asignación de catálogo y vigencia de ensayo | Validación local de la asignación Gourmet molido 500 g y del precio sintético S/40. Pendiente configuración exacta aprobada |
+| Entregas, historial, egresos y dashboard | Cobro, despacho y reportes derivados del diario | Faltan filtros gerenciales por producto/lote y revisión móvil conjunta | Conservar evidencia por lote y cobro separado de ingresos |
+
+Candidato local de interfaz: ux55/build/worker-bundle.mjs, SHA256 344d3b2cd3ac57e66313df4ef6d3c78eb00ab9abf10c345bcbb8580d23c47d9c. Las dos variantes del formulario compilan y pasan comprobaciones dirigidas de orden y saldo agregado. No es la versión publicada. Falta recorrido en navegador y regresión de cierre antes de congelar una RC.
+
+| Recorrido | Evidencia reutilizada de 5G.4 | Pendiente de 5G.5 |
+|---|---|---|
+| 1. Inicio de sesión | Roles verificados en pruebas técnicas, acceso de administrador en Safari | Menú y permisos de los tres perfiles en el candidato |
+| 2. Pedido simple | Reserva Google por S/22 | Confirmar nueva interfaz |
+| 3. Pedido combinado | Tripack recuperado y Dúo con competencia por última bolsa, PC/iPhone | Recompra y envío según política en el candidato |
+| 4. Lotes activos | Procesamiento y disponibilidad en Google | Selección comercial de partida nueva |
+| 5. Cobro y despacho | Dos cobros, S/10 y S/12, y despacho único en Google | Confirmar estados en versión candidata |
+| 6. Rentabilidad | Ingreso S/22, costo S/5 y margen S/17 contrastados | Filtros y recorrido en versión candidata |
+| 7. Sin conexión | Reinicio físico de Safari iPhone, mismo recibo | Confirmar compatibilidad del candidato |
+| 8. Móvil | Pedido y recuperación desde iPhone | Recorrido completo por ventas, lotes y pedidos |
+
+Estado: laboratorio operativo para las funciones verificadas en 5G.4. NO-GO técnico para congelar RC por respaldo remoto, catálogo y recorridos pendientes. NO-GO comercial por censo, custodia/recuperación, catálogo/políticas, conteo y obligaciones, y cierre autorizado de escritores. El lote previsto de 300 kg requiere pesos, conteo y documentos reales.
+
+### Fase 5G.6 · validación del candidato móvil
+
+HEAD remoto y local al inicio coinciden en 6fbb6e0985a4ee878e1a19c33849d43c192b4348. Backend candidato de respaldo 203e16feb5dffb5360fa2eee96d07d931efd8480ab4416a67dd30be655a306d5 y Worker UX 344d3b2cd3ac57e66313df4ef6d3c78eb00ab9abf10c345bcbb8580d23c47d9c cotejados localmente. Actualizaciones remotas pendientes de aprobación. El último estado verificado de despliegue sigue siendo AUTH6 y Worker c82dd835. Las colas en todos los dispositivos y la implementación de AUTH deben contrastarse antes de aplicar el paquete.
+
+Simulador en navegador con datos ficticios, Worker compilado y backend VM: cliente primero, lote y molienda visibles, subtotal S/22, botón bloqueado con cinco bolsas de una partida con cuatro y reserva confirmada para una bolsa. Acceso con las tres identidades ficticias, menú básico del vendedor y menú ampliado del administrador observados. A 390 px el formulario mide 328 px. El pequeño desborde medido corresponde al control de desconexión del simulador. No es prueba de Google, de iPhone/Android físicos ni del acceso instalado. El selector ficticio del simulador requirió recarga al cambiar de sesión.
+
+Dos controles dirigidos nuevos aprobados en ux55/worker.test.mjs. El HTML de entrada y el verificador de respaldo coinciden con el Worker base. El manifiesto del paquete está en ux55/manifest-files.json. En una actualización futura del Worker se debe cotejar el código activo, publicar exactamente el candidato y actualizar CV_5G4_WORKER_SHA256 para identificar el respaldo. Reversión a c82dd835 y a su hash anterior. Costo adicional S/0.
+
+En los ocho recorridos, el login de tres identidades y la reserva individual tienen evidencia local nueva, y el selector de lote se revisó en el formulario. Para pedidos combinados, cobro/despacho, margen y recuperación se mantiene la evidencia anterior anotada en la matriz. La aceptación física del candidato y del acceso desde pantalla de inicio queda pendiente. Usar la URL del laboratorio con ?engine=5g4 y una cuenta Google individual autorizada. Etiquetar el acceso directo Casa Vieja · Laboratorio. El acceso directo del sistema comercial anterior es otro destino.
+
+Dictamen: GO para demostración local. NO-GO de aceptación remota de 5G.6 y NO-GO comercial hasta verificar respaldo y custodia, catálogo vigente y partida vinculada, censo y cierre de escritores, inventario físico y obligaciones. La base TEST_ONLY es exclusiva del ensayo.

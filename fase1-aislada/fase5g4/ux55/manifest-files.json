@@ -1,0 +1,13 @@
+{
+  "environment": "TEST_ONLY",
+  "status": "LOCAL_VERIFIED_PENDING_REMOTE_APPROVAL",
+  "baseWorkerVersion": "c82dd835",
+  "baseWorkerSha256": "766f8682deacc69de92a053462be2b10532aafa5b9ce6deda0c2af081697eecf",
+  "files": {
+    "build.cjs": "c971eb57cc9f5e8a3c94e74d58e041cecbbf263a1c9e59d1743354dfa0f1d2c4",
+    "build/worker-bundle.mjs": "344d3b2cd3ac57e66313df4ef6d3c78eb00ab9abf10c345bcbb8580d23c47d9c",
+    "worker.test.mjs": "359ba845ff015488be04b3d86a6f4d1bc7495e874eccc32d5145fdc1ee6d95ea",
+    "preview.mjs": "abf006d9028621d306b4e1b9cc138e5b217d449623a74bede83c7eabdd4212a5"
+  },
+  "remoteChanged": false
+}

@@ -218,13 +218,13 @@ entry=patch(entry,"$('logout5d').onclick=()=>{loginFlow.invalidate();session.log
   catch{noticeLogout63('No se confirmó el cierre. Conéctate y vuelve a intentarlo.');button.disabled=false;}
  };`);
 entry=patch(entry,"function login(response){return loginFlow.run(response.credential);}",read('browser.js'));
-entry=patch(entry,"  await new Promise((resolve,reject)=>{const script=document.createElement('script');", "  try{await sessionRequest63('bootstrap');await loginFlow.run(COOKIE_MODE63);if(session.current())return;}catch{}\n  await new Promise((resolve,reject)=>{const script=document.createElement('script');");
-entry=patch(entry,"ajustes-62 · Backend requiere paquete de ajustes","cierre-66.1 · Backend de laboratorio");
+entry=patch(entry,"  await new Promise((resolve,reject)=>{const script=document.createElement('script');", "  if(await loginFlow.run(COOKIE_MODE63))return;\n  await new Promise((resolve,reject)=>{const script=document.createElement('script');");
+entry=patch(entry,"ajustes-62 · Backend requiere paquete de ajustes","cierre-66.2 · Backend de laboratorio");
 const checked=spawnSync(process.execPath,['--input-type=module','--check'],{input:entry,encoding:'utf8'});
 if(checked.status!==0)throw Error(checked.stderr);
 assets['/entry.mjs']=entry;
 // /approved-app.js contains the mounted catalogue UI and its build label.
-assets['/approved-app.js']=patch(assets['/approved-app.js'],"ajustes-62 · Backend requiere paquete de ajustes","cierre-66.1 · Backend de laboratorio");
+assets['/approved-app.js']=patch(assets['/approved-app.js'],"ajustes-62 · Backend requiere paquete de ajustes","cierre-66.2 · Backend de laboratorio");
 assets['/backup54.mjs']=read('../backup54.mjs');
 const backupStart='const CV54Phone=(()=>{',backupEnd='return {encryptArchive54};})();';
 const embeddedBackup=assets['/entry.mjs'].match(/const CV54Phone=\(\(\)=>\{[\s\S]*?return \{encryptArchive54\};\}\)\(\);/);

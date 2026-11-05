@@ -153,7 +153,7 @@ class Engine extends Inventory{
    for(const l of c.items){const offer=s.commerce.offers[l.offerId],r=s.resources[l.resourceId];check(offer&&offer.active&&offer.validFrom<=day(now)&&offer.validUntil>=day(now),'PRICE_NOT_CURRENT');check(l.offerVersion===offer.version,'OFFER_VERSION_CONFLICT');check(r&&r.stage==='PACKAGED'&&r.family===offer.family&&r.grind===offer.grind&&r.grams===offer.grams,'OFFER_RESOURCE_MISMATCH');num(l.quantity,1);const qty=num(l.quantity*offer.bags,1),lineGross=num(l.quantity*offer.priceCents);gross=num(gross+lineGross);details.push({offer:clone(offer),resourceId:r.id,presentations:l.quantity,qty,grossCents:lineGross});if(!aggregate[r.id])aggregate[r.id]={resourceId:r.id,qty:0,grossCents:0,netCents:0};aggregate[r.id].qty=num(aggregate[r.id].qty+qty);aggregate[r.id].grossCents=num(aggregate[r.id].grossCents+lineGross);}
    const discount=num(c.discountCents||0);check(discount<=gross,'INVALID_DISCOUNT');if(discount){const a=s.commerce.authorizations[c.authorizationId];check(a&&!a.usedBy&&a.saleId===c.saleId&&a.maxCents>=discount&&Date.parse(a.expiresAt)>=Date.parse(now),'DISCOUNT_NOT_AUTHORIZED');event('DISCOUNT_USED',{authorizationId:a.id,amountCents:discount});}
    let cumulative=0,allocated=0;for(const l of Object.values(aggregate)){cumulative+=l.grossCents;const next=gross?share(discount,cumulative,gross):0;l.netCents=l.grossCents-(next-allocated);allocated=next;}
-   const metadata=c.customer||{};check(Object.keys(metadata).every(k=>['name','phone','zone','note'].includes(k)),'INVALID_CUSTOMER');for(const v of Object.values(metadata))check(typeof v==='string'&&v.length<=500,'INVALID_CUSTOMER');
+   const metadata=c.customer||{};check(Object.keys(metadata).every(k=>['name','phone','zone','note','address','previousOrder'].includes(k)),'INVALID_CUSTOMER');for(const v of Object.values(metadata))check(typeof v==='string'&&v.length<=500,'INVALID_CUSTOMER');
    p=super.plan(s,{...c,totalCents:gross-discount,lines:Object.values(aggregate).map(l=>({resourceId:l.resourceId,qty:l.qty})),metadata:{customer:metadata.name||'',phone:metadata.phone||'',zone:metadata.zone||'',note:metadata.note||'',date:day(c.date)}});
    p.sale.commercial={version:4,channel:text(c.channel||'Otro',80),grossCents:gross,discountCents:discount,authorizationId:c.authorizationId||null,items:details,allocations:Object.values(aggregate),createdAt:now};event('ORDER_REGISTERED',{grossCents:gross,discountCents:discount,amountCents:p.sale.totalCents+p.sale.deliveryChargedCents});
   }else if(['RECORD_PAYMENT','RECORD_REFUND'].includes(c.type)){
@@ -189,7 +189,7 @@ class Engine extends Inventory{
   const events=s.commerce.events.filter(e=>day(e.date)>=from&&day(e.date)<=to),sum=(k,f='amountCents')=>events.filter(e=>e.kind===k).reduce((n,e)=>n+(e[f]||0),0);
   const revenue=sum('DISPATCH_RECOGNIZED')-sum('RETURN_CREDIT'),cogs=sum('DISPATCH_RECOGNIZED','costCents')-sum('RETURN_CREDIT','costCents'),distribution=sum('DISPATCH_RECOGNIZED','distributionCents'),opex=sum('OPERATING_EXPENSE');
   const orders=events.filter(e=>e.kind==='ORDER_REGISTERED'),sales=Object.values(s.sales).filter(x=>x.commercial);const customers={};
-  for(const sale of sales){const raw=sale.metadata.phone||'',phone=raw.replace(/\D/g,'').replace(/^51(?=\d{9}$)/,'');const key=phone||sale.id;if(!customers[key])customers[key]={id:key,name:sale.metadata.customer||'Sin nombre',phone,orders:[],purchaseCount:0,totalCents:0};const customer=customers[key];customer.orders.push(sale.id);if(['DISPATCHED','PART_RETURNED'].includes(sale.status))customer.purchaseCount++;if(sale.status!=='CANCELLED')customer.totalCents+=this.financial(s,sale.id).dueCents;}
+  for(const sale of sales){const raw=sale.metadata.phone||'',phone=raw.replace(/\D/g,'').replace(/^51(?=\d{9}$)/,'');const key=sale.commercial.customerId64||sale.id;if(!customers[key])customers[key]={id:key,name:sale.metadata.customer||'Sin nombre',phone,orders:[],purchaseCount:0,totalCents:0};const customer=customers[key];customer.orders.push(sale.id);if(['DISPATCHED','PART_RETURNED'].includes(sale.status))customer.purchaseCount++;if(sale.status!=='CANCELLED')customer.totalCents+=this.financial(s,sale.id).dueCents;}
   const top={};for(const e of events.filter(e=>e.kind==='DISPATCH_RECOGNIZED'))for(const l of s.sales[e.saleId].lines){const key=l.family+' '+l.grind+' '+l.grams+'g';top[key]=(top[key]||0)+l.qty;}
   return {from,to,registeredOrders:orders.length,registeredCents:orders.reduce((n,e)=>n+e.amountCents,0),dispatchedOrders:events.filter(e=>e.kind==='DISPATCH_RECOGNIZED').length,deliveredOrders:events.filter(e=>e.kind==='DELIVERY_RECORDED').length,revenueCents:revenue,collectionsCents:sum('PAYMENT'),refundsCents:sum('REFUND'),netCollectionsCents:sum('PAYMENT')-sum('REFUND'),cogsCents:cogs,distributionCents:distribution,operatingExpenseCents:opex,grossMarginCents:revenue-cogs,estimatedProfitCents:revenue-cogs-distribution-opex-sum('STOCK_LOSS'),stockLossCents:sum('STOCK_LOSS'),paidOperatingExpensesCents:sum('EXPENSE_PAYMENT')+events.filter(e=>e.kind==='OPERATING_EXPENSE'&&e.paid).reduce((n,e)=>n+e.amountCents,0),purchasePaymentsCents:sum('PURCHASE_PAYMENT'),outstandingCents:sales.reduce((n,sale)=>n+this.financial(s,sale.id).outstandingCents,0),refundableCents:sales.reduce((n,sale)=>n+this.financial(s,sale.id).refundableCents,0),topProducts:top,customers:Object.values(customers)};
  }
@@ -758,7 +758,7 @@ CVZeroAccess.Engine.prototype.plan=function(state,command){
   this.policy={...this.policy,shippingByZone:{...this.policy.shippingByZone,[zone]:{...tariff,chargedCents:adjustment.appliedDeliveryCents}}};
   adjustment.approvedBy=approved.reviewer;adjustment.approvalId=approved.id;
  }
- try{plan=CV53PlanBeforeCatalogue.call(this,prepared.state,prepared.command);}finally{this.policy=previousPolicy;}plan.catalogueRef=prepared.catalogueRef;if(adjustment){plan.sale.commercial.adjustment=adjustment;plan.audit.commercialAdjustment=adjustment;plan.audit.adjustmentMarginWarning=plan.sale.profitCents<0?'NEGATIVE_MARGIN':null;}plan.sale.commercial.catalogueRef=prepared.catalogueRef;return plan;}
+ try{plan=CV53PlanBeforeCatalogue.call(this,prepared.state,prepared.command);cvLinkCustomer64_(this,state,command,plan);}finally{this.policy=previousPolicy;}plan.catalogueRef=prepared.catalogueRef;if(adjustment){plan.sale.commercial.adjustment=adjustment;plan.audit.commercialAdjustment=adjustment;plan.audit.adjustmentMarginWarning=plan.sale.profitCents<0?'NEGATIVE_MARGIN':null;}plan.sale.commercial.catalogueRef=prepared.catalogueRef;return plan;}
  }
  return CV53PlanBeforeCatalogue.call(this,state,command);
 };
@@ -965,6 +965,24 @@ function cvAuthorizedAdjustment62_(engine, command, prepared, approved) {
   referenceDeliveryCents:tariff.chargedCents,appliedDeliveryCents:delivery,
   realDeliveryCostCents:tariff.costCents
  };
+}
+
+function cvLinkCustomer64_(engine,state,command,plan){
+ const customer=command.customer||{};
+ let id=plan.sale.id;
+ if(Object.hasOwn(customer,'previousOrder')){
+  const previous=Object.hasOwn(state.sales,customer.previousOrder)?state.sales[customer.previousOrder]:null;
+  if(!previous?.commercial||previous.status==='CANCELLED')throw Error('CUSTOMER_LINK_UNAVAILABLE');
+  if(engine.actor.role==='seller'){
+   const own=engine.records().some(row=>row.kind==='PREPARED'&&row.id===previous.originOperationId&&row.plan.audit?.subject===engine.actor.subject);
+   if(!own)throw Error('CUSTOMER_LINK_UNAVAILABLE');
+  }
+  if(!customer.name||!customer.phone||customer.name!==previous.metadata.customer||customer.phone!==previous.metadata.phone)
+   throw Error('CUSTOMER_CONTACT_MISMATCH');
+  id=previous.commercial.customerId64||previous.id;
+ }
+ plan.sale.commercial.customerId64=id;
+ plan.sale.metadata.address64=customer.address||'';
 }
 
 function cvApprovalBinding63_(command){

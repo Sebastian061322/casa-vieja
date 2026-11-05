@@ -38,6 +38,12 @@ backend=patch(backend,'const adjustment=cvAuthorizedAdjustment62_(this,command,p
   adjustment.approvedBy=approved.reviewer;adjustment.approvalId=approved.id;
  }
  try{plan=CV53PlanBeforeCatalogue.call(this,prepared.state,prepared.command);}finally{this.policy=previousPolicy;}`);
+backend=patch(backend,"['name','phone','zone','note'].includes(k)","['name','phone','zone','note','address','previousOrder'].includes(k)");
+backend=patch(backend,'try{plan=CV53PlanBeforeCatalogue.call(this,prepared.state,prepared.command);}finally{this.policy=previousPolicy;}',
+ 'try{plan=CV53PlanBeforeCatalogue.call(this,prepared.state,prepared.command);cvLinkCustomer64_(this,state,command,plan);}finally{this.policy=previousPolicy;}');
+backend=patch(backend,'const key=phone||sale.id;',
+ 'const key=sale.commercial.customerId64||sale.id;');
+backend+='\n'+read('customer.gs');
 backend+='\n'+read('approval.gs');
 backend+='\n'+read('cart.gs');
 backend+='\n'+read('../session-core/authority.mjs').replace('export function sessionAuthority','function sessionAuthority63_')+'\n'+read('backend.gs');
@@ -142,7 +148,33 @@ function installApproval63(s){
  if(b.hasAttribute('data-new-catalogue54'))`);
  return s;
 }
-for(const key of ['/entry.mjs','/approved-app.js'])assets[key]=installApproval63(installCart63(assets[key]));
+function installCustomer64(s){
+ s=patch(s,' function cartLine63(',read('report-browser.js')+'\n function cartLine63(');
+ s=patch(s,'function renderCustomers(){',` function customerHistory64(customer){
+  const ids=new Set(customer.orders);
+  const last=(snapshot.commerce?.events||[]).filter(e=>e.kind==='DISPATCH_RECOGNIZED'&&ids.has(e.saleId))
+   .reduce((latest,e)=>e.date>latest?e.date:latest,'');
+  const pending=customer.orders.filter(id=>snapshot.sales[id]?.status==='RESERVED').length;
+  return '<p>Última compra despachada '+esc(last.slice(0,10)||'Sin despacho')+' · '+pending+' pedido(s) reservado(s)</p>';
+ }
+function renderCustomers(){`);
+ s=patch(s,'<p>Importe neto de pedidos:','${customerHistory64(c)}<p>Importe neto de pedidos:');
+ s=patch(s,'<p>Costo por venta y ROAS requieren atribución verificada.</p>',
+  '<p>Costo por venta atribuible: N/D · ROAS atribuible: N/D. Requieren atribución verificada.</p>');
+ s=patch(s,"nav54('approvals63','Aprobaciones comerciales');","nav54('approvals63','Aprobaciones comerciales');nav54('order-report64','Reporte por producto y lote');");
+ s=patch(s,"if(view==='approvals63'){renderApprovalReview63();return;}","if(view==='order-report64'){renderOrderReport64();return;}if(view==='approvals63'){renderApprovalReview63();return;}");
+ s=patch(s,' function cartLine63(form,offer) {',read('customer-browser.js')+'\n function cartLine63(form,offer) {');
+ s=patch(s,"${label('customer','Cliente','text',draft.customer,'required')}","${customerFields64(draft)}");
+ s=patch(s,"const form=$('catalogue54-form');if(catalogueDraft54){catalogueDraft54.customer=form.elements.customer.value;catalogueDraft54.zone=form.elements.zone.value;",
+  "const form=$('catalogue54-form');if(catalogueDraft54){readCustomer64(form,catalogueDraft54);");
+ s=s.replaceAll('d.customer=form.elements.customer.value;d.zone=form.elements.zone.value;','readCustomer64(form,d);');
+ s=patch(s,' const adjustment62=readAdjustment62(form);',' bindCustomer64(command62,d);const adjustment62=readAdjustment62(form);');
+ s=patch(s,'const {type,offerId,...proposal}=order;','const {type,offerId,...proposal}=bindCustomer64(order,d);');
+ s=patch(s,'el.value=draft.selected[i];if(cartRows63(draft).length)el.required=false;});',
+  "el.value=draft.selected[i];if(cartRows63(draft).length)el.required=false;});$('catalogue54-form').elements.previousOrder.value=draft.previousOrder||'';");
+ return s;
+}
+for(const key of ['/entry.mjs','/approved-app.js'])assets[key]=installCustomer64(installApproval63(installCart63(assets[key])));
 let entry=assets['/entry.mjs'];
 entry=patch(entry,"method:'POST',credentials:'omit',cache:'no-store',signal:controller.signal,", "method:'POST',credentials:'same-origin',cache:'no-store',signal:controller.signal,");
 entry=patch(entry,"authorization:'Bearer '+token,...(fault?", "...(token===COOKIE_MODE63?{}:{authorization:'Bearer '+token}),...(fault?");
@@ -154,12 +186,12 @@ entry=patch(entry,"$('logout5d').onclick=()=>{loginFlow.invalidate();session.log
  };`);
 entry=patch(entry,"function login(response){return loginFlow.run(response.credential);}",read('browser.js'));
 entry=patch(entry,"  await new Promise((resolve,reject)=>{const script=document.createElement('script');", "  try{await sessionRequest63('bootstrap');await loginFlow.run(COOKIE_MODE63);if(session.current())return;}catch{}\n  await new Promise((resolve,reject)=>{const script=document.createElement('script');");
-entry=patch(entry,"ajustes-62 · Backend requiere paquete de ajustes","sesion-ajustes-63 · Backend de laboratorio");
+entry=patch(entry,"ajustes-62 · Backend requiere paquete de ajustes","clientes-64 · Backend de laboratorio");
 const checked=spawnSync(process.execPath,['--input-type=module','--check'],{input:entry,encoding:'utf8'});
 if(checked.status!==0)throw Error(checked.stderr);
 assets['/entry.mjs']=entry;
 // /approved-app.js contains the mounted catalogue UI and its build label.
-assets['/approved-app.js']=patch(assets['/approved-app.js'],"ajustes-62 · Backend requiere paquete de ajustes","sesion-ajustes-63 · Backend de laboratorio");
+assets['/approved-app.js']=patch(assets['/approved-app.js'],"ajustes-62 · Backend requiere paquete de ajustes","clientes-64 · Backend de laboratorio");
 const worker=prefix+JSON.stringify(assets)+workerBase.slice(end);
 const syntax=spawnSync(process.execPath,['--input-type=module','--check'],{input:worker,encoding:'utf8'});
 if(syntax.status!==0)throw Error(syntax.stderr);

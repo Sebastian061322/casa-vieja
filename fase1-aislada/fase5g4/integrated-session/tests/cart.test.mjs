@@ -72,3 +72,22 @@ test('aprobación se vincula a vendedor, pedido y selección exactos',()=>{
  assert.equal(view.adjustmentApprovals63[0].state,'APPROVED');
  assert.equal(view.sales[sale.saleId].costCents,undefined);
 });
+
+test('clientes homónimos conservan IDs distintos y la recompra exige un pedido accesible y contacto exacto',()=>{
+ const {s,command}=fixture(),rows=[row('monte-alto-250','demo:monte',1)];
+ const customer={name:'TEST_ONLY Cliente',phone:'999000001',zone:'Zona ficticia',address:'Dirección ficticia'};
+ const order=(extras={})=>command(rows,{customer:{...customer,...extras}});
+ const first=order(),second=order();
+ assert.equal(s.call('execute',first,'333333').state,'COMMITTED');
+ assert.equal(s.call('execute',second,'111111').state,'COMMITTED');
+ const snapshot=()=>s.call('snapshot',{format:'ui5d',continuityScope:'TEST_ONLY_CONTINUITY_5G3'});
+ assert.notEqual(snapshot().sales[first.saleId].commercial.customerId64,snapshot().sales[second.saleId].commercial.customerId64);
+ assert.equal(s.call('execute',order({previousOrder:second.saleId}),'333333').error,'CUSTOMER_LINK_UNAVAILABLE');
+ assert.equal(s.call('execute',order({previousOrder:first.saleId,phone:'999000002'}),'333333').error,'CUSTOMER_CONTACT_MISMATCH');
+ const repeat=order({previousOrder:first.saleId});
+ assert.equal(s.call('execute',repeat,'333333').state,'COMMITTED');
+ const view=snapshot();
+ assert.equal(view.sales[repeat.saleId].commercial.customerId64,first.saleId);
+ assert.equal(view.sales[repeat.saleId].metadata.address64,customer.address);
+ assert.deepEqual(view.reports.customers.find(c=>c.id===first.saleId).orders.sort(),[first.saleId,repeat.saleId].sort());
+});

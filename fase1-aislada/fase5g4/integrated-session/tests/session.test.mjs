@@ -67,3 +67,21 @@ test('cookie falsa, sesión vencida y otro origen fallan sin autorizar operacion
  props[key]=JSON.stringify(registry);
  assert.equal((await f.send('bootstrap',{cookie})).status,401);
 });
+
+test('cada consulta autenticada resuelve sesión y permisos en una sola llamada de backend',async()=>{
+ const f=fixture(),cookie=await f.login('111111'),before=f.writes();
+ const boot=await f.send('bootstrap',{cookie});
+ assert.equal((await boot.json()).profile,'administrator');
+ assert.equal(f.writes()-before,1);
+ const count=f.writes();
+ const snapshot=await f.send('snapshot',{cookie},{format:'ui5d',continuityScope:'TEST_ONLY_CONTINUITY_5G3'});
+ const body=await snapshot.json();
+ assert.equal(body.__cvActor72.subject,'google:111111');
+ assert.equal(f.writes()-count,1);
+ assert.match(snapshot.headers.get('server-timing'),/sheetReadMs;dur=/);
+ assert.equal(body.__timing72,undefined);
+ const row={target:'google:111111',role:'seller',active:true};
+ f.s.f.f.properties.ZERO_USER_3=JSON.stringify(row);
+ const denied=await f.send('users',{cookie});
+ assert.equal((await denied.json()).error,'PERMISSION_DENIED');
+});

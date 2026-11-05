@@ -1,0 +1,78 @@
+{
+  "environment": "TEST_ONLY",
+  "scope": "Read-only; browser includes bootstrap, stage durations overlap",
+  "samples": [
+    {
+      "sample": 1,
+      "revision": 142,
+      "browserWithBootstrapMs": 10176,
+      "kind": "CV_5E_READ_TIMING",
+      "traceId": "7855d5f5-3dcf-4e67-b964-1d5c17928464",
+      "totalMs": 1946,
+      "proofMs": 50,
+      "lockWaitMs": 86,
+      "lockHeldMs": 1722,
+      "sheetReadMs": 757,
+      "sheetWriteMs": 0,
+      "sheetReadbackMs": 0,
+      "reconstructMs": 51,
+      "reportsMs": 4,
+      "worker": {
+        "traceId": "7855d5f5-3dcf-4e67-b964-1d5c17928464",
+        "totalMs": 6197,
+        "identityMs": 0,
+        "signingMs": 0,
+        "backendMs": 4457,
+        "responseParseMs": 0
+      }
+    },
+    {
+      "sample": 2,
+      "revision": 142,
+      "browserWithBootstrapMs": 10879,
+      "kind": "CV_5E_READ_TIMING",
+      "traceId": "c6b37145-9988-4dbd-87ba-08412f70421a",
+      "totalMs": 2481,
+      "proofMs": 104,
+      "lockWaitMs": 124,
+      "lockHeldMs": 2107,
+      "sheetReadMs": 474,
+      "sheetWriteMs": 0,
+      "sheetReadbackMs": 0,
+      "reconstructMs": 39,
+      "reportsMs": 4,
+      "worker": {
+        "traceId": "c6b37145-9988-4dbd-87ba-08412f70421a",
+        "totalMs": 5732,
+        "identityMs": 0,
+        "signingMs": 0,
+        "backendMs": 4250,
+        "responseParseMs": 0
+      }
+    },
+    {
+      "sample": 3,
+      "revision": 142,
+      "browserWithBootstrapMs": 9379,
+      "kind": "CV_5E_READ_TIMING",
+      "traceId": "ee055414-fa7a-4b11-af55-afdd1723ca31",
+      "totalMs": 1107,
+      "proofMs": 38,
+      "lockWaitMs": 58,
+      "lockHeldMs": 925,
+      "sheetReadMs": 316,
+      "sheetWriteMs": 0,
+      "sheetReadbackMs": 0,
+      "reconstructMs": 43,
+      "reportsMs": 10,
+      "worker": {
+        "traceId": "ee055414-fa7a-4b11-af55-afdd1723ca31",
+        "totalMs": 5247,
+        "identityMs": 0,
+        "signingMs": 0,
+        "backendMs": 2777,
+        "responseParseMs": 0
+      }
+    }
+  ]
+}

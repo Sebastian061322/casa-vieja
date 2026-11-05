@@ -47,27 +47,26 @@
   }
  } else {
   if(data.action==='sessionStart63')return out({error:'IDENTITY_REQUIRED',retryable:false},401,origin);
-  const resolved=await backend63(await sign63(service63,'sessionResolve63',{digest:digest63}));
-  if(resolved?.error==='IDENTITY_REQUIRED'){
-   const reply=out({error:'IDENTITY_REQUIRED',retryable:false},401,origin);
-   reply.headers.set('set-cookie',sessionCookie('',0));
-   return reply;
-  }
-  if(!resolved?.session)throw Error(resolved?.error||'SESSION_LOOKUP_UNAVAILABLE');
-  session63=resolved.session;
-  identity={subject:session63.subject,expiresAt:session63.expiresAt};
-  fields63={sessionDigest63:digest63};
+  identity=service63;
+  fields63={sessionDigest63:digest63,sessionLookup72:true};
  }
  stage='GATEWAY_SIGNATURE';
  const signed=await timed('signingMs',()=>sign63(identity,issued63?'bootstrap':data.action,issued63?null:data.payload,fields63));
  metrics.traceId=signed.request.requestId;
  metrics.action=data.action;
  let result=await backend63(signed);
+ if(result?.error==='IDENTITY_REQUIRED'&&digest63){
+  const reply=out({error:'IDENTITY_REQUIRED',retryable:false},401,origin);
+  reply.headers.set('set-cookie',sessionCookie('',0));return reply;
+ }
  if(issued63&&!result?.error){
   if(!Number.isSafeInteger(result?.sessionExpiresAt63)||result.sessionExpiresAt63<=now())throw Error('SESSION_NOT_DURABLE');
   cookie63=sessionCookie(issued63.token,Math.max(1,Math.ceil((result.sessionExpiresAt63-now())/1000)));
   const {sessionExpiresAt63,...publicResult}=result;
   result=publicResult;
- }else if(session63&&!result?.error&&session63.expiresAt>now()){
-  cookie63=sessionCookie(token63,Math.max(1,Math.ceil((session63.expiresAt-now())/1000)));
+ }else if(digest63&&!result?.error&&Number.isSafeInteger(result.sessionExpiresAt72)&&result.sessionExpiresAt72>now()){
+  cookie63=sessionCookie(token63,Math.max(1,Math.ceil((result.sessionExpiresAt72-now())/1000)));
+ }
+ if(Object.hasOwn(result,'sessionExpiresAt72')){
+  const {sessionExpiresAt72,...publicResult}=result;result=publicResult;
  }

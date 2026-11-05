@@ -212,3 +212,22 @@ test('la reapertura usa un bootstrap y conserva capacidades del servidor',async(
  assert.deepEqual(calls,['bootstrap']);
  assert.ok(!assets['/entry.mjs'].includes("const boot=await session.invoke('bootstrap',null);if(!current())return false;"));
 });
+
+test('la lectura directa comprueba el perfil actual antes de publicar una proyección',async()=>{
+ const worker=fs.readFileSync(new URL('../build/worker-bundle.mjs',import.meta.url),'utf8'),marker='\nconst assets=';
+ const assets=JSON.parse(worker.slice(worker.indexOf(marker)+marker.length,worker.indexOf(';\nexport default')));
+ const {createSession}=await import('data:text/javascript;base64,'+Buffer.from(assets['/session.mjs']).toString('base64'));
+ let changed=false;const calls=[];
+ const session=createSession({send:async(_,action)=>{
+  calls.push(action);
+  if(action==='bootstrap')return {subject:'google:111111',profile:'administrator',environment:'TEST_ONLY',destination:'TEST_ONLY_ZERO_1'};
+  return {resources:{},__cvActor72:{subject:'google:111111',profile:changed?'seller':'administrator'}};
+ }});
+ await session.login('CV_COOKIE_SESSION');calls.length=0;
+ assert.deepEqual(await session.invoke('snapshot',{}),{resources:{}});
+ assert.deepEqual(calls,['snapshot']);
+ changed=true;
+ await assert.rejects(()=>session.invoke('snapshot',{}),/ACCOUNT_OR_PROFILE_CHANGED/);
+ assert.equal(session.current(),null);
+ assert.ok(assets['/entry.mjs'].includes("if(['snapshot','reports','dashboard'].includes(action))"));
+});

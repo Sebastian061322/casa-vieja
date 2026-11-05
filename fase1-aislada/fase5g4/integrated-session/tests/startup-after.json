@@ -1,0 +1,38 @@
+{
+  "environment": "LOCAL_VM_NO_NETWORK",
+  "samples": 7,
+  "initial": {
+    "backendCalls": 3,
+    "localBackendMedianMs": 0.55,
+    "localBackendWorstMs": 2.25,
+    "stages": [
+      {
+        "action": "bootstrap",
+        "responseBytes": 769
+      },
+      {
+        "action": "bootstrap",
+        "responseBytes": 837
+      },
+      {
+        "action": "snapshot",
+        "responseBytes": 4048
+      }
+    ]
+  },
+  "resume": {
+    "backendCalls": 2,
+    "localBackendMedianMs": 0.28,
+    "localBackendWorstMs": 0.37,
+    "stages": [
+      {
+        "action": "bootstrap",
+        "responseBytes": 837
+      },
+      {
+        "action": "snapshot",
+        "responseBytes": 4048
+      }
+    ]
+  }
+}

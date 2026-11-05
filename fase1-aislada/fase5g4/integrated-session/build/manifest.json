@@ -1,8 +1,9 @@
 {
   "environment": "TEST_ONLY",
-  "baseBackend": 7,
-  "baseWorker": "52a8512a",
-  "backendSha256": "6e96e504acae138fd26b240dd55e11060320d4e66b7420b5b4a44c134ff66bed",
-  "workerSha256": "87478aeb7c9a1fe13b06e2aaf60cab885df1fb96b095e611d7a6e38c4d8c780c",
+  "baseBackend": 8,
+  "baseWorker": "76293bcc",
+  "candidate": "rendimiento-72",
+  "backendSha256": "e78ae2b52d54727c8e42abdbb9b8384f1c04879704ef26fc74b08160e714449f",
+  "workerSha256": "6d5634525d2ff0cb7e4bcf5ea67a331a3bc28936c9a07ef7903a144fc8c6c3e2",
   "deployed": false
 }

@@ -13,13 +13,25 @@ let backend=patch(backendBase,
  "const users63=zeroPropertyLog_('ZERO_USER_');zeroConsumeNonce_(current,p,Date.now());const sessionResult63=cvSessionDispatch63_(current,p,users63);if(sessionResult63)return sessionResult63;const actor5e=zeroActor_(current,users63,p);");
 backend=patch(backend,"const actor=zeroActor_(zeroProof_(envelope),zeroPropertyLog_('ZERO_USER_'),props);",
  "const request63=zeroProof_(envelope),users63=zeroPropertyLog_('ZERO_USER_');cvSessionDispatch63_(request63,props,users63);const actor=zeroActor_(request63,users63,props);");
+backend=patch(backend,"const current=zeroProof_(envelope);const users63=zeroPropertyLog_('ZERO_USER_');",
+ "const signed72=zeroProof_(envelope),users63=zeroPropertyLog_('ZERO_USER_');const current=cvEffectiveRequest72_(signed72,p,users63);");
+backend=patch(backend,'verify:()=>verified,lock:fn=>fn(),users:', 'verify:()=>current,lock:fn=>fn(),users:');
+backend=patch(backend,'  const events = users.read();', '  request=cvEffectiveRequest72_(request,properties,users);const events = users.read();');
+backend=patch(backend,'    return result}\n  finally{',
+ `    if(CV5EMetrics.current.authorized===true&&!result?.error){
+      const timing={totalMs:Math.max(0,Date.now()-start)};
+      for(const key of ['proofMs','lockWaitMs','lockHeldMs','sheetReadMs','sheetWriteMs','sheetReadbackMs','reconstructMs','reportsMs'])timing[key]=CV5EMetrics.current[key]||0;
+      result={...result,__timing72:timing};
+    }
+    return result}\n  finally{`);
+backend+='\n'+read('performance-backend.gs');
 backend=patch(backend,'return service.handle(envelope);',
  `const result63=service.handle(envelope);
  if(current.action==='bootstrap'&&current.issueDigest63&&!result63.error){
   const issued63=cvSessions63_(p,users63).issue(current.issueDigest63,actor5e.subject,current.expiresAt,current.previousDigest63);
   return {...result63,sessionExpiresAt63:issued63.idleExpiry};
  }
- return result63;`);
+ return result63.error?result63:{...result63,__cvActor72:{subject:actor5e.subject,profile:actor5e.role},...(current.sessionExpiresAt72?{sessionExpiresAt72:current.sessionExpiresAt72}:{})};`);
 backend=patch(backend,'if(cfg?.enabled===true||command.catalogueOfferId!==undefined){const prepared=CV53CatalogueRules.prepareSale(state,command,cfg,CV53CatalogueSource,this.context.now());',
  'if(cfg?.enabled===true||command.catalogueOfferId!==undefined||Object.hasOwn(command,"catalogueCart")){const prepared=Object.hasOwn(command,"catalogueCart")?cvPrepareCart63_(state,command,cfg,CV53CatalogueSource,this.context.now()):CV53CatalogueRules.prepareSale(state,command,cfg,CV53CatalogueSource,this.context.now());');
 backend=patch(backend,'if(!CV_SCOPE53_ACTIVE)return CV53PlanBeforeCatalogue.call(this,state,command);',
@@ -219,12 +231,12 @@ entry=patch(entry,"$('logout5d').onclick=()=>{loginFlow.invalidate();session.log
  };`);
 entry=patch(entry,"function login(response){return loginFlow.run(response.credential);}",read('browser.js'));
 entry=patch(entry,"  await new Promise((resolve,reject)=>{const script=document.createElement('script');", "  if(await loginFlow.run(COOKIE_MODE63))return;\n  await new Promise((resolve,reject)=>{const script=document.createElement('script');");
-entry=patch(entry,"ajustes-62 · Backend requiere paquete de ajustes","cierre-66.3 · Backend de laboratorio");
+entry=patch(entry,"ajustes-62 · Backend requiere paquete de ajustes","rendimiento-72 · Backend de laboratorio");
 const checked=spawnSync(process.execPath,['--input-type=module','--check'],{input:entry,encoding:'utf8'});
 if(checked.status!==0)throw Error(checked.stderr);
 assets['/entry.mjs']=entry;
 // /approved-app.js contains the mounted catalogue UI and its build label.
-assets['/approved-app.js']=patch(assets['/approved-app.js'],"ajustes-62 · Backend requiere paquete de ajustes","cierre-66.3 · Backend de laboratorio");
+assets['/approved-app.js']=patch(assets['/approved-app.js'],"ajustes-62 · Backend requiere paquete de ajustes","rendimiento-72 · Backend de laboratorio");
 assets['/backup54.mjs']=read('../backup54.mjs');
 const backupStart='const CV54Phone=(()=>{',backupEnd='return {encryptArchive54};})();';
 const embeddedBackup=assets['/entry.mjs'].match(/const CV54Phone=\(\(\)=>\{[\s\S]*?return \{encryptArchive54\};\}\)\(\);/);
@@ -235,6 +247,36 @@ assets['/session.mjs']=patch(assets['/session.mjs'],'    return {...identity};',
 for(const key of ['/entry.mjs','/login-flow.mjs']){
  assets[key]=patch(assets[key], "        const boot=await session.invoke('bootstrap',null);if(!current())return false;\n        const actor={...identity,capabilities:boot.capabilities};", '        const actor=identity;');
 }
+for(const key of ['/session.mjs','/entry.mjs'])assets[key]=patch(assets[key],
+ "    const boot = await sendCurrent(expected, credential, 'bootstrap', null); check(expected);",
+ `    if(['snapshot','reports','dashboard'].includes(action)){
+      const result=await sendCurrent(expected,credential,action,payload);check(expected);
+      if(result.__cvActor72?.subject!==actor.subject||result.__cvActor72?.profile!==actor.profile){logout();throw Error('ACCOUNT_OR_PROFILE_CHANGED');}
+      const {__cvActor72,...response}=result;return response;
+    }
+    const boot = await sendCurrent(expected, credential, 'bootstrap', null); check(expected);`);
+assets['/entry.mjs']=patch(assets['/entry.mjs'],'    return {...identity};','    return {...identity,capabilities:boot.capabilities};');
+for(const key of ['/entry.mjs','/approved-app.js'])assets[key]=patch(assets[key],
+ "const result=await rpc('initialize');if(result.error)throw Error(result.error);", "if(session.current()?.subject!==actor.subject||session.current()?.profile!==actor.profile)throw Error('ACCOUNT_OR_PROFILE_CHANGED');");
+assets['/entry.mjs']=patch(assets['/entry.mjs'],'    return await readLabResponse(response,action);',
+ "    const value=await readLabResponse(response,action);if(action==='snapshot'&&!value.error)CVPerf72.mark('inventoryResponseMs');return value;");
+assets['/entry.mjs']=read('performance-browser.js')+'\n'+assets['/entry.mjs'];
+assets['/entry.mjs']=assets['/entry.mjs'].replaceAll("await fetch('/api',", "await CVPerf72.fetchApi('/api',");
+assets['/entry.mjs']=patch(assets['/entry.mjs'],"},show:actor=>{", "},show:actor=>{CVPerf72.mark('profileVisibleMs');");
+for(const key of ['/entry.mjs','/approved-app.js']){
+ assets[key]=patch(assets[key],"const local=await client.view();snapshot=local.snapshot;", "const local=await client.view();snapshot=local.snapshot;if(downloaded)performance.mark('cv-inventory-current72');");
+}
+prefix=patch(prefix,"const answer63=out(result,200,origin,metrics.traceId);",
+ `const timing72=result?.__timing72;const {__timing72,...body72}=result;
+ const answer63=out(body72,200,origin,metrics.traceId);
+ const names72=['totalMs','proofMs','lockWaitMs','lockHeldMs','sheetReadMs','sheetWriteMs','sheetReadbackMs','reconstructMs','reportsMs'];
+ const durations72=['worker;dur='+Math.max(0,now()-started),'backend;dur='+(metrics.backendMs||0)];
+ for(const name of names72)if(Number.isFinite(timing72?.[name]))durations72.push(name+';dur='+Math.max(0,timing72[name]));
+ answer63.headers.set('server-timing',durations72.join(','));`);
+assets['/entry.mjs']=patch(assets['/entry.mjs'],"async function login(response){", "async function login(response){CVPerf72.mark('authenticationStartedMs');");
+assets['/entry.mjs']=patch(assets['/entry.mjs'],"if(await loginFlow.run(COOKIE_MODE63))return;", "CVPerf72.mark('resumeStartedMs');if(await loginFlow.run(COOKIE_MODE63))return;");
+assets['/entry.mjs']=patch(assets['/entry.mjs'],"{format:'ui5d',metricsProbe:true}",
+ "{format:'ui5d',metricsProbe:true,...(scopedMode54?{continuityScope:'TEST_ONLY_CONTINUITY_5G3'}:{})}");
 const worker=prefix+JSON.stringify(assets)+workerBase.slice(end);
 const syntax=spawnSync(process.execPath,['--input-type=module','--check'],{input:worker,encoding:'utf8'});
 if(syntax.status!==0)throw Error(syntax.stderr);
@@ -242,6 +284,6 @@ const output=path.join(__dirname,'build');
 fs.mkdirSync(output,{recursive:true});
 fs.writeFileSync(path.join(output,'Candidate.gs'),backend);
 fs.writeFileSync(path.join(output,'worker-bundle.mjs'),worker);
-const manifest={environment:'TEST_ONLY',baseBackend:7,baseWorker:'52a8512a',backendSha256:hash(backend),workerSha256:hash(worker),deployed:false};
+const manifest={environment:'TEST_ONLY',baseBackend:8,baseWorker:'76293bcc',candidate:'rendimiento-72',backendSha256:hash(backend),workerSha256:hash(worker),deployed:false};
 fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
 console.log(manifest);

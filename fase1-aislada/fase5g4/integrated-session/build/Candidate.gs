@@ -245,12 +245,12 @@ function invEngine_(){
 /* Candidato S/0, apagado. Nunca pegar en Apps Script productivo. */
 function zeroProof_(envelope,config){const cfg=config||{enabled:cvProps5g_().getProperty('ZERO_LAB_ENABLED')==='YES',secret:cvProps5g_().getProperty('ZERO_GATEWAY_SECRET'),now:Date.now()};if(!cfg.enabled||typeof cfg.secret!=='string'||cfg.secret.length<43||JSON.stringify(envelope||{}).length>32000)throw Error('IDENTITY_REQUIRED');const r=envelope?.request;if(!r||typeof envelope.mac!=='string')throw Error('IDENTITY_REQUIRED');const expected=Utilities.base64Encode(Utilities.computeHmacSha256Signature(CVInventoryBase.canonical(r),cfg.secret,Utilities.Charset.UTF_8));let different=expected.length^envelope.mac.length;for(let i=0;i<expected.length;i++)different|=expected.charCodeAt(i)^(envelope.mac.charCodeAt(i)||0);if(different)throw Error('IDENTITY_REQUIRED');if(r.version!==2||r.destination!=='TEST_ONLY_ZERO_1'||!Number.isSafeInteger(r.issuedAt)||!Number.isSafeInteger(r.expiresAt)||r.issuedAt>cfg.now+30000||r.expiresAt<=cfg.now||r.expiresAt-r.issuedAt>30000||!/^google:[0-9]{5,64}$/.test(r.subject)||typeof r.requestId!=='string'||r.requestId.length>120)throw Error('IDENTITY_REQUIRED');return r;}
 function zeroPropertyLog_(prefix){const p=cvProps5g_();const read=()=>{const rows=[];for(let i=0;i<200;i++){const raw=p.getProperty(prefix+i);if(!raw)return rows;rows.push(JSON.parse(raw));}throw Error('LAB_ADMIN_LOG_FULL');};return {read,append:r=>{const rows=read(),raw=JSON.stringify(r);if(raw.length>7500||rows.length>=199)throw Error('LAB_ADMIN_LOG_FULL');const key=prefix+rows.length;p.setProperty(key,raw);if(p.getProperty(key)!==raw)throw Error('ADMIN_EVENT_NOT_DURABLE');}};}
-function zeroRequestBase5e_(envelope){try{const verified=CV5EMetrics.measure("proofMs",()=>zeroProof_(envelope));CV5EMetrics.current.authorized=true;return cvLocked_(()=>{const p=cvProps5g_(),approved=p.getProperty('ZERO_APPROVED_SCRIPT_ID');if(!approved||ScriptApp.getScriptId()!==approved)throw Error('APPROVED_LAB_REQUIRED');const current=zeroProof_(envelope);const users63=zeroPropertyLog_('ZERO_USER_');zeroConsumeNonce_(current,p,Date.now());const sessionResult63=cvSessionDispatch63_(current,p,users63);if(sessionResult63)return sessionResult63;const actor5e=zeroActor_(current,users63,p);if(current.action==='snapshot'&&current.payload?.metricsProbe===true){if(actor5e.role!=='administrator')throw Error('PERMISSION_DENIED');CV5EMetrics.current.adminProbe=true;}const service=new CVZeroAccess.Service({environment:'TEST_ONLY',verify:()=>verified,lock:fn=>fn(),users:zeroPropertyLog_('ZERO_USER_'),policies:zeroPropertyLog_('ZERO_POLICY_'),now:()=>new Date().toISOString(),store:()=>invEngine_().store});const result63=service.handle(envelope);
+function zeroRequestBase5e_(envelope){try{const verified=CV5EMetrics.measure("proofMs",()=>zeroProof_(envelope));CV5EMetrics.current.authorized=true;return cvLocked_(()=>{const p=cvProps5g_(),approved=p.getProperty('ZERO_APPROVED_SCRIPT_ID');if(!approved||ScriptApp.getScriptId()!==approved)throw Error('APPROVED_LAB_REQUIRED');const signed72=zeroProof_(envelope),users63=zeroPropertyLog_('ZERO_USER_');const current=cvEffectiveRequest72_(signed72,p,users63);zeroConsumeNonce_(current,p,Date.now());const sessionResult63=cvSessionDispatch63_(current,p,users63);if(sessionResult63)return sessionResult63;const actor5e=zeroActor_(current,users63,p);if(current.action==='snapshot'&&current.payload?.metricsProbe===true){if(actor5e.role!=='administrator')throw Error('PERMISSION_DENIED');CV5EMetrics.current.adminProbe=true;}const service=new CVZeroAccess.Service({environment:'TEST_ONLY',verify:()=>current,lock:fn=>fn(),users:zeroPropertyLog_('ZERO_USER_'),policies:zeroPropertyLog_('ZERO_POLICY_'),now:()=>new Date().toISOString(),store:()=>invEngine_().store});const result63=service.handle(envelope);
  if(current.action==='bootstrap'&&current.issueDigest63&&!result63.error){
   const issued63=cvSessions63_(p,users63).issue(current.issueDigest63,actor5e.subject,current.expiresAt,current.previousDigest63);
   return {...result63,sessionExpiresAt63:issued63.idleExpiry};
  }
- return result63;});}catch(e){return {error:/^[A-Z_]+$/.test(e.message)?e.message:'SERVER_UNAVAILABLE',retryable:!['INSUFFICIENT_STOCK','PERMISSION_DENIED','FINANCIAL_FIELDS_FORBIDDEN','IDENTITY_SPOOFING','IDEMPOTENCY_CONFLICT','INVALID_ITEMS'].includes(e.message)};}}
+ return result63.error?result63:{...result63,__cvActor72:{subject:actor5e.subject,profile:actor5e.role},...(current.sessionExpiresAt72?{sessionExpiresAt72:current.sessionExpiresAt72}:{})};});}catch(e){return {error:/^[A-Z_]+$/.test(e.message)?e.message:'SERVER_UNAVAILABLE',retryable:!['INSUFFICIENT_STOCK','PERMISSION_DENIED','FINANCIAL_FIELDS_FORBIDDEN','IDENTITY_SPOOFING','IDEMPOTENCY_CONFLICT','INVALID_ITEMS'].includes(e.message)};}}
 function doPost(event){try{return ContentService.createTextOutput(JSON.stringify(cvHttpGateway54_(JSON.parse(event.postData.contents)))).setMimeType(ContentService.MimeType.JSON)}catch(e){return ContentService.createTextOutput(JSON.stringify({error:'IDENTITY_REQUIRED',retryable:true})).setMimeType(ContentService.MimeType.JSON)}}
 function doGet(){return ContentService.createTextOutput(JSON.stringify({environment:'TEST_ONLY',status:'AUTHENTICATED_POST_REQUIRED'})).setMimeType(ContentService.MimeType.JSON);}
 
@@ -280,7 +280,7 @@ function zeroConsumeNonce_(request, properties, now) {
  * El correo proviene del token Google verificado por Worker, no del payload.
  * Los perfiles se obtienen exclusivamente de configuración privada del servidor. */
 function zeroActor_(request, users, properties) {
-  const events = users.read();
+  request=cvEffectiveRequest72_(request,properties,users);const events = users.read();
   if (events.some(row => row.target === request.subject)) {
     return CVZeroAccess.principal(request.subject, events);
   }
@@ -367,6 +367,11 @@ function zeroRequestBase5g_(envelope){
     if(CV5EMetrics.current.adminProbe===true&&result?.profile==='administrator'&&result.uiVersion==='5D'&&!result.error){
       const durations={};for(const key of ['proofMs','lockWaitMs','lockHeldMs','sheetReadMs','sheetWriteMs','sheetReadbackMs','reconstructMs','reportsMs'])durations[key]=CV5EMetrics.current[key]||0;
       result={...result,diagnostics5e:{kind:'CV_5E_READ_TIMING',traceId:envelope.request.requestId,totalMs:Math.max(0,Date.now()-start),...durations}};
+    }
+    if(CV5EMetrics.current.authorized===true&&!result?.error){
+      const timing={totalMs:Math.max(0,Date.now()-start)};
+      for(const key of ['proofMs','lockWaitMs','lockHeldMs','sheetReadMs','sheetWriteMs','sheetReadbackMs','reconstructMs','reportsMs'])timing[key]=CV5EMetrics.current[key]||0;
+      result={...result,__timing72:timing};
     }
     return result}
   finally{
@@ -969,6 +974,14 @@ function cvAuthorizedAdjustment62_(engine, command, prepared, approved) {
   referenceDeliveryCents:tariff.chargedCents,appliedDeliveryCents:delivery,
   realDeliveryCostCents:tariff.costCents
  };
+}
+
+function cvEffectiveRequest72_(request, properties, users){
+ if(request.sessionLookup72!==true)return request;
+ if(request.subject!=='google:00000'||typeof request.sessionDigest63!=='string'||!/^[a-f0-9]{64}$/.test(request.sessionDigest63))throw Error('IDENTITY_REQUIRED');
+ const session=cvSessions63_(properties,users).resolve(request.sessionDigest63);
+ if(!session)throw Error('IDENTITY_REQUIRED');
+ return {...request,sessionLookup72:false,subject:session.subject,sessionExpiresAt72:session.expiresAt};
 }
 
 function cvAdsDetails65_(data){

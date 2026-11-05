@@ -39,7 +39,7 @@ $('google-button').innerHTML='<p>Solo datos TEST_ONLY. Sin Google ni Sheets real
 const fixturePanel54=document.createElement('div');fixturePanel54.innerHTML='<label><input type="checkbox" id="offline-fixture54"> Simular desconexión local (solo API de este ensayo)</label>';document.body.prepend(fixturePanel54);
 const fetchFixture54=window.fetch.bind(window);window.fetch=(input,options)=>{if(String(input)==='/api'&&$('offline-fixture54')?.checked)return Promise.reject(Error('TEST_ONLY_OFFLINE'));return fetchFixture54(input,options);};
 document.querySelectorAll('[data-fixture54]').forEach(b=>b.onclick=async()=>{try{const response=await fetch('/fixture-credential54?subject='+b.dataset.fixture54).then(r=>r.json());await login({credential:response.credential});}catch(e){status(e.message)}});
-void (async()=>{try{await sessionRequest63('bootstrap');await loginFlow.run(COOKIE_MODE63);}catch{}})();
+void (async()=>{try{await loginFlow.run(COOKIE_MODE63);}catch{}})();
 `;
 const tail="start().catch(()=>status('No se pudo abrir el acceso. No se confirmó ninguna operación.'));";
 if(assets['/entry.mjs'].split(tail).length!==2)throw Error('FIXTURE_BOUNDARY');assets['/entry.mjs']=assets['/entry.mjs'].replace(tail,hook);

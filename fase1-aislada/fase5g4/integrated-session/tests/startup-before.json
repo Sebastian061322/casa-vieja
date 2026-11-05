@@ -1,0 +1,70 @@
+{
+  "environment": "LOCAL_VM_NO_NETWORK",
+  "samples": 7,
+  "initial": {
+    "backendCalls": 7,
+    "localBackendMedianMs": 0.79,
+    "localBackendWorstMs": 2.42,
+    "stages": [
+      {
+        "action": "bootstrap",
+        "responseBytes": 769
+      },
+      {
+        "action": "sessionResolve63",
+        "responseBytes": 242
+      },
+      {
+        "action": "bootstrap",
+        "responseBytes": 802
+      },
+      {
+        "action": "sessionResolve63",
+        "responseBytes": 242
+      },
+      {
+        "action": "bootstrap",
+        "responseBytes": 802
+      },
+      {
+        "action": "sessionResolve63",
+        "responseBytes": 242
+      },
+      {
+        "action": "snapshot",
+        "responseBytes": 4013
+      }
+    ]
+  },
+  "resume": {
+    "backendCalls": 6,
+    "localBackendMedianMs": 0.52,
+    "localBackendWorstMs": 0.62,
+    "stages": [
+      {
+        "action": "sessionResolve63",
+        "responseBytes": 242
+      },
+      {
+        "action": "bootstrap",
+        "responseBytes": 802
+      },
+      {
+        "action": "sessionResolve63",
+        "responseBytes": 242
+      },
+      {
+        "action": "bootstrap",
+        "responseBytes": 802
+      },
+      {
+        "action": "sessionResolve63",
+        "responseBytes": 242
+      },
+      {
+        "action": "snapshot",
+        "responseBytes": 4013
+      }
+    ]
+  }
+}

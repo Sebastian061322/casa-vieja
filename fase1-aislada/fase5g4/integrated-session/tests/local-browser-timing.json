@@ -1,0 +1,102 @@
+{
+  "environment": "LOOPBACK_VM",
+  "note": "Human sign-in delay included in initial navigation marks; preview preflight differs from published startup",
+  "initial": {
+    "environment": "TEST_ONLY",
+    "marks": {
+      "firstScreenMs": 52,
+      "profileVisibleMs": 4897,
+      "panelUsableMs": 4897,
+      "inventoryResponseMs": 4904
+    },
+    "calls": [
+      {
+        "id": 1,
+        "action": "bootstrap",
+        "startedMs": 20,
+        "firstResponseMs": 12,
+        "status": 401,
+        "serverTiming": "",
+        "responseBytes": 47,
+        "durationMs": 14
+      },
+      {
+        "id": 2,
+        "action": "sessionStart63",
+        "startedMs": 4883,
+        "firstResponseMs": 4,
+        "status": 200,
+        "serverTiming": "worker;dur=2,backend;dur=0,totalMs;dur=0,proofMs;dur=0,lockWaitMs;dur=0,lockHeldMs;dur=0,sheetReadMs;dur=0,sheetWriteMs;dur=0,sheetReadbackMs;dur=0,reconstructMs;dur=0,reportsMs;dur=0",
+        "responseBytes": 580,
+        "durationMs": 4
+      },
+      {
+        "id": 3,
+        "action": "bootstrap",
+        "startedMs": 4887,
+        "firstResponseMs": 2,
+        "status": 200,
+        "serverTiming": "worker;dur=1,backend;dur=1,totalMs;dur=1,proofMs;dur=0,lockWaitMs;dur=0,lockHeldMs;dur=1,sheetReadMs;dur=0,sheetWriteMs;dur=0,sheetReadbackMs;dur=0,reconstructMs;dur=0,reportsMs;dur=0",
+        "responseBytes": 648,
+        "durationMs": 3
+      },
+      {
+        "id": 4,
+        "action": "snapshot",
+        "startedMs": 4898,
+        "firstResponseMs": 6,
+        "status": 200,
+        "serverTiming": "worker;dur=4,backend;dur=4,totalMs;dur=2,proofMs;dur=0,lockWaitMs;dur=0,lockHeldMs;dur=2,sheetReadMs;dur=1,sheetWriteMs;dur=0,sheetReadbackMs;dur=0,reconstructMs;dur=0,reportsMs;dur=0",
+        "responseBytes": 18819,
+        "durationMs": 6
+      }
+    ],
+    "maximumConcurrent": 1,
+    "medianCallMs": 6,
+    "worstCallMs": 14
+  },
+  "reopen": {
+    "environment": "TEST_ONLY",
+    "marks": {
+      "profileVisibleMs": 38,
+      "panelUsableMs": 38,
+      "inventoryResponseMs": 43,
+      "firstScreenMs": 56
+    },
+    "calls": [
+      {
+        "id": 1,
+        "action": "bootstrap",
+        "startedMs": 28,
+        "firstResponseMs": 3,
+        "status": 200,
+        "serverTiming": "worker;dur=1,backend;dur=1,totalMs;dur=0,proofMs;dur=0,lockWaitMs;dur=0,lockHeldMs;dur=0,sheetReadMs;dur=0,sheetWriteMs;dur=0,sheetReadbackMs;dur=0,reconstructMs;dur=0,reportsMs;dur=0",
+        "responseBytes": 648,
+        "durationMs": 4
+      },
+      {
+        "id": 2,
+        "action": "bootstrap",
+        "startedMs": 32,
+        "firstResponseMs": 3,
+        "status": 200,
+        "serverTiming": "worker;dur=0,backend;dur=0,totalMs;dur=0,proofMs;dur=0,lockWaitMs;dur=0,lockHeldMs;dur=0,sheetReadMs;dur=0,sheetWriteMs;dur=0,sheetReadbackMs;dur=0,reconstructMs;dur=0,reportsMs;dur=0",
+        "responseBytes": 648,
+        "durationMs": 3
+      },
+      {
+        "id": 3,
+        "action": "snapshot",
+        "startedMs": 39,
+        "firstResponseMs": 5,
+        "status": 200,
+        "serverTiming": "worker;dur=3,backend;dur=3,totalMs;dur=2,proofMs;dur=0,lockWaitMs;dur=0,lockHeldMs;dur=2,sheetReadMs;dur=0,sheetWriteMs;dur=0,sheetReadbackMs;dur=0,reconstructMs;dur=1,reportsMs;dur=0",
+        "responseBytes": 18819,
+        "durationMs": 5
+      }
+    ],
+    "maximumConcurrent": 1,
+    "medianCallMs": 4,
+    "worstCallMs": 5
+  }
+}

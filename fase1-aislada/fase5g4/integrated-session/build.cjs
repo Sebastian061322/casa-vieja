@@ -219,18 +219,22 @@ entry=patch(entry,"$('logout5d').onclick=()=>{loginFlow.invalidate();session.log
  };`);
 entry=patch(entry,"function login(response){return loginFlow.run(response.credential);}",read('browser.js'));
 entry=patch(entry,"  await new Promise((resolve,reject)=>{const script=document.createElement('script');", "  if(await loginFlow.run(COOKIE_MODE63))return;\n  await new Promise((resolve,reject)=>{const script=document.createElement('script');");
-entry=patch(entry,"ajustes-62 · Backend requiere paquete de ajustes","cierre-66.2 · Backend de laboratorio");
+entry=patch(entry,"ajustes-62 · Backend requiere paquete de ajustes","cierre-66.3 · Backend de laboratorio");
 const checked=spawnSync(process.execPath,['--input-type=module','--check'],{input:entry,encoding:'utf8'});
 if(checked.status!==0)throw Error(checked.stderr);
 assets['/entry.mjs']=entry;
 // /approved-app.js contains the mounted catalogue UI and its build label.
-assets['/approved-app.js']=patch(assets['/approved-app.js'],"ajustes-62 · Backend requiere paquete de ajustes","cierre-66.2 · Backend de laboratorio");
+assets['/approved-app.js']=patch(assets['/approved-app.js'],"ajustes-62 · Backend requiere paquete de ajustes","cierre-66.3 · Backend de laboratorio");
 assets['/backup54.mjs']=read('../backup54.mjs');
 const backupStart='const CV54Phone=(()=>{',backupEnd='return {encryptArchive54};})();';
 const embeddedBackup=assets['/entry.mjs'].match(/const CV54Phone=\(\(\)=>\{[\s\S]*?return \{encryptArchive54\};\}\)\(\);/);
 if(!embeddedBackup)throw Error('EMBEDDED_BACKUP_BOUNDARY');
 assets['/entry.mjs']=patch(assets['/entry.mjs'],embeddedBackup[0],
  backupStart+assets['/backup54.mjs'].replace(/^export /gm,'')+'\n'+backupEnd);
+assets['/session.mjs']=patch(assets['/session.mjs'],'    return {...identity};','    return {...identity,capabilities:boot.capabilities};');
+for(const key of ['/entry.mjs','/login-flow.mjs']){
+ assets[key]=patch(assets[key], "        const boot=await session.invoke('bootstrap',null);if(!current())return false;\n        const actor={...identity,capabilities:boot.capabilities};", '        const actor=identity;');
+}
 const worker=prefix+JSON.stringify(assets)+workerBase.slice(end);
 const syntax=spawnSync(process.execPath,['--input-type=module','--check'],{input:worker,encoding:'utf8'});
 if(syntax.status!==0)throw Error(syntax.stderr);

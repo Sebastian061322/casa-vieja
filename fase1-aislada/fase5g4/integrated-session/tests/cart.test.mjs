@@ -194,3 +194,21 @@ test('el módulo servido cifra y descifra un respaldo superior al límite de arg
  assert.equal(recovered.archive.sections.configuration.value.payload,payload);
  await assert.rejects(()=>decryptFile54(encrypted.fileText+' ',encrypted.keyBase64,encrypted.encryptedFileHash),/INDEPENDENT_FILE_HASH_REQUIRED/);
 });
+
+test('la reapertura usa un bootstrap y conserva capacidades del servidor',async()=>{
+ const worker=fs.readFileSync(new URL('../build/worker-bundle.mjs',import.meta.url),'utf8');
+ const marker='\nconst assets=';
+ const assets=JSON.parse(worker.slice(worker.indexOf(marker)+marker.length,worker.indexOf(';\nexport default')));
+ const load=source=>import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+ const {createSession}=await load(assets['/session.mjs']);
+ const {createLoginFlow}=await load(assets['/login-flow.mjs']);
+ const calls=[],capabilities=['TEST_ONLY'];
+ const session=createSession({send:async(_,action)=>{
+  calls.push(action);
+  return {subject:'google:111111',profile:'administrator',environment:'TEST_ONLY',destination:'TEST_ONLY_ZERO_1',capabilities};
+ }});
+ const flow=createLoginFlow({session,prepare:async actor=>assert.deepEqual(actor.capabilities,capabilities),show(){},onError:assert.fail});
+ assert.equal(await flow.run('CV_COOKIE_SESSION'),true);
+ assert.deepEqual(calls,['bootstrap']);
+ assert.ok(!assets['/entry.mjs'].includes("const boot=await session.invoke('bootstrap',null);if(!current())return false;"));
+});

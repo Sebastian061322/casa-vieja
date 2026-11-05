@@ -3,6 +3,6 @@
   "baseBackend": 7,
   "baseWorker": "52a8512a",
   "backendSha256": "6e96e504acae138fd26b240dd55e11060320d4e66b7420b5b4a44c134ff66bed",
-  "workerSha256": "2f53c5607e2e740f498d120be7341c4255ce38959666c09d4308349ed4484ed1",
+  "workerSha256": "f11c1186c29c30deece32c20ca5ae2ec05cc3eaf275b0ed258fcad4c6a8fa17f",
   "deployed": false
 }

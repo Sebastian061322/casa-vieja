@@ -1,7 +1,13 @@
 // Web Crypto local. No claves en red, almacenamiento del navegador o consola.
 const canonical=x=>Array.isArray(x)?'['+x.map(canonical).join(',')+']':x&&typeof x==='object'?'{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canonical(x[k])).join(',')+'}':JSON.stringify(x);
 const utf8=new TextEncoder(),hex=bytes=>[...new Uint8Array(bytes)].map(n=>n.toString(16).padStart(2,'0')).join('');
-const b64=bytes=>btoa(String.fromCharCode(...new Uint8Array(bytes))),unb64=s=>Uint8Array.from(atob(s),x=>x.charCodeAt(0));
+function b64(bytes){
+ const view=new Uint8Array(bytes),chunks=[];
+ for(let start=0;start<view.length;start+=8192)
+  chunks.push(String.fromCharCode(...view.subarray(start,start+8192)));
+ return btoa(chunks.join(''));
+}
+const unb64=s=>Uint8Array.from(atob(s),x=>x.charCodeAt(0));
 const digest=async value=>hex(await crypto.subtle.digest('SHA-256',utf8.encode(canonical(value))));
 const fileHash=async text=>hex(await crypto.subtle.digest('SHA-256',utf8.encode(text)));
 export async function verifyArchive54(archive){
@@ -23,7 +29,10 @@ export async function decryptArchive54(sealed,keyBase64,expectedEncryptedHash){
  if(sealed?.environment!=='TEST_ONLY'||sealed.schemaVersion!==1||sealed.algorithm!=='AES-256-GCM')throw Error('ENCRYPTED_SCHEMA_REJECTED');
  const raw=unb64(keyBase64);if(raw.length!==32)throw Error('KEY_REQUIRED');
  const key=await crypto.subtle.importKey('raw',raw,'AES-GCM',false,['decrypt']);raw.fill(0);
- const data=new Uint8Array([...unb64(sealed.ciphertext),...unb64(sealed.tag)]);
+ const ciphertext=unb64(sealed.ciphertext),tag=unb64(sealed.tag);
+ const data=new Uint8Array(ciphertext.length+tag.length);
+ data.set(ciphertext);
+ data.set(tag,ciphertext.length);
  const clear=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(sealed.iv),additionalData:utf8.encode('CV_TEST_ONLY_5G2'),tagLength:128},key,data);
  const archive=JSON.parse(new TextDecoder().decode(clear));return {archive,verified:await verifyArchive54(archive)};
 }

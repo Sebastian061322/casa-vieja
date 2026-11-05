@@ -175,3 +175,18 @@ test('el candidato verifica y cifra un respaldo que incluye el alta independient
  assert.ok(target.journal.some(r=>r.plan?.customerRegistration65?.name===customer.name));
  assert.equal(JSON.stringify(s.scopedLedger()),before);
 });
+
+test('el módulo servido cifra y descifra un respaldo superior al límite de argumentos',async()=>{
+ const worker=fs.readFileSync(new URL('../build/worker-bundle.mjs',import.meta.url),'utf8');
+ const begin='\nconst assets=';
+ const assets=JSON.parse(worker.slice(worker.indexOf(begin)+begin.length,worker.indexOf(';\nexport default')));
+ const {encryptArchive54,decryptFile54}=await import('data:text/javascript;base64,'+Buffer.from(assets['/backup54.mjs']).toString('base64'));
+ const payload='Café · respaldo '.repeat(30000);
+ const backup=require('../../../fase5g2/backup.cjs');
+ const archive=backup.pack({environment:'TEST_ONLY',syntheticOnly:true,journal:[],effects:[],configuration:{payload},openingBundle:{},codeHashes:{backend:'a'.repeat(64)},operationMetadata:{}});
+ const encrypted=await encryptArchive54(archive);
+ assert.ok(encrypted.fileText.length>500000);
+ const recovered=await decryptFile54(encrypted.fileText,encrypted.keyBase64,encrypted.encryptedFileHash);
+ assert.equal(recovered.archive.sections.configuration.value.payload,payload);
+ await assert.rejects(()=>decryptFile54(encrypted.fileText+' ',encrypted.keyBase64,encrypted.encryptedFileHash),/INDEPENDENT_FILE_HASH_REQUIRED/);
+});

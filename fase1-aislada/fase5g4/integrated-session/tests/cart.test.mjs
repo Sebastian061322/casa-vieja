@@ -91,3 +91,87 @@ test('clientes homónimos conservan IDs distintos y la recompra exige un pedido 
  assert.equal(view.sales[repeat.saleId].metadata.address64,customer.address);
  assert.deepEqual(view.reports.customers.find(c=>c.id===first.saleId).orders.sort(),[first.saleId,repeat.saleId].sort());
 });
+
+test('alta separada de cliente y recompra con permisos sin movimientos previos',()=>{
+ const {s,command}=fixture();
+ const create=(type,fields)=>s.scope(s.local.command(type,{saleId:'future:'+crypto.randomUUID(),...fields}));
+ const customer={name:'TEST_ONLY Alta',phone:'+51 999000003',address:'Dirección ficticia',zone:'Zona ficticia'};
+ const initial=s.scopedLedger().effects.length;
+ assert.equal(s.call('execute',create('REGISTER_CUSTOMER',{customer}),'333333').error,'PERMISSION_DENIED');
+ const registration=create('REGISTER_CUSTOMER',{customer});
+ assert.equal(s.call('execute',registration,'222222').state,'COMMITTED');
+ assert.equal(s.scopedLedger().effects.length,initial);
+ const snapshot=(subject)=>s.call('snapshot',{format:'ui5d',continuityScope:'TEST_ONLY_CONTINUITY_5G3'},subject);
+ const id=snapshot('222222').customerRegistry65[0].id;
+ assert.equal(snapshot('333333').customerRegistry65,undefined);
+ const c=command([row('monte-alto-250','demo:monte',1)],{customer:{...customer,registryId:id}});
+ assert.equal(s.call('execute',c,'222222').state,'COMMITTED');
+ assert.deepEqual(snapshot('222222').reports.customers.find(c=>c.id===id).orders,[c.saleId]);
+});
+
+test('Ads conserva comprobante único, revisiones auditadas y un solo gasto en reportes',()=>{
+ const {s}=fixture();
+ const create=(type,fields)=>s.scope(s.local.command(type,{saleId:'future:'+crypto.randomUUID(),...fields}));
+ const adDetails={date:'2026-11-01',account:'TEST_ONLY cuenta',campaign:'TEST_ONLY campaña',adSet:'Conjunto',ad:'Anuncio',messages:5,observations:''};
+ const expense={category:'PUBLICIDAD',amountCents:1200,description:'Ads ficticio',documentRef:'TEST_ONLY_AD_65',adDetails};
+ const source=create('RECORD_EXPENSE',expense);
+ assert.equal(s.call('execute',source,'222222').state,'COMMITTED');
+ assert.equal(s.call('execute',create('RECORD_EXPENSE',expense),'222222').error,'DUPLICATE_DOCUMENT');
+ const change={sourceOperationId:source.operationId,expectedAdRevision:0,reason:'TEST_ONLY comprobante revisado',amountCents:1500,adDetails:{...adDetails,messages:6}};
+ assert.equal(s.call('execute',create('CORRECT_AD_EXPENSE',change),'333333').error,'PERMISSION_DENIED');
+ const correction=create('CORRECT_AD_EXPENSE',change);
+ assert.equal(s.call('execute',correction,'222222').state,'COMMITTED');
+ assert.equal(s.call('execute',create('CORRECT_AD_EXPENSE',change),'222222').error,'AD_REVISION_CONFLICT');
+ const view=s.call('snapshot',{format:'ui5d',continuityScope:'TEST_ONLY_CONTINUITY_5G3'},'222222');
+ assert.equal(view.reports.operatingExpenseCents,1500);
+ assert.equal(view.commerce.events.filter(e=>e.kind==='OPERATING_EXPENSE').length,1);
+ assert.equal(view.commerce.events.find(e=>e.kind==='OPERATING_EXPENSE').messages,6);
+ assert.equal(view.commerce.events.find(e=>e.kind==='AD_EXPENSE_CORRECTED').previous.amountCents,1200);
+ assert.equal(s.scopedLedger().journal.find(r=>r.id===source.operationId&&r.kind==='PREPARED').plan.commerceEvents[0].amountCents,1200);
+});
+
+test('reportes separan cobros, despacho, descuento y costo histórico del lote',()=>{
+ const {s,command}=fixture();
+ const sale=command([row('monte-alto-250','demo:monte',1)],{commercialAdjustment:{productTotalCents:3500,deliveryChargedCents:0,reason:'TEST_ONLY'}});
+ const call=c=>s.call('execute',c,'222222');
+ const read=()=>s.call('snapshot',{format:'ui5d',continuityScope:'TEST_ONLY_CONTINUITY_5G3'},'222222');
+ const next=(type,fields={})=>s.scope(s.local.command(type,{saleId:sale.saleId,expectedSaleVersion:read().sales[sale.saleId].version,...fields}));
+ assert.equal(call(sale).state,'COMMITTED');
+ const pay=(amountCents,documentRef)=>call(next('RECORD_PAYMENT',{amountCents,documentRef}));
+ assert.equal(pay(1200,'TEST_ONLY_PAGO_1').state,'COMMITTED');
+ assert.equal(read().sales[sale.saleId].financial.outstandingCents,2300);
+ assert.equal(read().reports.revenueCents,0);
+ assert.equal(call(next('DISPATCH_SALE')).error,'CREDIT_POLICY_REQUIRED');
+ assert.equal(pay(2300,'TEST_ONLY_PAGO_2').state,'COMMITTED');
+ assert.equal(call(next('DISPATCH_SALE')).state,'COMMITTED');
+ const view=read();
+ assert.equal(view.reports.collectionsCents,3500);
+ assert.equal(view.reports.revenueCents,3500);
+ assert.equal(view.reports.cogsCents,2000);
+ assert.equal(view.reports.grossMarginCents,1500);
+ assert.equal(view.sales[sale.saleId].lines[0].lot,'demo:monte-lot');
+ assert.equal(view.sales[sale.saleId].lines[0].totalCostCents,2000);
+});
+
+test('el candidato verifica y cifra un respaldo que incluye el alta independiente',async()=>{
+ const {s}=fixture();
+ const manifest=JSON.parse(fs.readFileSync(new URL('../build/manifest.json',import.meta.url)));
+ s.f.f.properties.CV_5G4_BACKEND_SHA256=manifest.backendSha256;
+ s.f.f.properties.CV_5G4_WORKER_SHA256=manifest.workerSha256;
+ const customer={name:'TEST_ONLY Respaldo',phone:'999000006',address:'Dirección ficticia',zone:'Zona ficticia'};
+ const registration=s.scope(s.local.command('REGISTER_CUSTOMER',{saleId:'future:'+crypto.randomUUID(),customer}));
+ assert.equal(s.call('execute',registration).state,'COMMITTED');
+ const before=JSON.stringify(s.scopedLedger());
+ const payload={format:'ui5d',continuityScope:'TEST_ONLY_CONTINUITY_5G3',backup54:true};
+ assert.equal(s.call('snapshot',payload,'222222').error,'PERMISSION_DENIED');
+ const archive=s.call('snapshot',payload).backupArchive54;
+ const {encryptArchive54,decryptFile54}=await import('../../backup54.mjs');
+ const sealed=await encryptArchive54(archive);
+ const restored=await decryptFile54(sealed.fileText,sealed.keyBase64,sealed.encryptedFileHash);
+ assert.equal(restored.verified.archiveHash,archive.sha256);
+ const target={environment:'TEST_ONLY',journal:[],effects:[]};
+ const backup=require('../../../fase5g2/backup.cjs');
+ backup.restore(archive,target,{writer:'NONE',expectedHash:archive.sha256});
+ assert.ok(target.journal.some(r=>r.plan?.customerRegistration65?.name===customer.name));
+ assert.equal(JSON.stringify(s.scopedLedger()),before);
+});

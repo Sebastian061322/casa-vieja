@@ -135,7 +135,7 @@ const day=iso=>new Date(Date.parse(iso)-5*3600000).toISOString().slice(0,10);
 const ref=s=>text(s,100).toUpperCase();
 class Engine extends Inventory{
  constructor(store,opening,hook,context={role:'owner',now:()=>new Date().toISOString()}){super(store,opening,hook);this.context=context;}
- state(){const s=super.state();s.commerce={offers:{},authorizations:{},events:[],documents:{}};const records=this.records(),preparedById=new Map(records.filter(r=>r.kind==='PREPARED').map(r=>[r.id,r]));for(const row of records.filter(r=>r.kind==='COMMITTED')){const p=preparedById.get(row.id);for(const e of p.plan.commerceEvents||[]){s.commerce.events.push(clone(e));if(e.documentRef){check(!s.commerce.documents[e.documentRef],'COMMERCIAL_DOCUMENT_CONFLICT');s.commerce.documents[e.documentRef]=e.id;}if(e.kind==='OFFER')s.commerce.offers[e.offer.id]=clone(e.offer);if(e.kind==='DISCOUNT_AUTHORIZATION')s.commerce.authorizations[e.authorization.id]=clone(e.authorization);if(e.kind==='DISCOUNT_USED')s.commerce.authorizations[e.authorizationId].usedBy=e.operationId;}}return s;}
+ state(){const s=super.state();s.commerce={offers:{},authorizations:{},events:[],documents:{}};const records=this.records(),preparedById=new Map(records.filter(r=>r.kind==='PREPARED').map(r=>[r.id,r]));for(const row of records.filter(r=>r.kind==='COMMITTED')){const p=preparedById.get(row.id);for(const e of p.plan.commerceEvents||[]){s.commerce.events.push(clone(e));if(e.documentRef){check(!s.commerce.documents[e.documentRef],'COMMERCIAL_DOCUMENT_CONFLICT');s.commerce.documents[e.documentRef]=e.id;}if(e.kind==='OFFER')s.commerce.offers[e.offer.id]=clone(e.offer);if(e.kind==='DISCOUNT_AUTHORIZATION')s.commerce.authorizations[e.authorization.id]=clone(e.authorization);if(e.kind==='DISCOUNT_USED')s.commerce.authorizations[e.authorizationId].usedBy=e.operationId;}}return CV_SCOPE53_ACTIVE?cvProjectAds65_(s):s;}
  financial(s,saleId){const sale=s.sales[saleId],events=s.commerce.events.filter(e=>e.saleId===saleId);const sum=k=>events.filter(e=>e.kind===k).reduce((n,e)=>n+e.amountCents,0);const credit=sum('RETURN_CREDIT');const due=sale?.status==='CANCELLED'?0:(sale?.totalCents||0)+(sale?.deliveryChargedCents||0)-credit;const paid=sum('PAYMENT'),refunded=sum('REFUND');return {dueCents:due,paidCents:paid,refundedCents:refunded,cashCents:paid-refunded,outstandingCents:Math.max(0,due-paid+refunded),refundableCents:Math.max(0,paid-refunded-due)};}
  plan(s,c){
   check(c.commercialVersion===4,'COMMERCIAL_VERSION_REQUIRED');check(this.context&&this.context.role==='owner','OWNER_ONLY');const now=this.context.now();check(!Number.isNaN(Date.parse(now)),'INVALID_SERVER_TIME');
@@ -153,7 +153,7 @@ class Engine extends Inventory{
    for(const l of c.items){const offer=s.commerce.offers[l.offerId],r=s.resources[l.resourceId];check(offer&&offer.active&&offer.validFrom<=day(now)&&offer.validUntil>=day(now),'PRICE_NOT_CURRENT');check(l.offerVersion===offer.version,'OFFER_VERSION_CONFLICT');check(r&&r.stage==='PACKAGED'&&r.family===offer.family&&r.grind===offer.grind&&r.grams===offer.grams,'OFFER_RESOURCE_MISMATCH');num(l.quantity,1);const qty=num(l.quantity*offer.bags,1),lineGross=num(l.quantity*offer.priceCents);gross=num(gross+lineGross);details.push({offer:clone(offer),resourceId:r.id,presentations:l.quantity,qty,grossCents:lineGross});if(!aggregate[r.id])aggregate[r.id]={resourceId:r.id,qty:0,grossCents:0,netCents:0};aggregate[r.id].qty=num(aggregate[r.id].qty+qty);aggregate[r.id].grossCents=num(aggregate[r.id].grossCents+lineGross);}
    const discount=num(c.discountCents||0);check(discount<=gross,'INVALID_DISCOUNT');if(discount){const a=s.commerce.authorizations[c.authorizationId];check(a&&!a.usedBy&&a.saleId===c.saleId&&a.maxCents>=discount&&Date.parse(a.expiresAt)>=Date.parse(now),'DISCOUNT_NOT_AUTHORIZED');event('DISCOUNT_USED',{authorizationId:a.id,amountCents:discount});}
    let cumulative=0,allocated=0;for(const l of Object.values(aggregate)){cumulative+=l.grossCents;const next=gross?share(discount,cumulative,gross):0;l.netCents=l.grossCents-(next-allocated);allocated=next;}
-   const metadata=c.customer||{};check(Object.keys(metadata).every(k=>['name','phone','zone','note','address','previousOrder'].includes(k)),'INVALID_CUSTOMER');for(const v of Object.values(metadata))check(typeof v==='string'&&v.length<=500,'INVALID_CUSTOMER');
+   const metadata=c.customer||{};check(Object.keys(metadata).every(k=>['name','phone','zone','note','address','previousOrder','registryId'].includes(k)),'INVALID_CUSTOMER');for(const v of Object.values(metadata))check(typeof v==='string'&&v.length<=500,'INVALID_CUSTOMER');
    p=super.plan(s,{...c,totalCents:gross-discount,lines:Object.values(aggregate).map(l=>({resourceId:l.resourceId,qty:l.qty})),metadata:{customer:metadata.name||'',phone:metadata.phone||'',zone:metadata.zone||'',note:metadata.note||'',date:day(c.date)}});
    p.sale.commercial={version:4,channel:text(c.channel||'Otro',80),grossCents:gross,discountCents:discount,authorizationId:c.authorizationId||null,items:details,allocations:Object.values(aggregate),createdAt:now};event('ORDER_REGISTERED',{grossCents:gross,discountCents:discount,amountCents:p.sale.totalCents+p.sale.deliveryChargedCents});
   }else if(['RECORD_PAYMENT','RECORD_REFUND'].includes(c.type)){
@@ -212,7 +212,11 @@ class Engine extends C.Engine{
  finish(p){const previous=this.recovering;this.recovering=true;try{return super.finish(p)}finally{this.recovering=previous}}
  plan(s,input){check(roles[this.actor.role].includes(input.type),'PERMISSION_DENIED');const c=clone(input);c.date=this.context.now();c.responsible=this.actor.subject;
   if(this.actor.role==='seller'){check(!financial.some(k=>Object.hasOwn(c,k)),'FINANCIAL_FIELDS_FORBIDDEN');check(Array.isArray(c.items)&&c.items.every(i=>Object.keys(i).every(k=>['offerId','offerVersion','resourceId','quantity'].includes(k))),'INVALID_ITEMS');const shipping=this.policy.shippingByZone?.[c.customer?.zone||''];check(shipping&&Number.isSafeInteger(shipping.costCents)&&shipping.costCents>=0&&Number.isSafeInteger(shipping.chargedCents)&&shipping.chargedCents>=0,'SHIPPING_POLICY_REQUIRED');c.deliveryCostCents=shipping.costCents;c.deliveryChargedCents=shipping.chargedCents;}
-  const p=super.plan(s,c);p.audit={subject:this.actor.subject,role:this.actor.role,serverAt:c.date,submittedAt:input.date,type:input.type,operationId:input.operationId};p.policyRef={version:this.policy.version||0,environment:'TEST_ONLY',rulesApprovedForProduction:false};for(const e of p.commerceEvents||[])e.actorRole=this.actor.role;return p;
+  const p=super.plan(s,c);p.audit={subject:this.actor.subject,role:this.actor.role,serverAt:c.date,submittedAt:input.date,type:input.type,operationId:input.operationId};if(CV_SCOPE53_ACTIVE&&c.type==='RECORD_EXPENSE'&&Object.hasOwn(c,'adDetails')){
+  if(c.category!=='PUBLICIDAD')throw Error('INVALID_AD_DETAILS');
+  const details=cvAdsDetails65_(c.adDetails);
+  Object.assign(p.commerceEvents[0],{adDetails65:details,messages:details.messages,campaign:details.campaign});
+ }p.policyRef={version:this.policy.version||0,environment:'TEST_ONLY',rulesApprovedForProduction:false};for(const e of p.commerceEvents||[])e.actorRole=this.actor.role;return p;
  }
 }
 function snapshot(engine,{offset=0,limit=50,revision}={}){check(Number.isSafeInteger(offset)&&offset>=0&&Number.isSafeInteger(limit)&&limit>0&&limit<=100,'INVALID_PAGE');const s=engine.state();check(revision===undefined||revision===s.revision,'REVISION_CHANGED');const management=engine.actor.role!=='seller',pick=(o,keys)=>Object.fromEntries(keys.filter(k=>o[k]!==undefined).map(k=>[k,clone(o[k])])),resources=Object.values(s.resources).filter(r=>management||r.stage==='PACKAGED').map(r=>pick(r,['id','product','lot','stage','family','grind','grams','unit','physical','reserved','qty','supplyKind',...(management?['valueCents','reservedValueCents']:[])]));const sales=Object.values(s.sales).filter(sale=>management||engine.records().some(p=>p.kind==='PREPARED'&&p.id===sale.originOperationId&&p.plan.audit?.subject===engine.actor.subject)).map(sale=>({...pick(sale,['id','version','status','totalCents','deliveryChargedCents','metadata',...(management?['costCents','deliveryCostCents']:[])]),lines:sale.lines.map(l=>pick(l,['resourceId','qty','lot','family','grind','grams','returned',...(management?['totalCostCents']:[])]))}));const offers=Object.values(s.commerce.offers).filter(o=>o.active).map(o=>pick(o,['id','name','family','grind','grams','bags','priceCents','validFrom','validUntil','version']));return {epoch:s.epoch,revision:s.revision,profile:engine.actor.role,resources:resources.slice(offset,offset+limit),sales:sales.slice(offset,offset+limit),offers:offers.slice(offset,offset+limit),next:Math.max(resources.length,sales.length,offers.length)>offset+limit?offset+limit:null};}
@@ -746,7 +750,7 @@ module.exports={prepareSale};
 return module.exports;})();
 const CV53PlanBeforeCatalogue=CVZeroAccess.Engine.prototype.plan;
 CVZeroAccess.Engine.prototype.plan=function(state,command){
- if(!CV_SCOPE53_ACTIVE)return CV53PlanBeforeCatalogue.call(this,state,command);if(["REQUEST_COMMERCIAL_ADJUSTMENT","REVIEW_COMMERCIAL_ADJUSTMENT"].includes(command.type))return cvApprovalPlan63_(this,state,command);
+ if(!CV_SCOPE53_ACTIVE)return CV53PlanBeforeCatalogue.call(this,state,command);if(["REQUEST_COMMERCIAL_ADJUSTMENT","REVIEW_COMMERCIAL_ADJUSTMENT"].includes(command.type))return cvApprovalPlan63_(this,state,command);if(command.type==="REGISTER_CUSTOMER")return cvRegisterCustomer65_(this,command);if(command.type==="CORRECT_AD_EXPENSE")return cvCorrectAd65_(this,state,command);
  if(command.type==='CONFIGURE_OFFER'&&command.offer?.id?.startsWith('demo:cv53_internal_'))throw Error('INTERNAL_OFFER_FORBIDDEN');
  if(['REGISTER_SALE','RESERVE_SALE'].includes(command.type)){
   const raw=cvProps5g_().getProperty('CV_5G3_CATALOGUE_CONFIG'),cfg=raw?JSON.parse(raw):null;
@@ -967,10 +971,61 @@ function cvAuthorizedAdjustment62_(engine, command, prepared, approved) {
  };
 }
 
+function cvAdsDetails65_(data){
+ if(!data||typeof data!=='object'||Array.isArray(data)||
+    Object.keys(data).some(k=>!['date','account','campaign','adSet','ad','observations','messages'].includes(k)))
+  throw Error('INVALID_AD_DETAILS');
+ for(const key of ['account','campaign','adSet','ad','observations'])
+  if(typeof data[key]!=='string'||data[key].length>200||(key!=='observations'&&!data[key].trim()))throw Error('INVALID_AD_DETAILS');
+ if(typeof data.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(data.date)||
+    !Number.isFinite(Date.parse(data.date))||new Date(data.date).toISOString().slice(0,10)!==data.date||
+    !Number.isSafeInteger(data.messages)||data.messages<0)throw Error('INVALID_AD_DETAILS');
+ return CVInventoryBase.clone(data);
+}
+
+function cvCorrectAd65_(engine,state,command){
+ if(engine.actor.role==='seller')throw Error('PERMISSION_DENIED');
+ if(command.commercialVersion!==4)throw Error('COMMERCIAL_VERSION_REQUIRED');
+ const {subject,role}=engine.actor,now=engine.context.now();
+ const current=state.commerce.events.find(e=>e.kind==='OPERATING_EXPENSE'&&e.category==='PUBLICIDAD'&&e.operationId===command.sourceOperationId);
+ if(!current)throw Error('AD_EXPENSE_NOT_FOUND');
+ if((current.adRevision65||0)!==command.expectedAdRevision)throw Error('AD_REVISION_CONFLICT');
+ if(typeof command.reason!=='string'||!command.reason.trim()||command.reason.length>500)throw Error('INVALID_CORRECTION_REASON');
+ const amount=command.amountCents;
+ const paid=state.commerce.events.filter(e=>e.kind==='EXPENSE_PAYMENT'&&e.sourceOperationId===current.operationId)
+  .reduce((n,e)=>n+e.amountCents,0);
+ if(!Number.isSafeInteger(amount)||amount<Math.max(paid,1)||amount>100000000000||
+    (current.paid&&amount!==current.amountCents))throw Error('AD_AMOUNT_CONFLICT');
+ const after=cvAdsDetails65_(command.adDetails),revision=(current.adRevision65||0)+1;
+ const event={id:command.operationId+':commercial:0',kind:'AD_EXPENSE_CORRECTED',date:now,operationId:command.operationId,
+  sourceOperationId:current.operationId,actorRole:role,subject,reason:command.reason.trim(),revision,
+  previous:{amountCents:current.amountCents,messages:current.messages,details:current.adDetails65||null},next:{amountCents:amount,details:after}};
+ return {sale:{id:command.saleId,version:1,entityType:'inventory'},resources:[],lots:[],effects:[],commerceEvents:[event],
+  audit:{subject,role,serverAt:now,type:command.type,operationId:command.operationId}};
+}
+
+function cvProjectAds65_(state){
+ const expenses=new Map();
+ for(const event of state.commerce.events){
+  if(event.kind==='OPERATING_EXPENSE'&&event.category==='PUBLICIDAD')expenses.set(event.operationId,event);
+  if(event.kind!=='AD_EXPENSE_CORRECTED')continue;
+  const expense=expenses.get(event.sourceOperationId);
+  if(!expense||event.revision!==(expense.adRevision65||0)+1)throw Error('AD_REVISION_CONFLICT');
+  Object.assign(expense,{adRevision65:event.revision,adDetails65:event.next.details,amountCents:event.next.amountCents,
+   campaign:event.next.details.campaign,messages:event.next.details.messages});
+ }
+ return state;
+}
+
 function cvLinkCustomer64_(engine,state,command,plan){
  const customer=command.customer||{};
  let id=plan.sale.id;
- if(Object.hasOwn(customer,'previousOrder')){
+ if(Object.hasOwn(customer,'registryId')){
+  if(engine.actor.role==='seller'||Object.hasOwn(customer,'previousOrder'))throw Error('CUSTOMER_LINK_UNAVAILABLE');
+  const entry=cvCustomerRegistry65_(engine)[customer.registryId];
+  if(!entry?.id||entry.name!==customer.name||entry.phone!==customer.phone)throw Error('CUSTOMER_CONTACT_MISMATCH');
+  id=entry.id;
+ }else if(Object.hasOwn(customer,'previousOrder')){
   const previous=Object.hasOwn(state.sales,customer.previousOrder)?state.sales[customer.previousOrder]:null;
   if(!previous?.commercial||previous.status==='CANCELLED')throw Error('CUSTOMER_LINK_UNAVAILABLE');
   if(engine.actor.role==='seller'){
@@ -983,6 +1038,28 @@ function cvLinkCustomer64_(engine,state,command,plan){
  }
  plan.sale.commercial.customerId64=id;
  plan.sale.metadata.address64=customer.address||'';
+}
+
+function cvCustomerRegistry65_(engine){
+ const records=engine.records(), committed=new Set(records.filter(r=>r.kind==='COMMITTED').map(r=>r.id));
+ return Object.fromEntries(records.filter(r=>r.kind==='PREPARED'&&r.plan?.customerRegistration65&&committed.has(r.id))
+  .map(r=>[r.plan.customerRegistration65.id,r.plan.customerRegistration65]));
+}
+
+function cvRegisterCustomer65_(engine,command){
+ if(engine.actor.role==='seller')throw Error('PERMISSION_DENIED');
+ if(command.commercialVersion!==4)throw Error('COMMERCIAL_VERSION_REQUIRED');
+ const input=command.customer;
+ if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!['name','phone','address','zone'].includes(k))||
+    !['name','phone','address','zone'].every(k=>typeof input[k]==='string'&&input[k].trim()&&input[k].length<=200))
+  throw Error('INVALID_CUSTOMER');
+ const phone=input.phone.trim();
+ if(!/^\+?[\d ()-]+$/.test(phone)||phone.replace(/\D/g,'').length<7||phone.replace(/\D/g,'').length>15)
+  throw Error('INVALID_CUSTOMER');
+ const {subject,role}=engine.actor,serverAt=engine.context.now();
+ const customer={id:'customer:'+command.operationId,name:input.name.trim(),phone,address:input.address.trim(),zone:input.zone.trim()};
+ return {sale:{id:command.saleId,version:1,entityType:'inventory'},resources:[],lots:[],effects:[],commerceEvents:[],
+  customerRegistration65:customer,audit:{subject,role,serverAt,type:command.type,operationId:command.operationId}};
 }
 
 function cvApprovalBinding63_(command){
@@ -1053,6 +1130,11 @@ CV5DView.snapshot=function(engine){
  const snapshot=CVApprovalViewBase63_(engine);
  if(!CV_SCOPE53_ACTIVE)return snapshot;
  const management=engine.actor.role!=='seller';
+ if(management){
+  snapshot.customerRegistry65=Object.values(cvCustomerRegistry65_(engine));
+  const existing=new Set(snapshot.reports.customers.map(c=>c.id));
+  for(const c of snapshot.customerRegistry65)if(!existing.has(c.id))snapshot.reports.customers.push({...c,orders:[],purchaseCount:0,totalCents:0});
+ }
  return {...snapshot,adjustmentApprovals63:Object.values(cvApprovalRows63_(engine))
   .filter(r=>management||r.subject===engine.actor.subject)
   .filter(r=>Date.parse(r.expiresAt)>Date.parse(engine.context.now()))

@@ -66,6 +66,11 @@ CV5DView.snapshot=function(engine){
  const snapshot=CVApprovalViewBase63_(engine);
  if(!CV_SCOPE53_ACTIVE)return snapshot;
  const management=engine.actor.role!=='seller';
+ if(management){
+  snapshot.customerRegistry65=Object.values(cvCustomerRegistry65_(engine));
+  const existing=new Set(snapshot.reports.customers.map(c=>c.id));
+  for(const c of snapshot.customerRegistry65)if(!existing.has(c.id))snapshot.reports.customers.push({...c,orders:[],purchaseCount:0,totalCents:0});
+ }
  return {...snapshot,adjustmentApprovals63:Object.values(cvApprovalRows63_(engine))
   .filter(r=>management||r.subject===engine.actor.subject)
   .filter(r=>Date.parse(r.expiresAt)>Date.parse(engine.context.now()))

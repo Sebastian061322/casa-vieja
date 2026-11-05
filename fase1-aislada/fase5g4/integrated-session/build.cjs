@@ -23,7 +23,7 @@ backend=patch(backend,'return service.handle(envelope);',
 backend=patch(backend,'if(cfg?.enabled===true||command.catalogueOfferId!==undefined){const prepared=CV53CatalogueRules.prepareSale(state,command,cfg,CV53CatalogueSource,this.context.now());',
  'if(cfg?.enabled===true||command.catalogueOfferId!==undefined||Object.hasOwn(command,"catalogueCart")){const prepared=Object.hasOwn(command,"catalogueCart")?cvPrepareCart63_(state,command,cfg,CV53CatalogueSource,this.context.now()):CV53CatalogueRules.prepareSale(state,command,cfg,CV53CatalogueSource,this.context.now());');
 backend=patch(backend,'if(!CV_SCOPE53_ACTIVE)return CV53PlanBeforeCatalogue.call(this,state,command);',
- 'if(!CV_SCOPE53_ACTIVE)return CV53PlanBeforeCatalogue.call(this,state,command);if(["REQUEST_COMMERCIAL_ADJUSTMENT","REVIEW_COMMERCIAL_ADJUSTMENT"].includes(command.type))return cvApprovalPlan63_(this,state,command);');
+ 'if(!CV_SCOPE53_ACTIVE)return CV53PlanBeforeCatalogue.call(this,state,command);if(["REQUEST_COMMERCIAL_ADJUSTMENT","REVIEW_COMMERCIAL_ADJUSTMENT"].includes(command.type))return cvApprovalPlan63_(this,state,command);if(command.type==="REGISTER_CUSTOMER")return cvRegisterCustomer65_(this,command);if(command.type==="CORRECT_AD_EXPENSE")return cvCorrectAd65_(this,state,command);');
 backend=patch(backend,'function cvAuthorizedAdjustment62_(engine, command, prepared) {','function cvAuthorizedAdjustment62_(engine, command, prepared, approved) {');
 backend=patch(backend,'const adjustment = command.commercialAdjustment;', 'const adjustment = approved?.adjustment || command.commercialAdjustment;');
 backend=patch(backend,"if (!manager) return null;","if (!manager && !approved) return null;");
@@ -38,11 +38,20 @@ backend=patch(backend,'const adjustment=cvAuthorizedAdjustment62_(this,command,p
   adjustment.approvedBy=approved.reviewer;adjustment.approvalId=approved.id;
  }
  try{plan=CV53PlanBeforeCatalogue.call(this,prepared.state,prepared.command);}finally{this.policy=previousPolicy;}`);
-backend=patch(backend,"['name','phone','zone','note'].includes(k)","['name','phone','zone','note','address','previousOrder'].includes(k)");
+backend=patch(backend,"['name','phone','zone','note'].includes(k)","['name','phone','zone','note','address','previousOrder','registryId'].includes(k)");
 backend=patch(backend,'try{plan=CV53PlanBeforeCatalogue.call(this,prepared.state,prepared.command);}finally{this.policy=previousPolicy;}',
  'try{plan=CV53PlanBeforeCatalogue.call(this,prepared.state,prepared.command);cvLinkCustomer64_(this,state,command,plan);}finally{this.policy=previousPolicy;}');
 backend=patch(backend,'const key=phone||sale.id;',
  'const key=sale.commercial.customerId64||sale.id;');
+backend=patch(backend,"if(e.kind==='DISCOUNT_USED')s.commerce.authorizations[e.authorizationId].usedBy=e.operationId;}}return s;}",
+ "if(e.kind==='DISCOUNT_USED')s.commerce.authorizations[e.authorizationId].usedBy=e.operationId;}}return CV_SCOPE53_ACTIVE?cvProjectAds65_(s):s;}");
+backend=patch(backend,'p.policyRef={version:this.policy.version||0,',
+ `if(CV_SCOPE53_ACTIVE&&c.type==='RECORD_EXPENSE'&&Object.hasOwn(c,'adDetails')){
+  if(c.category!=='PUBLICIDAD')throw Error('INVALID_AD_DETAILS');
+  const details=cvAdsDetails65_(c.adDetails);
+  Object.assign(p.commerceEvents[0],{adDetails65:details,messages:details.messages,campaign:details.campaign});
+ }p.policyRef={version:this.policy.version||0,`);
+backend+='\n'+read('ads.gs');
 backend+='\n'+read('customer.gs');
 backend+='\n'+read('approval.gs');
 backend+='\n'+read('cart.gs');
@@ -158,7 +167,31 @@ function installCustomer64(s){
   return '<p>Última compra despachada '+esc(last.slice(0,10)||'Sin despacho')+' · '+pending+' pedido(s) reservado(s)</p>';
  }
 function renderCustomers(){`);
+ s=patch(s,'<div id="customer-list"></div>', '${customerRegistration65()}<div id="customer-list"></div>');
+ s=patch(s,'function renderCustomers(){',`function customerRegistration65(){
+  return '<details class="card"><summary>Alta de cliente</summary><form id="customer-register65" class="form-grid">'+
+   [['name','Nombre','text'],['phone','Teléfono','tel'],['address','Dirección','text'],['zone','Zona','text']]
+    .map(([key,title,type])=>label(key,title,type,'','required maxlength="200"')).join('')+
+   '<button class="btn" type="submit">Guardar cliente</button></form></details>';
+ }
+ document.addEventListener('submit',async event=>{
+  if(event.target.id!=='customer-register65')return;
+  event.preventDefault();
+  const form=event.target,button=form.querySelector('button');
+  button.disabled=true;
+  try{await send({type:'REGISTER_CUSTOMER',saleId:'future:'+uuid(),customer:Object.fromEntries(new FormData(form))});}
+  catch(error){notice(explain(error));}
+  finally{button.disabled=false;}
+ });
+ function renderCustomers(){`);
+ s=patch(s,".filter(c=>`${c.name} ${c.phone}`.toLowerCase().includes(q))",
+  ".filter(c=>c.name.toLowerCase().includes(q)||(/^\\+?[\\d ()-]+$/.test(q)&&c.phone.replace(/\\D/g,'').replace(/^51(?=\\d{9}$)/,'').includes(q.replace(/\\D/g,'').replace(/^51(?=\\d{9}$)/,''))))");
  s=patch(s,'<p>Importe neto de pedidos:','${customerHistory64(c)}<p>Importe neto de pedidos:');
+ s=patch(s,'function renderAds56(filters = {}) {',read('ads-browser.js')+'\nfunction renderAds56(filters = {}) {');
+ s=patch(s,'const { rows, investment, messages, costPerMessage } = advertisingSummary(events, filters);',
+  'const { rows, investment, messages, costPerMessage } = advertisingSummary(events.map(e=>e.adDetails65?{...e,date:e.adDetails65.date}:e), filters);');
+ s=patch(s,'<p>Selecciona Publicidad manual en el formulario de egresos.</p>','${adForm65()}');
+ s=patch(s,'${esc(e.description)}</p></article>','${esc(e.description)}</p>${adHistory65(events,e)}</article>');
  s=patch(s,'<p>Costo por venta y ROAS requieren atribución verificada.</p>',
   '<p>Costo por venta atribuible: N/D · ROAS atribuible: N/D. Requieren atribución verificada.</p>');
  s=patch(s,"nav54('approvals63','Aprobaciones comerciales');","nav54('approvals63','Aprobaciones comerciales');nav54('order-report64','Reporte por producto y lote');");

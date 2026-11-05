@@ -2,7 +2,7 @@
   "environment": "TEST_ONLY",
   "baseBackend": 7,
   "baseWorker": "52a8512a",
-  "backendSha256": "5fba6141657b5cf395358876864418bd0de6b668583c835b07773a325d80052d",
-  "workerSha256": "8770f2b4e78c2c8506a8bb1959726ae7cf57ca61c39f1818a8adc6aebcdabd99",
+  "backendSha256": "6e96e504acae138fd26b240dd55e11060320d4e66b7420b5b4a44c134ff66bed",
+  "workerSha256": "2f53c5607e2e740f498d120be7341c4255ce38959666c09d4308349ed4484ed1",
   "deployed": false
 }

@@ -180,11 +180,15 @@ test('el módulo servido cifra y descifra un respaldo superior al límite de arg
  const worker=fs.readFileSync(new URL('../build/worker-bundle.mjs',import.meta.url),'utf8');
  const begin='\nconst assets=';
  const assets=JSON.parse(worker.slice(worker.indexOf(begin)+begin.length,worker.indexOf(';\nexport default')));
- const {encryptArchive54,decryptFile54}=await import('data:text/javascript;base64,'+Buffer.from(assets['/backup54.mjs']).toString('base64'));
+ const embedded=assets['/entry.mjs'].match(/const CV54Phone=\(\(\)=>\{[\s\S]*?return \{encryptArchive54\};\}\)\(\);/);
+ assert.ok(embedded);
+ const module=source=>import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+ const {CV54Phone}=await module(embedded[0]+' export {CV54Phone};');
+ const {decryptFile54}=await module(assets['/backup54.mjs']);
  const payload='Café · respaldo '.repeat(30000);
  const backup=require('../../../fase5g2/backup.cjs');
  const archive=backup.pack({environment:'TEST_ONLY',syntheticOnly:true,journal:[],effects:[],configuration:{payload},openingBundle:{},codeHashes:{backend:'a'.repeat(64)},operationMetadata:{}});
- const encrypted=await encryptArchive54(archive);
+ const encrypted=await CV54Phone.encryptArchive54(archive);
  assert.ok(encrypted.fileText.length>500000);
  const recovered=await decryptFile54(encrypted.fileText,encrypted.keyBase64,encrypted.encryptedFileHash);
  assert.equal(recovered.archive.sections.configuration.value.payload,payload);

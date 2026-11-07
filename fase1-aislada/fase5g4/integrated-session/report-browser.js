@@ -35,7 +35,7 @@
    '<p>Gastos de todo el período · Publicidad '+money(ads)+' · Otros '+money(other)+' · Resultado estimado '+(dimensionFiltered?'N/D para el segmento':money(revenue-costs-sum('DISPATCH_RECOGNIZED','distributionCents')-ads-other-loss))+'</p>'+
    '<h4>Stock envasado actual por lote</h4>'+stock.filter(matches).map(r=>'<p>'+esc(r.product)+' · '+esc(r.lot)+' · '+r.qty+' disponibles</p>').join('')+
    '<h4>Partidas de pedidos coincidentes</h4>'+orders.filter(s=>periodIds.has(s.id)).slice(0,50).map(s=>'<details><summary>'+esc(s.id)+'</summary>'+
-    s.lines.filter(matches).map(l=>'<p>'+esc(l.lot)+' · '+esc(lineOf(l))+' · '+l.qty+' bolsa(s) · Costo histórico '+money(l.totalCostCents)+'</p>').join('')+'</details>').join('')+'</section>';
+    s.lines.filter(matches).map(l=>'<p>'+esc(l.lot)+' · '+esc(lineOf(l))+' · '+l.qty+' bolsa(s) · Costo histórico '+(Number.isSafeInteger(l.totalCostCents)?money(l.totalCostCents):'N/D')+'</p>').join('')+'</details>').join('')+'</section>';
   for(const [key] of dimensions)$('report-filter64').elements[key].value=filters[key]||'';
  }
  document.addEventListener('submit',event=>{

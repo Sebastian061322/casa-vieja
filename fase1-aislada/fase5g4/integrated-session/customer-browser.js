@@ -1,9 +1,7 @@
  function customerFields64(draft){
-  const candidates=Object.values(snapshot.sales).filter(s=>s.commercial&&s.status!=='CANCELLED'&&s.metadata?.phone)
-   .sort((a,b)=>String(b.metadata.date).localeCompare(String(a.metadata.date))).slice(0,100);
-  const registered=(snapshot.customerRegistry65||[]).map(c=>option(c.id,c.name+' · •••'+c.phone.slice(-3))).join('');
-  const options=candidates.map(s=>option(s.id,s.metadata.customer+' · •••'+s.metadata.phone.slice(-3)+' · '+s.metadata.date)).join('');
-  return select('previousOrder','Cliente existente',option('','Cliente nuevo')+registered+options)+
+  const options=customerOptions73(draft,'');
+  return label('customerSearch73','Buscar cliente por nombre o teléfono','search','','autocomplete="off"')+
+   select('previousOrder','Cliente existente',options)+
    label('customer','Cliente','text',draft.customer,'required')+
    label('phone','Teléfono','tel',draft.phone||'')+
    label('address','Dirección','text',draft.address||'')+
@@ -27,3 +25,17 @@
   for(const [field,value] of Object.entries({customer:contact.name,phone:contact.phone,address:contact.address,zone:contact.zone}))
    form.elements[field].value=value||'';
  },true);
+
+ function customerOptions73(draft,query){
+  const all=customerChoices73(snapshot.sales,snapshot.customerRegistry65||[]);
+  const found=customerChoices73(snapshot.sales,snapshot.customerRegistry65||[],query);
+  const selected=all.find(c=>c.value===draft.previousOrder);
+  if(selected){const index=found.findIndex(c=>c.value===selected.value);if(index>=0)found.splice(index,1);found.unshift(selected);}
+  return option('','Cliente nuevo')+found.slice(0,100).map(c=>option(c.value,c.name+' · •••'+c.phone.slice(-3)+' · '+(c.date||c.value.slice(-6)))).join('');
+ }
+ document.addEventListener('input',event=>{
+  if(event.target.name!=='customerSearch73'||!event.target.closest('#catalogue54-form'))return;
+  const form=event.target.form,value=form.elements.previousOrder.value;
+  form.elements.previousOrder.innerHTML=customerOptions73({previousOrder:value},event.target.value);
+  form.elements.previousOrder.value=value;
+ });

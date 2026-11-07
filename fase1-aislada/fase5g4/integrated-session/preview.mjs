@@ -47,9 +47,13 @@ const server=http.createServer(async(req,res)=>{try{
  if(req.headers.host!=='127.0.0.1:'+port){res.writeHead(403);res.end();return;}
  const url=new URL(req.url,origin);let response;
  if(url.pathname==='/fixture-credential54'){const subject=url.searchParams.get('subject');if(!['111111','222222','333333'].includes(subject)){res.writeHead(403);res.end();return;}response=Response.json({credential:token(subject)},{headers:{'cache-control':'no-store'}});}
- else if(url.pathname==='/api'){const chunks=[];for await(const c of req)chunks.push(c);response=await gateway.fetch(new Request(url,{method:req.method,headers:req.headers,body:Buffer.concat(chunks)}),env);}
+ else if(url.pathname==='/api'){const chunks=[];for await(const c of req)chunks.push(c);response=await gateway.fetch(new Request(url,{method:req.method,headers:{...req.headers,...(req.headers.cookie?{cookie:req.headers.cookie.replaceAll('cv-local-fixture72=','__Host-cv-lab-session=')}:{})},body:Buffer.concat(chunks)}),env);}
  else if(assets[url.pathname])response=new Response(assets[url.pathname],{headers:{'content-type':url.pathname.endsWith('.css')?'text/css':url.pathname.endsWith('.js')||url.pathname.endsWith('.mjs')?'text/javascript':'text/html','cache-control':'no-store'}});
  else response=new Response('Not found',{status:404});
- res.writeHead(response.status,Object.fromEntries(response.headers));res.end(Buffer.from(await response.arrayBuffer()));
+ // Adaptador exclusivo del simulador HTTP loopback con identidades ficticias.
+ // Las cookies de producción mantienen __Host, Secure y HttpOnly en el artefacto publicado.
+ const fixtureHeaders=Object.fromEntries(response.headers);
+ if(fixtureHeaders['set-cookie'])fixtureHeaders['set-cookie']=fixtureHeaders['set-cookie'].replace('__Host-cv-lab-session=','cv-local-fixture72=').replace('; Secure','');
+ res.writeHead(response.status,fixtureHeaders);res.end(Buffer.from(await response.arrayBuffer()));
  }catch{res.writeHead(500,{'content-type':'application/json'});res.end(JSON.stringify({error:'LOCAL_FIXTURE_UNAVAILABLE'}));}});
 server.listen(port,'127.0.0.1',()=>console.log('Fixture local TEST_ONLY '+origin+'/?engine=5g4; sin Google/Sheets reales'));

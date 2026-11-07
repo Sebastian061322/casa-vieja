@@ -231,12 +231,12 @@ entry=patch(entry,"$('logout5d').onclick=()=>{loginFlow.invalidate();session.log
  };`);
 entry=patch(entry,"function login(response){return loginFlow.run(response.credential);}",read('browser.js'));
 entry=patch(entry,"  await new Promise((resolve,reject)=>{const script=document.createElement('script');", "  if(await loginFlow.run(COOKIE_MODE63))return;\n  await new Promise((resolve,reject)=>{const script=document.createElement('script');");
-entry=patch(entry,"ajustes-62 · Backend requiere paquete de ajustes","rendimiento-72 · Backend de laboratorio");
+entry=patch(entry,"ajustes-62 · Backend requiere paquete de ajustes","comercial-73 · Backend de laboratorio");
 const checked=spawnSync(process.execPath,['--input-type=module','--check'],{input:entry,encoding:'utf8'});
 if(checked.status!==0)throw Error(checked.stderr);
 assets['/entry.mjs']=entry;
 // /approved-app.js contains the mounted catalogue UI and its build label.
-assets['/approved-app.js']=patch(assets['/approved-app.js'],"ajustes-62 · Backend requiere paquete de ajustes","rendimiento-72 · Backend de laboratorio");
+assets['/approved-app.js']=patch(assets['/approved-app.js'],"ajustes-62 · Backend requiere paquete de ajustes","comercial-73 · Backend de laboratorio");
 assets['/backup54.mjs']=read('../backup54.mjs');
 const backupStart='const CV54Phone=(()=>{',backupEnd='return {encryptArchive54};})();';
 const embeddedBackup=assets['/entry.mjs'].match(/const CV54Phone=\(\(\)=>\{[\s\S]*?return \{encryptArchive54\};\}\)\(\);/);
@@ -277,6 +277,25 @@ assets['/entry.mjs']=patch(assets['/entry.mjs'],"async function login(response){
 assets['/entry.mjs']=patch(assets['/entry.mjs'],"if(await loginFlow.run(COOKIE_MODE63))return;", "CVPerf72.mark('resumeStartedMs');if(await loginFlow.run(COOKIE_MODE63))return;");
 assets['/entry.mjs']=patch(assets['/entry.mjs'],"{format:'ui5d',metricsProbe:true}",
  "{format:'ui5d',metricsProbe:true,...(scopedMode54?{continuityScope:'TEST_ONLY_CONTINUITY_5G3'}:{})}");
+for(const key of ['/entry.mjs','/approved-app.js']){
+ let app=assets[key];
+ app=patch(app,' function cartLine63(',read('commercial-view.mjs').replace(/^export /gm,'')+'\n function cartLine63(');
+ app=patch(app,'function explain(error){',read('usability-browser.js')+'\nfunction explain(error){');
+ app=patch(app,'const code=error.message||error;return ({','const code=error.message||error;return errorMessage73(code)||({');
+ app=patch(app,'const { rows, investment, messages, costPerMessage } = advertisingSummary(', 'const { rows, investment, messages, costPerMessage } = advertisingSummary73(');
+ app=app.replaceAll('esc(q.command.type)','esc(operationTitle73(q.command.type))').replaceAll('esc(q.state)','esc(operationState73(q.state))');
+ app=app.replaceAll('escape(item.command.type)','escape(operationTitle73(item.command.type))').replaceAll('escape(item.state)','escape(operationState73(item.state))');
+ app=patch(app,"esc(pending.lastError||'Pendiente de confirmación')","esc(explain(pending.lastError||'Pendiente de confirmación'))");
+ app=patch(app,'esc(pending.state)', 'esc(operationState73(pending.state))');
+ app=patch(app,"<form id=\"catalogue54-form\">","${sale?'<details class=\"card\"><summary>Ver selección del pedido confirmado</summary>':''}<form id=\"catalogue54-form\">");
+ app=patch(app,"</fieldset></form><p id=\"catalogue-state54\"","</fieldset></form>${sale?'</details>':''}<p id=\"catalogue-state54\"");
+ app=patch(app,'dirty=false;await catalogueForm54();}',"dirty=false;notice('Nuevo borrador local. Aún no se ha enviado ningún pedido.');await catalogueForm54();}");
+ app=patch(app,'<button class="btn secondary" data-new-catalogue54','\${orderReceipt73(sale,local)}<button class="btn secondary" data-new-catalogue54');
+ app=patch(app,'<button type="submit" class="btn secondary">Filtrar</button></form>', '\${adsFilterFields73(events)}<button type="submit" class="btn secondary">Filtrar</button></form>');
+ app=patch(app,"  $('ads-filter56').elements.campaign.value = filters.campaign || '';", "  for(const key of ['campaign','account','adSet','ad'])$('ads-filter56').elements[key].value=filters[key]||'';");
+ app=patch(app,"renderAds56({ from: fields.get('from'), to: fields.get('to'), campaign: fields.get('campaign') });", "const selected=Object.fromEntries(fields);if(selected.from&&selected.to&&selected.from>selected.to){notice('Revisa el orden de las fechas del filtro.');return;}renderAds56(selected);");
+ assets[key]=app;
+}
 const worker=prefix+JSON.stringify(assets)+workerBase.slice(end);
 const syntax=spawnSync(process.execPath,['--input-type=module','--check'],{input:worker,encoding:'utf8'});
 if(syntax.status!==0)throw Error(syntax.stderr);
@@ -284,6 +303,6 @@ const output=path.join(__dirname,'build');
 fs.mkdirSync(output,{recursive:true});
 fs.writeFileSync(path.join(output,'Candidate.gs'),backend);
 fs.writeFileSync(path.join(output,'worker-bundle.mjs'),worker);
-const manifest={environment:'TEST_ONLY',baseBackend:8,baseWorker:'76293bcc',candidate:'rendimiento-72',backendSha256:hash(backend),workerSha256:hash(worker),deployed:false};
+const manifest={environment:'TEST_ONLY',baseBackend:9,baseWorker:'21b70d74',candidate:'comercial-73',backendSha256:hash(backend),workerSha256:hash(worker),deployed:false};
 fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
 console.log(manifest);

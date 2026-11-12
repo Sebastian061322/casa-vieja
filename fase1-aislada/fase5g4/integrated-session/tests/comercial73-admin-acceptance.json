@@ -1,0 +1,13 @@
+{
+  "scope": "Read-only navigation and administrator validation, not all mutations or physical iPhone",
+  "checkedAt": "2026-11-12T04:36:47.576Z",
+  "sections": [
+    "Reportes",
+    "Publicidad / Meta Ads",
+    "Aprobaciones comerciales",
+    "Reporte por producto y lote",
+    "Lotes y preparación",
+    "Versión de Casa Vieja"
+  ],
+  "result": "- generic: Administrador principal\n- button \"Cerrar sesión\"\n- link \"Ir al contenido\":\n  - /url: \"#main-content\"\n- complementary:\n  - heading \"Casa Vieja\" [level=1]\n  - text: Control de operaciones\n  - button \"Abrir menú\": ☰\n- main:\n  - heading \"Versión de Casa Vieja\" [active] [level=2]\n  - generic: Laboratorio conectado\n  - status: Laboratorio local · datos ficticios. Consulta el estado de cada pedido.\n  - checkbox \"Revisé las colas de los otros orígenes y equipos del laboratorio antes de registrar operaciones nuevas. Esta revisión no aprueba un corte comercial.\"\n  - text: Revisé las colas de los otros orígenes y equipos del laboratorio antes de registrar operaciones nuevas. Esta revisión no aprueba un corte comercial.\n  - button \"Sincronizar\"\n  - generic: Sin operaciones pendientes\n  - heading \"Operaciones pendientes\" [level=3]\n  - paragraph: Todo confirmado por el servidor.\n  - generic: Laboratorio · comercial-73 · Backend de laboratorio\n  - heading \"Verificaciones de laboratorio\" [level=2]\n  - paragraph: Solo TEST_ONLY. Comprueba permisos y tiempos de consultas sin crear ventas, cambiar usuarios ni mostrar credenciales. No equivale a una prueba de carga ni de celulares.\n  - button \"Comprobar permisos y consultas\"\n  - list:\n    - listitem: \"Resultado: APROBADO · administrator · TEST_ONLY\"\n    - listitem: \"Inicio UTC: 2026-11-12T04:36:09.350Z\"\n    - listitem: \"reject-forged-role: APROBADO · IDENTITY_SPOOFING · 4888 ms\"\n    - listitem: \"read-snapshot-1: APROBADO · 2580 ms\"\n    - listitem: \"read-snapshot-2: APROBADO · 6147 ms\"\n    - listitem: \"read-snapshot-3: APROBADO · 3247 ms\"\n    - listitem: \"journal-revision-unchanged: APROBADO\"\n    - listitem: \"Fin UTC: 2026-11-12T04:36:32.368Z\"\n  - button \"Medir consulta sintética (3 muestras)\"\n- navigation \"Accesos rápidos\":\n  - button \"Inicio\":\n    - text: Inicio\n  - button \"Ventas\":\n    - text: Ventas\n  - button \"Pedidos\":\n    - text: Pedidos\n  - button \"Inventario\":\n    - text: Inventario\n  - button \"Más\":\n    - generic: ☰\n    - text: Más\n- generic \"Tiempos del ensayo\""
+}

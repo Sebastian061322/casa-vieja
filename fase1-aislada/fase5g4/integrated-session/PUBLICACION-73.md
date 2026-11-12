@@ -22,3 +22,7 @@ El manifiesto build/manifest.json describe el artefacto de preparación (deploye
 Reversión compatible de interfaz: Worker 21b70d74 y hash anterior 6d5634525d2ff0cb7e4bcf5ea67a331a3bc28936c9a07ef7903a144fc8c6c3e2, conservando backend, diarios, recibos y colas. No ejecutar automáticamente ni restaurar datos antiguos.
 
 No hay activación comercial: faltan aceptación móvil integral, catálogo/tarifas aprobados, inventario físico y costos de apertura, obligaciones previas, respaldo comercial autorizado, revisión de colas/dispositivos y plan de cierre de escritores antiguos con autorización de corte.
+
+## Aceptación remota posterior
+
+Sesión de administrador recuperada tras recarga; navegación y consultas de ventas, pedidos, inventario, clientes, lotes, reportes, Ads y aprobaciones comprobadas. Ensayo del administrador APROBADO, falsificación de identidad rechazada y revisión del diario sin cambios. Evidencia: tests/comercial73-admin-acceptance.json. Estas comprobaciones no acreditan todas las escrituras ni sustituyen la aceptación física en iPhone. Entrada pública nuevamente cotejada con SHA e9ac91f305b91c16b963c2df34fa6f01846cbb028c2e152d4ea7433fd535e6f0. No hubo cambios de paquete ni nuevo despliegue.

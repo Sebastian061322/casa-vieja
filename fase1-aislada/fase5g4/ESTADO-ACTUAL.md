@@ -1,3 +1,5 @@
+> Estado de cierre revalidado 11/11/2026: candidato comercial-73 de f94f19e; 687/687 pruebas locales aprobadas. Laboratorio público sigue en rendimiento-72. Despliegue nuevo y aceptación autenticada pendientes de continuidad verificable; producción intacta. Ver integrated-session/CANDIDATO-73.md, sección de revalidación.
+
 # Fase 5G.4 — estado verificable al 28/10/2026
 
 **Actualización 29/10: corrección autorizada publicada en desarrollo (6b3ff7b), Worker e571872f y Apps Script6. Catálogo habilitado en Google; apertura única, venta simple, cobro parcial/final y despacho confirmados. Tripack recuperado, última unidad PC/iPhone y reinicio sin conexión aprobados con evidencia Google. Aviso superior corregido y listado adicional publicado en Worker c82dd835; Apps Script6 intacto; aceptación del nuevo listado en Google confirmada. NO-GO comercial.** Trabajo en checkout separado casa-vieja-checkout-5g4, rama dev/fase1-estabilizacion. Este estado sustituye el checkpoint provisional; conserva informes anteriores como historia.

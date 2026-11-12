@@ -1,0 +1,32 @@
+[
+  {
+    "name": "no-origin",
+    "status": 403,
+    "expected": 403,
+    "pass": true,
+    "result": {
+      "error": "ORIGIN_DENIED",
+      "retryable": true
+    }
+  },
+  {
+    "name": "foreign-origin",
+    "status": 403,
+    "expected": 403,
+    "pass": true,
+    "result": {
+      "error": "ORIGIN_DENIED",
+      "retryable": true
+    }
+  },
+  {
+    "name": "no-session",
+    "status": 401,
+    "expected": 401,
+    "pass": true,
+    "result": {
+      "error": "IDENTITY_REQUIRED",
+      "retryable": true
+    }
+  }
+]

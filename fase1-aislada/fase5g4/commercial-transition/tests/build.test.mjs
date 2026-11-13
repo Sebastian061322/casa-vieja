@@ -7,6 +7,8 @@ const marker='\nconst assets=',start=worker.indexOf(marker)+marker.length,end=wo
 const assets=JSON.parse(worker.slice(start,end));
 
 test('candidato PWA conserva el backend y añade instalación móvil',()=>{
+ assert.match(assets['/'],/apple-mobile-web-app-capable/);
+ assert.match(assets['/'],/manifest\.webmanifest/);
  assert.match(assets['/index.html'],/apple-mobile-web-app-capable/);
  assert.match(assets['/index.html'],/manifest\.webmanifest/);
  assert.match(assets['/entry.mjs'],/serviceWorker\.register/);

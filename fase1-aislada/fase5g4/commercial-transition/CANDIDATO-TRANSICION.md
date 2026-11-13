@@ -1,6 +1,6 @@
 # Candidato de transición comercial
 
-Estado: preparado localmente; no desplegado.
+Estado: corrección de instalación móvil preparada; requiere publicación en laboratorio.
 
 ## Datos de origen
 
@@ -50,7 +50,8 @@ Estado: preparado localmente; no desplegado.
 
 - Pruebas nuevas: 7/7 aprobadas.
 - Regresión completa: 694/694 aprobadas.
-- Worker PWA local: `d8afa423de9b722da05ab000dbf5f190ad91fa3d109732c199ed6c44b22ca983`.
+- Worker PWA corregido: `eeb81a74279db433d740e397ef8075319d4594e3387a5237f6a0db3d32e38e7c`.
+- La verificación remota del primer paquete detectó que `/index.html` anunciaba la PWA pero `/` no. El candidato corregido cubre ambas rutas y añade una prueba de regresión específica.
 - Backend vigente, sin cambios: `e78ae2b52d54727c8e42abdbb9b8384f1c04879704ef26fc74b08160e714449f`.
 
 ## Bloqueo para datos reales

@@ -26,8 +26,8 @@ assets['/icon.svg']=read(path.join(pwa,'icon.svg'));
 assets['/icon-192.png']='base64:'+fs.readFileSync(path.join(pwa,'icon-192.png')).toString('base64');
 assets['/icon-512.png']='base64:'+fs.readFileSync(path.join(pwa,'icon-512.png')).toString('base64');
 
-assets['/index.html']=patch(assets['/index.html'],'<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>',
- '<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#241b15"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Casa Vieja"><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/icon-192.png"><title>');
+const mobileHead='<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#241b15"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Casa Vieja"><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/icon-192.png"><title>';
+for(const route of ['/','/index.html'])assets[route]=patch(assets[route],'<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>',mobileHead);
 assets['/entry.mjs']+='\nif("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).catch(()=>{}));\n';
 
 worker=worker.slice(0,start)+JSON.stringify(assets)+worker.slice(end);

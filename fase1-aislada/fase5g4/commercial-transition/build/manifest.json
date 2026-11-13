@@ -1,0 +1,9 @@
+{
+  "environment": "TEST_ONLY_PRE_CUTOVER",
+  "candidate": "commercial-transition-pwa-1",
+  "baseWorkerSha256": "6514225f39bab0298dba0e88a7522acfd2c2ee3a1d61ce8c09347e8dadb40c03",
+  "workerSha256": "d8afa423de9b722da05ab000dbf5f190ad91fa3d109732c199ed6c44b22ca983",
+  "backendSha256": "e78ae2b52d54727c8e42abdbb9b8384f1c04879704ef26fc74b08160e714449f",
+  "backendChanged": false,
+  "deployed": false
+}

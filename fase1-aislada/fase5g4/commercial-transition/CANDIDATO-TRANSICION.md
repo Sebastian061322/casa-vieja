@@ -1,6 +1,6 @@
 # Candidato de transición comercial
 
-Estado: corrección de instalación móvil preparada; requiere publicación en laboratorio.
+Estado: PWA publicada en laboratorio; destino comercial separado creado en modo precorte.
 
 ## Datos de origen
 
@@ -48,12 +48,20 @@ Estado: corrección de instalación móvil preparada; requiere publicación en l
 
 ## Verificación
 
-- Pruebas nuevas: 7/7 aprobadas.
-- Regresión completa: 694/694 aprobadas.
+- Pruebas específicas de transición y precorte: 12/12 aprobadas.
+- Regresión completa: 699/699 aprobadas.
 - Worker PWA corregido: `eeb81a74279db433d740e397ef8075319d4594e3387a5237f6a0db3d32e38e7c`.
 - La verificación remota del primer paquete detectó que `/index.html` anunciaba la PWA pero `/` no. El candidato corregido cubre ambas rutas y añade una prueba de regresión específica.
 - Backend vigente, sin cambios: `e78ae2b52d54727c8e42abdbb9b8384f1c04879704ef26fc74b08160e714449f`.
 
 ## Bloqueo para datos reales
 
-El backend vigente está ligado a la hoja sintética, el destino `TEST_ONLY_ZERO_1`, el epoch `TEST_ONLY_V3`, IDs `demo:` y políticas no aprobadas para producción. No es seguro reemplazar textos para ocultar esa condición. La siguiente acción remota debe crear un destino comercial independiente y cargar allí el paquete de migración; no debe modificar la base antigua.
+La aplicación completa vigente sigue ligada al laboratorio sintético `TEST_ONLY_ZERO_1`. El destino comercial separado ya existe, pero su backend está deliberadamente en modo precorte y no acepta ventas. Antes de habilitarlo se necesita refrescar el diferencial desde la base antigua y establecer un único escritor de stock; no es seguro encender ambos escritores a la vez.
+
+## Precorte comercial creado
+
+- La nueva hoja comercial contiene el legado, referencias y apertura preparada; `Ventas nuevas habilitadas = NO`.
+- El sistema antiguo permanece como único escritor de stock y como fuente de solo lectura para la migración.
+- El Apps Script `CasaVieja_COMERCIAL_PRECORTE` está separado, sin despliegue público y rechaza todos los POST con `CUTOVER_NOT_APPROVED`.
+- El identificador de la hoja se almacena en propiedades privadas del Script y no se publica en Git.
+- La apertura permanece `PREPARED_NOT_ACTIVE`. Activarla mientras el sistema antiguo siga recibiendo ventas produciría dos escritores de inventario y está bloqueado.

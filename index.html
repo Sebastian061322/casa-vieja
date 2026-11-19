@@ -227,6 +227,10 @@
     .btn{justify-content:center;}
     .nav-btn{justify-content:flex-start;}
   }
+
+  /* Ajustes puntuales de legibilidad móvil; conserva la identidad existente. */
+  .hint,.acc-field,.card{overflow-wrap:anywhere;}
+  @media(max-width:600px){input,select,textarea{font-size:16px;} .form-grid{grid-template-columns:minmax(0,1fr)!important;} .card{min-width:0;} .acc-actions{flex-wrap:wrap;}}
 </style>
 </head>
 <body>
@@ -478,7 +482,7 @@ function persistOutbox(){
   try { localStorage.setItem(OUTBOX_KEY, JSON.stringify(outbox)); localStorage.setItem(FAILED_KEY, JSON.stringify(failedOps)); }
   catch(e){ console.warn('No se pudo guardar la cola de sincronización', e); }
 }
-function hasPendingSync(){ return outbox.length > 0 || flushing; }
+function hasPendingSync(){ return outbox.length > 0 || failedOps.length > 0 || flushing; }
 
 function hintForError(e){
   e = String(e || '');
@@ -503,7 +507,8 @@ function updateSyncBadge(){
   }
   pill.style.display = 'block';
   const n = outbox.length;
-  if(n === 0){ pill.textContent = '✓ Guardado en Sheets'; pill.style.background = 'rgba(107,143,92,.92)'; pill.style.color = '#fff'; }
+  if(failedOps.length){ pill.textContent = '⚠ '+failedOps.length+' cambio(s) rechazado(s) · '+n+' pendiente(s)'; pill.style.background = 'var(--accent-red)'; pill.style.color = '#fff'; }
+  else if(n === 0 && !flushing){ pill.textContent = '✓ Cola enviada a Sheets'; pill.style.background = 'rgba(107,143,92,.92)'; pill.style.color = '#fff'; }
   else if(lastSyncError){ pill.textContent = '⚠ ' + n + ' sin guardar en Sheets — toca para ver'; pill.style.background = 'var(--accent-red)'; pill.style.color = '#fff'; }
   else { pill.textContent = '⏳ Guardando… (' + n + ')'; pill.style.background = 'var(--accent-gold)'; pill.style.color = '#231A12'; }
 }
@@ -534,7 +539,7 @@ async function flushOutbox(){
 async function syncThenRefresh(){
   await flushOutbox();
   if(hasPendingSync()){
-    showSyncBanner('Hay ' + outbox.length + ' cambio(s) sin guardar en Sheets. Se conservan en este dispositivo y se reintentan solos.', true);
+    showSyncBanner('Hay ' + (outbox.length + failedOps.length) + ' cambio(s) pendientes o rechazados en Sheets. Se conservan en este dispositivo y se reintentan solos.', true);
     return false;
   }
   return refreshFromRemote();
@@ -549,7 +554,7 @@ function openSyncModal(runDiag){
     <div class="card" style="width:92%;max-width:520px;max-height:90vh;overflow-y:auto;background:var(--surface);">
       <h3>Estado de guardado en Sheets</h3>
       <div class="hint" style="margin:0 0 8px 0;">Script versión: <b>${remoteVersion>=3.2 ? remoteVersion : remoteVersion+' (conviene la 3.2)'}</b> · URL: ${esc(String(c.url||'').slice(0,48))}…</div>
-      ${outbox.length===0 ? '<div style="color:var(--accent-green);font-weight:600;margin-bottom:8px;">✓ No hay cambios pendientes.</div>' : `<div style="margin-bottom:8px;"><b>${outbox.length}</b> cambio(s) esperando guardarse. Están a salvo en este dispositivo y no se borran.</div>${ops}`}
+      ${outbox.length===0 && failedOps.length===0 ? '<div style="color:var(--accent-green);font-weight:600;margin-bottom:8px;">✓ No hay cambios pendientes ni rechazados en este equipo.</div>' : `<div style="margin-bottom:8px;"><b>${outbox.length}</b> cambio(s) esperando guardarse. Están a salvo en este dispositivo y no se borran.</div>${ops}`}
       ${lastSyncError ? `<div style="background:rgba(193,67,46,.12);border-left:4px solid var(--accent-red);padding:8px 12px;margin:10px 0;border-radius:4px;font-size:13px;"><b>${esc(lastSyncError)}</b><br><span style="opacity:.9">${esc(hintForError(lastSyncError))}</span></div>` : ''}
       ${failedOps.length ? `<div class="hint">Hay ${failedOps.length} cambio(s) que el script rechazó. <a href="#" onclick="retryFailedOps();return false;" style="color:var(--accent-gold)">Reintentar</a></div>` : ''}
       <div id="sync-diag" style="margin:10px 0;font-size:13px;"></div>
@@ -606,7 +611,7 @@ function showSyncBanner(message, isError) {
 
 async function syncRemote(action, payload) {
   if (!isConnected()) return { ok: true, local: true };
-  outbox.push({ id: uid(), action, payload, ts: Date.now(), tries: 0, lastError: '' });
+  outbox.push({ id: uid(), action, payload: JSON.parse(JSON.stringify(payload)), ts: Date.now(), tries: 0, lastError: '' });
   persistOutbox();
   updateSyncBadge();
   flushOutbox(); // sin esperar: la pantalla no se bloquea
@@ -614,7 +619,7 @@ async function syncRemote(action, payload) {
 }
 
 function normalizeProduct(p) { return { id: String(p.id), name: String(p.name || ''), price: Number(p.price) || 0, cost: Number(p.cost) || 0, stock: Number(p.stock) || 0, minStock: Number(p.minStock) || 0, weightGrams: Number(p.weightGrams) || 0, packagingCost: Number(p.packagingCost) || 0, grindType: String(p.grindType || 'molido'), baseProductId: String(p.baseProductId || ''), unitsPerSale: Number(p.unitsPerSale) || 1 }; }
-function normalizeSale(s) { return { id: String(s.id), createdAt: Number(s.createdAt) || Date.now(), date: String(s.date || '').slice(0, 10), productId: String(s.productId || ''), productName: String(s.productName || ''), qty: Number(s.qty) || 0, unitPrice: Number(s.unitPrice) || 0, total: Number(s.total) || 0, unitCostUsed: Number(s.unitCostUsed) || 0, loteIdUsed: String(s.loteIdUsed || ''), channel: String(s.channel || ''), customer: String(s.customer || ''), phone: String(s.phone || ''), paymentStatus: String(s.paymentStatus || 'Pendiente'), deliveryStatus: String(s.deliveryStatus || 'Pendiente'), deliveryCost: Number(s.deliveryCost) || 0, deliveryCharged: Number(s.deliveryCharged) || 0, zone: String(s.zone || ''), profit: Number(s.profit) || 0, combo: Array.isArray(s.combo) ? s.combo.map(c => ({ grindType: String(c.grindType || ''), loteId: String(c.loteId || ''), loteName: String(c.loteName || ''), unitCost: Number(c.unitCost) || 0 })) : [] }; }
+function normalizeSale(s) { return { id: String(s.id), createdAt: Number(s.createdAt) || Date.now(), date: String(s.date || '').slice(0, 10), productId: String(s.productId || ''), productName: String(s.productName || ''), qty: Number(s.qty) || 0, unitPrice: Number(s.unitPrice) || 0, total: Number(s.total) || 0, unitCostUsed: Number(s.unitCostUsed) || 0, loteIdUsed: String(s.loteIdUsed || ''), channel: String(s.channel || ''), customer: String(s.customer || ''), phone: String(s.phone || ''), paymentStatus: String(s.paymentStatus || 'Pendiente'), deliveryStatus: String(s.deliveryStatus || 'Pendiente'), deliveryCost: Number(s.deliveryCost) || 0, deliveryCharged: Number(s.deliveryCharged) || 0, zone: String(s.zone || ''), profit: Number(s.profit) || 0, combo: Array.isArray(s.combo) ? s.combo.map(c => ({ grindType: String(c.grindType || ''), loteId: String(c.loteId || ''), loteName: String(c.loteName || ''), unitCost: Number(c.unitCost) || 0, baseId: String(c.baseId||''), weightGrams: Number(c.weightGrams)||0 })) : [] }; }
 function normalizeAd(a) { return { id: String(a.id), date: String(a.date || '').slice(0, 10), platform: String(a.platform || ''), campaign: String(a.campaign || ''), amount: Number(a.amount) || 0, messages: Number(a.messages) || 0 }; }
 function normalizeExpense(x) { return { id: String(x.id), date: String(x.date || '').slice(0, 10), category: String(x.category || ''), description: String(x.description || ''), amount: Number(x.amount) || 0, provider: String(x.provider || '') }; }
 function normalizeLote(l) {
@@ -719,6 +724,7 @@ function productById(id) { return DB.products.find(p => p.id === id); }
 function baseProductById(id) { return DB.baseProducts.find(b => b.id === id); }
 
 function getAvailableUnits(product) {
+  const shared=sharedProductAvailable(product); if(shared!==null) return shared;
   if (product.baseProductId) {
     const base = baseProductById(product.baseProductId);
     if (!base) return 0;
@@ -1067,7 +1073,7 @@ function renderDashboard(){
       <div class="card"><p class="kpi-label">Costo por mensaje (Ads)</p><p class="kpi-value gold">${d.costPerMessage===null?'—':money(d.costPerMessage)}</p><p class="kpi-sub">${d.messagesMonth} mensajes generados</p></div>
       <div class="card"><p class="kpi-label">Costo por venta con Ads</p><p class="kpi-value gold">${d.costPerAdSale===null?'—':money(d.costPerAdSale)}</p><p class="kpi-sub">${d.metaSalesCount} ventas por Ads${d.msgToSalePct===null?'':' · '+d.msgToSalePct.toFixed(0)+'% de los mensajes'}</p></div>
       <div class="card"><p class="kpi-label">Mejor canal del mes</p><p class="kpi-value" style="font-size:16px;">${d.topChannel?esc(d.topChannel[0]):'—'}</p><p class="kpi-sub">${d.topChannel?money(d.topChannel[1]):''}</p></div>
-      ${d.invOn ? `<div class="card"><p class="kpi-label">Bolsas listas (actual)</p><p class="kpi-value">${d.bagsReady}</p><p class="kpi-sub">${d.lowSupplies.length>0 ? '⚠ '+d.lowSupplies.length+' insumo(s) bajo mínimo: '+d.lowSupplies.slice(0,3).map(i=>esc(i.name)).join(', ') : 'Insumos en niveles normales'}</p></div>` : `<div class="card"><p class="kpi-label">Stock total (actual)</p><p class="kpi-value">${d.totalStock} u.</p><p class="kpi-sub">${d.lowStock.length>0?d.lowStock.length+' producto(s) bajo mínimo':'Niveles normales'}</p></div>`}
+      ${d.invOn ? `<div class="card"><p class="kpi-label">Bolsas listas (actual)</p><p class="kpi-value">${d.bagsReady}</p><p class="kpi-sub">${d.lowSupplies.length>0 ? '⚠ '+d.lowSupplies.length+' insumo(s) bajo mínimo: '+d.lowSupplies.slice(0,3).map(i=>esc(i.name)).join(', ') : 'Insumos en niveles normales'}</p></div>` : `<div class="card"><p class="kpi-label">Contadores de bolsas · modo anterior</p><p class="kpi-value">${d.totalStock} u.</p><p class="kpi-sub">${d.lowStock.length>0?d.lowStock.length+' producto(s) bajo mínimo':'Niveles normales'}</p></div>`}
       <div class="card"><p class="kpi-label">Pedidos por entregar (actual)</p><p class="kpi-value ${d.pendingDeliveries>0?'gold':''}">${d.pendingDeliveries}</p></div>
     </div>
     <div class="grid grid-charts">
@@ -1164,8 +1170,8 @@ function renderVentas(){
         <div><label>Teléfono (opcional)</label><input type="text" id="sf-phone" placeholder="Ej: 987654321"></div>
         <div><label>Estado de pago</label><select id="sf-payment">${PAYMENT_STATUSES.map(s=>`<option>${s}</option>`).join('')}</select></div>
         <div><label>Estado de entrega</label><select id="sf-delivery">${DELIVERY_STATUSES.map(s=>`<option>${s}</option>`).join('')}</select></div>
-        <div><label>Costo real de envío (S/)</label><input type="number" id="sf-delcost" step="0.01" value="0"></div>
-        <div><label>Cobrado al cliente por envío (S/)</label><input type="number" id="sf-delcharged" step="0.01" value="0"></div>
+        <div><label>Costo real de envío (S/)</label><input type="number" id="sf-delcost" step="0.01" value="0" oninput="updateComboPreview()"></div>
+        <div><label>Cobrado al cliente por envío (S/)</label><input type="number" id="sf-delcharged" step="0.01" value="0" oninput="updateComboPreview()"></div>
         <div><label>Zona / dirección</label><input type="text" id="sf-zone" placeholder="Distrito, referencia"></div>
         ${invEnabled() ? `<div><label>Despacho</label><select id="sf-dispatch"><option value="lima">Lima (bolsa estándar)</option><option value="provincia">Provincia</option></select></div>` : ''}
       </div>
@@ -1234,7 +1240,7 @@ function toggleComboMode(){
 function comboBasesHTML(grindType, selectedId){
   const bases = DB.baseProducts.filter(b=>b.grindType===grindType);
   if(bases.length===0) return `<option value="">— sin bolsa base de ${grindType==='grano'?'Grano':'Molido'} —</option>`;
-  return bases.map(b=>`<option value="${b.id}" ${b.id===selectedId?'selected':''}>${esc(b.name)} (stock: ${b.stock})</option>`).join('');
+  return bases.map(b=>`<option value="${b.id}" ${b.id===selectedId?'selected':''}>${esc(b.name)} · ${b.weightGrams||500} g (contador anterior: ${b.stock})</option>`).join('');
 }
 
 function comboLotesHTML(grindType, selectedId){
@@ -1287,10 +1293,10 @@ function getComboEntries(){
     const base = baseProductById(baseId);
     const lote = (DB.lotes||[]).find(l=>l.id===loteId);
     const costPerGram = lote ? (parseFloat(lote.costPerKgRoasted)||0)/1000 : 0;
-    const weight = base ? (parseFloat(base.weightGrams)||500) : 500;
+    const weight = base ? Number(base.weightGrams) : 0;
     const packaging = base ? (parseFloat(base.packagingCost)||0) : 0;
     const unitCost = Math.round((costPerGram*weight + packaging)*100)/100;
-    entries.push({ grindType, baseId, baseName: base?base.name:'', loteId, loteName: lote?lote.name:'', unitCost });
+    entries.push({ grindType, baseId, baseName: base?base.name:'', weightGrams: weight, loteId, loteName: lote?lote.name:'', unitCost });
   }
   return entries;
 }
@@ -1299,14 +1305,14 @@ function updateComboPreview(){
   if(!qs('sf-combo-toggle') || !qs('sf-combo-toggle').checked) return;
   const entries = getComboEntries();
   entries.forEach((e,idx)=>{ const el = qs('combo-unitcost-'+(idx+1)); if(el) el.textContent = money(e.unitCost); });
-  const totalCost = entries.reduce((a,e)=>a+e.unitCost,0);
+  const totalCost = entries.reduce((a,e)=>a+cents(e.unitCost),0)/100;
   const price = num('sf-price');
-  const profit = price - totalCost;
+  const profit = (cents(price)-cents(totalCost)+cents(num('sf-delcharged'))-cents(num('sf-delcost')))/100;
   const el = qs('sf-combo-summary');
   if(el){
     const granoCount = entries.filter(e=>e.grindType==='grano').length;
     const molidoCount = entries.filter(e=>e.grindType==='molido').length;
-    el.innerHTML = `Mezcla: <b>${granoCount} Grano + ${molidoCount} Molido</b> &nbsp;|&nbsp; Costo total estimado: <b>${money(totalCost)}</b> &nbsp;|&nbsp; Ganancia estimada: <b style="color:${profit>=0?'var(--accent-green)':'var(--accent-red)'}">${money(profit)}</b>`;
+    el.innerHTML = `Mezcla: <b>${granoCount} Grano + ${molidoCount} Molido</b> &nbsp;|&nbsp; Costo total estimado: <b>${money(totalCost)}</b> &nbsp;|&nbsp; Contribución estimada después del delivery: <b style="color:${profit>=0?'var(--accent-green)':'var(--accent-red)'}">${money(profit)}</b>`;
   }
 }
 
@@ -1437,21 +1443,23 @@ async function addSale(){
   const product = productById(productId);
   if(!product){ alert('Selecciona un producto válido.'); return; }
   const qty = num('sf-qty');
-  if(qty<=0){ alert('La cantidad debe ser mayor a 0.'); return; }
+  if(!Number.isSafeInteger(qty)||qty<=0){ alert('La cantidad debe ser un número entero mayor a 0.'); return; }
   const base = product.baseProductId ? baseProductById(product.baseProductId) : null;
   const available = getAvailableUnits(product);
   if(available < qty){
-    if(!confirm(`Stock insuficiente (disponible: ${available}). ¿Registrar la venta de todas formas?`)) return;
+    alert(`Stock insuficiente (disponible: ${available}). Revisa Inventario antes de registrar.`); return;
   }
   const price = num('sf-price');
   const delcost = num('sf-delcost');
   const delcharged = num('sf-delcharged');
+  if(!validSaleAmounts(price,delcost,delcharged)){ alert('Revisa el precio positivo y los importes de delivery no negativos.'); return; }
   const total = qty * price;
   
   const unitCost = getProductCost(product);
   const costTotal = qty * unitCost;
-  const profit = (total - costTotal) + (delcharged - delcost);
+  const profit = (cents(total)-cents(costTotal)+cents(delcharged)-cents(delcost))/100;
   const activeLote = getActiveLote(product.grindType || 'molido');
+  if(!activeLote || ![product.grindType||'molido','ambos'].includes(activeLote.type) || !(Number(activeLote.costPerKgRoasted)>0) || !Number.isSafeInteger(Number(product.weightGrams)) || !(product.weightGrams>0)){ alert('Completa el lote compatible, el costo y el peso antes de registrar.'); return; }
 
   const sale = {
     id: uid(), createdAt: Date.now(),
@@ -1472,19 +1480,21 @@ async function addSale(){
     combo: []
   };
 
+  let invEvsSale;
+  try { invEvsSale=planCoffeeSale([{grind:product.grindType||'molido',size:presentationBagSize(product),n:qty*(product.unitsPerSale||1),loteId:activeLote.id}],val('sf-dispatch')||'lima',qty,product.unitsPerSale||1,sale); } catch(e){ alert(e.message); return; }
   DB.sales.push(sale);
 
   let mv;
   if(base){
     const bagsConsumed = qty * (product.unitsPerSale||1);
-    base.stock -= bagsConsumed;
+    if(!poolOpening(activeLote.id)) base.stock -= bagsConsumed;
     mv = { id: uid(), date: sale.date, productId: base.id, productName: base.name, type:'salida', qty: bagsConsumed, reason:'Venta: ' + product.name + ' x' + qty };
   } else {
-    product.stock -= qty;
+    if(!poolOpening(activeLote.id)) product.stock -= qty;
     mv = { id: uid(), date: sale.date, productId, productName: product.name, type:'salida', qty, reason:'Venta' };
   }
   DB.movements.push(mv);
-  const invEvsSale = invApplySale(sale, [{ grind: product.grindType||'molido', size: presentationBagSize(product), n: qty*(product.unitsPerSale||1), loteId: null }], val('sf-dispatch')||'lima', qty, product.unitsPerSale||1);
+  DB.inv_events=(DB.inv_events||[]).concat(invEvsSale);
   saveDB(false);
   renderVentas();
   await syncRemote('addSale', sale);
@@ -1495,26 +1505,29 @@ async function addSale(){
 }
 
 async function addComboSale(){
+  if(!Number.isInteger(Number(val('sf-combo-count')))||Number(val('sf-combo-count'))<1||Number(val('sf-combo-count'))>8){alert('El pedido debe tener entre 1 y 8 bolsas completas.');return;}
   const entries = getComboEntries();
   if(entries.length===0){ alert('Agrega al menos una bolsa a la combinación.'); return; }
   const missingBase = entries.some(e=>!e.baseId);
   if(missingBase){ alert('Falta vincular alguna bolsa a un producto base. Revisa Configuración → Stock físico real.'); return; }
+  if(entries.some(e=>{const l=(DB.lotes||[]).find(l=>l.id===e.loteId);return !l||![e.grindType,'ambos'].includes(l.type)||!(Number(l.costPerKgRoasted)>0)||!Number.isSafeInteger(e.weightGrams)||e.weightGrams<=0;})){alert('Revisa el lote, su costo y los gramos de cada bolsa. No se admiten costos incompletos.');return;}
 
   const neededByBase = {};
   entries.forEach(e=>{ neededByBase[e.baseId] = (neededByBase[e.baseId]||0) + 1; });
   const shortages = Object.keys(neededByBase).map(bid=>{
     const b = baseProductById(bid);
-    return b && b.stock < neededByBase[bid] ? `${b.name} (disponible: ${b.stock}, necesitas: ${neededByBase[bid]})` : null;
+    return b && !entries.filter(e=>e.baseId===bid).every(e=>poolOpening(e.loteId)) && b.stock < neededByBase[bid] ? `${b.name} (disponible: ${b.stock}, necesitas: ${neededByBase[bid]})` : null;
   }).filter(Boolean);
   if(shortages.length>0){
-    if(!confirm(`Stock insuficiente: ${shortages.join(', ')}. ¿Registrar la venta de todas formas?`)) return;
+    alert('Stock insuficiente: '+shortages.join(', ')+'. Revisa Inventario antes de registrar.'); return;
   }
 
   const price = num('sf-price');
   const delcost = num('sf-delcost');
   const delcharged = num('sf-delcharged');
-  const totalCost = entries.reduce((a,e)=>a+e.unitCost,0);
-  const profit = (price - totalCost) + (delcharged - delcost);
+  if(!validSaleAmounts(price,delcost,delcharged)){alert('Revisa el precio positivo y los importes de delivery no negativos.');return;}
+  const totalCost = entries.reduce((a,e)=>a+cents(e.unitCost),0)/100;
+  const profit = (cents(price)-cents(totalCost)+cents(delcharged)-cents(delcost))/100;
 
   const granoCount = entries.filter(e=>e.grindType==='grano').length;
   const molidoCount = entries.filter(e=>e.grindType==='molido').length;
@@ -1537,16 +1550,18 @@ async function addComboSale(){
     deliveryCharged: delcharged || 0,
     zone: String(val('sf-zone') || '').trim(),
     profit: profit || 0,
-    combo: entries.map(e=>({ grindType: e.grindType, loteId: e.loteId, loteName: e.loteName, unitCost: e.unitCost }))
+    combo: entries.map(e=>({ grindType:e.grindType, loteId:e.loteId, loteName:e.loteName, unitCost:e.unitCost, baseId:e.baseId, weightGrams:e.weightGrams }))
   };
 
+  let invEvsCombo;
+  try { invEvsCombo=planCoffeeSale(entries.map(e=>({grind:e.grindType,size:e.weightGrams,n:1,loteId:e.loteId})),val('sf-dispatch')||'lima',1,entries.length,sale); } catch(e){alert(e.message);return;}
   DB.sales.push(sale);
 
   const movements = [];
   Object.keys(neededByBase).forEach(bid=>{
     const b = baseProductById(bid);
     if(!b) return;
-    b.stock -= neededByBase[bid];
+    b.stock -= entries.filter(e=>e.baseId===bid&&!poolOpening(e.loteId)).length;
     const lotesUsados = [...new Set(entries.filter(e=>e.baseId===bid).map(e=>e.loteName).filter(Boolean))].join(', ');
     movements.push({ id: uid(), date: sale.date, productId: b.id, productName: b.name, type:'salida', qty: neededByBase[bid], reason: 'Venta combinada: ' + productName + (lotesUsados ? ' (Lotes: '+lotesUsados+')' : '') });
   });
@@ -1559,7 +1574,7 @@ async function addComboSale(){
     if(!comboParts[k]) comboParts[k] = { grind:e.grindType, size, n:0, loteId:e.loteId||'' };
     comboParts[k].n += 1;
   });
-  const invEvsCombo = invApplySale(sale, Object.values(comboParts), val('sf-dispatch')||'lima', 1, entries.length);
+  DB.inv_events=(DB.inv_events||[]).concat(invEvsCombo);
 
   saveDB(false);
   renderVentas();
@@ -1575,6 +1590,8 @@ async function addComboSale(){
 }
 
 async function deleteSale(id){
+  const existing=DB.sales.find(s=>s.id===id);
+  if(existing && (existing.combo?.length || invEvs().some(e=>e.saleId===id&&poolOpening(e.loteId)))){alert('Esta venta tiene bolsas/lotes vinculados. Se conserva para evitar una devolución incorrecta de stock. Corrige sus datos con Editar; la anulación física necesita conciliación de movimientos.');return;}
   if(!confirm('¿Eliminar esta venta? El stock se devolverá.')) return;
   const sale = DB.sales.find(s=>s.id===id);
   let product = null, base = null, mv = null;
@@ -1637,11 +1654,12 @@ function editSale(id) {
   const modalHtml = `
     <div id="modal-edit-sale" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:9999;">
       <div class="card" style="width:90%; max-width:500px; max-height:90vh; overflow-y:auto; background:var(--surface);">
-        <h3>Editar Venta: ${esc(sale.productName || 'Producto')}</h3>
+        <h3>Editar Venta: ${esc(sale.productName || 'Producto')}</h3><p class="hint">Al guardar se verifica la ganancia con los costos históricos de todas las bolsas. No cambia el inventario.</p>
+        ${saleAuditHTML(sale)}
         ${Array.isArray(sale.combo) && sale.combo.length>0 ? `
         <div style="background:rgba(92,127,143,0.12); border-left:4px solid var(--accent-blue,#5C7F8F); padding:8px 12px; margin-bottom:12px; border-radius:4px; font-size:0.85rem;">
           🔀 <b>Venta combinada</b> — ${sale.combo.map(c=>`${c.grindType==='grano'?'Grano':'Molido'} (${esc(c.loteName||'sin lote')}, costo ${money(c.unitCost)})`).join(' + ')}
-          <br><span style="opacity:0.75;">La composición de bolsas/lotes no se puede editar aquí — si te equivocaste, elimina la venta y regístrala de nuevo.</span>
+          <br><span style="opacity:0.75;">La composición y sus costos históricos se conservan. Si necesitas corregir bolsas o lotes, concilia sus movimientos antes de sustituir el pedido.</span>
         </div>` : ''}
         <div class="form-grid" style="grid-template-columns:1fr 1fr; gap:10px;">
           <div>
@@ -1685,6 +1703,8 @@ async function saveSaleEdit(id) {
   const sale = DB.sales.find(s => s.id === id);
   if (!sale) return;
 
+  const amounts=[val('es-total'),val('es-delcost'),val('es-delcharged')].map(Number);
+  if(!validSaleAmounts(...amounts) || saleCostCents(sale)===null){alert('Revisa importes y costos históricos antes de guardar.');return;}
   sale.customer = String(val('es-customer') || '').trim();
   sale.phone = String(val('es-phone') || '').trim();
   sale.deliveryCost = num('es-delcost') || 0;
@@ -1692,8 +1712,8 @@ async function saveSaleEdit(id) {
   sale.total = num('es-total') || 0;
   sale.zone = String(val('es-zone') || '').trim();
 
-  const costTotal = (sale.qty || 1) * (sale.unitCostUsed || 0);
-  sale.profit = (sale.total - costTotal) + (sale.deliveryCharged - sale.deliveryCost);
+  sale.profit = saleProfit(sale);
+  if(sale.qty>0) sale.unitPrice = cents(sale.total/sale.qty)/100;
 
   saveDB(false);
   const y = window.scrollY;
@@ -1708,7 +1728,7 @@ function renderStock(){
   const moves = [...DB.movements].sort((a,b)=> b.date.localeCompare(a.date)).slice(0,50);
   const targets = movementTargets();
   const html = `
-    <div class="section-title">Stock físico (bolsas base)</div>
+    <div class="section-title">Bolsas base · modo anterior</div>
     ${DB.baseProducts.length===0 ? `<div class="empty">No hay productos base todavía. Créalos en <b>Configuración</b> — son las bolsas físicas de café que empacas.</div>` : `
     <div class="acc-list">
       ${DB.baseProducts.map(b=>{
@@ -1781,7 +1801,7 @@ function renderStock(){
       }).join('')}
     </div>`}
   `;
-  qs('view-stock').innerHTML = html;
+  qs('view-stock').innerHTML = sharedStockHTML()+html;
 }
 
 async function addMovement(){
@@ -1853,7 +1873,7 @@ function renderAds(){
           <div class="acc-field"><label>Plataforma</label><div>${esc(a.platform)}</div></div>
           <div class="acc-field"><label>Mensajes/Leads</label><div>${a.messages||0}</div></div>
         </div>
-        <div class="acc-actions"><button class="btn small danger" onclick="deleteAd('${a.id}')">Eliminar</button></div>`
+        <div class="acc-actions"><button class="btn small secondary" onclick="editAd('${a.id}')">Editar / corregir</button><button class="btn small danger" onclick="deleteAd('${a.id}')">Eliminar</button></div>`
     })}
   `;
   qs('view-ads').innerHTML = html;
@@ -2575,7 +2595,9 @@ async function submitBagging(loteId){
   if(loteKg(loteId) - kgUsed < -0.0001) warns.push('Los kilos registrados de este lote no alcanzan.');
   const items = bagPackItems(size);
   items.forEach(i=>{ if(itemStock(i.id) < n) warns.push('Falta stock de '+i.name+' (hay '+itemStock(i.id)+', necesitas '+n+').'); });
-  if(warns.length && !confirm(warns.join('\n')+'\n\n¿Registrar de todas formas?')) return;
+  if(poolOpening(loteId)&&bagPackMissing(size).length){alert('Completa la receta de empaque antes de embolsar con saldo compartido.');return;}
+  if(!Number.isSafeInteger(n)||Math.round(kgUsed*1000)<n*size){alert('Los kilos usados no pueden ser menores que el peso de las bolsas.');return;}
+  if(warns.length){alert(warns.join('\n'));return;}
   const batch = uid(), date = val('iv-date')||todayStr();
   const evs = [
     mkEvent('kg_bagging', { qty:-kgUsed, loteId, grind, size, batch, date }),
@@ -2594,7 +2616,8 @@ function openLooseModal(loteId){
 }
 async function submitLoose(loteId){
   const kg = num('iv-kg');
-  if(kg<=0){ alert('Escribe los kilos.'); return; }
+  if(kg<=0 || !Number.isFinite(kg)){ alert('Escribe los kilos.'); return; }
+  if(Math.round(kg*1000)>poolGrams(loteId)){alert('La salida supera el café a granel registrado. Revisa el conteo.');return;}
   await commitInvEvents([ mkEvent('kg_loose', { qty:-kg, loteId, note:val('iv-reason') }) ]);
 }
 
@@ -2736,8 +2759,9 @@ function describeGroup(g){
   if(by('kg_in').length){ const e=by('kg_in')[0]; return 'Saco recibido: +'+e.qty+' kg · '+loteName(e.loteId); }
   if(by('kg_bagging').length){ const k=by('kg_bagging')[0], b=by('bag_in')[0]; return 'Embolsado: '+(b?b.qty:'?')+' bolsas de '+(b?b.size:'?')+' g ('+(b?gl(b):'')+') · '+loteName(k.loteId)+' · −'+Math.abs(k.qty).toFixed(2)+' kg'; }
   if(by('kg_loose').length){ const e=by('kg_loose')[0]; return 'Salida suelta: −'+Math.abs(e.qty)+' kg · '+e.note+' · '+loteName(e.loteId); }
+  if(by('kg_pool_open').length){const e=by('kg_pool_open')[0];return 'Inicio del saldo compartido · '+loteName(e.loteId)+' · '+e.note;}
   if(by('kg_adjust').length){ const e=by('kg_adjust')[0]; return 'Conteo de café '+loteName(e.loteId)+': ajuste '+sg(e.qty)+' kg'; }
-  if(g.some(e=>e.saleId)){ const bags=sum(by('bag_out_sale').map(e=>-e.qty)); return 'Venta: −'+bags+' bolsas'+(by('sup_use_sale').length?' y bolsa de despacho':''); }
+  if(g.some(e=>e.saleId)){ const bags=sum(by('bag_out_sale').map(e=>-e.qty))+sum(by('kg_sale').map(e=>e.size>0?Math.round(-e.qty*1000/e.size):0)); return 'Venta: −'+bags+' bolsas'+(by('sup_use_sale').length?' y bolsa de despacho':''); }
   if(by('bag_loose').length){ const e=by('bag_loose')[0]; return 'Bolsas listas: −'+Math.abs(e.qty)+' ('+e.note+') · '+e.size+' g '+gl(e); }
   if(by('bag_adjust').length){ const e=by('bag_adjust')[0]; return 'Conteo de bolsas '+e.size+' g '+gl(e)+': ajuste '+sg(e.qty); }
   if(by('sup_in').length){ const e=by('sup_in')[0], it=invItemById(e.itemId); return 'Compra: +'+e.qty+' '+(it?it.name:'insumo')+' · '+money(e.cost); }
@@ -2745,6 +2769,7 @@ function describeGroup(g){
   return 'Movimiento';
 }
 async function undoInvBatch(key){
+  if(invEvs().some(e=>poolOpening(e.loteId))){alert('Con saldo compartido activo conserva los movimientos. Usa un nuevo conteo físico con motivo para corregir diferencias.');return;}
   if(!confirm('¿Deshacer este movimiento? Se revierten todos sus efectos.')) return;
   const ids = invEvs().filter(e=>!e.saleId && evGroupKey(e)===key).map(e=>e.id);
   if(!ids.length) return;
@@ -2778,7 +2803,7 @@ function renderInventario(){
         </span><span class="acc-caret">▾</span></div>
         <div class="acc-body">
           <div class="acc-fields">
-            <div class="acc-field"><label>Con estos kilos salen</label><div>≈ ${Math.max(0,e500)} bolsas de 500 g<br>≈ ${Math.max(0,e250)} bolsas de 250 g</div></div>
+            <div class="acc-field"><label>Con estos kilos salen</label><div>≈ ${Math.max(0,e500)} bolsas de 500 g <b>o</b><br>≈ ${Math.max(0,e250)} bolsas de 250 g (alternativas)</div></div>
             <div class="acc-field"><label>Tus insumos alcanzan para</label><div>${s500===null&&s250===null ? 'Crea insumos para saberlo' : '500 g: '+(s500===null?'—':s500)+' bolsas<br>250 g: '+(s250===null?'—':s250)+' bolsas'}</div></div>
           </div>
           <div class="acc-actions">
@@ -2887,7 +2912,7 @@ function renderInventario(){
       return `<div class="acc-item" id="${rowId}"><div class="acc-head" onclick="toggleAccordion('${rowId}')"><span class="acc-summary"><span class="acc-main" style="white-space:normal;">${esc(describeGroup(g.evs))}</span><span class="acc-sub">${fmtDate(e0.date)}</span></span><span class="acc-caret">▾</span></div>
       <div class="acc-body"><div class="acc-actions">${isSale ? '<span class="hint" style="margin:0;">Se revierte al eliminar la venta.</span>' : `<button class="btn small danger" onclick="undoInvBatch('${g.key}')">Deshacer</button>`}</div></div></div>`; }).join('')}</div>` : ''}
   `;
-  qs('view-inventario').innerHTML = html;
+  qs('view-inventario').innerHTML = sharedStockHTML()+html;
 }
 
 /* ============ CONFIGURACIÓN Y GESTIÓN DE LOTES ============ */
@@ -2905,6 +2930,7 @@ function renderConfig(){
       </p>
       
       <div class="form-grid">
+        <div><label>Fecha del lote / recepción</label><input type="date" id="lot-date" value="${todayStr()}"></div>
         <div><label>Nombre / Código Lote</label><input type="text" id="lot-name" placeholder="Ej: Lote 02 - Villa Rica"></div>
         <div><label>Productor / Finca</label><input type="text" id="lot-producer" placeholder="Ej: Don Pedro / Finca La Esperanza"></div>
         <div><label>Variedad</label><input type="text" id="lot-variety" placeholder="Ej: Caturra / Geisha"></div>
@@ -2945,6 +2971,7 @@ function renderConfig(){
               <div class="acc-field"><label>Origen</label><div>${esc(l.origin||'—')}</div></div>
               <div class="acc-field"><label>Productor</label><div>${esc(l.producer||'—')}</div></div>
               <div class="acc-field"><label>Variedad</label><div>${esc(l.variety||'—')}${l.cupScore?` (${l.cupScore} pts)`:''}</div></div>
+              <div class="acc-field"><label>Fecha del lote</label><div>${fmtDate(l.date)}</div></div>
               <div class="acc-field"><label>Kg verde</label><div>${l.greenKg} kg · ${money(l.greenCostPerKg)}/kg</div></div>
               <div class="acc-field"><label>Flete</label><div>${money(l.freightCost||0)}</div></div>
               <div class="acc-field"><label>Kg tostado</label><div>${l.roastedKg} kg</div></div>
@@ -2960,9 +2987,10 @@ function renderConfig(){
       }).join('')}
     </div>` : ''}
 
+    ${sharedStockHTML()}
     <!-- STOCK FÍSICO REAL (PRODUCTO BASE) -->
-    <div class="section-title">Stock físico real (bolsas base)</div>
-    <p class="hint" style="margin-top:0;">Esto es lo que de verdad tienes en almacén: bolsas empacadas (ej: "Bolsa 500g Molido — Blend Gourmet"). Las presentaciones de abajo (Unitario, Duopack, Tripack…) descuentan de aquí. <b>Gramos/bolsa</b> y <b>Empaque/bolsa</b> se usan para calcular el costo en una <b>venta combinada</b>. Toca una tarjeta para editarla.</p>
+    <div class="section-title">Bolsas base · contadores del modo anterior</div>
+    <p class="hint" style="margin-top:0;">Estos contadores se conservan para lotes sin saldo compartido. En lotes activados utiliza el panel de café disponible y los movimientos de Inventario. Bolsas empacadas (ej: "Bolsa 500g Molido — Blend Gourmet"). Las presentaciones de abajo (Unitario, Duopack, Tripack…) descuentan de aquí. <b>Gramos/bolsa</b> y <b>Empaque/bolsa</b> se usan para calcular el costo en una <b>venta combinada</b>. Toca una tarjeta para editarla.</p>
     <div class="acc-list">
       ${DB.baseProducts.map(b=>{
         const rowId = 'bp-row-'+b.id;
@@ -3166,7 +3194,7 @@ async function addLote(){
 
   const lote = {
     id: uid(), name, producer, variety, origin, cupScore, type,
-    date: todayStr(), greenKg, greenCostPerKg, freightCost,
+    date: validDate(val('lot-date')) ? val('lot-date') : todayStr(), greenKg, greenCostPerKg, freightCost,
     roastedKg, roastCost, totalLotCost, costPerKgRoasted, yieldPct,
     active: true
   };
@@ -3203,6 +3231,7 @@ async function toggleLoteActive(id){
 }
 
 async function deleteLote(id){
+  if(poolOpening(id) || DB.sales.some(s=>s.loteIdUsed===id||s.combo?.some(c=>c.loteId===id))){alert('Este lote tiene historial vinculado. Desactívalo en lugar de eliminarlo.');return;}
   if(!confirm('¿Eliminar este lote? Las ventas pasadas conservarán sus datos registrados.')) return;
   DB.lotes = DB.lotes.filter(l => l.id !== id);
   saveDB(false);
@@ -3219,6 +3248,7 @@ function editLoteModal(id){
       <div class="card" style="width:90%; max-width:600px; max-height:90vh; overflow-y:auto; background:var(--surface);">
         <h3>Editar Lote: ${esc(l.name)}</h3>
         <div class="form-grid" style="grid-template-columns:1fr 1fr; gap:10px;">
+          <div><label>Fecha del lote / recepción</label><input type="date" id="el-date" value="${esc(l.date)}"></div>
           <div><label>Nombre Lote</label><input type="text" id="el-name" value="${esc(l.name)}"></div>
           <div><label>Productor</label><input type="text" id="el-producer" value="${esc(l.producer||'')}"></div>
           <div><label>Variedad</label><input type="text" id="el-variety" value="${esc(l.variety||'')}"></div>
@@ -3257,6 +3287,8 @@ async function saveEditedLote(id){
   const l = DB.lotes.find(item => item.id === id);
   if(!l) return;
 
+  if(!validDate(val('el-date')) || num('el-green-kg')<=0 || num('el-roasted-kg')<=0){alert('Revisa fecha y kilos positivos del lote.');return;}
+  l.date=val('el-date');
   l.name = val('el-name').trim() || l.name;
   l.producer = val('el-producer').trim();
   l.variety = val('el-variety').trim();
@@ -3426,6 +3458,178 @@ function resetAll(){
   renderView('config');
 }
 
+/* ============ CORRECCIONES PUNTUALES · 16/11/2026 ============ */
+// Conserva el formato de la base y los costos históricos. No migra datos al abrir.
+function cents(n){ return Math.round(Number(n)*100); }
+function saleCostCents(s){
+  if(Array.isArray(s.combo) && s.combo.length){
+    if(s.combo.some(c=>!Number.isFinite(Number(c.unitCost)) || Number(c.unitCost)<0)) return null;
+    return s.combo.reduce((n,c)=>n+cents(c.unitCost),0);
+  }
+  if(!Number.isFinite(Number(s.unitCostUsed)) || Number(s.unitCostUsed)<0) return null;
+  return Math.round(Number(s.qty)*cents(s.unitCostUsed));
+}
+function saleProfit(s){
+  const cost = saleCostCents(s);
+  return cost===null ? null : (cents(s.total)-cost+cents(s.deliveryCharged||0)-cents(s.deliveryCost||0))/100;
+}
+function validSaleAmounts(price, delcost, delcharged){
+  return [price,delcost,delcharged].every(n=>Number.isFinite(n)&&n>=0&&Number.isSafeInteger(cents(n)))&&cents(price)>0;
+}
+function saleAuditHTML(s){
+  const cost = saleCostCents(s), profit = saleProfit(s);
+  if(cost===null || profit===null) return '<p class="hint">Costo histórico incompleto. No se puede verificar el margen.</p>';
+  const gross = (cents(s.total)-cost)/100;
+  return '<p class="hint">Costo histórico de todas las bolsas: <b>'+money(cost/100)+'</b> · Margen de productos: <b>'+money(gross)+'</b>'+
+    (s.total>0?' ('+(gross/s.total*100).toFixed(1)+'%)':'')+'<br>Después del delivery: <b>'+money(profit)+'</b>. No incluye otros gastos ni acredita un cobro.</p>';
+}
+
+/* ---- Publicidad: mismo ID; auditoría en Ajustes, sin reemplazar la base ---- */
+function adRevisions(id){
+  try { const value=getSetting('adHistory:'+id); const rows=typeof value==='string'?JSON.parse(value):value; return Array.isArray(rows)?rows:[]; } catch(e){ return []; }
+}
+function editAd(id){
+  const a=DB.ads.find(x=>x.id===id); if(!a) return;
+  if(isConnected() && remoteVersion<3.1){ alert('Tu Apps Script debe admitir upsertItem (v3.1 o posterior) antes de editar publicidad. El registro se conserva.'); return; }
+  openInvModal('Editar gasto publicitario', `
+    <input type="hidden" id="ea-version" value="${esc(JSON.stringify(a))}">
+    <div class="form-grid">
+      <div><label>Fecha</label><input type="date" id="ea-date" value="${esc(a.date)}"></div>
+      <div><label>Plataforma</label><input id="ea-platform" value="${esc(a.platform)}"></div>
+      <div><label>Campaña / conjunto</label><input id="ea-campaign" value="${esc(a.campaign)}"></div>
+      <div><label>Monto gastado (S/)</label><input type="number" step="0.01" min="0.01" id="ea-amount" value="${a.amount}"></div>
+      <div><label>Mensajes / leads</label><input type="number" step="1" min="0" id="ea-messages" value="${a.messages||0}"></div>
+      <div><label>Motivo de la corrección</label><input id="ea-reason" placeholder="Ej: corregir importe del comprobante"></div>
+    </div><p class="hint">Se conserva el mismo gasto y se guardan sus valores anteriores. El estado de sincronización indica si Sheets lo aceptó.</p>
+    <div class="cv-ad-history">${adRevisions(id).map(r=>'<p class="hint">'+esc(r.at)+' · '+money(r.before.amount)+' → '+money(r.after.amount)+' · '+esc(r.reason)+'</p>').join('')}</div>
+    ${invModalButtons(`saveAdEdit('${id}')`,'Guardar corrección')}`);
+}
+async function saveAdEdit(id){
+  const a=DB.ads.find(x=>x.id===id); if(!a) return;
+  if(isConnected() && remoteVersion<3.1){ alert('La versión de Apps Script no permite esta edición.'); return; }
+  if(JSON.stringify(a)!==val('ea-version')){ alert('Este registro cambió. Cierra y vuelve a abrir la edición.'); return; }
+  const amount=Number(val('ea-amount')), messages=Number(val('ea-messages')), date=val('ea-date'), reason=val('ea-reason').trim();
+  if(!Number.isFinite(amount)||amount<=0||!Number.isInteger(messages)||messages<0||!validDate(date)||!reason){ alert('Revisa fecha, monto positivo, mensajes enteros y motivo.'); return; }
+  const before={...a}, after={...a,date,platform:val('ea-platform').trim()||'Meta Ads',campaign:val('ea-campaign').trim(),amount:cents(amount)/100,messages};
+  const history=adRevisions(id).concat({at:new Date().toISOString(),reason,before,after});
+  Object.assign(a,after); DB.settings=DB.settings||{}; DB.settings['adHistory:'+id]=JSON.stringify(history);
+  saveDB(false); closeInvModal(); renderAds();
+  // Son operaciones ya utilizadas por esta interfaz; no se inventa updateAd.
+  await syncRemote('setSetting',{key:'adHistory:'+id,value:JSON.stringify(history)});
+  await syncRemote('upsertItem',{collection:'ads',item:after});
+  showSyncBanner(isConnected()?'Corrección guardada localmente y en cola para Sheets.':'Corrección guardada en este navegador.',false);
+}
+function validDate(value){
+  return /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value+'T12:00:00Z')) && new Date(value+'T12:00:00Z').toISOString().slice(0,10)===value;
+}
+
+/* ---- Saldo compartido: se activa por lote con conteo, nunca por migración automática ---- */
+function poolOpening(loteId){ return invEvs().filter(e=>e.loteId===loteId&&e.kind==='kg_pool_open').sort((a,b)=>a.ts-b.ts)[0]||null; }
+function poolGrams(loteId){ return Math.round(loteKg(loteId)*1000); }
+function inventoryReady(loteId,grind,size){ return bagStockMap().find(b=>b.loteId===loteId&&b.grind===grind&&b.size===size)?.qty||0; }
+function sharedAvailable(loteId,grind,size){
+  if(!poolOpening(loteId)) return null;
+  const lote=(DB.lotes||[]).find(l=>l.id===loteId);
+  if(!lote || ![grind,'ambos'].includes(lote.type) || !(size>0)) return 0;
+  return Math.max(0,inventoryReady(loteId,grind,size)) + Math.floor(Math.max(0,poolGrams(loteId))/size);
+}
+function sharedProductAvailable(p){
+  const l=getActiveLote(p.grindType||'molido'), size=presentationBagSize(p);
+  const bags=l?sharedAvailable(l.id,p.grindType||'molido',size):null;
+  return bags===null?null:Math.floor(bags/(p.unitsPerSale||1));
+}
+function planCoffeeSale(parts,dispatch,packs,bagsPerPack,sale){
+  if(parts.some(p=>poolOpening(p.loteId)) && isConnected() && remoteVersion<3.1) throw Error('Comprueba que Apps Script admita inv_events antes de vender con saldo compartido.');
+  const evs=[], bulkUsed={}, readyUsed={}, supplyUsed={};
+  const useSupply=(item,n)=>{if(item)supplyUsed[item.id]=(supplyUsed[item.id]||0)+n;};
+  for(const p of parts){
+    if(!Number.isSafeInteger(p.n)||p.n<=0||!Number.isSafeInteger(p.size)||p.size<=0) throw Error('Revisa el peso y la cantidad de cada bolsa.');
+    const opening=poolOpening(p.loteId);
+    if(opening && (sale.date<opening.date||sale.date>todayStr())) throw Error('En saldo compartido registra ventas desde la fecha del conteo hasta hoy; concilia las anteriores por separado.');
+    const id=p.loteId, l=(DB.lotes||[]).find(x=>x.id===id);
+    if(!l || ![p.grind,'ambos'].includes(l.type)) throw Error('Selecciona un lote compatible con cada molienda.');
+    if(!poolOpening(id)){
+      // Modo anterior: solo descontar bolsas trazables si existe su registro de apertura.
+      const key=id+'|'+p.grind+'|'+p.size, known=bagStockMap().find(b=>b.key===key);
+      if(known){
+        const used=readyUsed[key]||0;
+        if(known.qty-used<p.n) throw Error('No alcanzan las bolsas listas del lote. Revisa Inventario.');
+        readyUsed[key]=used+p.n; evs.push(mkEvent('bag_out_sale',{qty:-p.n,loteId:id,grind:p.grind,size:p.size,saleId:sale.id,date:sale.date}));
+      }
+      continue;
+    }
+    const key=id+'|'+p.grind+'|'+p.size, used=readyUsed[key]||0;
+    const ready=Math.min(p.n,Math.max(0,inventoryReady(id,p.grind,p.size)-used));
+    readyUsed[key]=used+ready;
+    if(ready) evs.push(mkEvent('bag_out_sale',{qty:-ready,loteId:id,grind:p.grind,size:p.size,saleId:sale.id,date:sale.date}));
+    const fresh=p.n-ready, grams=fresh*p.size;
+    bulkUsed[id]=(bulkUsed[id]||0)+grams;
+    if(bulkUsed[id]>poolGrams(id)) throw Error('El café compartido del lote no alcanza para todas las bolsas del pedido.');
+    if(fresh){
+      if(bagPackMissing(p.size).length) throw Error('Completa la receta y los costos de empaque de '+p.size+' g en Inventario antes de preparar al vender.');
+      evs.push(mkEvent('kg_sale',{qty:-grams/1000,loteId:id,grind:p.grind,size:p.size,saleId:sale.id,date:sale.date,note:'Preparado al vender: '+fresh+' bolsa(s). No descontar otra vez.'}));
+      bagPackItems(p.size).forEach(i=>useSupply(i,fresh));
+    }
+  }
+  const role=dispatch==='provincia'?'disp_prov':(bagsPerPack>=3?'disp_tripack':'disp_unit');
+  useSupply(invFindItem(role,0),packs||1);
+  for(const [itemId,n] of Object.entries(supplyUsed)){
+    if(itemStock(itemId)<n) throw Error('No alcanza el insumo '+(invItemById(itemId)?.name||'de empaque')+'.');
+    evs.push(mkEvent('sup_use_sale',{qty:-n,itemId,saleId:sale.id,date:sale.date}));
+  }
+  return evs;
+}
+function sharedStockHTML(){
+  const rows=(DB.lotes||[]).filter(l=>l.active||poolOpening(l.id));
+  return `<div class="section-title">Café disponible por lote · saldo compartido</div><div class="card">
+    <p class="hint">500 g y 250 g consumen el mismo café. Las equivalencias son alternativas, no existencias que se suman. Las bolsas listas se descuentan sin volver a consumir granel. La preparación al vender requiere receta de empaque completa.</p>
+    ${rows.map(l=>{
+      const open=poolOpening(l.id), grams=poolGrams(l.id), ready=bagStockMap().filter(b=>b.loteId===l.id), readyGrams=ready.reduce((n,b)=>n+Math.round(b.qty*b.size),0), negative=grams<0||ready.some(b=>b.qty<0);
+      const projection=poolProjection(l.id);
+      return `<div class="card" style="margin:12px 0"><b>${esc(l.name)}</b> · ${l.active?'Activo':'Anterior'}<p class="hint">Fecha del lote: ${fmtDate(l.date)} · Tostado inicial registrado: ${Number(l.roastedKg||0).toFixed(3)} kg</p>
+        ${open?`<p><b>${negative?'Saldo por revisar':((grams+readyGrams)/1000).toFixed(3)+' kg actuales registrados'}</b><br>Granel compartido: ${(grams/1000).toFixed(3)} kg · En bolsas listas: ${(readyGrams/1000).toFixed(3)} kg</p>
+          <p class="hint">Solo con el granel: ${Math.floor(Math.max(0,grams)/500)} bolsas de 500 g <b>o</b> ${Math.floor(Math.max(0,grams)/250)} de 250 g. El stock listo conserva su molienda y gramaje.</p>
+          <p class="hint">Conteo de inicio: ${fmtDate(open.date)}. ${esc(projection)}</p>`:
+          '<p class="hint"><b>Sin conteo compartido de inicio.</b> Los kilos iniciales no se muestran como saldo actual. Se conserva el modo anterior hasta conciliar granel y bolsas listas.</p>'}
+        <button class="btn small secondary" onclick="openPoolModal('${l.id}')">${open?'Registrar nuevo conteo':'Configurar saldo compartido'}</button>
+      </div>`;
+    }).join('')||'<p class="hint">Crea o activa un lote para consultar su saldo.</p>'}
+    <p class="hint">El conteo es un registro operativo: no reemplaza la verificación física. Las operaciones pendientes de otros equipos pueden cambiar este saldo.</p></div>`;
+}
+function poolProjection(loteId){
+  const open=poolOpening(loteId); if(!open) return 'Duración estimada: N/D hasta el conteo inicial.';
+  const date=todayStr(), today=Date.parse(date+'T00:00:00Z'), start=Math.max(today-29*86400000,Date.parse(open.date+'T00:00:00Z'));
+  const grams=invEvs().filter(e=>e.loteId===loteId&&e.ts>=open.ts&&['kg_sale','bag_out_sale'].includes(e.kind)&&Date.parse(e.date+'T00:00:00Z')>=start&&e.date<=date).reduce((n,e)=>n-(e.kind==='kg_sale'?Math.round(e.qty*1000):Math.round(e.qty*e.size)),0);
+  const days=Math.floor((today-start)/86400000)+1;
+  if(days<7||grams<=0) return 'Duración estimada: N/D; se necesitan al menos 7 días observados y ventas registradas después del conteo.';
+  const remaining=poolGrams(loteId)+bagStockMap().filter(b=>b.loteId===loteId).reduce((n,b)=>n+b.qty*b.size,0);
+  if(remaining<0) return 'Duración estimada: N/D; revisa los saldos negativos.';
+  return 'Duración orientativa: '+Math.floor(remaining/(grams/days))+' días al ritmo registrado de los últimos '+days+' días (hasta '+fmtDate(date)+'). No es una promesa de disponibilidad.';
+}
+function openPoolModal(loteId){
+  if(isConnected()&&remoteVersion<3.1){alert('El saldo compartido requiere que Apps Script admita inv_events (v3.1 o posterior). No se cambiará el inventario.');return;}
+  openInvModal('Conteo de café · '+esc(loteName(loteId)),`
+    <p class="hint">Cuenta únicamente café <b>tostado a granel</b> que puede usarse para esta línea. No incluyas café ya empacado, pergamino ni verde. Revisa por separado las bolsas listas en Inventario. No copies los kilos iniciales si ya hubo ventas.</p>
+    <div><label>Fecha del conteo</label><input type="date" id="pool-date" value="${todayStr()}"></div>
+    <div><label>Kilos tostados a granel contados</label><input type="number" id="pool-kg" min="0" step="0.001" placeholder="Peso real de hoy"></div>
+    <div><label>Motivo / evidencia del conteo</label><input id="pool-note" placeholder="Ej: pesaje físico de sacos abiertos"></div>
+    <label style="margin:12px 0"><input id="pool-check" type="checkbox" style="width:auto"> Revisé las bolsas listas, los otros equipos y sus operaciones pendientes. Este café puede prepararse en grano o molerse al vender, sin merma adicional en este flujo.</label>
+    <p class="hint">Se registrará la diferencia, sin borrar movimientos. Desde este conteo el saldo de granel será compartido entre gramajes y moliendas permitidas del lote.</p>
+    ${invModalButtons(`savePoolCount('${loteId}')`,'Registrar conteo y saldo')}`);
+}
+async function savePoolCount(loteId){
+  if(hasPendingSync()){alert('Resuelve los pendientes y rechazos de este equipo antes del conteo. No se borrará ninguna operación.');return;}
+  const kg=Number(val('pool-kg')), date=val('pool-date'), note=val('pool-note').trim();
+  if(!val('pool-kg').trim()||!Number.isFinite(kg)||kg<0||!validDate(date)||date!==todayStr()||!note||!qs('pool-check').checked){alert('Completa el peso real, motivo y revisión. El conteo de activación debe ser de hoy.');return;}
+  if(isConnected()&&remoteVersion<3.1){alert('Actualiza la compatibilidad de Apps Script antes de activar.');return;}
+  const ready=bagStockMap().filter(b=>b.loteId===loteId);
+  if(ready.some(b=>b.qty<0)){alert('Hay bolsas listas con saldo negativo. Concilia esos conteos antes de activar el saldo compartido.');return;}
+  if(!confirm('¿Registrar el conteo físico y usarlo como saldo compartido de este lote? No se descontarán ventas antiguas nuevamente.'))return;
+  const delta=(Math.round(kg*1000)-poolGrams(loteId))/1000;
+  const ev=mkEvent(poolOpening(loteId)?'kg_adjust':'kg_pool_open',{qty:delta,loteId,date,note:'Conteo compartido: '+kg+' kg. '+note});
+  await commitInvEvents([ev]); showSyncBanner('Conteo guardado localmente. Revisa el estado de Sheets antes de continuar en otro equipo.',false);
+}
+
 /* ============ INICIALIZACIÓN Y AUTO-SINCRONIZACIÓN EN VIVO (BLINDADA CONTRA INTERRUPCIONES) ============ */
 // Al redibujar una pantalla tras guardar/editar, conservar la posición de scroll
 // (switchView ya hace scroll arriba ANTES de renderizar, así que al navegar sigue empezando arriba).
@@ -3465,7 +3669,7 @@ async function tryLiveRefresh(){
   if(document.visibilityState !== 'visible') return;
   if(hasPendingSync()) return; // hay cambios sin guardar en Sheets: no pisar con datos viejos
   if(Date.now() - lastUserInteraction < INTERACTION_QUIET_MS) return; // el usuario está activo: no interrumpir
-  if(document.getElementById('modal-edit-sale') || document.getElementById('inv-modal')) return; // hay un modal de edición abierto
+  if(document.getElementById('modal-edit-sale') || document.getElementById('inv-modal') || qs('modal-container')?.innerHTML.trim()) return; // hay un modal de edición abierto
 
   const isTyping = document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'SELECT' || document.activeElement.tagName === 'TEXTAREA');
   if(isTyping) return;
